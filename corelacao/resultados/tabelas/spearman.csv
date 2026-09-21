@@ -1,0 +1,4 @@
+par,soc,textura,rho,p,n,p_holm
+SOC x areia,soc_g_m2,areia,-0.4987043407394259,0.0,9792,0.0
+SOC x silte,soc_g_m2,silte,0.3839103726654915,0.0,9792,0.0
+SOC x argila,soc_g_m2,argila,0.4365486354784843,0.0,9792,0.0

@@ -1,0 +1,29 @@
+# Somente a entrega ao professor e o codigo cientifico entram no repositorio.
+# Dados, caches, resultados intermediarios, edicao do PDF/notebook e backup local.
+.local/
+tmp/
+dados/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Credenciais e configuracao pessoal.
+.env
+.env.*
+*credentials*.json
+service-account*.json
+*.bak
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Artefatos legados, caso sejam recriados por engano.
+CONTEXTO.md
+resultado_acesso_gee.json
+matriz_*_c03.csv
+matriz_*_c03.parquet
+resultados/arquivo_pre_correcao/
