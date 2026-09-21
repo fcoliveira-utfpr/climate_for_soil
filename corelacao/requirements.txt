@@ -1,0 +1,17 @@
+# Versoes usadas na analise. Python 3.11 ou superior.
+earthengine-api>=1.7.37
+pandas>=3.0.2
+numpy>=2.4.4
+scipy>=1.17.1
+statsmodels>=0.15.0
+scikit-posthocs>=0.16.1
+scikit-learn>=1.9.0
+matplotlib>=3.10.8
+pyarrow>=24.0.0
+pillow>=12.2.0
+nbformat>=5.11.1
+nbconvert>=7.17.1
+ipykernel>=7.3.0
+requests>=2.32.0
+nbclient>=0.10.0
+pypdf>=6.0.0

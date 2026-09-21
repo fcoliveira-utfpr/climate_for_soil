@@ -1,0 +1,4 @@
+# Artefatos binarios: impedir conversao de quebras de linha pelo Git.
+*.pdf binary
+*.png binary
+*.parquet binary
