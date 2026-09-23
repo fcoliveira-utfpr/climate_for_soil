@@ -3,3 +3,4 @@ climas/dados_chelsa/mensal_recortado/
 climas/dados_chelsa/normal_1991_2020/
 __pycache__/
 .ipynb_checkpoints/
+.DS_Store
