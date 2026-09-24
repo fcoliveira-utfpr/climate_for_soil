@@ -8,10 +8,16 @@ unidades físicas (tas em °C; pr em mm/mês): não há offset/fator a aplicar.
 Adaptado do script JS original (base TerraClimate) para usar a normal do
 CHELSA V2.1 -- tas já é a temperatura média mensal (não precisa de
 (tmmx+tmmn)/2), e pet não entra nessa classificação.
+
+Correções em relação ao script JS: (1) sazonalidade dos climas C/D (f/s/w) pelo critério de
+Kottek et al. (2006) -- s e w mutuamente exclusivos e f = "nem s nem w"; antes f era "mês mais
+seco >= 40 mm" e pixels com mês seco < 40 mm sem seca sazonal forte ficavam sem classe (~5% da
+área C do Brasil); (2) verão e inverno trocados ao norte do equador (afeta As/Aw, o limiar do
+grupo B e s/w em Roraima e no Amapá).
 """
 import ee
 
-MESES_VERAO = [10, 11, 12, 1, 2, 3]  # out-mar (hemisfério sul)
+MESES_VERAO = [10, 11, 12, 1, 2, 3]  # out-mar (hemisfério sul; trocados com o inverno ao norte do equador)
 MESES_INVERNO = [4, 5, 6, 7, 8, 9]   # abr-set
 
 LEGENDA = {
@@ -72,14 +78,18 @@ def classificar_koppen(normal: ee.Image) -> ee.Image:
     rann = pr.reduce(ee.Reducer.sum()).rename("rann")
     rdry = pr.reduce(ee.Reducer.min()).rename("rdry")
 
-    pr_verao = _bandas_meses(normal, "pr", MESES_VERAO)
-    pr_inverno = _bandas_meses(normal, "pr", MESES_INVERNO)
-    prec_verao_sum = pr_verao.reduce(ee.Reducer.sum())
-    prec_inverno_sum = pr_inverno.reduce(ee.Reducer.sum())
-    psdry = pr_verao.reduce(ee.Reducer.min())
-    pwdry = pr_inverno.reduce(ee.Reducer.min())
-    pswet = pr_verao.reduce(ee.Reducer.max())
-    pwwet = pr_inverno.reduce(ee.Reducer.max())
+    # Estatísticas dos semestres out-mar e abr-set; ao norte do equador o verão é abr-set.
+    pr_out_mar = _bandas_meses(normal, "pr", MESES_VERAO)
+    pr_abr_set = _bandas_meses(normal, "pr", MESES_INVERNO)
+    norte = ee.Image.pixelLonLat().select("latitude").gt(0)
+
+    def por_hemisferio(reducer):
+        out_mar, abr_set = pr_out_mar.reduce(reducer), pr_abr_set.reduce(reducer)
+        return out_mar.where(norte, abr_set), abr_set.where(norte, out_mar)  # (verão, inverno)
+
+    prec_verao_sum, prec_inverno_sum = por_hemisferio(ee.Reducer.sum())
+    psdry, pwdry = por_hemisferio(ee.Reducer.min())
+    pswet, pwwet = por_hemisferio(ee.Reducer.max())
 
     pct_verao = prec_verao_sum.divide(rann)
     pct_inverno = prec_inverno_sum.divide(rann)
@@ -109,10 +119,11 @@ def classificar_koppen(normal: ee.Image) -> ee.Image:
     bsh = is_bs.And(temp_anual.gte(18))
     bsk = is_bs.And(temp_anual.lt(18))
 
-    # --- sazonalidade C/D ---
-    is_f = rdry.gte(40)
-    is_w = rdry.lt(40).And(pswet.gte(pwdry.multiply(10)))
-    is_s = rdry.lt(40).And(pwwet.gte(psdry.multiply(3))).And(is_w.Not())
+    # --- sazonalidade C/D (Kottek et al. 2006) ---
+    # s: verão seco; w: inverno seco; f: nem s nem w (s e w são mutuamente exclusivos).
+    is_s = psdry.lt(pwdry).And(pwwet.gt(psdry.multiply(3))).And(psdry.lt(40))
+    is_w = pwdry.lt(psdry).And(pswet.gt(pwdry.multiply(10)))
+    is_f = is_s.Not().And(is_w.Not())
 
     is_quente = thot.gte(22)
     is_temperado = is_quente.Not().And(tmon10.gte(4))
