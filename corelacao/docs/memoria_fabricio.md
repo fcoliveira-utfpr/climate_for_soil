@@ -370,9 +370,92 @@ A/C (Tcold >= 18 °C) está certa, então a queda em relação ao IPEF vem dos d
 TIF regenerado (`koppen_chelsa.ipynb`): sem buracos (cobre todo pixel que o Holdridge cobre); Cfa
 5,79% -> 6,13%, Cfb 1,92% -> 2,02%, As 2,04% -> 1,80%.
 
-**Pendente:** o usuário subir o TIF novo substituindo `projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020`
+**Feito (2026-09-24):** asset corrigido já está no GEE (atualizado 2026-09-24 02:34 UTC; conferido: 56 dos
+59 pontos de SOC antes sem Köppen CHELSA agora têm classe, 37 Cfa e 19 Cfb; os 3 restantes são litoral).
+~~Pendente: o usuário subir o TIF novo substituindo~~ `projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020`
 (com `--pyramiding_policy=mode`, que também acaba com as classes intermediárias falsas nas escalas
 reduzidas). Depois: rodar de novo `codigo/preparar_dados.py` e `codigo/comparar_climas.py`, reexecutar
 `comparacao_climas.ipynb`, revisar o texto (a conclusão sobre o Köppen CHELSA provavelmente se mantém,
 porque os 765 pontos C -> A não são afetados pelas correções) e acrescentar a seção "por que o Köppen
 CHELSA fica abaixo" + a limitação do aglomerado de Rondônia.
+
+## Análise refeita com o Köppen corrigido (2026-09-24)
+
+- `preparar_dados.py` passou a extrair também a temperatura do mês mais frio do CHELSA
+  (`chelsa_brasil_tas_normal_1991_2020`, mínimo das 12 bandas), usada no diagnóstico da fronteira A/C.
+- Amostra comum maior com o Köppen sem buracos: 12.207 locais SOC e 11.978 textura (antes 12.151 /
+  11.934). Resultados praticamente iguais; conclusões mantidas (Holdridge L2 para SOC, Thornthwaite L2
+  para textura, argila sem sistema, CAD indiferente, Köppen CHELSA < IPEF).
+- `comparar_climas.py` gera também `koppen_concordancia.csv`, `koppen_hibridos.csv` e
+  `koppen_fronteira.csv` (diagnóstico agregado) e, em `amostra.csv`, a concentração espacial.
+- Notebook: nova seção 6 "Por que o Köppen CHELSA fica abaixo do Köppen IPEF" (concordância 55,7%;
+  híbridos: trocar só o grupo A x C/B recupera SOC 0,039 -> 0,065 e areia 0,032 -> 0,062; 765 locais C -> A
+  com mês mais frio 18,2-20 °C e SOC de clima C, 45 vs 50/36 Mg/ha). Seções seguintes renumeradas (7-10).
+- **Correção do registro anterior:** a amostra não tem "1/4 num único aglomerado em Rondônia". São duas
+  regiões: ~26% na região de Rondônia e ~19% no Rio Grande do Sul; 20 dos ~200 blocos de 2° têm 56-60%
+  dos locais. Limitação atualizada no notebook com essa tabela.
+
+## Holdridge: nomes das zonas x tabela do script (2026-09-24, em aberto)
+
+O usuário segue os nomes de Jungkunst et al. (2021), J. Plant Nutr. Soil Sci., doi 10.1002/jpln.202100008
+(38 zonas, base Leemans). Não consegui ler o texto completo (acesso bloqueado); pedi a tabela das 38 zonas
+ao usuário.
+
+Achados até agora:
+- Numerações de Leemans publicadas diferem entre si: NOAA/NGDC (Leemans 1992) vai de 0 a 39 (1 gelo ...
+  37 Tropical Moist, 38 Tropical Wet, 39 Tropical Rain); a legenda do MapBiomas é essa sem a 39; a tabela
+  `projects/fcoliveira/assets/gesivaldo/Holdridge_Leemans` usa outra (36 = Tropical Wet Forest).
+- Pelo diagrama de Holdridge, cada tipo de vegetação = mesma faixa de ETP/P em qualquer faixa térmica
+  (moist 0,5-1; wet 0,25-0,5; rain 0,125-0,25; dry 1-2; very dry 2-4). Na `TABELA_ZONAS` do script
+  (holdridge_gee.py): temperado quente e subtropical corretos; **tropical deslocado em uma zona** (usa o
+  padrão de 7 zonas das outras faixas, mas a faixa tropical tem 8: inclui "very dry"). A zona 36 do
+  asset (ETP/P 0,5-1, ~43% do Brasil) é Tropical Moist Forest = 37 na numeração NOAA/Leemans; a 38 do
+  asset (<0,25) seria Tropical Rain (39). Temperado frio e boreal também deslocados (quase ausentes no BR).
+- Não afeta a comparação de climas (as fronteiras de ETP/P são as mesmas; a análise rotula pela faixa
+  ETP/P), mas afeta mapas e textos com os nomes.
+
+**Resolvido em parte (2026-09-24):** o usuário pôs o PDF do artigo em `climas/chelsa_climas_brasil/` (CC-BY).
+A Tab. 1 usa a numeração NOAA/Leemans (1 gelo ... 37 Tropical moist forest, 38 Tropical wet forest; sem
+tropical rain) e a Fig. 1 mostra onde cada faixa térmica começa na ETP/P (tropical 32, subtropical/temp.
+quente 16, temp. frio 8, boreal 4, subpolar 2). Confirmado: a `TABELA_ZONAS` estava certa só no temperado
+quente e no subtropical. Corrigida em `holdridge_gee.py` (tropical, temperado frio, boreal, subpolar) +
+`LEGENDA` com os nomes do artigo; `holdridge_chelsa.ipynb` reexecutado, TIF regenerado. No Brasil a
+mudança é só de número/nome (partição igual): a antiga 36 (43%, Amazônia) agora é 37 Tropical moist
+forest; a 17 (1 pixel) virou 16. `corelacao/codigo/legendas.py` passou a usar os nomes do artigo.
+
+**Pendente:** (1) o usuário subir o TIF novo do Holdridge substituindo
+`projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020` (`--pyramiding_policy=mode`); (2) depois,
+rodar de novo `preparar_dados.py` + `comparar_climas.py` + notebook da corelacao (métricas devem ficar
+iguais; mudam só os rótulos) e commitar.
+
+**Decisão em aberto: ETP do Holdridge.** O script usa na razão ETP/P a ETP de Penman-Monteith do CHELSA;
+Holdridge, Leemans e o artigo usam ETP = 58,93 x biotemperatura. Teste local (1/16 dos pixels): 23% dos
+pixels mudam de zona; com a ETP de Holdridge o Brasil fica mais úmido (Subtropical moist forest 8,5% ->
+20,1%, Subtropical dry forest 23,9% -> 14,4%, Tropical moist forest 42,8% -> 48,0%). ETP mediana: Penman
+1569 mm x Holdridge 1444 mm. Primeiro o usuário escolheu manter Penman-Monteith; em seguida decidiu **testar as duas na corelacao**.
+`holdridge_gee.classificar_holdridge(..., etp="penman"|"holdridge")`; o notebook do Holdridge gera dois TIFs:
+`Holdridge_CHELSA_BR_1991_2020_ETPM.tif` e `..._ETH.tif` (o TIF único antigo foi apagado). Áreas no Brasil
+(ETPM x ETH): Tropical moist 43,0 x 48,1%; Subtropical dry 24,2 x 14,3%; Subtropical moist 8,3 x 20,3%.
+
+**Pendente:** o usuário subir `projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETPM` e `..._ETH`
+(`--pyramiding_policy=mode`). A corelacao já está preparada (`legendas.py`: `holdridge_l1` comum,
+`holdridge_etpm_l2` e `holdridge_eth_l2`; notebook com os dois sistemas e cor violeta para ETH, paleta
+validada). Depois: `preparar_dados.py` + `comparar_climas.py` + notebook, revisar texto/conclusões
+(Holdridge ETPM x ETH), commitar. O asset antigo `Holdridge_CHELSA_BR_1991_2020` (numeração errada) pode
+ser apagado do GEE depois.
+
+## Holdridge ETPM x ETH na corelacao (2026-09-24)
+
+Assets `Holdridge_CHELSA_BR_1991_2020_ETPM` e `_ETH` subidos pelo usuário e conferidos (ETPM: 42,8% na zona
+37; ETH: 20,2% na 29). Extração e comparação refeitas; `holdridge_l1` (faixa térmica, igual nas duas),
+`holdridge_etpm_l2`, `holdridge_eth_l2`.
+
+log(SOC), R² espacial (1° / 2° / 5°): ETH L2 0,082 / 0,076 / 0,093; ETPM L2 0,080 / 0,068 / 0,094. ETH é
+agora o melhor sistema para SOC nos blocos de 2° (vence o ETPM em 94% das repetições, IC toca o zero;
+empata com Thornthwaite L1 e Köppen IPEF L3). Silte: ETPM 0,075 x ETH 0,056 (os dois bem atrás do
+Thornthwaite L2, 0,20). Recomendação no notebook: SOC -> Holdridge L2 com ETP de Holdridge (definição
+original, comparável a Jungkunst et al. 2021); textura -> Thornthwaite L2. Figura 1 com eixo x menos
+denso (rótulos se sobrepunham). Paleta: ETH em violeta (#4a3aa7), validada.
+
+O asset antigo `Holdridge_CHELSA_BR_1991_2020` (numeração errada) pode ser apagado do GEE. O PDF do artigo
+(`climas/chelsa_climas_brasil/`) continua fora do git (o usuário ainda não decidiu).

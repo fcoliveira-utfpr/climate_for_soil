@@ -143,18 +143,21 @@ BANDAS_TH = ['umidade', 'subtipo', 'termica', 'concentracao']  # b1-b4 dos asset
 
 
 def imagem_climas():
-    """Os 4 assets novos numa imagem só (mesma grade CHELSA, ~928 m)."""
+    """Os assets novos numa imagem só (mesma grade CHELSA, ~928 m), mais a temperatura do
+    mês mais frio (critério da fronteira A/C do Köppen, usada no diagnóstico)."""
     th100 = ee.Image(leg.ASSET_TH100).select([0, 1, 2, 3], [f'th100_{b}' for b in BANDAS_TH])
     thsolo = ee.Image(leg.ASSET_THSOLO).select([0, 1, 2, 3], [f'thsolo_{b}' for b in BANDAS_TH])
     return (ee.Image(leg.ASSET_KOPPEN).select([0], ['koppen_chelsa'])
-            .addBands(ee.Image(leg.ASSET_HOLDRIDGE).select([0], ['holdridge']))
-            .addBands(th100).addBands(thsolo))
+            .addBands(ee.Image(leg.ASSET_HOLDRIDGE_ETPM).select([0], ['holdridge_etpm']))
+            .addBands(ee.Image(leg.ASSET_HOLDRIDGE_ETH).select([0], ['holdridge_eth']))
+            .addBands(th100).addBands(thsolo)
+            .addBands(ee.Image(leg.ASSET_TAS).reduce(ee.Reducer.min()).rename('tas_mes_mais_frio')))
 
 
 def extrair_climas(df, bloco=3000, workers=3):
     """Valor de cada banda no pixel de cada ponto, na grade nativa dos assets (sem reamostrar)."""
     img = imagem_climas()
-    proj = ee.Image(leg.ASSET_HOLDRIDGE).projection().getInfo()
+    proj = ee.Image(leg.ASSET_HOLDRIDGE_ETPM).projection().getInfo()
     bandas = img.bandNames().getInfo()
 
     def parte(ini):
@@ -183,8 +186,9 @@ def classes_climaticas(cod):
     out['koppen_chelsa_l1'] = kp.str[0]
     out['koppen_chelsa_l2'] = kp.str[:2]
     out['koppen_chelsa_l3'] = kp
-    out['holdridge_l1'] = mapa(cod.holdridge, leg.HOLDRIDGE_L1)
-    out['holdridge_l2'] = mapa(cod.holdridge, leg.HOLDRIDGE_L2)
+    out['holdridge_l1'] = mapa(cod.holdridge_etpm, leg.HOLDRIDGE_L1)
+    out['holdridge_etpm_l2'] = mapa(cod.holdridge_etpm, leg.HOLDRIDGE_L2)
+    out['holdridge_eth_l2'] = mapa(cod.holdridge_eth, leg.HOLDRIDGE_L2)
     for v in ('th100', 'thsolo'):
         u = mapa(cod[f'{v}_umidade'], leg.TH_UMIDADE)
         s = mapa(cod[f'{v}_subtipo'], leg.TH_SUBTIPO)
@@ -198,7 +202,8 @@ def classes_climaticas(cod):
 
 def com_climas(pontos):
     pontos = pontos.reset_index(drop=True)
-    return pd.concat([pontos, classes_climaticas(extrair_climas(pontos))], axis=1)
+    cod = extrair_climas(pontos)
+    return pd.concat([pontos, classes_climaticas(cod), cod[['tas_mes_mais_frio']]], axis=1)
 
 
 def main():
@@ -214,7 +219,7 @@ def main():
 
     info = {'gerado_em': datetime.now(timezone.utc).isoformat(),
             'assets': {'soc': MATRIZ_SOC, 'textura': MATRIZ_TEXTURA, 'koppen_chelsa': leg.ASSET_KOPPEN,
-                       'holdridge': leg.ASSET_HOLDRIDGE, 'thornthwaite_cad100': leg.ASSET_TH100,
+                       'holdridge_etpm': leg.ASSET_HOLDRIDGE_ETPM, 'holdridge_eth': leg.ASSET_HOLDRIDGE_ETH, 'thornthwaite_cad100': leg.ASSET_TH100,
                        'thornthwaite_cadsolo': leg.ASSET_THSOLO},
             'soc': info_soc, 'textura': info_tex}
     (DADOS / 'preparacao.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
