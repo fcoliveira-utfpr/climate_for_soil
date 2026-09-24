@@ -120,22 +120,72 @@ def amostra_comum(df, col_y):
     return df[ok].reset_index(drop=True), int((~ok).sum())
 
 
+def diagnostico_koppen(df, y, resp):
+    """Por que o Köppen CHELSA difere do IPEF: concordância, versões híbridas (CHELSA com uma das
+    discordâncias trocada pela resposta do IPEF) e temperatura do mês mais frio na fronteira A/C."""
+    ipef = df.koppen_ipef_l3.str.replace('Bsh', 'BSh')
+    ch = df.koppen_chelsa_l3
+    lon, lat = df.longitude.to_numpy(), df.latitude.to_numpy()
+
+    concord = (pd.crosstab(ipef.rename('ipef_l3'), ch.rename('chelsa_l3')).stack()
+               .rename('n').reset_index().query('n > 0').assign(resposta=resp))
+
+    ambos_a = (ipef.str[0] == 'A') & (ch.str[0] == 'A')
+    grupo_dif = ipef.str[0] != ch.str[0]
+    versoes = {
+        'Köppen IPEF L3': ipef,
+        'Köppen CHELSA L3': ch,
+        'CHELSA com o grupo do IPEF onde discordam (A x C/B)': ch.where(~grupo_dif, ipef),
+        'CHELSA com o subtipo do IPEF dentro do grupo A (Am/Aw...)': ch.where(~ambos_a, ipef),
+    }
+    reps = r2_repeticoes(y, {k: codificar(v) for k, v in versoes.items()}, lon, lat,
+                         ESQUEMAS[ESQUEMA_PRINCIPAL])
+    hibridos = pd.DataFrame({'resposta': resp, 'versao': list(versoes), 'r2_bloco_2': reps.mean().values,
+                             'ic_inf': reps.quantile(0.025).values, 'ic_sup': reps.quantile(0.975).values})
+
+    grupos = {'IPEF C, CHELSA A': (ipef.str[0] == 'C') & (ch.str[0] == 'A'),
+              'IPEF C, CHELSA C': (ipef.str[0] == 'C') & (ch.str[0] == 'C'),
+              'IPEF A, CHELSA A': ambos_a}
+    col = RESPOSTAS[resp][1]
+    fator = 0.01 if resp == 'log_soc' else 1
+    fronteira = []
+    for nome, m in grupos.items():
+        t = df.loc[m, 'tas_mes_mais_frio']
+        linha = {'resposta': resp, 'grupo': nome, 'n': int(m.sum()),
+                 'mediana_resposta': df.loc[m, col].median() * fator}
+        linha.update({f'tfrio_p{q}': t.quantile(q / 100) for q in (10, 25, 50, 75, 90)})
+        linha['pct_tfrio_18_19'] = 100 * t.between(18, 19, inclusive='left').mean()
+        fronteira.append(linha)
+    return concord, hibridos, pd.DataFrame(fronteira)
+
+
 def main():
     TABELAS.mkdir(parents=True, exist_ok=True)
     soc, tex = carregar_bases()
     bases = {'soc': soc, 'textura': tex}
 
     desempenho, diferencas, classes, amostra = [], [], [], []
+    concord, hibridos, fronteira = [], [], []
     for resp, (base, col, rotulo) in RESPOSTAS.items():
         df, n_fora = amostra_comum(bases[base], col)
         y = np.log(df[col].to_numpy(float)) if resp == 'log_soc' else df[col].to_numpy(float)
         codigos = {c: codificar(df[c]) for c in leg.COLUNAS_CLIMA}
         lon, lat = df.longitude.to_numpy(), df.latitude.to_numpy()
 
+        # concentração espacial da amostra (caixas aproximadas de RO e RS; blocos de 2° mais densos)
+        cont_b2 = np.sort(np.bincount(grupos_espaciais(lon, lat, 2.0)))[::-1]
+        caixa_ro = (lon >= -66.9) & (lon <= -59.7) & (lat >= -13.8) & (lat <= -7.9)
+        caixa_rs = (lat < -27.1) & (lon > -57.7)
         amostra.append({'resposta': resp, 'rotulo': rotulo, 'locais': len(df),
                         'excluidos_sem_classe': n_fora,
                         **{f'blocos_{e}': int(grupos_espaciais(lon, lat, t).max() + 1)
-                           for e, t in ESQUEMAS.items() if t is not None}})
+                           for e, t in ESQUEMAS.items() if t is not None},
+                        'pct_regiao_rondonia': 100 * caixa_ro.mean(),
+                        'pct_rio_grande_do_sul': 100 * caixa_rs.mean(),
+                        'pct_20_blocos_2_mais_densos': 100 * cont_b2[:20].sum() / len(df)})
+
+        c_, h_, f_ = diagnostico_koppen(df, y, resp)
+        concord.append(c_); hibridos.append(h_); fronteira.append(f_)
 
         reps = {e: r2_repeticoes(y, codigos, lon, lat, t) for e, t in ESQUEMAS.items()}
         for c, (cod, k) in codigos.items():
@@ -171,6 +221,9 @@ def main():
         print(f'{resp}: {len(df)} locais, melhor = {melhor} (R² {r[melhor].mean():.3f})')
 
     pd.DataFrame(amostra).to_csv(TABELAS / 'amostra.csv', index=False)
+    pd.concat(concord).to_csv(TABELAS / 'koppen_concordancia.csv', index=False)
+    pd.concat(hibridos).to_csv(TABELAS / 'koppen_hibridos.csv', index=False)
+    pd.concat(fronteira).to_csv(TABELAS / 'koppen_fronteira.csv', index=False)
     pd.DataFrame(desempenho).to_csv(TABELAS / 'desempenho.csv', index=False)
     pd.DataFrame(diferencas).to_csv(TABELAS / 'diferencas_pareadas.csv', index=False)
     cols = ['resposta', 'sistema', 'nivel', 'coluna', 'classe', 'n', 'mediana', 'media']

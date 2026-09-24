@@ -6,9 +6,14 @@ O Köppen IPEF (referência) vem embutido como dummies nas duas matrizes de pont
 """
 
 ASSET_KOPPEN = 'projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020'
-ASSET_HOLDRIDGE = 'projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020'
+# Holdridge em duas versões da ETP na razão ETP/P: Penman-Monteith do CHELSA (ETPM) e a de Holdridge,
+# 58,93 x biotemperatura (ETH). A biotemperatura (faixa térmica, L1) é a mesma nas duas.
+ASSET_HOLDRIDGE_ETPM = 'projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETPM'
+ASSET_HOLDRIDGE_ETH = 'projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETH'
 ASSET_TH100 = 'projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CAD100'
 ASSET_THSOLO = 'projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CADsolo'
+# Temperatura média mensal (12 bandas, °C): só para o diagnóstico da fronteira A/C do Köppen.
+ASSET_TAS = 'projects/fcoliveira/assets/chelsa_brasil_tas_normal_1991_2020'
 
 # --- Köppen-Geiger (koppen_gee.LEGENDA) ---------------------------------------------------------
 KOPPEN = {1: 'Af', 2: 'Am', 3: 'As', 4: 'Aw', 5: 'BSh', 6: 'BSk', 7: 'BWh', 8: 'BWk',
@@ -16,39 +21,30 @@ KOPPEN = {1: 'Af', 2: 'Am', 3: 'As', 4: 'Aw', 5: 'BSh', 6: 'BSk', 7: 'BWh', 8: '
           17: 'Cwc', 18: 'Dfa', 19: 'Dfb', 20: 'Dfc', 21: 'Dfd', 22: 'Dsa', 23: 'Dsb', 24: 'Dsc',
           25: 'Dsd', 26: 'Dwa', 27: 'Dwb', 28: 'Dwc', 29: 'Dwd', 30: 'ET', 31: 'EF'}
 
-# --- Holdridge (holdridge_gee.TABELA_ZONAS) -----------------------------------------------------
-# A numeração 1-38 segue o mesmo esquema da legenda do MapBiomas, mas pela tabela do script JS
-# os nomes de lá ficam deslocados (ex.: a zona 36 é ETP/P 0,5-1, "floresta úmida" no Holdridge
-# clássico, e não "floresta seca"). Por isso as zonas são rotuladas pela faixa térmica e pela
-# faixa da razão ETP/P, que saem direto da tabela.
-FAIXA_TERMICA = {2: 'Subpolar', 3: 'Boreal', 4: 'Temperado frio', 5: 'Temperado quente',
-                 6: 'Subtropical', 7: 'Tropical'}
-# Classe de umidade u (1 = mais seco) -> limites [inferior, superior) da razão ETP/P.
-_RETP_LIMITES = {1: (32, None), 2: (16, 32), 3: (8, 16), 4: (4, 8), 5: (2, 4), 6: (1, 2),
-                 7: (0.5, 1), 8: (0.25, 0.5), 9: (0.125, 0.25), 10: (None, 0.125)}
-_TABELA_ZONAS = [
-    (2, 1, 4, 3), (2, 5, 6, 4), (2, 7, 7, 5), (2, 8, 10, 6),
-    (3, 1, 3, 7), (3, 4, 4, 8), (3, 5, 5, 9), (3, 6, 7, 10), (3, 8, 10, 11),
-    (4, 1, 3, 12), (4, 4, 4, 13), (4, 5, 5, 14), (4, 6, 6, 15), (4, 7, 7, 16), (4, 8, 10, 17),
-    (5, 1, 3, 18), (5, 4, 4, 19), (5, 5, 5, 20), (5, 6, 6, 21), (5, 7, 7, 22), (5, 8, 8, 23), (5, 9, 10, 24),
-    (6, 1, 3, 25), (6, 4, 4, 26), (6, 5, 5, 27), (6, 6, 6, 28), (6, 7, 7, 29), (6, 8, 8, 30), (6, 9, 10, 31),
-    (7, 1, 3, 32), (7, 4, 4, 33), (7, 5, 5, 34), (7, 6, 6, 35), (7, 7, 7, 36), (7, 8, 8, 37), (7, 9, 10, 38),
-]
-
-
-def _faixa_retp(u_min, u_max):
-    """Faixa de ETP/P coberta pelas classes de umidade u_min..u_max (u_min é a mais seca)."""
-    fmt = lambda x: f'{x:g}'.replace('.', ',')
-    inf, sup = _RETP_LIMITES[u_max][0], _RETP_LIMITES[u_min][1]
-    if sup is None:
-        return f'>={fmt(inf)}'
-    if inf is None:
-        return f'<{fmt(sup)}'
-    return f'{fmt(inf)}-{fmt(sup)}'
-
-
-HOLDRIDGE_L1 = {z: FAIXA_TERMICA[t] for t, _, _, z in _TABELA_ZONAS}
-HOLDRIDGE_L2 = {z: f'{z} {FAIXA_TERMICA[t]}, ETP/P {_faixa_retp(u0, u1)}' for t, u0, u1, z in _TABELA_ZONAS}
+# --- Holdridge (holdridge_gee.LEGENDA) ----------------------------------------------------------
+# Numeração e nomes das 38 zonas de Jungkunst et al. (2021, J. Plant Nutr. Soil Sci. 184:5-11, Tab. 1),
+# base Leemans (1990). L1 = faixa térmica (latitudinal).
+HOLDRIDGE_NOMES = {
+    1: 'Polar ice', 2: 'Polar desert',
+    3: 'Subpolar dry tundra', 4: 'Subpolar moist tundra', 5: 'Subpolar wet tundra', 6: 'Subpolar rain tundra',
+    7: 'Boreal desert', 8: 'Boreal dry bush', 9: 'Boreal moist forest', 10: 'Boreal wet forest',
+    11: 'Boreal rain forest',
+    12: 'Cool temperate desert', 13: 'Cool temperate desert bush', 14: 'Cool temperate steppe',
+    15: 'Cool temperate moist forest', 16: 'Cool temperate wet forest', 17: 'Cool temperate rain forest',
+    18: 'Warm temperate desert', 19: 'Warm temperate desert bush', 20: 'Warm temperate thorn steppe',
+    21: 'Warm temperate dry forest', 22: 'Warm temperate moist forest', 23: 'Warm temperate wet forest',
+    24: 'Warm temperate rain forest',
+    25: 'Subtropical desert', 26: 'Subtropical desert bush', 27: 'Subtropical thorn steppe',
+    28: 'Subtropical dry forest', 29: 'Subtropical moist forest', 30: 'Subtropical wet forest',
+    31: 'Subtropical rain forest',
+    32: 'Tropical desert', 33: 'Tropical desert bush', 34: 'Tropical thorn steppe',
+    35: 'Tropical very dry forest', 36: 'Tropical dry forest', 37: 'Tropical moist forest',
+    38: 'Tropical wet forest',
+}
+_FAIXAS = [(1, 2, 'Polar'), (3, 6, 'Subpolar'), (7, 11, 'Boreal'), (12, 17, 'Temperado frio'),
+           (18, 24, 'Temperado quente'), (25, 31, 'Subtropical'), (32, 38, 'Tropical')]
+HOLDRIDGE_L1 = {z: nome for lo, hi, nome in _FAIXAS for z in range(lo, hi + 1)}
+HOLDRIDGE_L2 = {z: f'{z} {n}' for z, n in HOLDRIDGE_NOMES.items()}
 
 # --- Thornthwaite (thornthwaite.py) -------------------------------------------------------------
 TH_UMIDADE = {1: 'A', 2: 'B4', 3: 'B3', 4: 'B2', 5: 'B1', 6: 'C2', 7: 'C1', 8: 'D', 9: 'E'}
@@ -65,8 +61,9 @@ NIVEIS = {
     'koppen_chelsa_l1': ('Köppen CHELSA', 'L1', 'grupo (A, B, C)'),
     'koppen_chelsa_l2': ('Köppen CHELSA', 'L2', 'tipo (Af, Am, Aw, Cf...)'),
     'koppen_chelsa_l3': ('Köppen CHELSA', 'L3', 'classe completa (Aw, Cfa...)'),
-    'holdridge_l1': ('Holdridge CHELSA', 'L1', 'faixa térmica'),
-    'holdridge_l2': ('Holdridge CHELSA', 'L2', 'zona de vida'),
+    'holdridge_l1': ('Holdridge ETP Penman', 'L1', 'faixa térmica (igual nas duas ETPs)'),
+    'holdridge_etpm_l2': ('Holdridge ETP Penman', 'L2', 'zona de vida'),
+    'holdridge_eth_l2': ('Holdridge ETP Holdridge', 'L2', 'zona de vida'),
     'th100_l1': ('Thornthwaite CAD 100 mm', 'L1', 'classe de umidade'),
     'th100_l2': ('Thornthwaite CAD 100 mm', 'L2', 'umidade + subtipo'),
     'th100_l3': ('Thornthwaite CAD 100 mm', 'L3', 'tipo completo'),

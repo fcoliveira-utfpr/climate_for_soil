@@ -1,5 +1,5 @@
-resposta,rotulo,locais,excluidos_sem_classe,blocos_bloco_1,blocos_bloco_2,blocos_bloco_5
-log_soc,log(SOC),12151,135,650,200,44
-argila,Argila (%),11934,128,636,197,44
-areia,Areia (%),11934,128,636,197,44
-silte,Silte (%),11934,128,636,197,44
+resposta,rotulo,locais,excluidos_sem_classe,blocos_bloco_1,blocos_bloco_2,blocos_bloco_5,pct_regiao_rondonia,pct_rio_grande_do_sul,pct_20_blocos_2_mais_densos
+log_soc,log(SOC),12207,79,651,200,44,25.714753829769805,19.07921684279512,55.90235111001884
+argila,Argila (%),11978,84,637,197,44,27.049590916680582,18.675905827350142,59.65102688261813
+areia,Areia (%),11978,84,637,197,44,27.049590916680582,18.675905827350142,59.65102688261813
+silte,Silte (%),11978,84,637,197,44,27.049590916680582,18.675905827350142,59.65102688261813
