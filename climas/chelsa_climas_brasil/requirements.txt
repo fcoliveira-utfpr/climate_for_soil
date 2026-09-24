@@ -5,3 +5,6 @@ requests
 tqdm
 matplotlib
 geedim
+# geemap depende de pyproj; no Mac Intel (x86_64) o pyproj >= 3.8 nao tem wheel e falha ao compilar.
+# Nesse caso: pip install --only-binary=pyproj -r requirements.txt
+geemap
