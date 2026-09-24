@@ -5,6 +5,7 @@ climas/dados_chelsa/holdridge/
 climas/dados_chelsa/koppen/
 climas/dados_chelsa/awc/
 climas/dados_chelsa/thornthwaite/
+climas/dados_chelsa/zonas/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store

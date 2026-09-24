@@ -459,3 +459,45 @@ denso (rótulos se sobrepunham). Paleta: ETH em violeta (#4a3aa7), validada.
 
 O asset antigo `Holdridge_CHELSA_BR_1991_2020` (numeração errada) pode ser apagado do GEE. O PDF do artigo
 (`climas/chelsa_climas_brasil/`) continua fora do git (o usuário ainda não decidiu).
+
+## Experimento: o que pôr no lugar do Köppen nos modelos do MapBiomas (2026-09-24, em andamento)
+
+**Contexto (repositório mapbiomas/brazil-soil, collection_03beta):** o Köppen IPEF não estratifica; entra
+como dummies L1-L3 num único random forest nacional (`ranger` no SOC; GBM por profundidade na textura), ao
+lado de ~100 covariáveis (solo, geologia, relevo, bioma, fitofisionomia, uso, NDVI, água, fogo). É a
+**única informação climática** dos modelos (precipitação só como comentário "a fazer"; Holdridge do
+MapBiomas comentado com a nota "treinar e avaliar um modelo com koppen e outro com holdridge").
+
+**Objetivo do usuário:** substituir o Köppen para melhorar as estimativas; pediu também um cenário com
+zonas homogêneas.
+
+**Desenho** (`codigo/experimento_dados.py`, `zonas_clima.py`, `experimento_modelos.py`):
+- Base comum: todas as covariáveis das matrizes, menos identificadores, alvos, razões log (`log_*`),
+  produtos de textura (`*_000_030cm`, `textura_l1_030cm`), profundidade e dummies de Köppen/HLZ antigas
+  (103 covariáveis no SOC, 107 na textura). Uma linha por local (mediana), como na comparação de climas.
+- RF (sklearn, 200 árvores, max_features 0,33) para os 4 alvos (log SOC, areia, silte, argila %).
+- Cenários: A Köppen IPEF; B sem clima; C Holdridge ETH (L1+L2); D Thornthwaite CAD100 (L1+L2); E clima
+  contínuo (12 variáveis: T média/mês frio/mês quente, biotemperatura, P anual/mês seco/sazonalidade, ETP,
+  ETP/P, DEF, EXC, Im); F1 zonas k-means como dummies; F2 um RF por zona k-means; F3 zonas
+  supervisionadas (árvore de regressão no clima, multivariada na textura, ajustada dentro da dobra, 10
+  folhas) como dummies; F4 um RF por zona supervisionada (zona com < 300 locais de treino -> RF global).
+- Validação: blocos de 2°, 5 dobras x 3 repetições, mesmas dobras para todos -> diferenças pareadas vs A.
+- Zonas k-means (`zonas_clima.py`): ajustadas nos **pixels do Brasil** (300 mil, ponderados pela área),
+  não nos locais — descrevem o clima do país, viram mapa e não são moldadas pela amostra concentrada. 9
+  variáveis padronizadas (chuva/DEF/EXC em log). k = 10 (principal) e 15. Mapas em
+  `climas/dados_chelsa/zonas/zonas_climaticas_k{10,15}.tif`; centróides em `resultados/tabelas/`.
+  Zonas k10 coerentes (3-5 Amazônia úmida; 2 e 7 semiárido; 9-10 Sul); zona do ponto = zona do mapa em 100%.
+- Teste rápido (20 árvores, 1 rep): B ≈ A; E lidera em SOC e silte.
+
+**Resultados (rodada completa, 200 árvores, 3 repetições; ΔR² vs Köppen, mín-máx entre repetições):**
+- E clima contínuo: SOC +0,026 (+0,018/+0,033), silte +0,029 (+0,019/+0,038), areia +0,009 (+0,008/+0,010),
+  argila +0,004 (empate). R² SOC 0,17 -> 0,20.
+- F1 zonas k-means como covariável: SOC +0,019, silte +0,027, areia +0,007 (todas as reps > 0), argila +0,005.
+- D Thornthwaite L2: SOC +0,016; textura ~0. C Holdridge ETH: ~0 (o que era melhor para SOC isolado não
+  acrescenta no modelo completo). B sem clima: SOC +0,007, areia −0,009 (o Köppen contribui pouco hoje).
+- F3 zonas supervisionadas: intermediário. F2/F4 estratificado: pior em SOC, areia e argila (−0,02 a
+  −0,04 em areia/argila); silte empata.
+- **Recomendação:** trocar as dummies do Köppen pelas 12 variáveis contínuas (E); se quiserem categórica,
+  zonas k10 como dummies (F1); não estratificar. Próximo passo sugerido: repetir dentro do pipeline deles.
+- Notebook `experimento_clima_modelos.ipynb`; figura `resultados/figuras/zonas_k10.png`; mapa
+  `climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (fora do git; pode virar asset no GEE).

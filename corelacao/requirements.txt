@@ -7,3 +7,5 @@ matplotlib>=3.9
 pytest>=8
 nbconvert>=7.17
 ipykernel>=7.3
+scikit-learn>=1.5          # experimento_modelos.py, zonas_clima.py
+rasterio>=1.4              # zonas_clima.py (lê os rasters CHELSA locais)
