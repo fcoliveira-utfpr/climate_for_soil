@@ -1,9 +1,13 @@
-"""Preparacao auditavel das duas matrizes de treino do Earth Engine (acesso restrito,
-liberado para esta conta - ver docs/assets.md). Holdridge nao vem das matrizes: vem de
-uma extracao a parte com legenda confirmada (clima_legendas.py)."""
-import hashlib
+"""Baixa as duas matrizes de pontos do MapBiomas Solo C3 (acesso restrito, liberado para a conta
+fcoliveira), limpa, agrega por local e amostra os climas comparados em cada ponto.
+
+Saída (fora do git, dados restritos): .local/dados/soc.parquet e .local/dados/textura.parquet,
+uma linha por local, com a variável-resposta e uma coluna de classe por sistema/nível
+(legendas.COLUNAS_CLIMA).
+"""
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -11,34 +15,34 @@ import ee
 import numpy as np
 import pandas as pd
 
+import legendas as leg
 from gee_utils import conectar
-from clima_legendas import HOLDRIDGE, HLZ_L2_LEGENDA, HLZ_L1_LEGENDA, HLZ_L2_PARA_L1
 
 ROOT = Path(__file__).resolve().parents[1]
 DADOS = ROOT / '.local' / 'dados'
-RES = ROOT / '.local' / 'resultados'
-PUBLIC = ROOT / 'resultados'
 FRACOES = ['areia', 'silte', 'argila']
-CLIMAS = ['koppen_l1', 'koppen_l2', 'koppen_l3', 'HLZ_L1', 'HLZ_L2']
-NIVEIS_KOPPEN = ['koppen_l1', 'koppen_l2', 'koppen_l3']
+NIVEIS_IPEF = ['koppen_l1', 'koppen_l2', 'koppen_l3']
 
 MATRIZ_SOC = 'projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/matriz-collection3_carbon_datac2v2'
 MATRIZ_TEXTURA = 'projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/c03_psd_v2025_11_18'
 
 
+# ---------------------------------------------------------------------------------------------
+# Download e limpeza das matrizes
+# ---------------------------------------------------------------------------------------------
 def ponto_id(df):
     return df.longitude.round(6).astype(str) + '_' + df.latitude.round(6).astype(str)
 
 
 def coordenadas_validas(df):
-    """Graus geograficos: jamais corrigir escala decimal por suposicao."""
+    """Graus geográficos: jamais corrigir escala decimal por suposição."""
     return df.longitude.between(-180, 180) & df.latitude.between(-90, 90)
 
 
 def baixar_featurecollection(asset_id, tamanho_pagina=2000):
-    """Baixa uma FeatureCollection inteira paginando por nextPageToken (evita o
-    limite de payload de getInfo/ee_to_df numa matriz deste tamanho)."""
-    linhas, token, pagina, t0 = [], None, 0, time.time()
+    """Baixa uma FeatureCollection inteira paginando por nextPageToken (evita o limite de
+    payload de getInfo numa matriz deste tamanho)."""
+    linhas, token, t0 = [], None, time.time()
     while True:
         params = {'assetId': asset_id, 'pageSize': tamanho_pagina}
         if token:
@@ -51,55 +55,26 @@ def baixar_featurecollection(asset_id, tamanho_pagina=2000):
             if geom and geom.get('type') == 'Point':
                 props['longitude'], props['latitude'] = geom['coordinates'][:2]
             linhas.append(props)
-        pagina += 1
         token = resp.get('nextPageToken')
-        print(f'  pagina {pagina:>3}: {len(linhas):>6} linhas ({time.time()-t0:5.1f}s)', flush=True)
+        print(f'  {len(linhas):>6} linhas ({time.time() - t0:5.1f}s)', flush=True)
         if not token or not feicoes:
             break
     return pd.DataFrame(linhas)
 
 
-def decodificar_koppen(df):
-    """Converte as dummies koppen_l1_*/l2_*/l3_* (nativas nas duas matrizes) em colunas categoricas."""
+def decodificar_koppen_ipef(df):
+    """Converte as dummies koppen_l1_*/l2_*/l3_* (Köppen IPEF, nativas nas duas matrizes) em
+    colunas categóricas koppen_ipef_l1/l2/l3."""
     out = {}
-    for nivel in NIVEIS_KOPPEN:
+    for nivel in NIVEIS_IPEF:
         prefixo = nivel + '_'
         cols = [c for c in df.columns if c.startswith(prefixo)]
         bloco = df[cols].astype(float)
         valid = bloco.notna().all(axis=1) & bloco.isin([0, 1]).all(axis=1) & bloco.sum(axis=1).eq(1)
         rot = pd.Series(pd.NA, index=df.index, dtype='string')
         rot.loc[valid] = bloco.loc[valid].idxmax(axis=1).str.removeprefix(prefixo)
-        out[nivel] = rot
+        out['koppen_ipef_' + nivel[-2:]] = rot
     return pd.DataFrame(out)
-
-
-def extrair_holdridge(df, bloco=3000, workers=3):
-    """Amostra holdridge_lifezones_chelsa-v2026 (zone38_id) em cada ponto e decodifica
-    HLZ_L1/L2 com a legenda confirmada na propria descricao do asset."""
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-    img = ee.Image(HOLDRIDGE).select('zone38_id').rename('zone38_id')
-
-    def parte(ini):
-        sub = df.iloc[ini:ini + bloco]
-        pts = [ee.Feature(ee.Geometry.Point([r.longitude, r.latitude]), {'idx': int(r.Index)})
-               for r in sub.itertuples()]
-        amostra = img.reduceRegions(ee.FeatureCollection(pts), ee.Reducer.first(),
-                                    scale=1000, crs='EPSG:4326', tileScale=4)
-        resp = amostra.getInfo()['features']
-        # reduceRegions com imagem de 1 banda nomeia a saida 'first', nao o nome da banda.
-        out = pd.DataFrame([f['properties'] for f in resp]).set_index('idx')
-        return out.rename(columns={'first': 'zone38_id'})
-
-    partes = []
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = [pool.submit(parte, ini) for ini in range(0, len(df), bloco)]
-        for fut in as_completed(futures):
-            partes.append(fut.result())
-            print(f'  holdridge: {sum(len(p) for p in partes):>6}/{len(df)}', flush=True)
-    codigos = pd.concat(partes).sort_index()['zone38_id'].reindex(range(len(df)))
-    hlz_l2 = codigos.map(HLZ_L2_LEGENDA)
-    hlz_l1 = codigos.map(HLZ_L2_PARA_L1).map(HLZ_L1_LEGENDA)
-    return hlz_l1.astype('string').to_numpy(), hlz_l2.astype('string').to_numpy()
 
 
 def preparar_carbono():
@@ -110,31 +85,21 @@ def preparar_carbono():
 
     pseudo = df.PSEUDO_index.astype(float).eq(1)
     valid = np.isfinite(df[['longitude', 'latitude', 'soc_stock_g_m2']].astype(float)).all(axis=1)
-    valid &= (df.soc_stock_g_m2.astype(float) >= 0)
+    valid &= df.soc_stock_g_m2.astype(float) > 0          # log(SOC) exige SOC > 0
     valid &= coordenadas_validas(df)
     take = df[~pseudo & valid].copy()
 
-    koppen = decodificar_koppen(take)
-    take = pd.concat([take[['ponto_id', 'longitude', 'latitude', 'soc_stock_g_m2', 'elevation', 'year']], koppen], axis=1)
-    take['soc_g_m2'] = take.soc_stock_g_m2.astype(float)
-    take['elevation'] = take.elevation.astype(float)
-
-    # pseudo-replicacao: mesma coordenada aparece uma vez por ano (ate ~40x); mediana por ponto.
-    agg = {'longitude': 'first', 'latitude': 'first', 'soc_g_m2': 'median', 'elevation': 'median'}
-    agg.update({n: 'first' for n in NIVEIS_KOPPEN})
+    take = pd.concat([take[['ponto_id', 'longitude', 'latitude']],
+                      take.soc_stock_g_m2.astype(float).rename('soc_g_m2'),
+                      decodificar_koppen_ipef(take)], axis=1)
+    # pseudo-replicação: a mesma coordenada aparece uma vez por ano (até ~40x); mediana por ponto.
+    agg = {'longitude': 'first', 'latitude': 'first', 'soc_g_m2': 'median',
+           **{c: 'first' for c in ('koppen_ipef_l1', 'koppen_ipef_l2', 'koppen_ipef_l3')}}
     pontos = take.groupby('ponto_id', as_index=False).agg(agg)
 
     info = {'linhas_brutas': n_bruto, 'pseudoamostras_excluidas': int(pseudo.sum()),
-            'invalidas_excluidas': int((~pseudo & ~valid).sum()), 'pontos_validos': len(pontos)}
-    print(f'  linhas brutas ............. {n_bruto}')
-    print(f'  pseudoamostras excluidas .. {info["pseudoamostras_excluidas"]}')
-    print(f'  linhas invalidas excluidas  {info["invalidas_excluidas"]}')
-    print(f'  pontos unicos (agregados) . {len(pontos)}')
-
-    print('[SOC] Extraindo Holdridge confirmado...')
-    pontos = pontos.reset_index(drop=True)
-    pontos['HLZ_L1'], pontos['HLZ_L2'] = extrair_holdridge(pontos)
-
+            'invalidas_excluidas': int((~pseudo & ~valid).sum()), 'locais': len(pontos)}
+    print(f'  {info}')
     return pontos, info
 
 
@@ -144,78 +109,129 @@ def preparar_textura():
     n_bruto = len(df)
     df['ponto_id'] = ponto_id(df)
 
-    artificial = df.id.astype(str).str.contains('pseudo', case=False, regex=False) | df.id.astype(str).str.startswith('clay-copy-')
+    artificial = (df.id.astype(str).str.contains('pseudo', case=False, regex=False)
+                  | df.id.astype(str).str.startswith('clay-copy-'))
     profundidade = pd.to_numeric(df.profundidade, errors='coerce')
     fracoes = df[FRACOES].astype(float)
     valid = coordenadas_validas(df) & profundidade.le(30) & profundidade.gt(0)
     valid &= np.isfinite(fracoes.to_numpy()).all(axis=1) & (fracoes >= 0).all(axis=1)
-    valid &= np.isclose(fracoes.sum(axis=1), 1000, atol=15)  # g/kg fecham ~1000; tolerancia de arredondamento
+    valid &= np.isclose(fracoes.sum(axis=1), 1000, atol=15)  # g/kg fecham ~1000
     take = df[~artificial & valid].copy()
 
-    koppen = decodificar_koppen(take)
-    take = pd.concat([take[['ponto_id', 'longitude', 'latitude', 'elevation']].reset_index(drop=True),
-                      (fracoes.loc[take.index] / 10.0).reset_index(drop=True), koppen.reset_index(drop=True)], axis=1)
-    take['elevation'] = pd.to_numeric(take.elevation, errors='coerce')
-
-    agg = {'longitude': 'first', 'latitude': 'first', 'elevation': 'median',
-          **{f: 'median' for f in FRACOES}}
-    agg.update({n: 'first' for n in NIVEIS_KOPPEN})
+    take = pd.concat([take[['ponto_id', 'longitude', 'latitude']].reset_index(drop=True),
+                      (fracoes.loc[take.index] / 10.0).reset_index(drop=True),   # g/kg -> %
+                      decodificar_koppen_ipef(take).reset_index(drop=True)], axis=1)
+    agg = {'longitude': 'first', 'latitude': 'first', **{f: 'median' for f in FRACOES},
+           **{c: 'first' for c in ('koppen_ipef_l1', 'koppen_ipef_l2', 'koppen_ipef_l3')}}
     pontos = take.groupby('ponto_id', as_index=False).agg(agg)
 
-    # Pontos com mais de um horizonte em 0-30cm: a mediana por fracao, tomada coluna a
-    # coluna, pode nao fechar 100% mesmo que cada linha original fechasse. Exigir o
-    # fechamento tambem depois de agregar.
-    n_antes_fechamento = len(pontos)
-    fechamento = (pontos[FRACOES].sum(axis=1) - 100).abs()
-    pontos = pontos[fechamento <= 1].reset_index(drop=True)
+    # Com mais de um horizonte em 0-30 cm, a mediana coluna a coluna pode não fechar 100%.
+    n_antes = len(pontos)
+    pontos = pontos[(pontos[FRACOES].sum(axis=1) - 100).abs() <= 1].reset_index(drop=True)
 
     info = {'linhas_brutas': n_bruto, 'amostras_artificiais': int(artificial.sum()),
             'fora_camada_ou_invalidas': int((~artificial & ~valid).sum()),
-            'pontos_agregados_sem_fechar': n_antes_fechamento - len(pontos), 'pontos_validos': len(pontos)}
-    print(f'  linhas brutas ............. {n_bruto}')
-    print(f'  amostras artificiais ...... {info["amostras_artificiais"]}')
-    print(f'  fora de 0-30cm/invalidas .. {info["fora_camada_ou_invalidas"]}')
-    print(f'  agregados sem fechar 100% . {info["pontos_agregados_sem_fechar"]}')
-    print(f'  pontos unicos (agregados) . {len(pontos)}')
-
-    print('[Textura] Extraindo Holdridge confirmado...')
-    pontos = pontos.reset_index(drop=True)
-    pontos['HLZ_L1'], pontos['HLZ_L2'] = extrair_holdridge(pontos)
-
+            'agregados_sem_fechar_100': n_antes - len(pontos), 'locais': len(pontos)}
+    print(f'  {info}')
     return pontos, info
+
+
+# ---------------------------------------------------------------------------------------------
+# Climas CHELSA nos pontos
+# ---------------------------------------------------------------------------------------------
+BANDAS_TH = ['umidade', 'subtipo', 'termica', 'concentracao']  # b1-b4 dos assets de Thornthwaite
+
+
+def imagem_climas():
+    """Os 4 assets novos numa imagem só (mesma grade CHELSA, ~928 m)."""
+    th100 = ee.Image(leg.ASSET_TH100).select([0, 1, 2, 3], [f'th100_{b}' for b in BANDAS_TH])
+    thsolo = ee.Image(leg.ASSET_THSOLO).select([0, 1, 2, 3], [f'thsolo_{b}' for b in BANDAS_TH])
+    return (ee.Image(leg.ASSET_KOPPEN).select([0], ['koppen_chelsa'])
+            .addBands(ee.Image(leg.ASSET_HOLDRIDGE).select([0], ['holdridge']))
+            .addBands(th100).addBands(thsolo))
+
+
+def extrair_climas(df, bloco=3000, workers=3):
+    """Valor de cada banda no pixel de cada ponto, na grade nativa dos assets (sem reamostrar)."""
+    img = imagem_climas()
+    proj = ee.Image(leg.ASSET_HOLDRIDGE).projection().getInfo()
+    bandas = img.bandNames().getInfo()
+
+    def parte(ini):
+        sub = df.iloc[ini:ini + bloco]
+        pts = [ee.Feature(ee.Geometry.Point([r.longitude, r.latitude]), {'idx': int(r.Index)})
+               for r in sub.itertuples()]
+        amostra = img.reduceRegions(ee.FeatureCollection(pts), ee.Reducer.first(),
+                                    crs=proj['crs'], crsTransform=proj['transform'], tileScale=4)
+        return pd.DataFrame([f['properties'] for f in amostra.getInfo()['features']]).set_index('idx')
+
+    partes = []
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for fut in as_completed([pool.submit(parte, i) for i in range(0, len(df), bloco)]):
+            partes.append(fut.result())
+            print(f'  climas: {sum(len(p) for p in partes):>6}/{len(df)}', flush=True)
+    return pd.concat(partes).reindex(range(len(df)))[bandas]
+
+
+def classes_climaticas(cod):
+    """Códigos numéricos dos assets -> uma coluna de classe (texto) por sistema/nível."""
+    def mapa(serie, dic):
+        return serie.round().astype('Int64').map(dic).astype('string')
+
+    out = pd.DataFrame(index=cod.index)
+    kp = mapa(cod.koppen_chelsa, leg.KOPPEN)
+    out['koppen_chelsa_l1'] = kp.str[0]
+    out['koppen_chelsa_l2'] = kp.str[:2]
+    out['koppen_chelsa_l3'] = kp
+    out['holdridge_l1'] = mapa(cod.holdridge, leg.HOLDRIDGE_L1)
+    out['holdridge_l2'] = mapa(cod.holdridge, leg.HOLDRIDGE_L2)
+    for v in ('th100', 'thsolo'):
+        u = mapa(cod[f'{v}_umidade'], leg.TH_UMIDADE)
+        s = mapa(cod[f'{v}_subtipo'], leg.TH_SUBTIPO)
+        t = mapa(cod[f'{v}_termica'], leg.TH_TERMICA)
+        c = mapa(cod[f'{v}_concentracao'], leg.TH_CONCENTRACAO)
+        out[f'{v}_l1'] = u
+        out[f'{v}_l2'] = u + s
+        out[f'{v}_l3'] = u + s + t + c
+    return out
+
+
+def com_climas(pontos):
+    pontos = pontos.reset_index(drop=True)
+    return pd.concat([pontos, classes_climaticas(extrair_climas(pontos))], axis=1)
 
 
 def main():
     DADOS.mkdir(parents=True, exist_ok=True)
-    RES.mkdir(parents=True, exist_ok=True)
-    projeto = conectar(None)
-    print(f'Autenticado ({projeto})\n')
+    print(f'GEE: {conectar(None)}\n')
     soc, info_soc = preparar_carbono()
+    soc = com_climas(soc)
     soc.to_parquet(DADOS / 'soc.parquet', index=False)
     print()
     tex, info_tex = preparar_textura()
+    tex = com_climas(tex)
     tex.to_parquet(DADOS / 'textura.parquet', index=False)
 
-    joint = tex.merge(soc[['ponto_id', 'soc_g_m2']], on='ponto_id', how='inner')
-    joint = joint[joint.soc_g_m2 > 0].reset_index(drop=True)
-    joint.to_parquet(DADOS / 'joint.parquet', index=False)
-
     info = {'gerado_em': datetime.now(timezone.utc).isoformat(),
-           'assets': {'soc': MATRIZ_SOC, 'textura': MATRIZ_TEXTURA, 'holdridge': HOLDRIDGE},
-           'textura': info_tex, 'carbono': info_soc, 'pontos_para_extracao': len(joint),
-           'n_textura': len(tex), 'n_carbono': len(soc), 'n_pareados': len(joint)}
-    (RES / 'preparacao.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
-    print(f"\nSOC: {len(soc)} pontos | Textura: {len(tex)} pontos | Pareados: {len(joint)}")
+            'assets': {'soc': MATRIZ_SOC, 'textura': MATRIZ_TEXTURA, 'koppen_chelsa': leg.ASSET_KOPPEN,
+                       'holdridge': leg.ASSET_HOLDRIDGE, 'thornthwaite_cad100': leg.ASSET_TH100,
+                       'thornthwaite_cadsolo': leg.ASSET_THSOLO},
+            'soc': info_soc, 'textura': info_tex}
+    (DADOS / 'preparacao.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
+    print(f'\nSOC: {len(soc)} locais | Textura: {len(tex)} locais')
+
+
+def completar_ipef_l3(df):
+    """No Köppen IPEF o nível 3 só existe para B e C (Bsh, Cfa...); no grupo A o tipo (Af, Am,
+    As, Aw) já é a classe completa. Completa o L3 com o L2 para ficar equivalente ao L3 do
+    Köppen CHELSA e não perder os locais do grupo A na amostra comum."""
+    df = df.copy()
+    df['koppen_ipef_l3'] = df.koppen_ipef_l3.fillna(df.koppen_ipef_l2.where(df.koppen_ipef_l1 == 'A'))
+    return df
 
 
 def carregar_bases():
-    """Uma linha por local; tex/soc/joint com as mesmas colunas de nivel climatico."""
-    tex = pd.read_parquet(DADOS / 'textura.parquet')
-    soc = pd.read_parquet(DADOS / 'soc.parquet')
-    joint = pd.read_parquet(DADOS / 'joint.parquet')
-    if not all(coordenadas_validas(x).all() for x in (tex, soc)):
-        raise ValueError('Coordenadas fora dos limites geograficos; execute preparar_dados.py.')
-    return tex, soc, joint
+    return tuple(completar_ipef_l3(pd.read_parquet(DADOS / f'{b}.parquet')) for b in ('soc', 'textura'))
 
 
 if __name__ == '__main__':

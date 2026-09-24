@@ -1,0 +1,781 @@
+resposta,sistema,nivel,coluna,classe,n,mediana,media
+log_soc,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7221,36.0,47.25522157595901
+log_soc,Köppen IPEF (referência),L1,koppen_ipef_l1,B,460,25.305,28.559608695652173
+log_soc,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4470,48.345,59.39384899328859
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Af,485,44.03,53.63120618556702
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Am,4163,34.550000000000004,43.99002161902474
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,As,860,31.72,40.289563953488376
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Aw,1713,38.97,56.882273788674844
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Bs,460,25.305,28.559608695652173
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Cf,3512,47.71,57.6773861047836
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Cs,1,,
+log_soc,Köppen IPEF (referência),L2,koppen_ipef_l2,Cw,957,50.51,65.69260710553814
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Af,485,44.03,53.63120618556702
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Am,4163,34.550000000000004,43.99002161902474
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,As,860,31.72,40.289563953488376
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Aw,1713,38.97,56.882273788674844
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Bsh,460,25.305,28.559608695652173
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfa,2573,43.46,49.906529343179166
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfb,939,67.02,78.9706922257721
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Csa,1,,
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwa,401,46.14,49.824264339152116
+log_soc,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwb,556,54.34,77.13722122302158
+log_soc,Köppen CHELSA,L1,koppen_chelsa_l1,A,7931,36.82,48.47821270962048
+log_soc,Köppen CHELSA,L1,koppen_chelsa_l1,B,518,25.795,29.74880308880309
+log_soc,Köppen CHELSA,L1,koppen_chelsa_l1,C,3702,49.365,59.41850216099406
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,Af,399,43.74,54.72305764411028
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,Am,1107,37.71,49.11356820234869
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,As,390,30.810000000000002,44.99907692307692
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,Aw,6035,36.57,48.17362800331401
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,BS,492,26.415,30.17184959349594
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,BW,26,20.560000000000002,21.74346153846154
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,Cf,3254,48.38,58.98719268592502
+log_soc,Köppen CHELSA,L2,koppen_chelsa_l2,Cw,448,53.629999999999995,62.55127232142858
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Af,399,43.74,54.72305764411028
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Am,1107,37.71,49.11356820234869
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,As,390,30.810000000000002,44.99907692307692
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Aw,6035,36.57,48.17362800331401
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,BSh,492,26.415,30.17184959349594
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,BWh,26,20.560000000000002,21.74346153846154
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Cfa,2446,44.635000000000005,51.03957481602617
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Cfb,808,70.73,83.04644183168318
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Cwa,258,50.019999999999996,54.11802325581396
+log_soc,Köppen CHELSA,L3,koppen_chelsa_l3,Cwb,190,60.410000000000004,74.00273684210526
+log_soc,Holdridge CHELSA,L1,holdridge_l1,Subtropical,5569,42.75,55.12786676243491
+log_soc,Holdridge CHELSA,L1,holdridge_l1,Temperado frio,21,141.38,152.37142857142857
+log_soc,Holdridge CHELSA,L1,holdridge_l1,Temperado quente,953,69.13,82.53670514165792
+log_soc,Holdridge CHELSA,L1,holdridge_l1,Tropical,5608,34.44,41.1899982168331
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"16 Temperado frio, ETP/P 0,5-1",2,,
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"17 Temperado frio, ETP/P <0,5",19,137.42000000000002,147.07263157894738
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"21 Temperado quente, ETP/P 1-2",1,,
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"22 Temperado quente, ETP/P 0,5-1",860,66.83,76.45527906976746
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"23 Temperado quente, ETP/P 0,25-0,5",92,110.875,140.18902173913042
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"26 Subtropical, ETP/P 4-8",67,20.89,24.639701492537316
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"27 Subtropical, ETP/P 2-4",280,32.205,34.78521428571429
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"28 Subtropical, ETP/P 1-2",2357,41.160000000000004,60.467596521001276
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"29 Subtropical, ETP/P 0,5-1",2853,45.21,53.465452155625655
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"30 Subtropical, ETP/P 0,25-0,5",12,40.120000000000005,46.4425
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"33 Tropical, ETP/P 4-8",21,21.77,24.385238095238098
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"34 Tropical, ETP/P 2-4",695,27.55,30.170776978417265
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"35 Tropical, ETP/P 1-2",1397,33.82,43.7056012884753
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"36 Tropical, ETP/P 0,5-1",3382,35.765,41.969392371377886
+log_soc,Holdridge CHELSA,L2,holdridge_l2,"37 Tropical, ETP/P 0,25-0,5",113,49.93,57.65946902654868
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,A,244,72.42,96.77729508196721
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,B1,2724,38.290000000000006,44.33050477239354
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,B2,1287,52.120000000000005,61.39054778554778
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,B3,659,58.660000000000004,67.71276176024278
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,B4,161,62.1,69.53453416149068
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,C1,1792,38.94,59.31954799107143
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,C2,3581,37.410000000000004,46.99616308293773
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,D,1419,33.1,41.43752642706131
+log_soc,Thornthwaite CAD 100 mm,L1,th100_l1,E,284,22.450000000000003,25.587253521126758
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,Ar,232,72.92,98.96883620689655
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,As,12,44.745000000000005,54.4075
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B1r,1153,42.77,49.39046400693842
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B1s,11,39.24,52.22
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B1w,1554,35.315,40.53984555984556
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B1w2,6,34.410000000000004,39.29166666666667
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B2r,1121,54.410000000000004,63.38867528991972
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B2s,5,55.78,61.874
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B2w,160,38.84,47.5858125
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B2w2,1,,
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B3r,644,58.585,67.9644099378882
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B3s,3,,
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B3w,12,62.315,60.11833333333333
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B4r,160,61.97,69.44493750000001
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,B4w,1,,
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C1d,1158,38.415000000000006,62.07310017271157
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C1s,26,26.240000000000002,32.42923076923077
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C1w,528,42.065,58.048125
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C1w2,80,33.84,36.592625000000005
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C2r,947,38.68,43.6508606124604
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C2s,30,51.36750000000001,54.58433333333333
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C2w,2357,37.18,48.958152312261355
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,C2w2,247,34.78,40.178137651821864
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,Dd,1410,33.115,41.50050354609929
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,Dw,9,29.95,31.571111111111108
+log_soc,Thornthwaite CAD 100 mm,L2,th100_l2,Ed,284,22.450000000000003,25.587253521126758
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,ArA'a',205,73.0,99.64746341463415
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,ArB3'a',1,,
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,ArB4'a',26,72.095,95.94807692307693
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,AsA'a',12,44.745000000000005,54.4075
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B1rA'a',1148,42.77,49.36558797909407
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B1rB4'a',5,41.83,55.102
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B1sA'a',11,39.24,52.22
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B1w2A'a',6,34.410000000000004,39.29166666666667
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B1wA'a',1554,35.315,40.53984555984556
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B2rA'a',1082,54.46,63.66217652495379
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B2rB4'a',39,48.5,55.800769230769234
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B2sA'a',5,55.78,61.874
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B2w2A'a',1,,
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B2wA'a',160,38.84,47.5858125
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B3rA'a',600,58.2,67.36665833333333
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B3rB4'a',44,62.81999999999999,76.11556818181818
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B3sA'a',3,,
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B3wA'a',12,62.315,60.11833333333333
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B4rA'a',141,62.59,68.42163120567376
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B4rB4'a',19,60.39,77.03894736842105
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,B4wA'a',1,,
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C1dA'a',1158,38.415000000000006,62.07310017271157
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C1sA'a',26,26.240000000000002,32.42923076923077
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C1w2A'a',80,33.84,36.592625000000005
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C1wA'a',528,42.065,58.048125
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C2rA'a',947,38.68,43.6508606124604
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C2sA'a',30,51.36750000000001,54.58433333333333
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C2w2A'a',247,34.78,40.178137651821864
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,C2wA'a',2357,37.18,48.958152312261355
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,DdA'a',1410,33.115,41.50050354609929
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,DwA'a',9,29.95,31.571111111111108
+log_soc,Thornthwaite CAD 100 mm,L3,th100_l3,EdA'a',284,22.450000000000003,25.587253521126758
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,A,247,72.65,96.51538461538462
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,B1,2714,38.34,44.101836772291826
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,B2,1277,52.120000000000005,61.46374706342991
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,B3,652,59.18000000000001,68.19222392638036
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,B4,158,61.97,69.42670886075949
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,C1,1801,38.94,59.48335924486396
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,C2,3600,37.39,46.95827222222222
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,D,1418,33.225,41.579795486600844
+log_soc,Thornthwaite CAD do solo,L1,thsolo_l1,E,284,22.450000000000003,25.587253521126758
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,Ar,239,72.84,97.72384937238493
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,As,8,55.660000000000004,60.4125
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B1r,1338,41.30500000000001,47.86690209267564
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B1s,11,39.24,52.22
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B1w,1358,35.485,40.36054491899853
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B1w2,7,26.68,37.49
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B2r,1133,54.08,63.03653574580759
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B2s,5,55.78,61.874
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B2w,138,40.019999999999996,48.6722463768116
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B2w2,1,,
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B3r,639,59.15,68.38885758998435
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B3s,3,,
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B3w,10,62.519999999999996,62.864
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B4r,157,61.84,69.33471337579618
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,B4w,1,,
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C1d,1196,38.825,62.59298494983278
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C1s,27,30.93,34.90481481481482
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C1w,509,40.800000000000004,57.12791748526523
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C1w2,69,29.560000000000002,32.576521739130435
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C2r,984,38.815,43.81584857723577
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C2s,28,51.36750000000001,54.63464285714286
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C2w,2366,37.004999999999995,48.84872147083686
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,C2w2,222,33.505,39.7709009009009
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,Dd,1408,33.225,41.62116477272727
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,Dw,10,28.725,35.755
+log_soc,Thornthwaite CAD do solo,L2,thsolo_l2,Ed,284,22.450000000000003,25.587253521126758
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,ArA'a',212,72.92,98.22150943396225
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,ArB3'a',1,,
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,ArB4'a',26,72.095,95.94807692307693
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,AsA'a',8,55.660000000000004,60.4125
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B1rA'a',1333,41.300000000000004,47.83976369092273
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B1rB4'a',5,41.83,55.102
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B1sA'a',11,39.24,52.22
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B1w2A'a',7,26.68,37.49
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B1wA'a',1358,35.485,40.36054491899853
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B2rA'a',1094,54.21,63.294483546617926
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B2rB4'a',39,48.5,55.800769230769234
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B2sA'a',5,55.78,61.874
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B2w2A'a',1,,
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B2wA'a',138,40.019999999999996,48.6722463768116
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B3rA'a',595,58.69,67.8174705882353
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B3rB4'a',44,62.81999999999999,76.11556818181818
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B3sA'a',3,,
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B3wA'a',10,62.519999999999996,62.864
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B4rA'a',138,62.345,68.27398550724638
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B4rB4'a',19,60.39,77.03894736842105
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,B4wA'a',1,,
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C1dA'a',1196,38.825,62.59298494983278
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C1sA'a',27,30.93,34.90481481481482
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C1w2A'a',69,29.560000000000002,32.576521739130435
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C1wA'a',509,40.800000000000004,57.12791748526523
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C2rA'a',984,38.815,43.81584857723577
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C2sA'a',28,51.36750000000001,54.63464285714286
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C2w2A'a',222,33.505,39.7709009009009
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2366,37.004999999999995,48.84872147083686
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',1408,33.225,41.62116477272727
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',10,28.725,35.755
+log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',284,22.450000000000003,25.587253521126758
+argila,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,26.3,30.290460913971454
+argila,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,16.0,18.65057251908397
+argila,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4035,34.0,36.80831474597274
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Af,522,23.55,26.392432950191573
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Am,4226,28.5,32.918149550402276
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,As,526,18.5,22.35560836501901
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Aw,2363,24.0,28.218472280998732
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Bs,262,16.0,18.65057251908397
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Cf,3041,30.5,34.69210785925682
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Cs,1,,
+argila,Köppen IPEF (referência),L2,koppen_ipef_l2,Cw,993,43.0,43.30699899295065
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Af,522,23.55,26.392432950191573
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Am,4226,28.5,32.918149550402276
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,As,526,18.5,22.35560836501901
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Aw,2363,24.0,28.218472280998732
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Bsh,262,16.0,18.65057251908397
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfa,2281,24.3,30.42790442788251
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfb,760,48.1,47.490328947368425
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Csa,1,,
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwa,409,42.5,42.45122249388753
+argila,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwb,584,43.95,43.906335616438355
+argila,Köppen CHELSA,L1,koppen_chelsa_l1,A,8218,27.275,31.323229496227793
+argila,Köppen CHELSA,L1,koppen_chelsa_l1,B,359,17.0,20.10807799442897
+argila,Köppen CHELSA,L1,koppen_chelsa_l1,C,3357,32.25,35.776928805481084
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,Af,384,23.5,25.914583333333336
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,Am,1375,31.75,34.53876363636364
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,As,265,18.0,21.55528301886792
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,Aw,6194,27.35,31.36263319341298
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,BS,332,17.0,20.14352409638554
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,BW,27,16.25,19.67222222222222
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,Cf,2876,30.0,34.76611613351878
+argila,Köppen CHELSA,L2,koppen_chelsa_l2,Cw,481,42.5,41.82079002079002
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Af,384,23.5,25.914583333333336
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Am,1375,31.75,34.53876363636364
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,As,265,18.0,21.55528301886792
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Aw,6194,27.35,31.36263319341298
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,BSh,332,17.0,20.14352409638554
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,BWh,27,16.25,19.67222222222222
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Cfa,2202,24.5,30.861285195277024
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Cfb,674,48.95,47.52344213649852
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Cwa,259,44.8,43.66544401544402
+argila,Köppen CHELSA,L3,koppen_chelsa_l3,Cwb,222,36.875,39.6686936936937
+argila,Holdridge CHELSA,L1,holdridge_l1,Subtropical,5871,26.35,31.29603134048714
+argila,Holdridge CHELSA,L1,holdridge_l1,Temperado frio,20,34.5,36.4225
+argila,Holdridge CHELSA,L1,holdridge_l1,Temperado quente,866,42.0,43.53943418013857
+argila,Holdridge CHELSA,L1,holdridge_l1,Tropical,5177,27.2,31.401129998068377
+argila,Holdridge CHELSA,L2,holdridge_l2,"16 Temperado frio, ETP/P 0,5-1",3,,
+argila,Holdridge CHELSA,L2,holdridge_l2,"17 Temperado frio, ETP/P <0,5",17,34.8,36.800000000000004
+argila,Holdridge CHELSA,L2,holdridge_l2,"21 Temperado quente, ETP/P 1-2",1,,
+argila,Holdridge CHELSA,L2,holdridge_l2,"22 Temperado quente, ETP/P 0,5-1",791,41.0,42.44348925410873
+argila,Holdridge CHELSA,L2,holdridge_l2,"23 Temperado quente, ETP/P 0,25-0,5",74,61.675,55.74797297297298
+argila,Holdridge CHELSA,L2,holdridge_l2,"26 Subtropical, ETP/P 4-8",71,7.85,13.537323943661972
+argila,Holdridge CHELSA,L2,holdridge_l2,"27 Subtropical, ETP/P 2-4",261,20.5,24.711111111111112
+argila,Holdridge CHELSA,L2,holdridge_l2,"28 Subtropical, ETP/P 1-2",2445,30.5,33.86075664621677
+argila,Holdridge CHELSA,L2,holdridge_l2,"29 Subtropical, ETP/P 0,5-1",3086,23.8,30.210904082955285
+argila,Holdridge CHELSA,L2,holdridge_l2,"30 Subtropical, ETP/P 0,25-0,5",8,38.75,38.48125
+argila,Holdridge CHELSA,L2,holdridge_l2,"33 Tropical, ETP/P 4-8",20,21.45,21.4575
+argila,Holdridge CHELSA,L2,holdridge_l2,"34 Tropical, ETP/P 2-4",288,16.25,19.56684027777778
+argila,Holdridge CHELSA,L2,holdridge_l2,"35 Tropical, ETP/P 1-2",1222,22.0,25.968698854337152
+argila,Holdridge CHELSA,L2,holdridge_l2,"36 Tropical, ETP/P 0,5-1",3523,30.0,34.466590973602045
+argila,Holdridge CHELSA,L2,holdridge_l2,"37 Tropical, ETP/P 0,25-0,5",124,26.25,26.93306451612903
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,A,229,36.0,37.8438864628821
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,B1,2971,31.55,35.18571188152137
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,B2,1389,35.0,36.328257739380845
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,B3,650,39.0,39.54792307692308
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,B4,144,29.2,34.344791666666666
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,C1,1860,28.475,31.87518817204301
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,C2,3530,24.0,29.442932011331447
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,D,960,20.75,24.72234375
+argila,Thornthwaite CAD 100 mm,L1,th100_l1,E,201,15.4,17.247014925373136
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,Ar,217,36.0,38.383640552995395
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,As,12,27.0,28.083333333333332
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B1r,1086,28.0,31.68770718232044
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B1s,10,35.25,38.53
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B1w,1868,34.0,37.229710920770884
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B1w2,7,16.0,27.642857142857142
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B2r,977,37.0,39.255885363357216
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B2s,5,40.0,43.3
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B2w,406,24.675,29.252339901477836
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B2w2,1,,
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B3r,589,39.0,40.029456706281834
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B3s,3,,
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B3w,58,37.3,34.78103448275862
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B4r,143,29.65,34.438111888111884
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,B4w,1,,
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C1d,1044,26.0,29.49185823754789
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C1s,18,14.5,21.505555555555556
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C1w,721,34.0,36.053051317614425
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C1w2,77,20.0,27.493506493506494
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C2r,905,18.0,23.820110497237568
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C2s,15,35.0,37.45666666666667
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C2w,2368,27.075000000000003,31.345185810810808
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,C2w2,242,22.0,31.359917355371902
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,Dd,956,20.95,24.731642259414226
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,Dw,4,,
+argila,Thornthwaite CAD 100 mm,L2,th100_l2,Ed,201,15.4,17.247014925373136
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,ArA'a',204,34.65,37.50220588235294
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,ArB3'a',1,,
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,ArB4'a',12,54.35,53.225
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,AsA'a',12,27.0,28.083333333333332
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B1rA'a',1081,27.7,31.66873265494912
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B1rB4'a',5,34.5,35.79
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B1sA'a',10,35.25,38.53
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B1w2A'a',7,16.0,27.642857142857142
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B1wA'a',1868,34.0,37.229710920770884
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B2rA'a',944,36.599999999999994,39.063294491525426
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B2rB4'a',33,45.0,44.765151515151516
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B2sA'a',5,40.0,43.3
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B2w2A'a',1,,
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B2wA'a',406,24.675,29.252339901477836
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B3rA'a',554,38.0,39.94891696750903
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B3rB4'a',35,42.0,41.30428571428572
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B3sA'a',3,,
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B3wA'a',58,37.3,34.78103448275862
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B4rA'a',130,27.1,32.46076923076923
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B4rB4'a',13,50.5,54.21153846153846
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,B4wA'a',1,,
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C1dA'a',1044,26.0,29.49185823754789
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C1sA'a',18,14.5,21.505555555555556
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C1w2A'a',77,20.0,27.493506493506494
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C1wA'a',721,34.0,36.053051317614425
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C2rA'a',905,18.0,23.820110497237568
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C2sA'a',15,35.0,37.45666666666667
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C2w2A'a',242,22.0,31.359917355371902
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,C2wA'a',2368,27.075000000000003,31.345185810810808
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,DdA'a',956,20.95,24.731642259414226
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,DwA'a',4,,
+argila,Thornthwaite CAD 100 mm,L3,th100_l3,EdA'a',201,15.4,17.247014925373136
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,A,232,34.85,37.505387931034484
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,B1,2963,31.5,35.10852176847789
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,B2,1362,36.0,36.89203377386197
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,B3,662,37.0,38.05906344410876
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,B4,140,30.0,34.97607142857142
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,C1,1868,28.5,32.02861349036402
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,C2,3546,24.0,29.474280879864637
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,D,960,21.0,24.851927083333333
+argila,Thornthwaite CAD do solo,L1,thsolo_l1,E,201,15.4,17.247014925373136
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,Ar,224,34.8,37.697544642857146
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,As,8,38.25,32.125
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B1r,1258,29.575000000000003,32.82786168521462
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B1s,10,35.25,38.53
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B1w,1688,33.475,36.82482227488152
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B1w2,7,16.0,26.214285714285715
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B2r,1004,38.0,39.63431274900398
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B2s,5,40.0,43.3
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B2w,352,25.299999999999997,29.046875
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B2w2,1,,
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B3r,586,39.0,40.03046075085324
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B3s,3,,
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B3w,73,9.5,22.27054794520548
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B4r,139,30.0,35.07661870503597
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,B4w,1,,
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C1d,1112,26.0,29.732284172661874
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C1s,18,18.25,23.894444444444446
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C1w,671,36.0,36.93420268256334
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C1w2,67,17.0,23.197014925373136
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C2r,938,19.0,24.306183368869938
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C2s,15,35.0,37.52333333333333
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C2w,2376,27.0,31.405576599326597
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,C2w2,217,20.0,30.111059907834104
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,Dd,956,21.0,24.873274058577405
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,Dw,4,,
+argila,Thornthwaite CAD do solo,L2,thsolo_l2,Ed,201,15.4,17.247014925373136
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,ArA'a',211,33.5,36.803080568720375
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,ArB3'a',1,,
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,ArB4'a',12,54.35,53.225
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,AsA'a',8,38.25,32.125
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B1rA'a',1253,29.5,32.816041500399045
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B1rB4'a',5,34.5,35.79
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B1sA'a',10,35.25,38.53
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B1w2A'a',7,16.0,26.214285714285715
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B1wA'a',1688,33.475,36.82482227488152
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B2rA'a',971,37.0,39.45993820803295
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B2rB4'a',33,45.0,44.765151515151516
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B2sA'a',5,40.0,43.3
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B2w2A'a',1,,
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B2wA'a',352,25.299999999999997,29.046875
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B3rA'a',551,38.0,39.949546279491834
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B3rB4'a',35,42.0,41.30428571428572
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B3sA'a',3,,
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B3wA'a',73,9.5,22.27054794520548
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B4rA'a',126,27.55,33.10238095238095
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B4rB4'a',13,50.5,54.21153846153846
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,B4wA'a',1,,
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C1dA'a',1112,26.0,29.732284172661874
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C1sA'a',18,18.25,23.894444444444446
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C1w2A'a',67,17.0,23.197014925373136
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C1wA'a',671,36.0,36.93420268256334
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C2rA'a',938,19.0,24.306183368869938
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C2sA'a',15,35.0,37.52333333333333
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C2w2A'a',217,20.0,30.111059907834104
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,27.0,31.405576599326597
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',956,21.0,24.873274058577405
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
+argila,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,15.4,17.247014925373136
+areia,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,56.0,53.2567762210292
+areia,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,64.85,62.44389312977099
+areia,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4035,35.0,37.47208178438662
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Af,522,43.074999999999996,43.46992337164751
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Am,4226,56.4,53.12106010411737
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,As,526,62.0,58.463403041825096
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Aw,2363,56.0,54.502475666525605
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Bs,262,64.85,62.44389312977099
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Cf,3041,33.9,37.553732324893126
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Cs,1,,
+areia,Köppen IPEF (referência),L2,koppen_ipef_l2,Cw,993,37.0,37.18323262839879
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Af,522,43.074999999999996,43.46992337164751
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Am,4226,56.4,53.12106010411737
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,As,526,62.0,58.463403041825096
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Aw,2363,56.0,54.502475666525605
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Bsh,262,64.85,62.44389312977099
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfa,2281,42.1,42.98921525646646
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfb,760,16.0,21.24013157894737
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Csa,1,,
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwa,409,38.0,39.1841075794621
+areia,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwb,584,36.5,35.781934931506854
+areia,Köppen CHELSA,L1,koppen_chelsa_l1,A,8218,54.8,52.20247627159893
+areia,Köppen CHELSA,L1,koppen_chelsa_l1,B,359,63.5,60.297632311977715
+areia,Köppen CHELSA,L1,koppen_chelsa_l1,C,3357,34.0,36.82911826035151
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,Af,384,44.175000000000004,43.83033854166666
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,Am,1375,46.0,46.01050909090909
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,As,265,64.5,60.73754716981132
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,Aw,6194,56.75,53.730900871811436
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,BS,332,63.15,60.06219879518073
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,BW,27,65.0,63.1925925925926
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,Cf,2876,32.0,36.618619610570235
+areia,Köppen CHELSA,L2,koppen_chelsa_l2,Cw,481,39.6,38.08773388773389
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Af,384,44.175000000000004,43.83033854166666
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Am,1375,46.0,46.01050909090909
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,As,265,64.5,60.73754716981132
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Aw,6194,56.75,53.730900871811436
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,BSh,332,63.15,60.06219879518073
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,BWh,27,65.0,63.1925925925926
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Cfa,2202,40.0,41.55217983651226
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Cfb,674,15.325,20.500370919881306
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Cwa,259,39.0,37.73262548262548
+areia,Köppen CHELSA,L3,koppen_chelsa_l3,Cwb,222,40.0,38.50202702702703
+areia,Holdridge CHELSA,L1,holdridge_l1,Subtropical,5871,49.2,48.36485266564469
+areia,Holdridge CHELSA,L1,holdridge_l1,Temperado frio,20,28.5,30.375
+areia,Holdridge CHELSA,L1,holdridge_l1,Temperado quente,866,21.0,24.11887990762125
+areia,Holdridge CHELSA,L1,holdridge_l1,Tropical,5177,55.05,51.92923507823064
+areia,Holdridge CHELSA,L2,holdridge_l2,"16 Temperado frio, ETP/P 0,5-1",3,,
+areia,Holdridge CHELSA,L2,holdridge_l2,"17 Temperado frio, ETP/P <0,5",17,28.2,29.258823529411764
+areia,Holdridge CHELSA,L2,holdridge_l2,"21 Temperado quente, ETP/P 1-2",1,,
+areia,Holdridge CHELSA,L2,holdridge_l2,"22 Temperado quente, ETP/P 0,5-1",791,22.0,24.850505689001263
+areia,Holdridge CHELSA,L2,holdridge_l2,"23 Temperado quente, ETP/P 0,25-0,5",74,7.1,15.367567567567567
+areia,Holdridge CHELSA,L2,holdridge_l2,"26 Subtropical, ETP/P 4-8",71,73.0,67.35774647887324
+areia,Holdridge CHELSA,L2,holdridge_l2,"27 Subtropical, ETP/P 2-4",261,58.5,55.004022988505746
+areia,Holdridge CHELSA,L2,holdridge_l2,"28 Subtropical, ETP/P 1-2",2445,48.0,48.04660531697341
+areia,Holdridge CHELSA,L2,holdridge_l2,"29 Subtropical, ETP/P 0,5-1",3086,49.0,47.62571289695399
+areia,Holdridge CHELSA,L2,holdridge_l2,"30 Subtropical, ETP/P 0,25-0,5",8,41.975,45.5875
+areia,Holdridge CHELSA,L2,holdridge_l2,"33 Tropical, ETP/P 4-8",20,62.824999999999996,63.5625
+areia,Holdridge CHELSA,L2,holdridge_l2,"34 Tropical, ETP/P 2-4",288,64.1,61.564062500000006
+areia,Holdridge CHELSA,L2,holdridge_l2,"35 Tropical, ETP/P 1-2",1222,63.7,59.98371522094927
+areia,Holdridge CHELSA,L2,holdridge_l2,"36 Tropical, ETP/P 0,5-1",3523,51.7,48.88492761850696
+areia,Holdridge CHELSA,L2,holdridge_l2,"37 Tropical, ETP/P 0,25-0,5",124,34.425,34.792338709677416
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,A,229,19.5,28.23886462882096
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,B1,2971,45.8,46.30582295523393
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,B2,1389,34.0,38.16519078473722
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,B3,650,24.0,29.436615384615383
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,B4,144,28.875,33.47708333333333
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,C1,1860,51.5,50.18056451612904
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,C2,3530,58.475,54.81701133144475
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,D,960,59.0,55.7734375
+areia,Thornthwaite CAD 100 mm,L1,th100_l1,E,201,65.0,64.14179104477611
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,Ar,217,20.6,29.060829493087557
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,As,12,2.0,13.375
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B1r,1086,37.0,41.06965930018416
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B1s,10,40.0,39.11
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B1w,1868,50.275000000000006,49.36287473233405
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B1w2,7,57.5,53.142857142857146
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B2r,977,24.0,29.919651995905834
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B2s,5,25.0,21.9
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B2w,406,56.9,58.123029556650245
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B2w2,1,,
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B3r,589,23.0,27.46281833616299
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B3s,3,,
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B3w,58,46.9,49.01206896551724
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B4r,143,28.2,33.27062937062937
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,B4w,1,,
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C1d,1044,57.0,54.31733716475096
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C1s,18,70.45,64.53611111111111
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C1w,721,43.2,43.64244105409154
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C1w2,77,55.0,51.957142857142856
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C2r,905,58.35,54.2860773480663
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C2s,15,39.6,45.86666666666667
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C2w,2368,59.0,55.69484797297297
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,C2w2,242,53.0,48.767561983471076
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,Dd,956,59.0,55.75941422594142
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,Dw,4,,
+areia,Thornthwaite CAD 100 mm,L2,th100_l2,Ed,201,65.0,64.14179104477611
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,ArA'a',204,21.3,29.605392156862745
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,ArB3'a',1,,
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,ArB4'a',12,15.475,18.8125
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,AsA'a',12,2.0,13.375
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B1rA'a',1081,37.0,41.10129509713229
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B1rB4'a',5,34.0,34.230000000000004
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B1sA'a',10,40.0,39.11
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B1w2A'a',7,57.5,53.142857142857146
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B1wA'a',1868,50.275000000000006,49.36287473233405
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B2rA'a',944,24.025,30.08299788135593
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B2rB4'a',33,23.0,25.246969696969696
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B2sA'a',5,25.0,21.9
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B2w2A'a',1,,
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B2wA'a',406,56.9,58.123029556650245
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B3rA'a',554,23.0,27.571750902527075
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B3rB4'a',35,22.0,25.73857142857143
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B3sA'a',3,,
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B3wA'a',58,46.9,49.01206896551724
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B4rA'a',130,31.475,35.095000000000006
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B4rB4'a',13,14.0,15.026923076923076
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,B4wA'a',1,,
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C1dA'a',1044,57.0,54.31733716475096
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C1sA'a',18,70.45,64.53611111111111
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C1w2A'a',77,55.0,51.957142857142856
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C1wA'a',721,43.2,43.64244105409154
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C2rA'a',905,58.35,54.2860773480663
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C2sA'a',15,39.6,45.86666666666667
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C2w2A'a',242,53.0,48.767561983471076
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,C2wA'a',2368,59.0,55.69484797297297
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,DdA'a',956,59.0,55.75941422594142
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,DwA'a',4,,
+areia,Thornthwaite CAD 100 mm,L3,th100_l3,EdA'a',201,65.0,64.14179104477611
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,A,232,20.125,28.87801724137931
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,B1,2963,45.95,46.3967094161323
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,B2,1362,33.0,37.20484581497797
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,B3,662,25.0,31.825075528700907
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,B4,140,28.1,32.64071428571428
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,C1,1868,51.099999999999994,50.040310492505355
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,C2,3546,58.3,54.74310490693739
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,D,960,58.325,55.532552083333336
+areia,Thornthwaite CAD do solo,L1,thsolo_l1,E,201,65.0,64.14179104477611
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,Ar,224,20.8,29.4875
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,As,8,4.5,11.8125
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B1r,1258,38.05,41.12825914149443
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B1s,10,40.0,39.11
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B1w,1688,52.125,50.34182464454976
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B1w2,7,57.5,52.285714285714285
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B2r,1004,24.0,29.832171314741036
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B2s,5,25.0,21.9
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B2w,352,56.2,58.33267045454545
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B2w2,1,,
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B3r,586,23.0,27.492918088737202
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B3s,3,,
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B3w,73,85.9,66.32671232876713
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B4r,139,28.0,32.42230215827338
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,B4w,1,,
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C1d,1112,56.0,53.711825539568345
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C1s,18,60.45,60.73055555555556
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C1w,671,41.0,42.85886736214605
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C1w2,67,63.0,58.15373134328358
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C2r,938,58.0,53.78518123667377
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C2s,15,39.6,46.53333333333333
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C2w,2376,58.85,55.566708754208754
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,C2w2,217,56.0,50.433410138248846
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,Dd,956,58.3,55.46888075313807
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,Dw,4,,
+areia,Thornthwaite CAD do solo,L2,thsolo_l2,Ed,201,65.0,64.14179104477611
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,ArA'a',211,22.0,30.040284360189574
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,ArB3'a',1,,
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,ArB4'a',12,15.475,18.8125
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,AsA'a',8,4.5,11.8125
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B1rA'a',1253,38.1,41.15578611332801
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B1rB4'a',5,34.0,34.230000000000004
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B1sA'a',10,40.0,39.11
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B1w2A'a',7,57.5,52.285714285714285
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B1wA'a',1688,52.125,50.34182464454976
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B2rA'a',971,24.049999999999997,29.988002059732235
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B2rB4'a',33,23.0,25.246969696969696
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B2sA'a',5,25.0,21.9
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B2w2A'a',1,,
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B2wA'a',352,56.2,58.33267045454545
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B3rA'a',551,23.0,27.604355716878402
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B3rB4'a',35,22.0,25.73857142857143
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B3sA'a',3,,
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B3wA'a',73,85.9,66.32671232876713
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B4rA'a',126,31.0,34.217063492063495
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B4rB4'a',13,14.0,15.026923076923076
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,B4wA'a',1,,
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C1dA'a',1112,56.0,53.711825539568345
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C1sA'a',18,60.45,60.73055555555556
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C1w2A'a',67,63.0,58.15373134328358
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C1wA'a',671,41.0,42.85886736214605
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C2rA'a',938,58.0,53.78518123667377
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C2sA'a',15,39.6,46.53333333333333
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C2w2A'a',217,56.0,50.433410138248846
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,58.85,55.566708754208754
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',956,58.3,55.46888075313807
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
+areia,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,65.0,64.14179104477611
+silte,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,12.0,16.4502815241587
+silte,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,16.0,18.916984732824428
+silte,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4035,24.0,25.71828996282528
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Af,522,27.025,30.129885057471263
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Am,4226,10.0,13.958128253667772
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,As,526,17.0,19.18174904942966
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Aw,2363,14.0,17.277338129496403
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Bs,262,16.0,18.916984732824428
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Cf,3041,27.0,27.752597829661294
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Cs,1,,
+silte,Köppen IPEF (referência),L2,koppen_ipef_l2,Cw,993,15.0,19.509214501510577
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Af,522,27.025,30.129885057471263
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Am,4226,10.0,13.958128253667772
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,As,526,17.0,19.18174904942966
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Aw,2363,14.0,17.277338129496403
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Bsh,262,16.0,18.916984732824428
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfa,2281,25.0,26.581981587023236
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Cfb,760,31.0,31.265986842105264
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Csa,1,,
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwa,409,14.6,18.36528117359413
+silte,Köppen IPEF (referência),L3,koppen_ipef_l3,Cwb,584,16.0,20.310359589041095
+silte,Köppen CHELSA,L1,koppen_chelsa_l1,A,8218,12.0,16.472371623266003
+silte,Köppen CHELSA,L1,koppen_chelsa_l1,B,359,17.0,19.59735376044568
+silte,Köppen CHELSA,L1,koppen_chelsa_l1,C,3357,26.0,27.392001787310097
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,Af,384,25.75,30.254166666666666
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,Am,1375,14.0,19.439781818181817
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,As,265,14.65,17.718490566037733
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,Aw,6194,11.0,14.90591701646755
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,BS,332,17.0,19.797590361445785
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,BW,27,13.8,17.135185185185183
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,Cf,2876,28.0,28.612917246175243
+silte,Köppen CHELSA,L2,koppen_chelsa_l2,Cw,481,15.0,20.091891891891894
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Af,384,25.75,30.254166666666666
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Am,1375,14.0,19.439781818181817
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,As,265,14.65,17.718490566037733
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Aw,6194,11.0,14.90591701646755
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,BSh,332,17.0,19.797590361445785
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,BWh,27,13.8,17.135185185185183
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Cfa,2202,26.0,27.584695731153495
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Cfb,674,31.3,31.972181008902076
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Cwa,259,14.0,18.6019305019305
+silte,Köppen CHELSA,L3,koppen_chelsa_l3,Cwb,222,17.0,21.830180180180182
+silte,Holdridge CHELSA,L1,holdridge_l1,Subtropical,5871,17.35,20.337957758473852
+silte,Holdridge CHELSA,L1,holdridge_l1,Temperado frio,20,32.95,33.2125
+silte,Holdridge CHELSA,L1,holdridge_l1,Temperado quente,866,32.0,32.34001154734411
+silte,Holdridge CHELSA,L1,holdridge_l1,Tropical,5177,11.8,16.66708518446977
+silte,Holdridge CHELSA,L2,holdridge_l2,"16 Temperado frio, ETP/P 0,5-1",3,,
+silte,Holdridge CHELSA,L2,holdridge_l2,"17 Temperado frio, ETP/P <0,5",17,32.9,33.95294117647059
+silte,Holdridge CHELSA,L2,holdridge_l2,"21 Temperado quente, ETP/P 1-2",1,,
+silte,Holdridge CHELSA,L2,holdridge_l2,"22 Temperado quente, ETP/P 0,5-1",791,32.2,32.7031605562579
+silte,Holdridge CHELSA,L2,holdridge_l2,"23 Temperado quente, ETP/P 0,25-0,5",74,28.4,28.89527027027027
+silte,Holdridge CHELSA,L2,holdridge_l2,"26 Subtropical, ETP/P 4-8",71,17.5,19.10492957746479
+silte,Holdridge CHELSA,L2,holdridge_l2,"27 Subtropical, ETP/P 2-4",261,18.0,20.294061302681992
+silte,Holdridge CHELSA,L2,holdridge_l2,"28 Subtropical, ETP/P 1-2",2445,15.0,18.09288343558282
+silte,Holdridge CHELSA,L2,holdridge_l2,"29 Subtropical, ETP/P 0,5-1",3086,19.45,22.159915748541803
+silte,Holdridge CHELSA,L2,holdridge_l2,"30 Subtropical, ETP/P 0,25-0,5",8,16.0,16.04375
+silte,Holdridge CHELSA,L2,holdridge_l2,"33 Tropical, ETP/P 4-8",20,13.775,14.98
+silte,Holdridge CHELSA,L2,holdridge_l2,"34 Tropical, ETP/P 2-4",288,15.25,18.876041666666666
+silte,Holdridge CHELSA,L2,holdridge_l2,"35 Tropical, ETP/P 1-2",1222,10.475,14.043044189852699
+silte,Holdridge CHELSA,L2,holdridge_l2,"36 Tropical, ETP/P 0,5-1",3523,11.4,16.646082883905763
+silte,Holdridge CHELSA,L2,holdridge_l2,"37 Tropical, ETP/P 0,25-0,5",124,38.675,38.26491935483871
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,A,229,31.0,33.9203056768559
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,B1,2971,13.1,18.503988556041737
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,B2,1389,25.0,25.49845212383009
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,B3,650,31.0,31.014153846153846
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,B4,144,28.0,32.16284722222222
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,C1,1860,15.0,17.943655913978493
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,C2,3530,12.35,15.742110481586403
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,D,960,17.0,19.501614583333332
+silte,Thornthwaite CAD 100 mm,L1,th100_l1,E,201,16.9,18.621144278606966
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,Ar,217,30.0,32.55875576036866
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,As,12,56.5,58.541666666666664
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B1r,1086,25.0,27.238674033149174
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B1s,10,20.75,22.36
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B1w,1868,10.0,13.40259635974304
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B1w2,7,20.0,19.214285714285715
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B2r,977,31.0,30.814380757420675
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B2s,5,29.0,34.8
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B2w,406,10.1,12.621182266009852
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B2w2,1,,
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B3r,589,32.0,32.504499151103566
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B3s,3,,
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B3w,58,12.575,16.224999999999998
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B4r,143,28.0,32.275874125874125
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,B4w,1,,
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C1d,1044,13.0,16.189176245210728
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C1s,18,13.15,13.958333333333334
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C1w,721,17.5,20.30533980582524
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C1w2,77,15.0,20.54935064935065
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C2r,905,20.0,21.892375690607732
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C2s,15,14.0,16.676666666666666
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C2w,2368,10.0,12.961043074324325
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,C2w2,242,14.5,19.897314049586775
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,Dd,956,17.0,19.506328451882844
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,Dw,4,,
+silte,Thornthwaite CAD 100 mm,L2,th100_l2,Ed,201,16.9,18.621144278606966
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,ArA'a',204,30.25,32.895833333333336
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,ArB3'a',1,,
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,ArB4'a',12,28.8,27.962500000000002
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,AsA'a',12,56.5,58.541666666666664
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B1rA'a',1081,25.0,27.22599444958372
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B1rB4'a',5,24.0,29.98
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B1sA'a',10,20.75,22.36
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B1w2A'a',7,20.0,19.214285714285715
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B1wA'a',1868,10.0,13.40259635974304
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B2rA'a',944,31.0,30.843273305084747
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B2rB4'a',33,30.0,29.98787878787879
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B2sA'a',5,29.0,34.8
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B2w2A'a',1,,
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B2wA'a',406,10.1,12.621182266009852
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B3rA'a',554,32.0,32.47590252707582
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B3rB4'a',35,32.0,32.957142857142856
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B3sA'a',3,,
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B3wA'a',58,12.575,16.224999999999998
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B4rA'a',130,28.0,32.42730769230769
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B4rB4'a',13,31.5,30.76153846153846
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,B4wA'a',1,,
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C1dA'a',1044,13.0,16.189176245210728
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C1sA'a',18,13.15,13.958333333333334
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C1w2A'a',77,15.0,20.54935064935065
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C1wA'a',721,17.5,20.30533980582524
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C2rA'a',905,20.0,21.892375690607732
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C2sA'a',15,14.0,16.676666666666666
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C2w2A'a',242,14.5,19.897314049586775
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,C2wA'a',2368,10.0,12.961043074324325
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,DdA'a',956,17.0,19.506328451882844
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,DwA'a',4,,
+silte,Thornthwaite CAD 100 mm,L3,th100_l3,EdA'a',201,16.9,18.621144278606966
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,A,232,30.725,33.619612068965516
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,B1,2963,13.1,18.491140735740803
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,B2,1362,25.825000000000003,25.894750367107196
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,B3,662,30.4,30.11336858006042
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,B4,140,28.0,32.3675
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,C1,1868,15.0,17.92968415417559
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,C2,3546,12.35,15.78420755781162
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,D,960,17.0,19.61447916666667
+silte,Thornthwaite CAD do solo,L1,thsolo_l1,E,201,16.9,18.621144278606966
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,Ar,224,29.925,32.818080357142854
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,As,8,55.0,56.0625
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B1r,1258,23.975,26.040659777424484
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B1s,10,20.75,22.36
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B1w,1688,10.0,12.829383886255924
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B1w2,7,21.0,21.5
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B2r,1004,30.9,30.524750996015936
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B2s,5,29.0,34.8
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B2w,352,10.575,12.613068181818182
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B2w2,1,,
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B3r,586,32.0,32.473378839590445
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B3s,3,,
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B3w,73,6.6,11.406164383561643
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B4r,139,28.0,32.48525179856115
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,B4w,1,,
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C1d,1112,14.0,16.554226618705034
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C1s,18,13.65,15.375
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C1w,671,17.0,20.20581222056632
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C1w2,67,13.0,18.649253731343283
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C2r,938,20.0,21.907249466950958
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C2s,15,13.0,15.943333333333333
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C2w,2376,10.0,13.028535353535354
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,C2w2,217,14.0,19.47857142857143
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,Dd,956,17.0,19.65679916317992
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,Dw,4,,
+silte,Thornthwaite CAD do solo,L2,thsolo_l2,Ed,201,16.9,18.621144278606966
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,ArA'a',211,30.0,33.15995260663507
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,ArB3'a',1,,
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,ArB4'a',12,28.8,27.962500000000002
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,AsA'a',8,55.0,56.0625
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B1rA'a',1253,23.95,26.02494014365523
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B1rB4'a',5,24.0,29.98
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B1sA'a',10,20.75,22.36
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B1w2A'a',7,21.0,21.5
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B1wA'a',1688,10.0,12.829383886255924
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B2rA'a',971,30.9,30.542996910401648
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B2rB4'a',33,30.0,29.98787878787879
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B2sA'a',5,29.0,34.8
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B2w2A'a',1,,
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B2wA'a',352,10.575,12.613068181818182
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B3rA'a',551,32.0,32.442649727767694
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B3rB4'a',35,32.0,32.957142857142856
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B3sA'a',3,,
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B3wA'a',73,6.6,11.406164383561643
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B4rA'a',126,28.0,32.66309523809524
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B4rB4'a',13,31.5,30.76153846153846
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,B4wA'a',1,,
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C1dA'a',1112,14.0,16.554226618705034
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C1sA'a',18,13.65,15.375
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C1w2A'a',67,13.0,18.649253731343283
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C1wA'a',671,17.0,20.20581222056632
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C2rA'a',938,20.0,21.907249466950958
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C2sA'a',15,13.0,15.943333333333333
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C2w2A'a',217,14.0,19.47857142857143
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,10.0,13.028535353535354
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',956,17.0,19.65679916317992
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
+silte,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,16.9,18.621144278606966

@@ -1,4 +1,4 @@
-# Somente a entrega ao professor e o codigo cientifico entram no repositorio.
+# So o codigo, o notebook e os resultados agregados entram no repositorio; os dados por ponto sao restritos.
 # Dados, caches, resultados intermediarios, edicao do PDF/notebook e backup local.
 .local/
 tmp/
