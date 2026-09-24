@@ -3,6 +3,10 @@
 Registro do que já foi feito neste ambiente (Windows, `C:\Python\MapBiomas_analises\corelacao`),
 para continuar em outro dia sem repetir passos. Não é parte da entrega ao professor.
 
+> **Estado atual: ver a última seção ("Reestruturação: comparação de climas CHELSA", 2026-09-23).**
+> As seções anteriores são históricas: descrevem a análise antiga (testes, regressões, importância
+> climática), cujos scripts, notebook e resultados foram apagados nessa data.
+
 ## Ambiente
 
 - Python 3.13.14, pip 26.
@@ -284,3 +288,91 @@ consolidação normal (14 CSVs, 18 figuras agora, era 12/17). Adicionei ao noteb
 (as duas seções seguintes, Síntese e Fontes, viraram 11 e 12), com a figura, a tabela ao vivo, e o
 texto interpretativo com a ressalva do desvio-padrão. Reexecutei tudo e `verificar_resultados.py` (com
 e sem `--entrega`) passam limpos.
+
+
+## Reestruturação: comparação de climas CHELSA (2026-09-23, Mac)
+
+**Decisão do usuário:** refazer tudo com os assets climáticos novos (já no GEE) em torno de uma pergunta
+só: *qual classificação climática serve melhor de base para estimar SOC e textura?* Só o Köppen IPEF fica
+como referência (nada do Holdridge do MapBiomas). As outras análises e o documento do orientador saem; o
+registro fica só neste arquivo.
+
+**Apagado** (recuperável pelo git, commit anterior a esta reestruturação): `solo_clima_consolidado.ipynb`;
+`codigo/` analise_solo_clima, clima_legendas, exportar_resultados, graficos_relatorio,
+importancia_climatica, regressoes_corrigidas, reproduzir, test_metodologia, verificar_resultados;
+`docs/` orientacoes_solo_clima (documento do orientador), assets, reproducao; `resultados/` inteira.
+
+**Assets comparados** (projeto `fcoliveira`, CHELSA V2.1 1991-2020, ~928 m):
+`Koppen_CHELSA_BR_1991_2020`, `Holdridge_CHELSA_BR_1991_2020` (versão corrigida, limiar 24 °C: só zonas
+21-37), `Thornthwaite_CHELSA_BR_1991_2020_CAD100` e `_CADsolo` (bandas sem nome, b1-b4 = umidade,
+subtipo, térmica, concentração). Referência: Köppen IPEF das dummies das matrizes.
+
+**Pipeline novo:** `codigo/preparar_dados.py` (mesma limpeza auditada de antes: 12.286 locais SOC,
+12.062 textura; + amostragem dos 4 assets na grade nativa) -> `.local/dados/*.parquet`;
+`codigo/comparar_climas.py` -> `resultados/tabelas/` (amostra, desempenho, diferencas_pareadas,
+classes); `codigo/test_comparar_climas.py` (6 testes com dados sintéticos); `comparacao_climas.ipynb`
+lê só as tabelas (roda sem GEE).
+
+**Métrica escolhida e por quê:** R² fora da amostra com cada sistema/nível como único preditor (média da
+classe no treino), validação em blocos espaciais (2° principal; aleatória, 1° e 5° como sensibilidade),
+5 dobras x 50 repetições, mesmas dobras para todos -> diferenças pareadas com IC 95%. ω² como
+complemento descritivo. Motivos: classe climática é nominal (Pearson/Spearman não se aplicam); sistemas
+têm número de classes diferente (3 a 32) e η² premia classes demais; com ~12 mil locais todo p-valor é
+< 0,001 e não discrimina.
+
+**Detalhes de implementação decididos no caminho:**
+- Köppen IPEF L3 só existe para B e C; nos locais do grupo A foi completado com o L2 (Af/Am/As/Aw já são
+  a classe completa). Sem isso a amostra comum perderia ~60% dos locais.
+- SOC > 0 exigido (log). Locais sem classe em algum sistema (~1%, litoral/corpos d'água) saem da amostra
+  comum; 12.151 SOC e 11.934 textura.
+- Nomes das zonas de Holdridge: a numeração 1-38 é a mesma da legenda do MapBiomas, mas pela tabela do
+  script JS os nomes de lá ficam deslocados em uma posição (zona 36 = ETP/P 0,5-1, "moist" no Holdridge
+  clássico, não "dry"). Rotulei pela faixa térmica + faixa de ETP/P. **Pendente:** conferir a tabela de
+  zonas do script JS original contra o Holdridge clássico.
+
+**Resultados (R² espacial, blocos de 2°):**
+- SOC: todos baixos (≤ 0,07). Empate entre Thornthwaite L1, Holdridge L1/L2 e Köppen IPEF L3; a 5° o
+  Holdridge L2 fica melhor (0,095) e o Thornthwaite L1 cai (0,047) -> **recomendado Holdridge L2**.
+- Argila: nenhum sistema estima (R² ≤ 0 em blocos).
+- Areia: fraco (≤ 0,07); Thornthwaite L2 lidera a 1°/2° mas zera a 5°.
+- Silte: **Thornthwaite L2** vence todos em todas as escalas (0,20 vs 0,15 do melhor Köppen).
+- CAD 100 mm ≈ CAD do solo em tudo. Köppen CHELSA sempre abaixo do Köppen IPEF.
+- Conclusão no notebook: não há sistema único; Holdridge L2 para SOC, Thornthwaite L2 para textura; se
+  for um só, Thornthwaite L2.
+
+**Ambiente no Mac:** rodado com o venv `climas/chelsa_climas_brasil/.venv` (kernel `chelsa-venv`), que
+já tem earthengine-api, pandas, pyarrow, matplotlib, pytest.
+
+## Por que o Köppen CHELSA fica abaixo do IPEF; correção do Köppen CHELSA (2026-09-23)
+
+**Investigação (amostra de SOC, 12.151 locais):** os dois Köppen concordam em só 56% dos pontos.
+Discordâncias: Am (IPEF) -> Aw (CHELSA), 3.152 pontos, quase todos num aglomerado em Rondônia
+(~62°W, 11,6°S); C (IPEF) -> A (CHELSA), 765 pontos no Sudeste (~46°W, 20°S). Classificações híbridas
+(R² blocos 2°): trocar só o **grupo** onde há A <-> C/B pela resposta do IPEF recupera toda a diferença
+(SOC 0,040 -> 0,066; areia 0,031 -> 0,061); trocar o subtipo Am/Aw quase não ajuda. Nos pontos C -> A
+o mês mais frio do CHELSA fica entre 18,2 e 20 °C (metade entre 18 e 19): estão na fronteira A/C e o
+CHELSA (1991-2020) é um pouco mais quente. O SOC desses pontos (45 Mg/ha) é de clima C (49), não A
+(36). Interpretação: o solo integra o clima de séculos; uma fronteira recente deslocada por pouco pesa
+contra. Não dá para separar aquecimento recente x método do IPEF (regressão com altitude a 100 m) sem
+as temperaturas do IPEF. Colateral: ~1/4 da amostra de SOC está num único aglomerado em Rondônia
+(limitação a registrar no notebook).
+
+**Revisão do método do Köppen CHELSA** (`climas/chelsa_climas_brasil/koppen_gee.py`) contra Kottek et
+al. (2006) / Peel et al. (2007): grupos, limiar do B, Af/Am/As/Aw, h/k e a/b/c corretos -- a fronteira
+A/C (Tcold >= 18 °C) está certa, então a queda em relação ao IPEF vem dos dados. Dois erros corrigidos:
+1. Sazonalidade C/D: `f` era "mês mais seco >= 40 mm" e s/w exigiam mês seco < 40 mm; pixels C com
+   mês seco < 40 mm sem seca sazonal forte ficavam **sem classe** (50.040 pixels, ~5% da área C; causa
+   de 56 dos 59 pontos de SOC sem Köppen CHELSA). Agora Kottek: s e w mutuamente exclusivos, f = nem
+   s nem w.
+2. Verão/inverno não eram trocados ao norte do equador (As/Aw, limiar do B, s/w em RR e AP; ~7,6% dos
+   pixels A, ~240 pontos).
+
+TIF regenerado (`koppen_chelsa.ipynb`): sem buracos (cobre todo pixel que o Holdridge cobre); Cfa
+5,79% -> 6,13%, Cfb 1,92% -> 2,02%, As 2,04% -> 1,80%.
+
+**Pendente:** o usuário subir o TIF novo substituindo `projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020`
+(com `--pyramiding_policy=mode`, que também acaba com as classes intermediárias falsas nas escalas
+reduzidas). Depois: rodar de novo `codigo/preparar_dados.py` e `codigo/comparar_climas.py`, reexecutar
+`comparacao_climas.ipynb`, revisar o texto (a conclusão sobre o Köppen CHELSA provavelmente se mantém,
+porque os 765 pontos C -> A não são afetados pelas correções) e acrescentar a seção "por que o Köppen
+CHELSA fica abaixo" + a limitação do aglomerado de Rondônia.
