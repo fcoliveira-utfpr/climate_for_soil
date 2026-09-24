@@ -7,15 +7,45 @@ pr em mm/mês): não há offset/fator a aplicar (nem -273,15 nem divisões por 1
 """
 import ee
 
-# (classe de temperatura, classe RETP mínima, classe RETP máxima, id da zona) - mesma tabela do script JS original
+# (classe de temperatura, classe RETP mínima, classe RETP máxima, id da zona).
+# Numeração e nomes de Jungkunst et al. (2021, J. Plant Nutr. Soil Sci. 184:5-11, Tab. 1), base
+# Leemans (1990), 38 zonas. Faixas de ETP/P pela Fig. 1 do artigo: cada faixa térmica começa numa
+# linha de ETP/P diferente (tropical em 32, subtropical e temperado quente em 16, temperado frio em
+# 8, boreal em 4, subpolar em 2), e cada tipo de vegetação ocupa sempre a mesma província de
+# umidade (moist = 0,5-1; wet = 0,25-0,5; rain = 0,125-0,25; dry = 1-2; very dry = 2-4). Valores
+# além das pontas de cada faixa entram na zona extrema (ex.: tropical com ETP/P < 0,5 -> 38).
+# Correção (2026-09-24): o script JS usava em todas as faixas o padrão do subtropical, o que deslocava
+# o tropical em uma zona (ETP/P 0,5-1 virava 36, "dry forest", em vez de 37, "moist forest") e
+# também o temperado frio, o boreal e o subpolar.
+# Classes RETP (classe_retp): 1 >=32, 2 16-32, 3 8-16, 4 4-8, 5 2-4, 6 1-2, 7 0,5-1, 8 0,25-0,5,
+# 9 0,125-0,25, 10 <0,125.
 TABELA_ZONAS = [
-    (2, 1, 4, 3), (2, 5, 6, 4), (2, 7, 7, 5), (2, 8, 10, 6),
-    (3, 1, 3, 7), (3, 4, 4, 8), (3, 5, 5, 9), (3, 6, 7, 10), (3, 8, 10, 11),
-    (4, 1, 3, 12), (4, 4, 4, 13), (4, 5, 5, 14), (4, 6, 6, 15), (4, 7, 7, 16), (4, 8, 10, 17),
-    (5, 1, 3, 18), (5, 4, 4, 19), (5, 5, 5, 20), (5, 6, 6, 21), (5, 7, 7, 22), (5, 8, 8, 23), (5, 9, 10, 24),
-    (6, 1, 3, 25), (6, 4, 4, 26), (6, 5, 5, 27), (6, 6, 6, 28), (6, 7, 7, 29), (6, 8, 8, 30), (6, 9, 10, 31),
-    (7, 1, 3, 32), (7, 4, 4, 33), (7, 5, 5, 34), (7, 6, 6, 35), (7, 7, 7, 36), (7, 8, 8, 37), (7, 9, 10, 38),
+    (2, 1, 6, 3), (2, 7, 7, 4), (2, 8, 8, 5), (2, 9, 10, 6),                                 # subpolar
+    (3, 1, 5, 7), (3, 6, 6, 8), (3, 7, 7, 9), (3, 8, 8, 10), (3, 9, 10, 11),                 # boreal
+    (4, 1, 4, 12), (4, 5, 5, 13), (4, 6, 6, 14), (4, 7, 7, 15), (4, 8, 8, 16), (4, 9, 10, 17),  # temperado frio
+    (5, 1, 3, 18), (5, 4, 4, 19), (5, 5, 5, 20), (5, 6, 6, 21), (5, 7, 7, 22), (5, 8, 8, 23), (5, 9, 10, 24),  # temperado quente
+    (6, 1, 3, 25), (6, 4, 4, 26), (6, 5, 5, 27), (6, 6, 6, 28), (6, 7, 7, 29), (6, 8, 8, 30), (6, 9, 10, 31),  # subtropical
+    (7, 1, 2, 32), (7, 3, 3, 33), (7, 4, 4, 34), (7, 5, 5, 35), (7, 6, 6, 36), (7, 7, 7, 37), (7, 8, 10, 38),  # tropical
 ]
+
+# Nomes das 38 zonas (Jungkunst et al. 2021, Tab. 1).
+LEGENDA = {
+    1: "Polar ice", 2: "Polar desert",
+    3: "Subpolar dry tundra", 4: "Subpolar moist tundra", 5: "Subpolar wet tundra", 6: "Subpolar rain tundra",
+    7: "Boreal desert", 8: "Boreal dry bush", 9: "Boreal moist forest", 10: "Boreal wet forest",
+    11: "Boreal rain forest",
+    12: "Cool temperate desert", 13: "Cool temperate desert bush", 14: "Cool temperate steppe",
+    15: "Cool temperate moist forest", 16: "Cool temperate wet forest", 17: "Cool temperate rain forest",
+    18: "Warm temperate desert", 19: "Warm temperate desert bush", 20: "Warm temperate thorn steppe",
+    21: "Warm temperate dry forest", 22: "Warm temperate moist forest", 23: "Warm temperate wet forest",
+    24: "Warm temperate rain forest",
+    25: "Subtropical desert", 26: "Subtropical desert bush", 27: "Subtropical thorn steppe",
+    28: "Subtropical dry forest", 29: "Subtropical moist forest", 30: "Subtropical wet forest",
+    31: "Subtropical rain forest",
+    32: "Tropical desert", 33: "Tropical desert bush", 34: "Tropical thorn steppe",
+    35: "Tropical very dry forest", 36: "Tropical dry forest", 37: "Tropical moist forest",
+    38: "Tropical wet forest",
+}
 
 PALETA = [
     '#4d4d4d', '#6b6b6b', '#8a8a8a', '#a8a8a8',
@@ -96,11 +126,26 @@ def suavizar_zona(zona: ee.Image, radius: float = 1) -> ee.Image:
     return zona.focalMode(radius=radius, kernelType="square", units="pixels")
 
 
-def classificar_holdridge(normal: ee.Image, limiar_correcao=None) -> ee.Image:
-    """Retorna imagem com: zone38_id, biotemp (°C), prec (mm/ano), etp (mm/ano), retp (razão)."""
+FATOR_ETP_HOLDRIDGE = 58.93  # mm/ano por °C de biotemperatura (Holdridge 1967)
+
+
+def classificar_holdridge(normal: ee.Image, limiar_correcao=None, etp: str = "penman") -> ee.Image:
+    """Retorna imagem com: zone38_id, biotemp (°C), prec (mm/ano), etp (mm/ano), retp (razão).
+
+    etp: "penman" = ETP de Penman-Monteith do CHELSA (soma das 12 bandas `pet`);
+         "holdridge" = ETP de Holdridge, 58,93 x biotemperatura (a definição original, usada por
+         Leemans e por Jungkunst et al. 2021). Com a de Holdridge, ~23% dos pixels do Brasil mudam
+         de zona (o país fica mais úmido, sobretudo no Sul/Sudeste).
+    """
     biotemp = biotemperatura(normal.select("tas_.*"), limiar_correcao)
     prec = normal.select("pr_.*").reduce(ee.Reducer.sum()).rename("prec")
-    etp = normal.select("pet_.*").reduce(ee.Reducer.sum()).rename("etp")
+    if etp == "penman":
+        etp_anual = normal.select("pet_.*").reduce(ee.Reducer.sum())
+    elif etp == "holdridge":
+        etp_anual = biotemp.multiply(FATOR_ETP_HOLDRIDGE)
+    else:
+        raise ValueError(f"etp deve ser 'penman' ou 'holdridge', não {etp!r}")
+    etp = etp_anual.rename("etp")
     retp = etp.divide(prec.where(prec.lt(1), 1)).rename("retp")
 
     t = classe_temperatura(biotemp)
