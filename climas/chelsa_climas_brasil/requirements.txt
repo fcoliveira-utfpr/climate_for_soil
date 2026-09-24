@@ -8,3 +8,6 @@ geedim
 # geemap depende de pyproj; no Mac Intel (x86_64) o pyproj >= 3.8 nao tem wheel e falha ao compilar.
 # Nesse caso: pip install --only-binary=pyproj -r requirements.txt
 geemap
+# agrometeorologiapy >= 0.2.0 (balanco_hidrico_climatologico_grade). Enquanto a 0.2.0 nao estiver no PyPI:
+#   pip install -e ~/Python/agrobiblioteca
+agrometeorologiapy>=0.2.0
