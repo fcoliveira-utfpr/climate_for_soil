@@ -3,6 +3,8 @@ climas/dados_chelsa/mensal_recortado/
 climas/dados_chelsa/normal_1991_2020/
 climas/dados_chelsa/holdridge/
 climas/dados_chelsa/koppen/
+climas/dados_chelsa/awc/
+climas/dados_chelsa/thornthwaite/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
