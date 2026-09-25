@@ -202,7 +202,9 @@ c.append(md("""**Leitura:**
 
 c.append(md("""## 6. Mapas de referência (Köppen IPEF) e com o clima contínuo
 
-Estoque de SOC de 0-30 cm em 2023 (t/ha) e argila de 0-30 cm (%), versão fiel, grade de ~5 km."""))
+Estoque de SOC de 0-30 cm em 2023 (t/ha) e argila de 0-30 cm (%), versão fiel, grade de ~5 km. O SOC dos
+mapas já tem a correção de Duan (*smearing*, seção 5): o exp() da predição em log é multiplicado pelo fator
+de cada cenário (~1,23 na versão fiel, ~1,25 sem C2), para os mapas estimarem a média e não a mediana."""))
 c.append(code("""def ler(nome, banda=1):
     with rasterio.open(MAPAS / nome) as r:
         return r.read(banda), r.bounds
@@ -233,7 +235,7 @@ f.savefig(FIG / 'mapa_soc_fiel.png', dpi=110, bbox_inches='tight'); plt.show()
 f = trio('textura_0_30cm', 3, 'argila 0-30 cm (%)', 'Oranges', '')
 f.savefig(FIG / 'mapa_argila_fiel.png', dpi=110, bbox_inches='tight'); plt.show()"""))
 c.append(md("""Na versão fiel, os mapas com o Köppen e com o clima contínuo são muito parecidos na escala nacional. A
-diferença de SOC (terceiro painel) chega a ±15 t/ha em regiões específicas: com o clima contínuo, o SOC
+diferença de SOC (terceiro painel) chega a ±19 t/ha em regiões específicas: com o clima contínuo, o SOC
 **aumenta** no arco Rondônia–Mato Grosso–sul do Amazonas e **diminui** no litoral norte (Amapá, Maranhão) e
 em partes do Nordeste. Na argila, a diferença é pequena (até ~2 pontos percentuais), porque a textura da
 coleção 2 domina o modelo: um pouco menos argila no arco Rondônia–Mato Grosso, um pouco mais em faixas do
@@ -261,9 +263,9 @@ f = painel_diferencas('soc_0_30cm', 1, 'SOC (t/ha)', '_semC2')
 f.savefig(FIG / 'dif_soc_semC2.png', dpi=110, bbox_inches='tight'); plt.show()"""))
 c.append(md("""**Leitura:**
 
-- **"Sem clima" e o Köppen CHELSA são os que menos mudam o mapa** (|Δ| médio ≈ 2,1-2,2 t/ha); Holdridge,
-  Thornthwaite e zonas k10 ficam em ≈ 2,4-2,9 t/ha.
-- **O clima contínuo é o que mais muda** (≈ 4,8 t/ha): aumenta o SOC no arco Rondônia–Mato Grosso–sul do
+- **"Sem clima" e o Köppen CHELSA são os que menos mudam o mapa** (|Δ| médio ≈ 2,7 t/ha); Holdridge,
+  Thornthwaite e zonas k10 ficam em ≈ 3,1-3,6 t/ha.
+- **O clima contínuo é o que mais muda** (≈ 6,0 t/ha): aumenta o SOC no arco Rondônia–Mato Grosso–sul do
   Pará e reduz no litoral norte (Amapá, norte do Pará, Maranhão); no restante do país as diferenças se
   alternam em manchas. As zonas k10 aumentam sobretudo no oeste da Amazônia.
 - **Mudar mais não é, por si, melhor** — quem diz qual mapa é mais confiável é a validação da seção 4, onde
