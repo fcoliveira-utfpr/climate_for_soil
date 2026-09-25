@@ -114,9 +114,18 @@ def r2_repeticoes(y, codigos, lon, lat, tamanho, n_rep=N_REPETICOES, n_dobras=N_
 # ---------------------------------------------------------------------------------------------
 # Execução
 # ---------------------------------------------------------------------------------------------
+def com_zonas_k10(df, exp):
+    """Zona climática k10 de cada local, pelo clima contínuo extraído em experimento_dados.py."""
+    import zonas_clima as zc
+    e = exp[['ponto_id'] + [c for c in exp.columns if c.startswith('clim_')]].dropna()
+    cent, media, dp = zc.carregar(10)
+    e = e.assign(zona_k10=zc.atribuir(e, cent, media, dp).astype(str))
+    return df.merge(e[['ponto_id', 'zona_k10']], on='ponto_id', how='left')
+
+
 def amostra_comum(df, col_y):
     """Só locais com classe em todos os sistemas/níveis: todos avaliados nos mesmos pontos."""
-    ok = df[leg.COLUNAS_CLIMA].notna().all(axis=1) & df[col_y].notna()
+    ok = df[leg.COLUNAS_COMPARACAO].notna().all(axis=1) & df[col_y].notna()
     return df[ok].reset_index(drop=True), int((~ok).sum())
 
 
@@ -161,15 +170,17 @@ def diagnostico_koppen(df, y, resp):
 
 def main():
     TABELAS.mkdir(parents=True, exist_ok=True)
+    import experimento_dados as ed
     soc, tex = carregar_bases()
-    bases = {'soc': soc, 'textura': tex}
+    exp_soc, exp_tex = ed.carregar_experimento()
+    bases = {'soc': com_zonas_k10(soc, exp_soc), 'textura': com_zonas_k10(tex, exp_tex)}
 
     desempenho, diferencas, classes, amostra = [], [], [], []
     concord, hibridos, fronteira = [], [], []
     for resp, (base, col, rotulo) in RESPOSTAS.items():
         df, n_fora = amostra_comum(bases[base], col)
         y = np.log(df[col].to_numpy(float)) if resp == 'log_soc' else df[col].to_numpy(float)
-        codigos = {c: codificar(df[c]) for c in leg.COLUNAS_CLIMA}
+        codigos = {c: codificar(df[c]) for c in leg.COLUNAS_COMPARACAO}
         lon, lat = df.longitude.to_numpy(), df.latitude.to_numpy()
 
         # concentração espacial da amostra (caixas aproximadas de RO e RS; blocos de 2° mais densos)
@@ -201,7 +212,7 @@ def main():
         # diferenças pareadas em relação ao melhor preditor no esquema principal
         r = reps[ESQUEMA_PRINCIPAL]
         melhor = r.mean().idxmax()
-        for c in leg.COLUNAS_CLIMA:
+        for c in leg.COLUNAS_COMPARACAO:
             d = r[melhor] - r[c]
             diferencas.append({'resposta': resp, 'melhor': melhor, 'coluna': c,
                                'sistema': leg.NIVEIS[c][0], 'nivel': leg.NIVEIS[c][1],
@@ -210,7 +221,7 @@ def main():
 
         # médias por classe (interpretação); SOC em Mg/ha (1 g/m² = 0,01 Mg/ha)
         valor = df[col] * (0.01 if resp == 'log_soc' else 1)
-        for c in leg.COLUNAS_CLIMA:
+        for c in leg.COLUNAS_COMPARACAO:
             g = valor.groupby(df[c])
             t = pd.DataFrame({'n': g.size(), 'mediana': g.median(), 'media': g.mean()})
             # classes com poucos locais: não publicar o valor (seria quase o dado de um ponto, restrito)
