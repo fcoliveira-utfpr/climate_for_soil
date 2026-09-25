@@ -5,6 +5,10 @@ Mesmo esquema da fase 1b, agora com todos os dados: (1) modelos de textura da ca
 (2) RF de log(SOC) com as covariáveis da matriz de SOC + clima + essa textura, aplicado à grade de 5 km.
 As covariáveis dinâmicas (idades de uso, índices, água, fogo, bordas) são as de 2023.
 
+O RF prevê log(SOC); voltar com exp() estima ~a mediana e subestima a média em ~10 t/ha. Por isso o mapa é
+multiplicado pelo fator de Duan (smearing), média de exp(resíduo) nas predições fora da amostra da fase 1b
+(soc_oof.parquet) do mesmo cenário. Os resíduos dentro da amostra não servem: o RF quase os zera (fator ≈ 1).
+
 Saídas em climas/dados_reproducao/mapas/: covariaveis_soc_extras_5km.tif e soc_0_30cm_<cenario>.tif (t/ha).
 """
 import sys
@@ -46,6 +50,11 @@ def grade_soc():
     g = pd.concat([g, pd.DataFrame(ex, columns=nomes)], axis=1)
     g['cov_ok'] &= g[nomes].notna().all(axis=1)
     return g
+
+
+def fatores_smearing():
+    oof = pd.read_parquet(cfg.PONTOS / f'soc_oof{cfg.SUFIXO}.parquet')
+    return oof.groupby('cenario').apply(lambda g: np.mean(np.exp(g.log_soc_obs - g.log_soc_prev)))
 
 
 def prever(cenario, tex, soc, grade):
@@ -91,9 +100,10 @@ def main(etapas=('extras', 'mapas')):
     if 'mapas' in etapas:
         tex, soc = dados.carregar()
         grade = grade_soc()
+        fatores = fatores_smearing()
         for cen in cfg.CENARIOS:
-            salvar(prever(cen, tex, soc, grade), grade, cen)
-            print(f'  mapa de SOC: {cen}', flush=True)
+            salvar(prever(cen, tex, soc, grade) * fatores[cen], grade, cen)
+            print(f'  mapa de SOC: {cen} (smearing {fatores[cen]:.3f})', flush=True)
 
 
 if __name__ == '__main__':

@@ -544,3 +544,33 @@ estáveis, subprovíncias) conferidas contra 300 linhas da matriz no ano de cada
   `pgrep -f` com o nome do script para encadear etapas, porque o próprio comando de espera casa com o padrão).
 - Recomendação: trocar o Köppen pelo clima contínuo; zonas k10 se precisar de categórica; discutir com o
   MapBiomas a textura C2 como covariável (esconde a contribuição das outras e infla a validação).
+
+## Zonas k10 na comparação de climas (2026-09-25)
+
+As zonas climáticas k10 entraram como mais um sistema no `comparacao_climas` (`legendas.NIVEIS['zona_k10']`,
+`COLUNAS_COMPARACAO`; `COLUNAS_CLIMA` continua sem elas porque dependem do clima contínuo, extraído depois).
+Resultado (R² em blocos de 2°): zonas k10 melhores nas 4 variáveis — SOC 0,092 (Holdridge ETH 0,076), areia
+0,106 (Thornthwaite L2 0,071), silte 0,210 (Thornthwaite L2 0,199), argila 0,009 (única positiva) —, vencendo
+todos os sistemas em 100% das repetições em SOC, areia e silte. A 5°: melhores no silte (0,19); no SOC atrás
+do Holdridge L2 (0,083 x 0,094); na areia atrás do Köppen IPEF L1. Conclusão do notebook reescrita:
+zonas k10 = melhor classificação isolada; notebook enquadrado como "classificação sozinha" com ponteiros para
+o experimento e a reprodução. `experimento_clima_modelos.ipynb` ganhou a seção 9 com a atualização da
+reprodução.
+
+## Métricas do MapBiomas na reprodução (2026-09-25)
+
+`climas/reproducao/codigo/metricas_mapbiomas.py` calcula o `error_statistics` do MapBiomas (ME, MAE, RMSE,
+MEC, slope; MEC = mesma fórmula do nosso R²) nas predições fora da amostra (1ª repetição), textura em % e
+SOC em t/ha (com e sem smearing de Duan). Achado: SOC em t/ha tem MEC ~0,10 (fiel) contra R² 0,275 em log;
+viés de ~−10 t/ha pela retransformação do log (smearing elimina, MEC 0,14-0,16) e cauda longa (máx ~1.190
+t/ha). **Correção:** antes eu tinha dito que nosso SOC (0,275, log) estava "na mesma faixa" do MEC do
+MapBiomas por bioma (0,25-0,27, t/ha) — escalas diferentes, comparação errada; corrigido no relatório
+(seção 7.6) e no notebook da reprodução (seção 5). Ranking dos climas igual em t/ha.
+
+## Mapas de SOC com a correção de Duan (2026-09-25)
+
+`mapas_soc.py` agora multiplica o exp() da predição em log pelo fator de Duan (smearing) de cada cenário,
+calculado nas predições fora da amostra (`soc_oof.parquet`): ~1,23 na versão fiel, ~1,25 sem C2. Os mapas
+e as figuras de SOC foram refeitos. Números que mudaram: SOC mediano dos mapas ~40 → ~50 t/ha; diferença
+clima contínuo − Köppen (fiel) até ±19 t/ha; |Δ| médio sem C2: clima contínuo 4,8 → 6,0 t/ha, sem clima e
+Köppen CHELSA ~2,7, demais 3,1-3,6. O padrão espacial e as conclusões não mudam.

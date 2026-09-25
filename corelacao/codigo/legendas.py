@@ -70,5 +70,9 @@ NIVEIS = {
     'thsolo_l1': ('Thornthwaite CAD do solo', 'L1', 'classe de umidade'),
     'thsolo_l2': ('Thornthwaite CAD do solo', 'L2', 'umidade + subtipo'),
     'thsolo_l3': ('Thornthwaite CAD do solo', 'L3', 'tipo completo'),
+    # Zonas climáticas homogêneas (k-means sobre o clima CHELSA do Brasil, zonas_clima.py). Dependem do clima
+    # contínuo (experimento_dados.py), então entram só na comparação, não na extração de preparar_dados.py.
+    'zona_k10': ('Zonas climáticas k10', 'L1', 'zona homogênea (k-means, 10 zonas)'),
 }
-COLUNAS_CLIMA = list(NIVEIS)
+COLUNAS_CLIMA = [c for c in NIVEIS if c != 'zona_k10']      # classes extraídas dos assets por preparar_dados.py
+COLUNAS_COMPARACAO = list(NIVEIS)                           # tudo o que comparar_climas.py avalia
