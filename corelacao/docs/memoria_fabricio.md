@@ -544,3 +544,15 @@ estáveis, subprovíncias) conferidas contra 300 linhas da matriz no ano de cada
   `pgrep -f` com o nome do script para encadear etapas, porque o próprio comando de espera casa com o padrão).
 - Recomendação: trocar o Köppen pelo clima contínuo; zonas k10 se precisar de categórica; discutir com o
   MapBiomas a textura C2 como covariável (esconde a contribuição das outras e infla a validação).
+
+## Zonas k10 na comparação de climas (2026-09-25)
+
+As zonas climáticas k10 entraram como mais um sistema no `comparacao_climas` (`legendas.NIVEIS['zona_k10']`,
+`COLUNAS_COMPARACAO`; `COLUNAS_CLIMA` continua sem elas porque dependem do clima contínuo, extraído depois).
+Resultado (R² em blocos de 2°): zonas k10 melhores nas 4 variáveis — SOC 0,092 (Holdridge ETH 0,076), areia
+0,106 (Thornthwaite L2 0,071), silte 0,210 (Thornthwaite L2 0,199), argila 0,009 (única positiva) —, vencendo
+todos os sistemas em 100% das repetições em SOC, areia e silte. A 5°: melhores no silte (0,19); no SOC atrás
+do Holdridge L2 (0,083 x 0,094); na areia atrás do Köppen IPEF L1. Conclusão do notebook reescrita:
+zonas k10 = melhor classificação isolada; notebook enquadrado como "classificação sozinha" com ponteiros para
+o experimento e a reprodução. `experimento_clima_modelos.ipynb` ganhou a seção 9 com a atualização da
+reprodução.
