@@ -492,17 +492,18 @@ R² de referência (Köppen IPEF): textura 0,82-0,85 (fiel) e 0,29-0,33 (sem C2)
 coleção 2 (embaixo). Azul: melhor em todas as repetições; laranja: pior em todas; cinza: depende do sorteio.
 Note as escalas: na versão fiel, os ganhos na textura são de milésimos.*
 
-- **Nos mapas,** a troca muda pouco a média nacional (SOC mediano de ~40 t/ha), mas redistribui o carbono:
+- **Nos mapas,** a troca muda pouco a média nacional (SOC mediano de ~50 t/ha nos mapas), mas redistribui o carbono:
   com o clima contínuo, **mais SOC no arco Rondônia–Mato Grosso–sul do Pará e menos no litoral norte**
   (Amapá, norte do Pará, Maranhão).
 
 ![Mapas de SOC: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_soc_fiel.png)
 *Figura 11. Estoque de SOC de 0-30 cm em 2023 (t/ha), versão fiel: com o Köppen IPEF, com o clima contínuo e
-a diferença entre eles (vermelho = mais carbono com o clima contínuo).*
+a diferença entre eles (vermelho = mais carbono com o clima contínuo). Os mapas de SOC têm a correção de
+Duan (seção 7.6).*
 
 ![Diferença de SOC de cada clima em relação ao Köppen](climas/reproducao/resultados/figuras/dif_soc_semC2.png)
 *Figura 12. Diferença de SOC (t/ha) de cada cenário em relação ao Köppen, versão sem textura C2. O clima
-contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 4,8 t/ha); sem clima e Köppen CHELSA, os que menos.*
+contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 6,0 t/ha); sem clima e Köppen CHELSA, os que menos.*
 
 ![Mapas de argila: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_argila_semC2.png)
 *Figura 13. Argila de 0-30 cm (%), versão sem textura C2: Köppen IPEF, clima contínuo e a diferença.*
@@ -530,7 +531,7 @@ observado, a mesma fórmula do R² fora da amostra usado aqui) e **slope** (incl
   estima algo próximo da mediana, e o SOC é muito assimétrico (mediana 40 t/ha, média 51, máximo ~1.190):
   o modelo subestima em média ~10 t/ha. A correção de Duan (*smearing*) elimina o viés e leva o MEC a
   0,14-0,16. O restante é a cauda longa: poucos solos com estoques muito altos dominam o erro quadrático
-  (RMSE ≈ 3 × MAE). Para mapas em t/ha, recomenda-se aplicar o smearing ou modelar em escala original.
+  (RMSE ≈ 3 × MAE). Por isso, os mapas de SOC (Figuras 11 e 12) já aplicam o smearing: o exp() da predição é multiplicado pelo fator de cada cenário (~1,23 na versão fiel, ~1,25 sem C2), calculado nas predições fora da amostra.
 - **Comparação com o SOC do MapBiomas:** eles publicam MEC em t/ha de 0,73 (OOB) e 0,58 ("sem vazamento"),
   mas com o estoque acumulado de várias profundidades empilhadas, em que a profundidade explica boa parte;
   e 0,25-0,27 por bioma na camada mais profunda. **O nosso MEC em t/ha (0,10-0,16) fica abaixo** desses
@@ -573,7 +574,7 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 - A matriz de SOC de produção da C3 não é acessível a esta conta; a reprodução do SOC usa a `carbon_datac2v2`.
 - O GBM do scikit-learn não tem a subamostragem de 0,632 do GEE.
 - Os mapas estão a ~5 km (valor do centro do pixel), e não a 30 m.
-- O SOC foi modelado em log; na escala de t/ha, sem correção, as estimativas têm viés de ~−10 t/ha (seção 7.6).
+- O SOC foi modelado em log. A correção de Duan tira o viés médio (~−10 t/ha) dos mapas, mas é um fator único por cenário e não corrige o erro na cauda de solos com estoques muito altos (seção 7.6).
 - A validação das bases climáticas usa só 22 estações (2010-2019), com poucas na Amazônia.
 - A amostra de solo é concentrada (Rondônia e RS). A validação em blocos atenua, mas os ganhos medidos refletem mais
   essas regiões.

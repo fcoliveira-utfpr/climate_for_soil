@@ -566,3 +566,11 @@ viés de ~−10 t/ha pela retransformação do log (smearing elimina, MEC 0,14-0
 t/ha). **Correção:** antes eu tinha dito que nosso SOC (0,275, log) estava "na mesma faixa" do MEC do
 MapBiomas por bioma (0,25-0,27, t/ha) — escalas diferentes, comparação errada; corrigido no relatório
 (seção 7.6) e no notebook da reprodução (seção 5). Ranking dos climas igual em t/ha.
+
+## Mapas de SOC com a correção de Duan (2026-09-25)
+
+`mapas_soc.py` agora multiplica o exp() da predição em log pelo fator de Duan (smearing) de cada cenário,
+calculado nas predições fora da amostra (`soc_oof.parquet`): ~1,23 na versão fiel, ~1,25 sem C2. Os mapas
+e as figuras de SOC foram refeitos. Números que mudaram: SOC mediano dos mapas ~40 → ~50 t/ha; diferença
+clima contínuo − Köppen (fiel) até ±19 t/ha; |Δ| médio sem C2: clima contínuo 4,8 → 6,0 t/ha, sem clima e
+Köppen CHELSA ~2,7, demais 3,1-3,6. O padrão espacial e as conclusões não mudam.
