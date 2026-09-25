@@ -23,7 +23,15 @@ if str(CORELACAO) not in sys.path:
     sys.path.insert(0, str(CORELACAO))
 
 MATRIZ_TEXTURA = 'projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/c03_psd_v2025_11_18'
-MATRIZ_SOC = 'projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/matriz-collection3_carbon_datac2v2'
+# SOC: pontos da coleção 3 (o mesmo conjunto publicado no SoilData, doi 10.60502/SoilData/IUZOAK), sem
+# covariáveis; elas são extraídas no GEE com as imagens de covariaveis_gee.py. A matriz com covariáveis
+# da C3 (MATRIZES/collection3/c03_soc_v2025_11_26_trep) não é legível por esta conta; a matriz usada antes,
+# matriz-collection3_carbon_datac2v2, tem os estoques da coleção 2.
+ASSET_SOC = 'projects/mapbiomas-workspace/SOLOS/AMOSTRAS/ORIGINAIS/collection3/2025_11_26_soildata_soc_trep'
+COVARIAVEIS_SOC = [l.strip() for l in (Path(__file__).parent / 'covariaveis_soc.txt').read_text().splitlines()
+                   if l.strip() and not l.startswith('#')]
+ANO_MAX_COVARIAVEIS = 2023       # as bordas (edge_sum) vão até 2023; amostras de 2024 usam 2023, como os mapas
+PROF_SOC = 30                    # profundidade (cm) do estoque avaliado e mapeado
 
 # --- Textura: como no script texture/2_model_prediction do MapBiomas -------------------------------
 # Um GBM por alvo e por camada; camada = horizontes com centro a até 5 cm do centro da camada.

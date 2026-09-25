@@ -59,7 +59,7 @@ def fatores_smearing():
 
 def prever(cenario, tex, soc, grade):
     cats = m.categorias(cenario, tex, soc)
-    comuns = sorted(set(m.base(tex)) & set(m.base(soc)))
+    comuns = sorted(set(m.base(tex)) & set(m.base(soc)) - {'profundidade'})
     cov_tex = comuns + ['profundidade']
     cov_soc = [c for c in m.base(soc) if c not in cfg.TEXTURA_C2]
     clima_soc, clima_g = m.clima(soc, cenario, cats), m.clima(grade, cenario, cats)
@@ -77,7 +77,7 @@ def prever(cenario, tex, soc, grade):
     x_tr = pd.concat([soc[cov_soc], clima_soc, tex_soc], axis=1)
     med = x_tr.median()
     rf = m.rf(cfg.SEMENTE).fit(x_tr.fillna(med).to_numpy(float), np.log(soc.soc_g_m2.to_numpy(float)))
-    x_g = pd.concat([grade[cov_soc], clima_g, tex_g], axis=1)[x_tr.columns]
+    x_g = pd.concat([grade.assign(profundidade=float(cfg.PROF_SOC))[cov_soc], clima_g, tex_g], axis=1)[x_tr.columns]
     return np.exp(rf.predict(x_g.fillna(med).to_numpy(float))) * 0.01            # g/m² -> t/ha
 
 

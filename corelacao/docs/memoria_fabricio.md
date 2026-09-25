@@ -574,3 +574,20 @@ calculado nas predições fora da amostra (`soc_oof.parquet`): ~1,23 na versão 
 e as figuras de SOC foram refeitos. Números que mudaram: SOC mediano dos mapas ~40 → ~50 t/ha; diferença
 clima contínuo − Köppen (fiel) até ±19 t/ha; |Δ| médio sem C2: clima contínuo 4,8 → 6,0 t/ha, sem clima e
 Köppen CHELSA ~2,7, demais 3,1-3,6. O padrão espacial e as conclusões não mudam.
+
+## Reprodução com os pontos de SOC da coleção 3 (2026-09-25)
+
+A matriz de produção `c03_soc_v2025_11_26_trep` continua ilegível, mas a conta lê o asset de pontos que a
+alimenta, `ORIGINAIS/collection3/2025_11_26_soildata_soc_trep` (35.235 linhas; 9 colunas, sem covariáveis) —
+o mesmo conjunto publicado no SoilData (doi 10.60502/SoilData/IUZOAK, CC BY 4.0; CSVs baixados em
+`climas/dados_reproducao/soildata/`). Tem o estoque acumulado até cada profundidade; `trep10`/`trep20` são
+cópias de ~2.300 perfis com o ano recuado 10/20 anos (mesmo carbono). Decisões: usar `carbono_gm2_qmap`
+excluir pseudoamostras e trep; covariáveis (as 106 da matriz antiga, `covariaveis_soc.txt`)
+extraídas no GEE a 30 m no ano de coleta (<1985 → 1985; 2024 → 2023); profundidade como covariável, RF
+treinado em todas as linhas, R² só em 0-30 cm. Conferência: estáticas 100% iguais à matriz antiga, exceto
+`sibcs_homogeneo` (a antiga inclui LATOSSOLO; seguimos a C3/textura). Resultado: 25.875 linhas, 13.564 locais,
+10.892 avaliados. SOC R² Köppen 0,275 → 0,336 (fiel), 0,171 → 0,232 (sem C2); ganho do clima contínuo +0,025
+(fiel) e +0,038 (sem C2), zonas k10 +0,009/+0,015; "sem clima" > Köppen IPEF. Textura idêntica (mesmas
+dobras). MEC t/ha: Köppen 0,118 (0,156 smearing), contínuo 0,137 (0,176). O padrão espacial da diferença
+contínuo − Köppen mudou: agora menos SOC no norte do PA/AP, mais no NW do AM e em faixas do Centro-Oeste.
+Corelacao (seções 5-6 do relatório) segue com a matriz C2.

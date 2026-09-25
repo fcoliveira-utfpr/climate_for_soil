@@ -51,11 +51,13 @@ tropicais deslocada; substituído pelas versões ETPM e ETH).
 
 | Asset | O que é | Onde foi usado |
 |---|---|---|
-| `projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/matriz-collection3_carbon_datac2v2` | Matriz de treino de carbono: estoque de SOC 0-30 cm por ponto e ano, com as covariáveis do MapBiomas e o Köppen IPEF em dummies | `corelacao/codigo/preparar_dados.py`, `experimento_dados.py`; `climas/reproducao/codigo/dados.py` |
+| `projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/matriz-collection3_carbon_datac2v2` | Matriz de treino de carbono (estoques da coleção 2): estoque de SOC 0-30 cm por ponto e ano, com as covariáveis do MapBiomas e o Köppen IPEF em dummies | `corelacao/codigo/preparar_dados.py`, `experimento_dados.py`; na reprodução, só a lista de covariáveis (`covariaveis_soc.txt`) |
+| `projects/mapbiomas-workspace/SOLOS/AMOSTRAS/ORIGINAIS/collection3/2025_11_26_soildata_soc_trep` | Pontos de SOC da C3 (os que alimentam a matriz de produção; = SoilData doi 10.60502/SoilData/IUZOAK): estoque acumulado até cada profundidade, com e sem correção de viés (`_qmap`), ano, pseudoamostras e réplicas temporais `trep10`/`trep20`; sem covariáveis | `climas/reproducao/codigo/dados.py` (SOC da reprodução, com as covariáveis extraídas no GEE) |
 | `projects/mapbiomas-workspace/SOLOS/AMOSTRAS/MATRIZES/collection3/c03_psd_v2025_11_18` | Matriz de treino da textura (a de produção da C3): areia, silte e argila (g/kg) por horizonte, com profundidade, covariáveis e Köppen IPEF | Idem |
 
 **Referenciada, sem acesso de leitura:** `.../collection3/c03_soc_v2025_11_26_trep` (matriz de produção do SOC
-da C3; em seu lugar foi usada a `carbon_datac2v2`).
+da C3; em seu lugar, a reprodução usa os pontos `ORIGINAIS/.../2025_11_26_soildata_soc_trep` com covariáveis
+extraídas por nós).
 
 ## 5. MapBiomas Solo: covariáveis dos modelos C3
 

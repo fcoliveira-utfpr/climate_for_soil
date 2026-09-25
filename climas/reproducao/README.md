@@ -16,8 +16,8 @@ do MapBiomas Solo (coleção 3) melhoram? E como ficam os mapas?
 | | MapBiomas C3 | Aqui |
 |---|---|---|
 | Textura | GBM por alvo e por camada de 10 cm (horizontes a ±5 cm do centro), sobre ln((x+1)/(argila+1)); profundidade e textura da coleção 2 como covariáveis | igual, nas camadas de 0-30 cm (centros 5, 15, 25 cm); GBM do scikit-learn (400 iterações, taxa 0,01, 25 folhas) |
-| SOC | random forest com a textura de 0-30 cm da coleção atual como covariável | igual; a textura vem do modelo de textura do mesmo cenário de clima |
-| Matriz de SOC | `c03_soc_v2025_11_26_trep` (sem acesso de leitura para esta conta) | `matriz-collection3_carbon_datac2v2` (uma linha por local) |
+| SOC | random forest com a textura de 0-30 cm da coleção atual como covariável; estoque acumulado com a profundidade como covariável | igual; a textura vem do modelo de textura do mesmo cenário de clima; avaliação e mapas em 0-30 cm |
+| Matriz de SOC | `c03_soc_v2025_11_26_trep` (pontos + covariáveis; sem acesso de leitura para esta conta) | os pontos da C3 (`ORIGINAIS/collection3/2025_11_26_soildata_soc_trep`, = SoilData doi 10.60502/SoilData/IUZOAK), `carbono_gm2_qmap`, sem pseudoamostras e sem as réplicas `trep`; covariáveis extraídas no GEE no ano de coleta (lista em `codigo/covariaveis_soc.txt`) |
 | Clima | Köppen IPEF em dummies L1-L3 | 9 cenários (abaixo) |
 
 Cenários: Köppen IPEF (referência), sem clima, Köppen CHELSA, Holdridge ETPM, Holdridge ETH, Thornthwaite CAD
@@ -31,7 +31,7 @@ SOC para 2023.
 
 ```bash
 cd codigo
-python dados.py            # GEE (matrizes com acesso restrito) + climas da corelacao
+python dados.py            # GEE: matriz de textura, pontos de SOC C3 + covariáveis (horas; cache por ano), climas
 python fase1_textura.py    # ~45 min
 python fase1_soc.py        # ~1,5 h
 python mapas_textura.py    # baixa as covariáveis (GEE) e gera os 9 mapas de textura

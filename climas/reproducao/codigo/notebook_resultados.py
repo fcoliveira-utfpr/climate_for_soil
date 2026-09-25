@@ -16,11 +16,11 @@ silte, argila) e de **SOC** do MapBiomas Solo melhoram? E como os mapas mudam?
 **Resposta curta:**
 
 - **O clima contínuo (12 variáveis CHELSA + balanço hídrico) é a melhor troca para o Köppen**, nas duas
-  versões do experimento: melhora o SOC em todas as repetições (+0,014 de R² na versão fiel, +0,023 sem a
+  versões do experimento: melhora o SOC em todas as repetições (+0,025 de R² na versão fiel, +0,038 sem a
   textura da coleção 2) e é o único clima que ajuda a textura de forma apreciável quando o modelo não tem a
   textura anterior (+0,023, sobretudo no silte, +0,038).
 - **As zonas climáticas homogêneas (k10) são a segunda melhor opção** e a melhor entre as classificações:
-  +0,016 no SOC sem a textura da coleção 2.
+  +0,015 no SOC sem a textura da coleção 2 (+0,009 na versão fiel).
 - **Com a textura da coleção 2 como covariável (como o MapBiomas faz), a textura não depende do clima:** o
   R² vai a 0,82-0,85 e nenhum clima muda nada — o modelo praticamente copia o produto anterior, que foi
   ajustado com as mesmas amostras. Por isso o experimento foi feito também **sem** essa covariável.
@@ -32,8 +32,8 @@ c.append(md("""## 1. O que foi reproduzido
 | | MapBiomas C3 | Aqui |
 |---|---|---|
 | **Textura** | GBM por alvo e por camada de 10 cm (horizontes a ±5 cm do centro), sobre ln((x+1)/(argila+1)); profundidade e textura da coleção 2 como covariáveis | igual, nas camadas de 0-30 cm (centros 5, 15 e 25 cm) |
-| **SOC** | random forest com a textura de 0-30 cm da coleção atual como covariável; estoque de 0-30 cm | igual; a textura vem do modelo de textura **do mesmo cenário de clima** |
-| **Covariáveis** | ~110 (solo, geologia, relevo, bioma, fitofisionomia, uso da terra, índices espectrais, água, fogo) | as mesmas, das matrizes de treino; nos mapas, portadas para Python e conferidas contra a matriz |
+| **SOC** | random forest com a textura de 0-30 cm da coleção atual como covariável; estoque acumulado com a profundidade como covariável | igual; a textura vem do modelo de textura **do mesmo cenário de clima**; avaliação e mapas no estoque de 0-30 cm |
+| **Covariáveis** | ~110 (solo, geologia, relevo, bioma, fitofisionomia, uso da terra, índices espectrais, água, fogo) | as mesmas: na textura, da matriz de treino; no SOC e nos mapas, portadas para Python e extraídas no GEE (conferidas contra as matrizes) |
 | **Clima** | Köppen IPEF em dummies L1-L3 | 9 cenários |
 
 **Cenários de clima:** Köppen IPEF (referência), sem clima, Köppen CHELSA, Holdridge (ETP Penman e ETP de
@@ -41,8 +41,15 @@ Holdridge), Thornthwaite (CAD 100 mm e CAD do solo), clima contínuo (12 variáv
 homogêneas (k-means, 10 zonas). As classificações entram em dummies, como o Köppen no MapBiomas.
 
 **Diferenças em relação ao pipeline deles:**
-- **Matriz de SOC:** esta conta não tem leitura da matriz de produção (`c03_soc_v2025_11_26_trep`); usamos a
-  `matriz-collection3_carbon_datac2v2` (uma linha por local, estoque de 0-30 cm).
+- **Dados de SOC:** esta conta não lê a matriz de produção (`c03_soc_v2025_11_26_trep`, pontos + covariáveis).
+  Usamos os **pontos da coleção 3** que a alimentam (`ORIGINAIS/collection3/2025_11_26_soildata_soc_trep`, o
+  mesmo conjunto publicado no SoilData, doi 10.60502/SoilData/IUZOAK): estoque acumulado até cada
+  profundidade, com a correção de viés `carbono_gm2_qmap`, e **as covariáveis extraídas por nós no GEE** (30 m,
+  no ano de coleta; amostras de antes de 1985 usam 1985 e as de 2024 usam 2023). Ficam de fora as
+  pseudoamostras (afloramentos, areias) e as réplicas temporais `trep10`/`trep20` (cópias dos mesmos perfis
+  com o ano recuado, sem carbono novo). Resultado: 25.875 linhas (local × profundidade) em 13.564 locais,
+  10.892 deles com o estoque de 0-30 cm. Antes usávamos a `matriz-collection3_carbon_datac2v2`, com os estoques
+  da coleção 2 (12.207 locais); a troca elevou o R² do SOC em ~0,06 em todos os cenários, sem mudar o ranking.
 - **GBM:** o do scikit-learn (400 iterações, taxa 0,01, 25 folhas), sem a subamostragem de 0,632 do GEE.
 - **Mapas:** numa grade de 0,05° (~5 km) alinhada ao CHELSA, com as covariáveis do centro de cada pixel; SOC
   para 2023."""))
@@ -56,6 +63,11 @@ usam **as mesmas dobras**, e todos os cenários também — então a diferença 
 horizontes dos blocos de treino e depois preveem a textura de 0-30 cm nos locais de SOC. Assim a textura
 que entra no SOC dos locais de teste vem de modelos que nunca viram aqueles blocos, como aconteceria num
 lugar sem amostra.
+
+**SOC por profundidade:** o RF é treinado com todas as linhas (cada local entra com as profundidades que tem,
+e a profundidade é covariável, como no MapBiomas), mas o R² é calculado só no estoque de 0-30 cm, que é o que
+se mapeia. As profundidades de um local estão sempre no mesmo bloco, então nunca ficam divididas entre
+treino e teste.
 
 **Duas versões:**
 
@@ -114,7 +126,7 @@ c.append(code("""ref = pd.DataFrame({
 display(ref.round(3))"""))
 c.append(md("""Com a textura da coleção 2, o modelo de textura chega a R² de 0,82-0,85; sem ela, cai para 0,29-0,33.
 **Quase todo o desempenho da textura vem do produto anterior**, não das covariáveis ambientais. No SOC, a
-queda é menor (0,275 → 0,171), porque a textura entra por meio da cadeia."""))
+queda é menor (0,336 → 0,232), porque a textura entra por meio da cadeia."""))
 
 c.append(md("""## 4. Ganho de cada clima em relação ao Köppen
 
@@ -154,15 +166,17 @@ display(tab.round(4))"""))
 c.append(md("""**Leitura:**
 
 - **Versão fiel:** na textura, as diferenças são mínimas (|ΔR²| ≤ 0,003) — a textura da coleção 2 domina o
-  modelo; só o clima contínuo melhora as três frações em todas as repetições, e muito pouco (+0,002 a +0,003). No **SOC**, o **clima contínuo** melhora em todas as repetições (+0,014, ~5% do R²), e quase todas as
-  classificações (Holdridge ETP Penman, Thornthwaite, zonas k10) ficam um pouco à frente do Köppen; o Köppen
-  CHELSA empata com ele.
+  modelo; só o clima contínuo melhora as três frações em todas as repetições, e muito pouco (+0,002 a +0,003). No **SOC**, o **clima contínuo** melhora em todas as repetições (+0,025, ~7% do R²); zonas k10
+  (+0,009), Thornthwaite e Holdridge ETP Penman (+0,005 a +0,006) ficam um pouco à frente do Köppen em todas as
+  repetições. O modelo **sem clima** também fica à frente (+0,002): o Köppen IPEF não acrescenta nada ao que
+  as outras covariáveis já dizem. O Köppen CHELSA empata com ele.
 - **Sem a textura C2:** o **clima contínuo** é o melhor para textura (+0,023; silte +0,038, areia +0,018,
-  argila +0,013 em média), melhorando **as três frações em todas as repetições**, e para SOC (+0,023, ~13%
-  do R², em todas as repetições). As **zonas k10** vêm em segundo: SOC +0,016 e areia e silte em todas as
+  argila +0,013 em média), melhorando **as três frações em todas as repetições**, e para SOC (+0,038, ~16%
+  do R², em todas as repetições). As **zonas k10** vêm em segundo: SOC +0,015 e areia e silte em todas as
   repetições. O Thornthwaite melhora o silte, mas piora a argila; os demais climas variam com o sorteio dos
   blocos.
-- **Holdridge e os dois Köppen ficam perto de zero** nas duas versões."""))
+- **Na textura, Holdridge e Köppen CHELSA ficam perto de zero** nas duas versões; no SOC, o Köppen CHELSA
+  empata com o IPEF e o Holdridge ETP Penman fica um pouco à frente (+0,005 a +0,007)."""))
 
 c.append(md("""## 5. As métricas do MapBiomas: ME, MAE, RMSE, MEC e slope
 
@@ -186,25 +200,25 @@ c.append(md("""**Leitura:**
 - **Textura:** o MEC reproduz o R² (0,82-0,84 com C2; 0,30-0,37 sem C2), o viés é pequeno (< 0,6 ponto
   percentual) e o slope fica perto de 1. Sem a C2, o slope cai para 0,85-0,91: as predições variam um pouco
   mais que o observado. O clima contínuo reduz o RMSE nas três frações.
-- **SOC em t/ha:** o MEC cai para **~0,10** (versão fiel), bem abaixo do R² em log (0,275). Dois motivos:
+- **SOC em t/ha:** o MEC cai para **~0,12** (versão fiel), bem abaixo do R² em log (0,336). Dois motivos:
   1. **Viés da retransformação:** o modelo é ajustado em log, e voltar com exp() estima algo próximo da
-     mediana, não da média. O SOC é muito assimétrico (mediana 40 t/ha, média 51, máximo ~1.190), então o
-     modelo subestima em média ~10 t/ha (ME ≈ −10). A correção de Duan (*smearing*, linhas
-     `soc_t_ha_smearing`) elimina o viés e leva o MEC a 0,14-0,16.
+     mediana, não da média. O SOC é muito assimétrico (mediana 47 t/ha, média 55, máximo ~1.360), então o
+     modelo subestima em média ~9 t/ha (ME ≈ −9). A correção de Duan (*smearing*, linhas
+     `soc_t_ha_smearing`) elimina o viés e leva o MEC a 0,16-0,18.
   2. **Cauda longa:** poucos solos com estoques muito altos (orgânicos e hidromórficos) dominam o erro
-     quadrático em t/ha; por isso o RMSE (~62 t/ha) é três vezes o MAE (~22 t/ha).
-- **O ranking dos climas não muda com a métrica:** em t/ha, o clima contínuo também é o melhor (MEC 0,114 ×
-  0,100 do Köppen na versão fiel; 0,081 × 0,065 sem C2).
+     quadrático em t/ha; por isso o RMSE (~49 t/ha) é mais que o dobro do MAE (~20 t/ha).
+- **O ranking dos climas não muda com a métrica:** em t/ha, o clima contínuo também é o melhor (MEC 0,137 ×
+  0,118 do Köppen na versão fiel; 0,094 × 0,081 sem C2).
 - **Comparação com o MapBiomas:** eles publicam MEC do SOC em t/ha de 0,58-0,73 (com as profundidades
   empilhadas, em que a profundidade explica boa parte) e de 0,25-0,27 por bioma na camada mais profunda. O
-  nosso ~0,10-0,16 fica abaixo, mas com matriz, tratamento da profundidade e validação diferentes (a nossa
+  nosso ~0,12-0,18 fica abaixo, mas com matriz, tratamento da profundidade e validação diferentes (a nossa
   é espacial em blocos, mais exigente); a comparação serve só como ordem de grandeza."""))
 
 c.append(md("""## 6. Mapas de referência (Köppen IPEF) e com o clima contínuo
 
 Estoque de SOC de 0-30 cm em 2023 (t/ha) e argila de 0-30 cm (%), versão fiel, grade de ~5 km. O SOC dos
 mapas já tem a correção de Duan (*smearing*, seção 5): o exp() da predição em log é multiplicado pelo fator
-de cada cenário (~1,23 na versão fiel, ~1,25 sem C2), para os mapas estimarem a média e não a mediana."""))
+de cada cenário (~1,19 na versão fiel, ~1,21 sem C2), para os mapas estimarem a média e não a mediana."""))
 c.append(code("""def ler(nome, banda=1):
     with rasterio.open(MAPAS / nome) as r:
         return r.read(banda), r.bounds
@@ -235,9 +249,9 @@ f.savefig(FIG / 'mapa_soc_fiel.png', dpi=110, bbox_inches='tight'); plt.show()
 f = trio('textura_0_30cm', 3, 'argila 0-30 cm (%)', 'Oranges', '')
 f.savefig(FIG / 'mapa_argila_fiel.png', dpi=110, bbox_inches='tight'); plt.show()"""))
 c.append(md("""Na versão fiel, os mapas com o Köppen e com o clima contínuo são muito parecidos na escala nacional. A
-diferença de SOC (terceiro painel) chega a ±19 t/ha em regiões específicas: com o clima contínuo, o SOC
-**aumenta** no arco Rondônia–Mato Grosso–sul do Amazonas e **diminui** no litoral norte (Amapá, Maranhão) e
-em partes do Nordeste. Na argila, a diferença é pequena (até ~2 pontos percentuais), porque a textura da
+diferença de SOC (terceiro painel) chega a ±23 t/ha em regiões específicas: com o clima contínuo, o SOC
+**diminui** num bloco contínuo no norte do Pará e no Amapá (baixo Amazonas) e em trechos do litoral de SP ao
+RS, e **aumenta** no noroeste do Amazonas e no Acre, em manchas do Centro-Oeste e na costa do Nordeste. Na argila, a diferença é pequena (até ~2 pontos percentuais), porque a textura da
 coleção 2 domina o modelo: um pouco menos argila no arco Rondônia–Mato Grosso, um pouco mais em faixas do
 Centro-Norte."""))
 
@@ -263,11 +277,11 @@ f = painel_diferencas('soc_0_30cm', 1, 'SOC (t/ha)', '_semC2')
 f.savefig(FIG / 'dif_soc_semC2.png', dpi=110, bbox_inches='tight'); plt.show()"""))
 c.append(md("""**Leitura:**
 
-- **"Sem clima" e o Köppen CHELSA são os que menos mudam o mapa** (|Δ| médio ≈ 2,7 t/ha); Holdridge,
-  Thornthwaite e zonas k10 ficam em ≈ 3,1-3,6 t/ha.
-- **O clima contínuo é o que mais muda** (≈ 6,0 t/ha): aumenta o SOC no arco Rondônia–Mato Grosso–sul do
-  Pará e reduz no litoral norte (Amapá, norte do Pará, Maranhão); no restante do país as diferenças se
-  alternam em manchas. As zonas k10 aumentam sobretudo no oeste da Amazônia.
+- **"Sem clima" é o que menos muda o mapa** (|Δ| médio ≈ 2,8 t/ha); Holdridge e Köppen CHELSA ficam em
+  ≈ 3,0-3,1 t/ha, e Thornthwaite e zonas k10 em ≈ 3,3-3,4 t/ha.
+- **O clima contínuo é o que mais muda** (≈ 6,7 t/ha): reduz fortemente o SOC no norte do Pará, no Amapá e no
+  centro da Amazônia e em partes do Sul e do Sudeste, e aumenta no noroeste do Amazonas e numa faixa do
+  Centro-Oeste (MT, GO, MS) até o oeste da Bahia e de Minas. As zonas k10 aumentam sobretudo no oeste da Amazônia.
 - **Mudar mais não é, por si, melhor** — quem diz qual mapa é mais confiável é a validação da seção 4, onde
   o clima contínuo foi o melhor. Os mapas mostram **onde** a escolha do clima pesa: nas transições climáticas
   e em regiões com poucas amostras, onde o modelo depende mais da informação climática."""))
@@ -285,8 +299,9 @@ f.savefig(FIG / 'mapa_argila_semC2.png', dpi=110, bbox_inches='tight'); plt.show
 c.append(md("""## 9. Conclusão
 
 1. **Para os modelos do MapBiomas, a melhor troca do Köppen é o clima contínuo** (12 variáveis do CHELSA e
-   do balanço hídrico, todas já em assets no GEE). É o único cenário que melhora o SOC em todas as repetições
-   nas duas versões e o que mais ajuda a textura quando o modelo não depende do produto anterior.
+   do balanço hídrico, todas já em assets no GEE). É o que mais melhora o SOC nas duas versões (em todas as
+   repetições, com ganho 3 vezes maior que o da segunda opção) e o que mais ajuda a textura quando o modelo
+   não depende do produto anterior.
 2. **Se for preciso uma covariável categórica, as zonas climáticas k10** são a melhor classificação —
    segunda melhor opção no geral.
 3. **Com a textura da coleção 2 como covariável, o clima não importa para a textura.** Isso não é um mérito
@@ -296,14 +311,14 @@ c.append(md("""## 9. Conclusão
 4. **Os ganhos são modestos em valor absoluto**, porque o clima é uma entre ~110 covariáveis e bioma,
    fitofisionomia e índices espectrais já carregam parte do sinal climático.
 
-**Limitações:** matriz de SOC não é a de produção; GBM do scikit-learn sem subamostragem; mapas a ~5 km
+**Limitações:** a matriz de SOC não é a de produção (mesmos pontos da C3, mas covariáveis extraídas por nós); GBM do scikit-learn sem subamostragem; mapas a ~5 km
 (o mapa a 30 m do cenário escolhido pode ser gerado no GEE); amostra concentrada em Rondônia e no RS."""))
 
 c.append(md("""## 10. Como reproduzir
 
 ```bash
 cd codigo
-python dados.py                            # GEE (matrizes restritas) + climas da corelacao
+python dados.py                            # GEE: matriz de textura, pontos de SOC C3 + covariáveis, climas
 ./rodar.sh                                 # fase 1 (textura, SOC) e mapas, versão fiel
 REPRODUCAO_SEM_C2=1 ./rodar.sh             # idem, sem a textura da coleção 2
 python notebook_resultados.py              # regenera este notebook
