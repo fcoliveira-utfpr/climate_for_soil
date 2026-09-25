@@ -556,3 +556,13 @@ do Holdridge L2 (0,083 x 0,094); na areia atrás do Köppen IPEF L1. Conclusão 
 zonas k10 = melhor classificação isolada; notebook enquadrado como "classificação sozinha" com ponteiros para
 o experimento e a reprodução. `experimento_clima_modelos.ipynb` ganhou a seção 9 com a atualização da
 reprodução.
+
+## Métricas do MapBiomas na reprodução (2026-09-25)
+
+`climas/reproducao/codigo/metricas_mapbiomas.py` calcula o `error_statistics` do MapBiomas (ME, MAE, RMSE,
+MEC, slope; MEC = mesma fórmula do nosso R²) nas predições fora da amostra (1ª repetição), textura em % e
+SOC em t/ha (com e sem smearing de Duan). Achado: SOC em t/ha tem MEC ~0,10 (fiel) contra R² 0,275 em log;
+viés de ~−10 t/ha pela retransformação do log (smearing elimina, MEC 0,14-0,16) e cauda longa (máx ~1.190
+t/ha). **Correção:** antes eu tinha dito que nosso SOC (0,275, log) estava "na mesma faixa" do MEC do
+MapBiomas por bioma (0,25-0,27, t/ha) — escalas diferentes, comparação errada; corrigido no relatório
+(seção 7.6) e no notebook da reprodução (seção 5). Ranking dos climas igual em t/ha.
