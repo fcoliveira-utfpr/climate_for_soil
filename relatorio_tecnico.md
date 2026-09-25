@@ -508,16 +508,38 @@ contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 4,8 t/ha); sem cl
 *Figura 13. Argila de 0-30 cm (%), versão sem textura C2: Köppen IPEF, clima contínuo e a diferença.*
 
 
-### 7.6 Comparação com a validação oficial do MapBiomas
+### 7.6 Métricas do MapBiomas e comparação com a validação oficial
 
-A métrica deles é o MEC, com a mesma fórmula do R² usado aqui.
-- **Textura:** MEC 0,81 (areia), 0,66 (silte) e 0,75 (argila) em 0-100 cm, com dobras por perfil e C2 como
-  covariável. A reprodução dá 0,85, 0,84 e 0,82 em 0-30 cm, na mesma faixa. É mais alta porque as camadas
-  profundas, piores, ficam de fora.
-- **SOC:** o R² deles de 0,73 (OOB) e 0,58 ("sem vazamento") **não é comparável**: eles empilham o estoque
-  acumulado de várias profundidades, e a `profundidade` é a covariável mais importante ("mais fundo, mais
-  carbono"). O número mais comparável que publicam (por bioma, camada mais profunda, sem vazamento) é
-  **0,25-0,27** em Amazônia, Caatinga e Cerrado, na mesma faixa dos 0,275 da reprodução.
+O MapBiomas valida com a função `error_statistics`: ME (viés), MAE, RMSE, **MEC** (1 − MSE/variância do
+observado, a mesma fórmula do R² fora da amostra usado aqui) e **slope** (inclinação de observado ~ previsto;
+1 é o ideal, acima de 1 as predições estão "achatadas"). As mesmas métricas foram calculadas
+(`metricas_mapbiomas.py`) nas predições fora da amostra, na unidade deles: textura em % e **SOC em t/ha**.
+
+| Versão fiel | ME | MAE | RMSE | MEC | slope |
+|---|---|---|---|---|---|
+| Areia (%), Köppen / clima contínuo | 0,43 / 0,37 | 6,05 / 5,94 | 10,62 / 10,49 | 0,841 / 0,844 | 0,97 / 0,98 |
+| Silte (%), Köppen / clima contínuo | −0,07 / −0,02 | 3,54 / 3,52 | 5,86 / 5,85 | 0,835 / 0,836 | 1,01 / 1,01 |
+| Argila (%), Köppen / clima contínuo | −0,35 / −0,36 | 5,14 / 5,07 | 8,70 / 8,59 | 0,818 / 0,822 | 0,98 / 0,98 |
+| SOC (t/ha), Köppen / clima contínuo | −10,4 / −10,6 | 22,0 / 22,0 | 62,0 / 61,6 | 0,100 / 0,114 | 1,65 / 1,71 |
+| SOC (t/ha) com smearing, Köppen / clima contínuo | −1,0 / −1,3 | 23,2 / 23,1 | 60,7 / 60,1 | 0,139 / 0,156 | 1,34 / 1,38 |
+
+- **Textura:** a reprodução fica na faixa do MapBiomas (MEC 0,81 areia, 0,66 silte, 0,75 argila em 0-100 cm,
+  com dobras por perfil e C2 como covariável). A nossa é mais alta porque avalia só 0-30 cm (as camadas
+  profundas são piores). Viés pequeno e slope perto de 1.
+- **SOC em t/ha:** o MEC é **~0,10** (versão fiel), bem abaixo do R² em log (0,275). Voltar do log com exp()
+  estima algo próximo da mediana, e o SOC é muito assimétrico (mediana 40 t/ha, média 51, máximo ~1.190):
+  o modelo subestima em média ~10 t/ha. A correção de Duan (*smearing*) elimina o viés e leva o MEC a
+  0,14-0,16. O restante é a cauda longa: poucos solos com estoques muito altos dominam o erro quadrático
+  (RMSE ≈ 3 × MAE). Para mapas em t/ha, recomenda-se aplicar o smearing ou modelar em escala original.
+- **Comparação com o SOC do MapBiomas:** eles publicam MEC em t/ha de 0,73 (OOB) e 0,58 ("sem vazamento"),
+  mas com o estoque acumulado de várias profundidades empilhadas, em que a profundidade explica boa parte;
+  e 0,25-0,27 por bioma na camada mais profunda. **O nosso MEC em t/ha (0,10-0,16) fica abaixo** desses
+  números. Uma versão anterior deste relatório comparava o R² em log (0,275) com o MEC deles em t/ha e
+  concluía que estavam na mesma faixa; **essa comparação estava errada** (escalas diferentes). As diferenças
+  de matriz, profundidade e validação (a nossa é espacial em blocos, mais exigente) impedem uma comparação
+  direta; o número serve só como ordem de grandeza.
+- **O ranking dos climas não muda com a métrica:** em t/ha, o clima contínuo também é o melhor (MEC 0,114 ×
+  0,100 do Köppen na versão fiel; 0,081 × 0,065 sem C2).
 
 ### 7.7 Teste rápido de algoritmos
 
@@ -551,6 +573,7 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 - A matriz de SOC de produção da C3 não é acessível a esta conta; a reprodução do SOC usa a `carbon_datac2v2`.
 - O GBM do scikit-learn não tem a subamostragem de 0,632 do GEE.
 - Os mapas estão a ~5 km (valor do centro do pixel), e não a 30 m.
+- O SOC foi modelado em log; na escala de t/ha, sem correção, as estimativas têm viés de ~−10 t/ha (seção 7.6).
 - A validação das bases climáticas usa só 22 estações (2010-2019), com poucas na Amazônia.
 - A amostra de solo é concentrada (Rondônia e RS). A validação em blocos atenua, mas os ganhos medidos refletem mais
   essas regiões.
