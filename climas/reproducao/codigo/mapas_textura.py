@@ -43,10 +43,15 @@ def baixar_covariaveis():
     import covariaveis_gee as cg
     conectar(None)
     img = ee.Image.cat([cg.estaticas_textura(), cg.koppen_ipef()]).toFloat()
+    nomes = img.bandNames().getInfo()
     cfg.MAPAS.mkdir(parents=True, exist_ok=True)
     geemap.download_ee_image(img, filename=str(ARQ_COV), crs='EPSG:4326',
                              crs_transform=list(TRANSFORM)[:6], shape=FORMA, dtype='float32',
                              max_tile_size=8)
+    # geemap.download_ee_image nao grava as descricoes de banda no GeoTIFF; grava aqui, na
+    # mesma ordem de img.bandNames(), ja que grade_completa() le por nome (r.descriptions).
+    with rasterio.open(ARQ_COV, 'r+') as dst:
+        dst.descriptions = tuple(nomes)
 
 
 def _amostrar(arq, lon, lat, bandas=None):

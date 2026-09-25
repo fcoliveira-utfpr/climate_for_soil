@@ -28,8 +28,16 @@ def caminho_local(var: str, ano: int, mes: int) -> Path:
 
 
 def media_mensal(var: str, mes: int, perfil_referencia: dict):
-    """Média (ignorando ausências) de um mês, através dos anos 1991-2020, para uma variável."""
-    pilha = []
+    """Média (ignorando ausências) de um mês, através dos anos 1991-2020, para uma variável.
+
+    Acumula soma e contagem incrementalmente em vez de empilhar os 30 anos em memória
+    (equivalente a nanmean, mas com pico de memória de ~1 grade em vez de 30 -- empilhar
+    a grade inteira do Brasil por 30 anos passa de 2,8 GB e estourava em máquinas com
+    menos RAM livre).
+    """
+    soma = None
+    contagem = None
+    n_anos = 0
     for ano in range(ANO_INICIO, ANO_FIM + 1):
         caminho = caminho_local(var, ano, mes)
         if not caminho.exists():
@@ -39,18 +47,23 @@ def media_mensal(var: str, mes: int, perfil_referencia: dict):
                 perfil_referencia["shape"] = src.shape
                 perfil_referencia["transform"] = src.transform
                 perfil_referencia["crs"] = src.crs
-            pilha.append(src.read(1))
+            dados = src.read(1)
+        if soma is None:
+            soma = np.zeros(dados.shape, dtype="float64")
+            contagem = np.zeros(dados.shape, dtype="int32")
+        valido = ~np.isnan(dados)
+        soma[valido] += dados[valido]
+        contagem += valido
+        n_anos += 1
 
-    if not pilha:
+    if soma is None:
         print(f"  AVISO: nenhum arquivo para {var} mês {mes:02d} em {ANO_INICIO}-{ANO_FIM}; banda ficará toda NaN.")
         return None, 0, None
 
-    empilhado = np.stack(pilha, axis=0)
-    n_validos = np.sum(~np.isnan(empilhado), axis=0)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=RuntimeWarning)  # pixels sem nenhum ano válido -> NaN
-        media = np.nanmean(empilhado, axis=0)
-    return media.astype("float32"), len(pilha), n_validos
+        media = np.where(contagem > 0, soma / contagem, np.nan)
+    return media.astype("float32"), n_anos, contagem
 
 
 def gerar_variavel(var: str):
