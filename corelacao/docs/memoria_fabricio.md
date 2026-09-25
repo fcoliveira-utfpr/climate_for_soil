@@ -501,3 +501,46 @@ zonas homogêneas.
   zonas k10 como dummies (F1); não estratificar. Próximo passo sugerido: repetir dentro do pipeline deles.
 - Notebook `experimento_clima_modelos.ipynb`; figura `resultados/figuras/zonas_k10.png`; mapa
   `climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (fora do git; pode virar asset no GEE).
+
+## Reprodução dos modelos do MapBiomas com os climas (2026-09-24, em andamento)
+
+Pasta criada pelo usuário: `climas/reproducao/` (código, notebook, resultados agregados); dados gerados em
+`climas/dados_reproducao/` (fora do git). Pedido: dois experimentos (textura, depois SOC), com **todos** os
+nossos climas, e notebook com gráficos e mapas.
+
+**Como o MapBiomas trata a profundidade (lido no repositório):** textura = GBM (400 árvores, shrinkage 0,01,
+samplingRate 0,632, maxNodes 25) por alvo (ln((areia+1)/(argila+1)), ln((silte+1)/(argila+1)), esqueleto)
+e por camada de 10 cm (centros 5..95, horizontes a ±5 cm; `profundidade` = ponto médio do horizonte e
+também covariável), mapas 0-10 ... 90-100 cm, textura da coleção 2 como covariável. SOC = RF, matriz de
+produção `c03_soc_v2025_11_26_trep` com profundidades empilhadas, predição com profundidade = 30 (estoque
+0-30 cm) e textura 0-30 da C3 como covariável. **Esta conta não lê as matrizes de SOC da C3** (lista a pasta,
+mas leitura negada); lê `c03_psd_v2025_11_18` (a de produção da textura) e a `carbon_datac2v2`.
+
+**Decisões:** textura fiel (GBM por camada nas razões log, 0-30 cm = camadas 5/15/25, com C2 e
+profundidade); SOC com a `carbon_datac2v2` e a textura da cadeia (modelo de textura com as 88
+covariáveis comuns às duas matrizes, previsto nos locais de SOC dentro da dobra). Mapas numa grade de
+0,05° (~5 km) alinhada ao CHELSA (usuário concordou; 1 km no GEE fica para os mapas finais dos melhores
+cenários). Covariáveis do MapBiomas portadas para Python (`covariaveis_gee.py`): as 110 da textura batem
+com a matriz; as 24 extras do SOC (idades de uso, índices com decaimento, bordas, água, fogo, áreas
+estáveis, subprovíncias) conferidas contra 300 linhas da matriz no ano de cada linha: 100% iguais
+(`antropico` = idade de `agropecuaria`; fogo pela coleção 4.1 pública). SOC mapeado para 2023.
+
+**Resultados da reprodução (2026-09-25):**
+- Versão fiel (com textura C2 como covariável, como o MapBiomas): textura R² 0,82-0,85 e nenhum clima muda
+  (|ΔR²| ≤ 0,003; só o clima contínuo +0,002-0,003 em todas as reps). A C2 foi ajustada com as mesmas
+  amostras e "entrega" a resposta mesmo na validação espacial -> rodada também a **variante sem C2**
+  (`REPRODUCAO_SEM_C2=1`, saídas `_semC2`).
+- SOC fiel: Köppen 0,275; clima contínuo 0,289 (+0,014, todas as reps); Holdridge ETPM, Thornthwaite
+  (as duas CADs), zonas k10 e Holdridge ETH +0,002 a +0,005 (todas as reps); Köppen CHELSA empata.
+- Sem C2: textura R² 0,29-0,33 (Köppen); clima contínuo +0,023 (silte +0,038, areia +0,018, argila +0,013;
+  as três frações em todas as reps); zonas k10 +0,007 (areia e silte em todas as reps). SOC 0,171 ->
+  clima contínuo 0,194 (+0,023), zonas k10 +0,016, Thornthwaite solo +0,008.
+- Mapas (grade 0,05°, 36 GeoTIFFs em `climas/dados_reproducao/mapas/`): SOC mediano ~40 t/ha. O clima
+  contínuo é o que mais muda o mapa (|Δ| SOC ~4,8 t/ha sem C2): mais SOC no arco RO-MT-sul do PA, menos no
+  litoral norte. Pixels sem covariável do MapBiomas vinham como -inf no download: tratados como sem dado e
+  mascarados.
+- Notebook `climas/reproducao/reproducao_resultados.ipynb` (gerado por `codigo/notebook_resultados.py`);
+  figuras em `climas/reproducao/resultados/figuras/`. Execução: `codigo/rodar.sh` (lição: não usar
+  `pgrep -f` com o nome do script para encadear etapas, porque o próprio comando de espera casa com o padrão).
+- Recomendação: trocar o Köppen pelo clima contínuo; zonas k10 se precisar de categórica; discutir com o
+  MapBiomas a textura C2 como covariável (esconde a contribuição das outras e infla a validação).
