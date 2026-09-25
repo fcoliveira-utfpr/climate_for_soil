@@ -7,6 +7,7 @@ climas/dados_chelsa/awc/
 climas/dados_chelsa/thornthwaite/
 climas/dados_chelsa/zonas/
 climas/dados_reproducao/
+.claude/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store

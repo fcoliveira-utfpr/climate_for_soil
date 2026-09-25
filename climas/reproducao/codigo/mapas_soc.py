@@ -27,9 +27,14 @@ def baixar_extras():
     from gee_utils import conectar
     import covariaveis_gee as cg
     conectar(None)
-    geemap.download_ee_image(cg.extras_soc(ANO).toFloat(), filename=str(ARQ_EXTRAS), crs='EPSG:4326',
+    img = cg.extras_soc(ANO).toFloat()
+    nomes = img.bandNames().getInfo()
+    geemap.download_ee_image(img, filename=str(ARQ_EXTRAS), crs='EPSG:4326',
                              crs_transform=list(mt.TRANSFORM)[:6], shape=mt.FORMA, dtype='float32',
                              max_tile_size=8)
+    # geemap.download_ee_image nao grava as descricoes de banda no GeoTIFF; grava aqui (ver mapas_textura.py).
+    with rasterio.open(ARQ_EXTRAS, 'r+') as dst:
+        dst.descriptions = tuple(nomes)
 
 
 def grade_soc():
