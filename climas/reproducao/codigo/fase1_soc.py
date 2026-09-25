@@ -11,6 +11,10 @@ a textura dos locais de teste vem de modelos que nunca viram os blocos de teste.
 O modelo de textura desta etapa usa só as covariáveis que existem nas duas matrizes (os locais de SOC
 não têm as combinações geologia x solo da matriz de textura); a profundidade entra como o centro da camada.
 
+Os dados de SOC têm uma linha por local e profundidade (estoque acumulado até ela); a profundidade é
+covariável do RF, que é treinado com todas as linhas. O R² é calculado só nas linhas de 0-30 cm (o estoque
+que o MapBiomas mapeia); as outras profundidades do mesmo local ficam sempre na mesma dobra (mesmo bloco).
+
 Saída: resultados/tabelas/soc_repeticoes.csv e dados_reproducao/pontos/soc_oof.parquet (restrito).
 """
 import time
@@ -26,14 +30,16 @@ import modelagem as m
 def main():
     tex, soc = dados.carregar()
     cats = {c: m.categorias(c, tex, soc) for c in cfg.CENARIOS}
-    comuns = sorted(set(m.base(tex)) & set(m.base(soc)))                 # textura da cadeia
+    comuns = sorted(set(m.base(tex)) & set(m.base(soc)) - {'profundidade'})   # textura da cadeia
     cov_tex = comuns + ['profundidade']
     cov_soc = [c for c in m.base(soc) if c not in cfg.TEXTURA_C2]         # a textura vem da cadeia
     chaves_tex, chaves_soc = m.chave_bloco(tex), m.chave_bloco(soc)
     todas_chaves = pd.concat([chaves_tex, chaves_soc])
     y = np.log(soc.soc_g_m2.to_numpy(float))
+    aval = soc.profundidade.eq(cfg.PROF_SOC).to_numpy()                 # estoque de 0-30 cm
     rng = np.random.default_rng(cfg.SEMENTE)          # mesma sequência da fase 1a -> mesmas dobras
-    print(f'SOC: {len(soc)} locais | covariáveis SOC {len(cov_soc)} | textura da cadeia {len(cov_tex)}',
+    print(f'SOC: {len(soc)} linhas, {soc.ponto_id.nunique()} locais, {aval.sum()} avaliadas (0-30 cm) | '
+          f'covariáveis SOC {len(cov_soc)} | textura da cadeia {len(cov_tex)}',
           flush=True)
 
     linhas, oof = [], []
@@ -65,10 +71,12 @@ def main():
                 med = x[tr].median()
                 mod = m.rf(cfg.SEMENTE + rep).fit(x[tr].fillna(med).to_numpy(float), y[tr])
                 pred[te] = mod.predict(x[te].fillna(med).to_numpy(float))
-            linhas.append({'rep': rep, 'cenario': cen, 'n': len(soc), 'r2': m.r2(y, pred), 'rmse': m.rmse(y, pred)})
+            linhas.append({'rep': rep, 'cenario': cen, 'n': int(aval.sum()), 'r2': m.r2(y[aval], pred[aval]),
+                           'rmse': m.rmse(y[aval], pred[aval])})
             if rep == 0:
-                oof.append(pd.DataFrame({'ponto_id': soc.ponto_id, 'cenario': cen, 'longitude': soc.longitude,
-                                         'latitude': soc.latitude, 'log_soc_obs': y, 'log_soc_prev': pred}))
+                s = soc[aval]
+                oof.append(pd.DataFrame({'ponto_id': s.ponto_id, 'cenario': cen, 'longitude': s.longitude,
+                                         'latitude': s.latitude, 'log_soc_obs': y[aval], 'log_soc_prev': pred[aval]}))
             print(f'  rep {rep + 1} {cen:15s} R² {linhas[-1]["r2"]:.3f}  {time.time() - t0:5.0f}s', flush=True)
         pd.DataFrame(linhas).to_csv(cfg.TABELAS / f'soc_repeticoes{cfg.SUFIXO}.csv', index=False)          # parcial
     pd.concat(oof).to_parquet(cfg.PONTOS / f'soc_oof{cfg.SUFIXO}.parquet', index=False)

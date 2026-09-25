@@ -40,7 +40,8 @@ Para responder, o caminho foi dividido em etapas, cada uma motivada pelo que a a
 | Experimento | O que colocar no lugar do Köppen **dentro** de um modelo com as covariáveis do MapBiomas? | `corelacao/experimento_clima_modelos.ipynb` |
 | Reprodução | Repetir o teste **reproduzindo fielmente** os modelos do MapBiomas C3, com mapas | `climas/reproducao/` |
 
-Os dados de solo são as matrizes de treino do MapBiomas Solo C3 no Google Earth Engine (acesso restrito).
+Os dados de solo são as matrizes de treino do MapBiomas Solo C3 no Google Earth Engine (acesso restrito) e,
+no SOC da reprodução, os pontos da coleção 3 que alimentam a matriz de produção (seção 7.2).
 Os dados por ponto nunca foram versionados; só resultados agregados vão para o git.
 
 ---
@@ -435,17 +436,38 @@ deles, porque o SOC usa a textura como covariável).
 | | MapBiomas C3 | Reprodução |
 |---|---|---|
 | Textura | GBM (400 árvores, shrinkage 0,01, samplingRate 0,632, maxNodes 25) **por alvo e por camada de 10 cm** (horizontes a ±5 cm do centro), sobre ln((x+1)/(argila+1)); `profundidade` (ponto médio do horizonte) e textura da coleção 2 como covariáveis; mapas de 0-10 a 90-100 cm | igual, nas camadas de 0-30 cm (centros 5, 15, 25 cm); GBM do scikit-learn sem a subamostragem de 0,632 |
-| SOC | RF sobre a matriz com profundidades empilhadas, predição com profundidade = 30 (estoque 0-30 cm), textura de 0-30 cm da C3 como covariável | RF com a textura de 0-30 cm **prevista pelo modelo de textura do mesmo cenário** |
-| Matriz de SOC | `c03_soc_v2025_11_26_trep` | **sem acesso de leitura**; usada a `carbon_datac2v2` |
+| SOC | RF sobre a matriz com profundidades empilhadas, predição com profundidade = 30 (estoque 0-30 cm), textura de 0-30 cm da C3 como covariável | igual (profundidades empilhadas, profundidade como covariável, avaliação e mapas em 0-30 cm), com a textura de 0-30 cm **prevista pelo modelo de textura do mesmo cenário** |
+| Matriz de SOC | `c03_soc_v2025_11_26_trep` (pontos + covariáveis) | **sem acesso de leitura**; usados os **pontos da C3** que a alimentam (`ORIGINAIS/collection3/2025_11_26_soildata_soc_trep`), com as covariáveis extraídas por nós no GEE |
+
+**Dados de SOC.** A primeira versão da reprodução usou a `matriz-collection3_carbon_datac2v2`, a única matriz
+de carbono legível, mas com os estoques da **coleção 2** (12.207 locais). Depois foi localizado o asset de
+pontos da C3, `ORIGINAIS/collection3/2025_11_26_soildata_soc_trep` (35.235 linhas, 18.325 perfis), o mesmo
+conjunto publicado no repositório SoilData (doi [10.60502/SoilData/IUZOAK](https://doi.org/10.60502/SoilData/IUZOAK),
+CC BY 4.0). Ele traz, para cada perfil, o estoque de carbono acumulado da superfície até cada profundidade,
+com e sem correção de viés por *quantile mapping*; foi usado o corrigido (`carbono_gm2_qmap`). Comparado à
+matriz da C2, tem ~3.000 locais novos (sobretudo MT, RO e Pantanal) e estoques recalculados (correlação de
+0,85 em log nos mesmos locais). Decisões:
+- **Fora:** pseudoamostras (afloramentos, areias) e as réplicas `trep10`/`trep20`, cópias de ~2.300 perfis
+  com o ano recuado em 10 e 20 anos e o mesmo carbono (reforçam esses perfis no modelo temporal do MapBiomas,
+  mas não trazem informação nova para a validação por local).
+- **Covariáveis:** as 106 do modelo de SOC, extraídas no GEE a 30 m com o módulo portado (seção 7.4), no ano
+  de coleta de cada amostra (antes de 1985 → 1985; 2024 → 2023, último ano das bordas). Conferidas contra a
+  matriz antiga em 200 locais: as estáticas batem em 100%, exceto `sibcs_homogeneo`, que na matriz antiga
+  incluía o LATOSSOLO; seguimos a definição da C3, idêntica à da matriz de textura.
+- **Resultado:** 25.875 linhas (local × profundidade) em 13.564 locais; 10.892 locais têm o estoque de 0-30 cm,
+  que é o avaliado. O RF é treinado com todas as linhas.
+
+A troca elevou o R² do SOC em ~0,06 em todos os cenários (Köppen: 0,275 → 0,336) sem mudar o ranking dos
+climas, e aumentou o ganho do clima contínuo. A textura não muda (as dobras são as mesmas).
 
 Foram confirmados na matriz: a razão log é ln((areia+1)/(argila+1)) em g/kg (erro máximo de 0,016 pelo
 arredondamento) e a `profundidade` é o ponto médio do horizonte.
 
 **Cadeia textura → SOC sem vazamento.** Em cada dobra, os modelos de textura são treinados só com os
-horizontes dos blocos de treino e depois preveem a textura nos locais de SOC. Sem esse cuidado, os ~9.800
-locais com SOC e textura medidos vazariam a resposta. As dobras são as mesmas na textura e no SOC. Como os
+horizontes dos blocos de treino e depois preveem a textura nos locais de SOC. Sem esse cuidado, os perfis com SOC e
+textura medidos (a maioria) vazariam a resposta. As dobras são as mesmas na textura e no SOC. Como os
 locais de SOC não têm as combinações geologia × solo da matriz de textura, o modelo de textura da cadeia usa
-as 88 covariáveis comuns às duas matrizes.
+as 82 covariáveis comuns às duas matrizes, mais a profundidade.
 
 ### 7.3 A textura da coleção 2 "entrega" a resposta
 
@@ -467,25 +489,31 @@ anterior**.
 - **Mapas numa grade de 0,05° (~5 km) alinhada ao CHELSA:** a 1 km, seriam ~10 milhões de pixels × 9 cenários
   × 6 modelos, inviável localmente. Cada pixel usa as covariáveis do centro (um "ponto virtual") e o clima
   de 1 km. O SOC é mapeado para 2023. Pixels sem covariável vinham como −∞ no download e foram mascarados.
+- **Pontos de SOC:** as mesmas imagens foram amostradas nos pontos da C3 (seção 7.2).
 - **Resultado:** 36 GeoTIFFs (9 cenários × textura e SOC × duas versões).
 
 ### 7.5 Resultados
 
 | Ganho de R² sobre o Köppen IPEF | Textura, fiel | SOC, fiel | Textura, sem C2 | SOC, sem C2 |
 |---|---|---|---|---|
-| **Clima contínuo** | +0,002 | **+0,014** | **+0,023** (silte +0,038) | **+0,023** |
-| Zonas k10 | 0,000 | +0,004 | +0,007 | **+0,016** |
-| Thornthwaite (as duas CADs) | ~0 | +0,005 | +0,003 | +0,007 |
-| Holdridge (as duas ETPs) | ~0 | +0,002 a +0,005 | ~0 | +0,002 |
-| Köppen CHELSA | ~0 | 0,000 | +0,002 | +0,002 |
+| **Clima contínuo** | +0,002 | **+0,025** | **+0,023** (silte +0,038) | **+0,038** |
+| Zonas k10 | 0,000 | +0,009 | +0,007 | **+0,015** |
+| Thornthwaite (as duas CADs) | ~0 | +0,006 | +0,003 | +0,008 a +0,010 |
+| Holdridge (as duas ETPs) | ~0 | +0,002 a +0,005 | ~0 | +0,004 a +0,007 |
+| Sem clima | ~0 | +0,002 | ~0 | +0,002 |
+| Köppen CHELSA | ~0 | −0,001 | +0,002 | −0,002 |
 
-R² de referência (Köppen IPEF): textura 0,82-0,85 (fiel) e 0,29-0,33 (sem C2); SOC 0,275 (fiel) e 0,171
-(sem C2).
+R² de referência (Köppen IPEF): textura 0,82-0,85 (fiel) e 0,29-0,33 (sem C2); SOC 0,336 (fiel) e 0,232
+(sem C2), com os pontos da C3.
 
 - **O clima contínuo é a melhor troca nas duas versões:** melhora o SOC em todas as repetições e é o único
   clima que ajuda claramente a textura quando o modelo não depende da C2 (as três frações, em todas as
   repetições).
-- **As zonas k10 ficam em segundo.**
+- **As zonas k10 ficam em segundo.** Thornthwaite e Holdridge ETP Penman também ficam à frente do Köppen no
+  SOC em todas as repetições, mas com ganhos menores.
+- **O Köppen IPEF não acrescenta nada ao modelo de SOC:** tirar o clima (cenário "sem clima") dá um R² um
+  pouco maior que o dele. As outras covariáveis (bioma, fitofisionomia, índices espectrais) já carregam o que
+  a classificação sabe.
 
 ![Ganho de R² de cada clima em relação ao Köppen](climas/reproducao/resultados/figuras/ganho_vs_koppen.png)
 *Figura 10. Ganho de R² de cada clima em relação ao Köppen IPEF, na versão fiel (em cima) e sem a textura da
@@ -493,8 +521,9 @@ coleção 2 (embaixo). Azul: melhor em todas as repetições; laranja: pior em t
 Note as escalas: na versão fiel, os ganhos na textura são de milésimos.*
 
 - **Nos mapas,** a troca muda pouco a média nacional (SOC mediano de ~50 t/ha nos mapas), mas redistribui o carbono:
-  com o clima contínuo, **mais SOC no arco Rondônia–Mato Grosso–sul do Pará e menos no litoral norte**
-  (Amapá, norte do Pará, Maranhão).
+  com o clima contínuo, **menos SOC num bloco no norte do Pará e no Amapá (baixo Amazonas)** e em trechos
+  do litoral Sul/Sudeste, e **mais no noroeste do Amazonas, no Acre, em faixas do Centro-Oeste e na costa do
+  Nordeste**.
 
 ![Mapas de SOC: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_soc_fiel.png)
 *Figura 11. Estoque de SOC de 0-30 cm em 2023 (t/ha), versão fiel: com o Köppen IPEF, com o clima contínuo e
@@ -503,7 +532,7 @@ Duan (seção 7.6).*
 
 ![Diferença de SOC de cada clima em relação ao Köppen](climas/reproducao/resultados/figuras/dif_soc_semC2.png)
 *Figura 12. Diferença de SOC (t/ha) de cada cenário em relação ao Köppen, versão sem textura C2. O clima
-contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 6,0 t/ha); sem clima e Köppen CHELSA, os que menos.*
+contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 6,7 t/ha); os demais ficam entre 2,8 (sem clima) e 3,4 t/ha.*
 
 ![Mapas de argila: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_argila_semC2.png)
 *Figura 13. Argila de 0-30 cm (%), versão sem textura C2: Köppen IPEF, clima contínuo e a diferença.*
@@ -521,26 +550,26 @@ observado, a mesma fórmula do R² fora da amostra usado aqui) e **slope** (incl
 | Areia (%), Köppen / clima contínuo | 0,43 / 0,37 | 6,05 / 5,94 | 10,62 / 10,49 | 0,841 / 0,844 | 0,97 / 0,98 |
 | Silte (%), Köppen / clima contínuo | −0,07 / −0,02 | 3,54 / 3,52 | 5,86 / 5,85 | 0,835 / 0,836 | 1,01 / 1,01 |
 | Argila (%), Köppen / clima contínuo | −0,35 / −0,36 | 5,14 / 5,07 | 8,70 / 8,59 | 0,818 / 0,822 | 0,98 / 0,98 |
-| SOC (t/ha), Köppen / clima contínuo | −10,4 / −10,6 | 22,0 / 22,0 | 62,0 / 61,6 | 0,100 / 0,114 | 1,65 / 1,71 |
-| SOC (t/ha) com smearing, Köppen / clima contínuo | −1,0 / −1,3 | 23,2 / 23,1 | 60,7 / 60,1 | 0,139 / 0,156 | 1,34 / 1,38 |
+| SOC (t/ha), Köppen / clima contínuo | −9,1 / −8,9 | 20,3 / 20,1 | 48,9 / 48,4 | 0,118 / 0,137 | 1,29 / 1,37 |
+| SOC (t/ha) com smearing, Köppen / clima contínuo | −0,1 / −0,5 | 21,3 / 20,9 | 47,8 / 47,3 | 0,156 / 0,176 | 1,08 / 1,16 |
 
 - **Textura:** a reprodução fica na faixa do MapBiomas (MEC 0,81 areia, 0,66 silte, 0,75 argila em 0-100 cm,
   com dobras por perfil e C2 como covariável). A nossa é mais alta porque avalia só 0-30 cm (as camadas
   profundas são piores). Viés pequeno e slope perto de 1.
-- **SOC em t/ha:** o MEC é **~0,10** (versão fiel), bem abaixo do R² em log (0,275). Voltar do log com exp()
-  estima algo próximo da mediana, e o SOC é muito assimétrico (mediana 40 t/ha, média 51, máximo ~1.190):
-  o modelo subestima em média ~10 t/ha. A correção de Duan (*smearing*) elimina o viés e leva o MEC a
-  0,14-0,16. O restante é a cauda longa: poucos solos com estoques muito altos dominam o erro quadrático
-  (RMSE ≈ 3 × MAE). Por isso, os mapas de SOC (Figuras 11 e 12) já aplicam o smearing: o exp() da predição é multiplicado pelo fator de cada cenário (~1,23 na versão fiel, ~1,25 sem C2), calculado nas predições fora da amostra.
+- **SOC em t/ha:** o MEC é **~0,12** (versão fiel), bem abaixo do R² em log (0,336). Voltar do log com exp()
+  estima algo próximo da mediana, e o SOC é muito assimétrico (mediana 47 t/ha, média 55, máximo ~1.360):
+  o modelo subestima em média ~9 t/ha. A correção de Duan (*smearing*) elimina o viés e leva o MEC a
+  0,16-0,18. O restante é a cauda longa: poucos solos com estoques muito altos dominam o erro quadrático
+  (RMSE ≈ 2,4 × MAE). Por isso, os mapas de SOC (Figuras 11 e 12) já aplicam o smearing: o exp() da predição é multiplicado pelo fator de cada cenário (~1,19 na versão fiel, ~1,21 sem C2), calculado nas predições fora da amostra.
 - **Comparação com o SOC do MapBiomas:** eles publicam MEC em t/ha de 0,73 (OOB) e 0,58 ("sem vazamento"),
   mas com o estoque acumulado de várias profundidades empilhadas, em que a profundidade explica boa parte;
-  e 0,25-0,27 por bioma na camada mais profunda. **O nosso MEC em t/ha (0,10-0,16) fica abaixo** desses
-  números. Uma versão anterior deste relatório comparava o R² em log (0,275) com o MEC deles em t/ha e
+  e 0,25-0,27 por bioma na camada mais profunda. **O nosso MEC em t/ha (0,12-0,18) fica abaixo** desses
+  números. Uma versão anterior deste relatório comparava o R² em log (então 0,275) com o MEC deles em t/ha e
   concluía que estavam na mesma faixa; **essa comparação estava errada** (escalas diferentes). As diferenças
   de matriz, profundidade e validação (a nossa é espacial em blocos, mais exigente) impedem uma comparação
   direta; o número serve só como ordem de grandeza.
-- **O ranking dos climas não muda com a métrica:** em t/ha, o clima contínuo também é o melhor (MEC 0,114 ×
-  0,100 do Köppen na versão fiel; 0,081 × 0,065 sem C2).
+- **O ranking dos climas não muda com a métrica:** em t/ha, o clima contínuo também é o melhor (MEC 0,137 ×
+  0,118 do Köppen na versão fiel; 0,094 × 0,081 sem C2).
 
 ### 7.7 Teste rápido de algoritmos
 
@@ -564,17 +593,21 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 4. **Covariável de textura da coleção 2:** ela domina o modelo de textura e esconde a contribuição das
    demais covariáveis, inclusive o clima; convém discutir o seu uso com a equipe do MapBiomas.
 5. **Magnitude:** os ganhos são modestos em valor absoluto, porque o clima é uma entre ~110 covariáveis, mas
-   são consistentes entre repetições e entre algoritmos. No SOC, chegam a 5-13% do R².
+   são consistentes entre repetições e entre algoritmos. No SOC, chegam a 7-16% do R².
 
 ---
 
 ## 9. Limitações e próximos passos
 
 **Limitações:**
-- A matriz de SOC de produção da C3 não é acessível a esta conta; a reprodução do SOC usa a `carbon_datac2v2`.
+- A matriz de SOC de produção da C3 não é acessível a esta conta; a reprodução usa os mesmos pontos da C3,
+  mas com covariáveis extraídas por nós (podem diferir em detalhes das de produção, como `sibcs_homogeneo`).
+- A comparação das classificações (seção 5) e o experimento (seção 6) usam a matriz de SOC antiga
+  (`carbon_datac2v2`, estoques da C2); só a reprodução (seção 7) passou para os pontos da C3. Como na
+  reprodução a troca não mudou o ranking dos climas, as conclusões das seções 5 e 6 devem se manter.
 - O GBM do scikit-learn não tem a subamostragem de 0,632 do GEE.
 - Os mapas estão a ~5 km (valor do centro do pixel), e não a 30 m.
-- O SOC foi modelado em log. A correção de Duan tira o viés médio (~−10 t/ha) dos mapas, mas é um fator único por cenário e não corrige o erro na cauda de solos com estoques muito altos (seção 7.6).
+- O SOC foi modelado em log. A correção de Duan tira o viés médio (~−9 t/ha) dos mapas, mas é um fator único por cenário e não corrige o erro na cauda de solos com estoques muito altos (seção 7.6).
 - A validação das bases climáticas usa só 22 estações (2010-2019), com poucas na Amazônia.
 - A amostra de solo é concentrada (Rondônia e RS). A validação em blocos atenua, mas os ganhos medidos refletem mais
   essas regiões.
@@ -582,7 +615,8 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
   ETP de Thornthwaite ou de Holdridge nas letras térmicas e nas fronteiras de umidade.
 
 **Próximos passos sugeridos:**
-1. Pedir acesso de leitura à `c03_soc_v2025_11_26_trep` e repetir o SOC na matriz de produção.
+1. Pedir acesso de leitura à `c03_soc_v2025_11_26_trep` e conferir as covariáveis extraídas contra as de
+   produção.
 2. Gerar os mapas a 30 m no GEE para o Köppen IPEF e o clima contínuo (e as zonas k10, que precisam virar
    asset).
 3. Discutir com o MapBiomas o uso da textura da coleção 2 como covariável.
