@@ -207,6 +207,16 @@ log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2366,37.004999999999995,48
 log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',1410,33.225,41.663425531914896
 log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',10,28.725,35.755
 log_soc,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',284,22.450000000000003,25.587253521126758
+log_soc,Zonas climáticas k10,L1,zona_k10,1,618,31.27,37.30607605177993
+log_soc,Zonas climáticas k10,L1,zona_k10,10,1940,62.510000000000005,71.92339175257732
+log_soc,Zonas climáticas k10,L1,zona_k10,2,1013,28.73,35.024610069101676
+log_soc,Zonas climáticas k10,L1,zona_k10,3,467,43.62,54.52749464668094
+log_soc,Zonas climáticas k10,L1,zona_k10,4,3417,34.11,40.53568188469417
+log_soc,Zonas climáticas k10,L1,zona_k10,5,155,52.93,58.10516129032258
+log_soc,Zonas climáticas k10,L1,zona_k10,6,1289,41.11,54.510880527540735
+log_soc,Zonas climáticas k10,L1,zona_k10,7,963,35.21,65.12895119418484
+log_soc,Zonas climáticas k10,L1,zona_k10,8,969,49.75,62.31963364293085
+log_soc,Zonas climáticas k10,L1,zona_k10,9,1376,37.715,42.98521802325582
 argila,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,26.3,30.290460913971454
 argila,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,16.0,18.65057251908397
 argila,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4079,34.0,36.796212306937974
@@ -415,6 +425,16 @@ argila,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,27.0,31.40557659932659
 argila,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',957,21.0,24.902664576802508
 argila,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
 argila,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,15.4,17.247014925373136
+argila,Zonas climáticas k10,L1,zona_k10,1,575,16.95,22.454521739130435
+argila,Zonas climáticas k10,L1,zona_k10,10,1610,42.0,42.73981366459628
+argila,Zonas climáticas k10,L1,zona_k10,2,623,19.0,22.702086677367575
+argila,Zonas climáticas k10,L1,zona_k10,3,480,26.0,29.393229166666668
+argila,Zonas climáticas k10,L1,zona_k10,4,3902,28.55,33.07296258329062
+argila,Zonas climáticas k10,L1,zona_k10,5,171,25.75,26.18888888888889
+argila,Zonas climáticas k10,L1,zona_k10,6,1542,28.0,31.38041504539559
+argila,Zonas climáticas k10,L1,zona_k10,7,790,21.0,25.7903164556962
+argila,Zonas climáticas k10,L1,zona_k10,8,979,42.0,42.76501532175689
+argila,Zonas climáticas k10,L1,zona_k10,9,1306,18.0,24.634724349157732
 areia,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,56.0,53.2567762210292
 areia,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,64.85,62.44389312977099
 areia,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4079,35.0,37.60859279235107
@@ -623,6 +643,16 @@ areia,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,58.85,55.56670875420875
 areia,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',957,58.3,55.44958202716823
 areia,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
 areia,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,65.0,64.14179104477611
+areia,Zonas climáticas k10,L1,zona_k10,1,575,65.0,58.622173913043476
+areia,Zonas climáticas k10,L1,zona_k10,10,1610,19.15,24.47251552795031
+areia,Zonas climáticas k10,L1,zona_k10,2,623,61.0,57.11982343499198
+areia,Zonas climáticas k10,L1,zona_k10,3,480,40.125,40.76770833333333
+areia,Zonas climáticas k10,L1,zona_k10,4,3902,56.45,53.764082521783706
+areia,Zonas climáticas k10,L1,zona_k10,5,171,40.0,39.39590643274854
+areia,Zonas climáticas k10,L1,zona_k10,6,1542,52.849999999999994,51.77759403372244
+areia,Zonas climáticas k10,L1,zona_k10,7,790,61.0,58.356392405063296
+areia,Zonas climáticas k10,L1,zona_k10,8,979,40.0,38.644126659856994
+areia,Zonas climáticas k10,L1,zona_k10,9,1306,57.0,52.010528330781014
 silte,Köppen IPEF (referência),L1,koppen_ipef_l1,A,7637,12.0,16.4502815241587
 silte,Köppen IPEF (referência),L1,koppen_ipef_l1,B,262,16.0,18.916984732824428
 silte,Köppen IPEF (referência),L1,koppen_ipef_l1,C,4079,24.0,25.5938955626379
@@ -831,3 +861,13 @@ silte,Thornthwaite CAD do solo,L3,thsolo_l3,C2wA'a',2376,10.0,13.028535353535354
 silte,Thornthwaite CAD do solo,L3,thsolo_l3,DdA'a',957,17.0,19.646708463949846
 silte,Thornthwaite CAD do solo,L3,thsolo_l3,DwA'a',4,,
 silte,Thornthwaite CAD do solo,L3,thsolo_l3,EdA'a',201,16.9,18.621144278606966
+silte,Zonas climáticas k10,L1,zona_k10,1,575,14.0,18.92608695652174
+silte,Zonas climáticas k10,L1,zona_k10,10,1610,32.0,32.78453416149068
+silte,Zonas climáticas k10,L1,zona_k10,2,623,17.0,20.18354735152488
+silte,Zonas climáticas k10,L1,zona_k10,3,480,25.0,29.831458333333334
+silte,Zonas climáticas k10,L1,zona_k10,4,3902,10.0,13.160661199384931
+silte,Zonas climáticas k10,L1,zona_k10,5,171,32.65,34.396491228070175
+silte,Zonas climáticas k10,L1,zona_k10,6,1542,13.5,16.840726329442283
+silte,Zonas climáticas k10,L1,zona_k10,7,790,13.0,15.853037974683543
+silte,Zonas climáticas k10,L1,zona_k10,8,979,15.0,18.589070480081716
+silte,Zonas climáticas k10,L1,zona_k10,9,1306,21.0,23.353598774885146
