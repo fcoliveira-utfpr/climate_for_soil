@@ -591,3 +591,90 @@ treinado em todas as linhas, R² só em 0-30 cm. Conferência: estáticas 100% i
 dobras). MEC t/ha: Köppen 0,118 (0,156 smearing), contínuo 0,137 (0,176). O padrão espacial da diferença
 contínuo − Köppen mudou: agora menos SOC no norte do PA/AP, mais no NW do AM e em faixas do Centro-Oeste.
 Corelacao (seções 5-6 do relatório) segue com a matriz C2.
+
+## Metodologia completa das zonas climáticas homogêneas k10 (registro de 2026-09-25)
+
+Código: `corelacao/codigo/zonas_clima.py`. Saídas: centróides e padronização em
+`corelacao/resultados/tabelas/zonas_k10_{centroides,padronizacao}.csv`; mapa em
+`climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (uint8, 0 = sem dado; fora do git, pode virar asset).
+Também foi gerado k = 15 (`zonas_k15_*`), como sensibilidade.
+
+**Objetivo.** Ter uma classificação climática definida pelos dados (sem as regras fixas do Köppen, Holdridge
+ou Thornthwaite), que agrupe regiões de clima parecido e possa entrar nos modelos como o Köppen entra hoje.
+
+**1. Variáveis (9), por pixel do CHELSA V2.1 (~1 km, normal 1991-2020).**
+Calculadas por `experimento_dados.calcular_variaveis`, a mesma função usada nos pontos:
+- `clim_t_media`: temperatura média anual (média das 12 médias mensais), °C;
+- `clim_t_mes_frio`: temperatura média do mês mais frio, °C;
+- `clim_p_anual`: chuva anual (soma das 12 mensais), mm;
+- `clim_p_mes_seco`: chuva do mês mais seco, mm;
+- `clim_p_sazonalidade`: desvio-padrão / média da chuva mensal (coeficiente de variação);
+- `clim_etp_anual`: ETP anual (Penman-Monteith do CHELSA), mm;
+- `clim_def_anual`, `clim_exc_anual`, `clim_im`: deficiência, excedente e índice de umidade do balanço hídrico
+  de Thornthwaite-Mather com CAD 100 mm (bandas 6, 7 e 10 de `Thornthwaite_CHELSA_BR_1991_2020_CAD100.tif`).
+Ficaram fora das zonas (mas estão no clima contínuo): temperatura do mês mais quente, biotemperatura e ETP/P.
+O motivo da exclusão não foi registrado.
+
+**2. Transformações.**
+- log(1 + x) na chuva anual, na chuva do mês mais seco, na DEF e no EXC (muito assimétricas; sem o log, os
+  pixels extremos da Amazônia e do semiárido dominariam as distâncias);
+- padronização (z-score) com a média e o desvio da amostra de pixels, para que °C e mm pesem igual. Os
+  valores ficam em `zonas_k10_padronizacao.csv` e são reutilizados para atribuir pixels e pontos.
+
+**3. Amostra de ajuste: pixels do Brasil, não pontos de solo.**
+- Máscara do Brasil: banda 2 de `climas/dados_chelsa/awc/AWC_BR_grade_CHELSA.tif`; só pixels com todas as
+  variáveis válidas.
+- Amostra aleatória de 300 mil pixels, com probabilidade proporcional ao cosseno da latitude (área real do
+  pixel em graus); semente 2026.
+- Por que não os pontos: (a) as zonas descrevem o clima do país e viram um mapa aplicável a qualquer pixel;
+  (b) a amostra de solo é concentrada (~26% RO, ~19% RS) e puxaria as zonas para essas regiões; (c) as zonas
+  não usam SOC nem textura, então não há vazamento quando entram nos modelos de SOC e textura.
+
+**4. Agrupamento.** `sklearn.cluster.KMeans(n_clusters=10, n_init=10, random_state=2026)` sobre as 9
+variáveis padronizadas (distância euclidiana, todas com o mesmo peso). As zonas são renumeradas da mais
+quente (1) para a mais fria (10), pela temperatura média do centróide.
+
+**5. Escolha de k = 10.** Igual ao número de classes do Köppen L3 presentes no Brasil (10, tanto no IPEF
+quanto no CHELSA: Af, Am, As, Aw, BSh, Cfa, Cfb, Csa/BWh, Cwa, Cwb), para comparar as duas classificações com
+o mesmo nível de detalhe. Não houve otimização estatística do k (silhueta, cotovelo ou R²); k = 15 foi gerado
+como sensibilidade. Pendência possível: testar k = 6-15 pelo R² em blocos.
+
+**6. Atribuição de pixels e pontos.** Cada pixel do mapa e cada ponto de solo recebe a zona do centróide mais
+próximo (distância euclidiana no espaço padronizado, com as mesmas transformações e a mesma padronização do
+ajuste) — `zonas_clima.atribuir`. Nos pontos, as variáveis vêm do CHELSA extraído no pixel do ponto
+(`experimento_dados.extrair_clima_mensal`); a zona do ponto coincide com a do mapa em 100% dos casos.
+
+**7. As 10 zonas (centróides em unidades físicas).**
+
+| Zona | T média °C | T mês frio °C | Chuva mm | Mês seco mm | Sazonalidade | ETP mm | DEF mm | EXC mm | Im | Leitura |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 26,8 | 25,5 | 1.499 | 2 | 0,83 | 1.782 | 670 | 363 | 1 | tropical quente com seca longa |
+| 2 | 26,5 | 24,6 | 723 | 1 | 0,91 | 1.912 | 1.146 | 0 | −36 | semiárido quente |
+| 3 | 26,0 | 25,2 | 2.300 | 54 | 0,52 | 1.464 | 109 | 950 | 62 | Amazônia úmida |
+| 4 | 25,8 | 24,8 | 1.971 | 14 | 0,69 | 1.553 | 349 | 759 | 37 | Amazônia com seca moderada |
+| 5 | 25,6 | 24,9 | 2.856 | 137 | 0,30 | 1.400 | 1 | 1.440 | 106 | Amazônia superúmida |
+| 6 | 24,2 | 21,9 | 1.374 | 5 | 0,79 | 1.713 | 543 | 164 | −6 | tropical sazonal (tipo Cerrado) |
+| 7 | 24,2 | 21,0 | 989 | 23 | 0,52 | 1.677 | 549 | 0 | −23 | semiárido/seco-subúmido mais ameno |
+| 8 | 21,2 | 18,1 | 1.445 | 14 | 0,75 | 1.496 | 301 | 215 | 7 | tropical de altitude, inverno seco |
+| 9 | 19,9 | 14,6 | 1.588 | 82 | 0,24 | 1.452 | 51 | 172 | 13 | subtropical sem estação seca |
+| 10 | 18,4 | 13,8 | 1.965 | 103 | 0,25 | 1.275 | 1 | 657 | 57 | subtropical superúmido |
+
+Conferido no mapa: 3-5 Amazônia úmida, 2 e 7 semiárido e seco-subúmido, 9-10 Sul. As leituras das zonas 1,
+6 e 8 são interpretação dos centróides (não conferidas zona a zona no mapa).
+
+**8. Como as zonas foram usadas.**
+- Comparação isolada (`comparacao_climas.ipynb`, `legendas.NIVEIS['zona_k10']`): mais um sistema, avaliado pelo
+  R² em blocos espaciais; foi a melhor classificação nas 4 variáveis (1° e 2°).
+- Experimento dos modelos (`experimento_clima_modelos.ipynb`): F1 = zonas como dummies (recupera quase todo o
+  ganho do clima contínuo); F2 = um RF por zona (pior; não estratificar).
+- Reprodução do MapBiomas (`climas/reproducao/`): cenário `zonas_k10` em dummies, como o Köppen; 2º lugar
+  atrás do clima contínuo (SOC +0,009 fiel, +0,015 sem C2, com os pontos da C3).
+
+**9. Limitações.**
+- k fixado por analogia com o Köppen, não otimizado.
+- Variáveis correlacionadas (T média e T do mês frio; chuva, EXC e Im) com peso igual: temperatura e
+  disponibilidade de água pesam mais do que uma variável isolada. Não houve ponderação nem PCA.
+- O k-means supõe grupos compactos e dá fronteiras rígidas: um pixel de transição vai inteiro para uma zona.
+- O agrupamento é só climático (de propósito, para não haver vazamento): uma zona pode reunir climas
+  parecidos sobre solos muito diferentes.
+- Depende da normal CHELSA 1991-2020 e do BHC com CAD fixa de 100 mm.
