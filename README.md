@@ -16,6 +16,9 @@ coleção 3**, reproduzidos em Python, com mapas.
 **Relatório completo:** [relatorio_tecnico.md](relatorio_tecnico.md) (metodologia, decisões, resultados,
 13 figuras). **Registro de decisões:** [corelacao/docs/memoria_fabricio.md](corelacao/docs/memoria_fabricio.md).
 **Todos os assets do GEE usados:** [climas/dados_chelsa/assets_utilizados.md](climas/dados_chelsa/assets_utilizados.md).
+**Mapas interativos no Google Earth Engine:** [abrir no Code Editor](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)
+(exige conta no GEE; código em [mapas_gee.js](mapas_gee.js)) — clima CHELSA, classificações climáticas e
+mapas de SOC, areia, silte e argila nos 9 cenários de clima.
 
 ---
 
@@ -132,6 +135,10 @@ o Köppen e 0,137 com o clima contínuo (0,156 e 0,176 com a correção de Duan 
 <p align="center"><img src="climas/reproducao/resultados/figuras/ganho_vs_koppen.png" width="85%"></p>
 <p align="center"><img src="climas/reproducao/resultados/figuras/mapa_soc_fiel.png" width="85%"></p>
 
+Os mapas de SOC, areia, silte e argila de todos os cenários (versão fiel, ~5 km), a diferença de SOC em
+relação ao Köppen e as classificações climáticas podem ser explorados no GEE:
+**[mapas interativos](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)**.
+
 ### 2.5 Recomendação
 
 1. **Trocar as dummies do Köppen pelo clima contínuo** (12 variáveis do CHELSA e do balanço hídrico, todas
@@ -149,6 +156,7 @@ o Köppen e 0,137 com o clima contínuo (0,156 e 0,176 com a correção de Duan 
 .
 ├── README.md
 ├── relatorio_tecnico.md                 # relatório técnico completo
+├── mapas_gee.js                         # visualizador dos mapas no GEE (Code Editor)
 ├── validacao/                           # estações × Xavier, CHELSA, ERA5-Land, TerraClimate
 │   ├── comparacao_v1.ipynb
 │   ├── baixar_era5.py, atualizar_dados_chelsa.py
