@@ -19,8 +19,8 @@ from gee_utils import conectar
 from preparar_dados import (DADOS, FRACOES, MATRIZ_SOC, MATRIZ_TEXTURA, baixar_featurecollection,
                             carregar_bases, coordenadas_validas, ponto_id)
 
-ASSET_PR = 'projects/fcoliveira/assets/chelsa_brasil_pr_normal_1991_2020'
-ASSET_PET = 'projects/fcoliveira/assets/chelsa_brasil_pet_normal_1991_2020'
+ASSET_PR = 'projects/fcoliveira/assets/CHELSA/chelsa_brasil_pr_normal_1991_2020'
+ASSET_PET = 'projects/fcoliveira/assets/CHELSA/chelsa_brasil_pet_normal_1991_2020'
 
 # Colunas das matrizes que não são covariáveis (ou vazariam o alvo) -> fora do modelo.
 NAO_COVARIAVEIS = re.compile(

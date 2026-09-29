@@ -596,7 +596,8 @@ Corelacao (seções 5-6 do relatório) segue com a matriz C2.
 
 Código: `corelacao/codigo/zonas_clima.py`. Saídas: centróides e padronização em
 `corelacao/resultados/tabelas/zonas_k10_{centroides,padronizacao}.csv`; mapa em
-`climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (uint8, 0 = sem dado; fora do git, pode virar asset).
+`climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (uint8, 0 = sem dado; fora do git), também no GEE como
+`projects/fcoliveira/assets/CHELSA/zonas_climaticas_k10` (subido em 24/09; conferido em 28/09: 100% igual ao local).
 Também foi gerado k = 15 (`zonas_k15_*`), como sensibilidade.
 
 **Objetivo.** Ter uma classificação climática definida pelos dados (sem as regras fixas do Köppen, Holdridge
@@ -678,3 +679,14 @@ Conferido no mapa: 3-5 Amazônia úmida, 2 e 7 semiárido e seco-subúmido, 9-10
 - O agrupamento é só climático (de propósito, para não haver vazamento): uma zona pode reunir climas
   parecidos sobre solos muito diferentes.
 - Depende da normal CHELSA 1991-2020 e do BHC com CAD fixa de 100 mm.
+
+## Assets reorganizados na pasta CHELSA (2026-09-28)
+
+O usuário moveu os assets de clima para `projects/fcoliveira/assets/CHELSA/` (normais tas/pr/pet, Köppen,
+Holdridge ETPM/ETH, Thornthwaite CAD100/CADsolo) e subiu nela, manualmente, os 18 mapas da versão fiel
+(`textura_0_30cm_<cenário>`: b1 areia, b2 silte, b3 argila; `soc_0_30cm_<cenário>`: b1 t/ha),
+`covariaveis_soc_extras_5km`, `zonas_climaticas_k15` e `mapbiomas_soil_collection3_soc_class_000_030cm`
+(produto C3, não usado). Os mapas sem C2 ficaram só locais (pouco uso). Depois moveu também o
+`zonas_climaticas_k10` para `CHELSA/` (conferido: 100% igual ao TIF local); só o `AWC_br` continua na raiz. Caminhos atualizados em `legendas.py`, `experimento_dados.py`, notebooks de
+classificação e documentação; todos os caminhos citados no código foram conferidos no GEE (existem). As
+menções aos caminhos antigos em entradas anteriores desta memória são históricas.
