@@ -51,21 +51,26 @@ Cada etapa respondeu a uma pergunta e motivou a seguinte:
 
 ### 2.1 Base climática: CHELSA V2.1
 
-Comparação com 22 estações (2010-2019, ~2.390 pares estação × mês):
+Comparação de quatro bases em grade com 22 estações (2010-2019, ~2.390 pares estação × mês):
 
 | Variável | Base | r | RMSE | NSE | KGE |
 |---|---|---|---|---|---|
 | Temperatura média | **CHELSA** | 0,990 | 0,82 °C | 0,967 | 0,977 |
 | Temperatura média | Xavier | 0,986 | 0,85 °C | 0,965 | 0,919 |
+| Temperatura média | TerraClimate | 0,969 | 1,51 °C | 0,889 | 0,936 |
 | Temperatura média | ERA5-Land | 0,949 | 1,63 °C | 0,871 | 0,875 |
 | Precipitação mensal | **Xavier** | 0,922 | 44,0 mm | 0,846 | 0,903 |
 | Precipitação mensal | CHELSA | 0,815 | 66,9 mm | 0,644 | 0,810 |
 | Precipitação mensal | ERA5-Land | 0,815 | 66,2 mm | 0,650 | 0,803 |
+| Precipitação mensal | TerraClimate | 0,820 | 68,6 mm | 0,625 | 0,803 |
 
-O CHELSA foi escolhido: temperatura tão boa quanto a do Xavier, chuva empatada com o ERA5-Land, ~1 km e
+O CHELSA foi escolhido: temperatura tão boa quanto a do Xavier (ERA5-Land e TerraClimate são ~0,75-1 °C mais
+frios), chuva empatada com o ERA5-Land e o TerraClimate e com o menor viés, ~1 km e
 **ETP de Penman-Monteith** pronta (necessária para Holdridge e Thornthwaite). Um diagnóstico dedicado mostrou
 que a primeira normal de chuva no GEE tinha um **artefato de exportação** (subestimativa de 130-250% fora da
 faixa 13°S-2°N); os assets foram regerados, um por variável.
+
+<p align="center"><img src="validacao/figuras/dispersao_tmed_pr.png" width="85%"></p>
 
 ### 2.2 Classificações climáticas a partir do CHELSA
 
@@ -144,7 +149,7 @@ o Köppen e 0,137 com o clima contínuo (0,156 e 0,176 com a correção de Duan 
 .
 ├── README.md
 ├── relatorio_tecnico.md                 # relatório técnico completo
-├── validacao/                           # estações × Xavier, CHELSA, ERA5-Land
+├── validacao/                           # estações × Xavier, CHELSA, ERA5-Land, TerraClimate
 │   ├── comparacao_v1.ipynb
 │   ├── baixar_era5.py, atualizar_dados_chelsa.py
 │   ├── *.csv                            # séries das estações e das grades

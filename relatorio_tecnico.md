@@ -38,11 +38,10 @@ Para responder, o caminho foi dividido em etapas, cada uma motivada pelo que a a
 | Classificações | Köppen, Holdridge e Thornthwaite corretos a partir do CHELSA | `climas/chelsa_climas_brasil/` |
 | Comparação | Qual classificação, **sozinha**, separa melhor SOC e textura? | `corelacao/comparacao_climas.ipynb` |
 | Experimento | O que colocar no lugar do Köppen **dentro** de um modelo com as covariáveis do MapBiomas? | `corelacao/experimento_clima_modelos.ipynb` |
-| Reprodução | Repetir o teste **reproduzindo fielmente** os modelos do MapBiomas C3, com mapas | `climas/reproducao/` |
+| Reprodução | Repetir o teste **reproduzindo** os modelos do MapBiomas C3, com mapas | `climas/reproducao/` |
 
-Os dados de solo são as matrizes de treino do MapBiomas Solo C3 no Google Earth Engine (acesso restrito) e,
+Os dados de solo são as matrizes de treino do MapBiomas Solo C3 no Google Earth Engine e,
 no SOC da reprodução, os pontos da coleção 3 que alimentam a matriz de produção (seção 7.2).
-Os dados por ponto nunca foram versionados; só resultados agregados vão para o git.
 
 ---
 
@@ -54,9 +53,9 @@ estações meteorológicas.
 **Dados.**
 - Observado: série mensal de **22 estações** meteorológicas em 13 UFs, de **2010 a 2019**
   (`mensal_todas_estacoes.csv`; poucas na Amazônia, uma em Rondônia e uma no Pará).
-- Grades: **Xavier** (grade brasileira de estações interpoladas), **CHELSA V2.1** (~1 km) e **ERA5-Land**
-  (~9 km, extraído do GEE por `baixar_era5.py`). Uma versão anterior usava TerraClimate; ele foi trocado
-  pelo ERA5-Land, e a comparação foi refeita com os dados CHELSA atualizados (seção 3).
+- Grades (quatro): **Xavier** (grade brasileira de estações interpoladas), **CHELSA V2.1** (~1 km),
+  **ERA5-Land** (~9 km, extraído do GEE por `baixar_era5.py`) e **TerraClimate** (~4 km,
+  `dados_terraclimate.csv`). A comparação usa os dados CHELSA atualizados (seção 3).
 - Variáveis: temperatura média (`tmed`) e precipitação mensal (`pr_mes`). A ETP ficou fora do escopo, por
   não haver ETP observada comparável nas estações.
 
@@ -64,38 +63,48 @@ estações meteorológicas.
 concordância d de Willmott, KGE e razão de desvios-padrão. Métricas globais (todos os pares) e medianas por
 estação.
 
-**Resultados (métricas globais, ~2.390 pares estação × mês):**
+**Resultados (métricas globais, ~2.390 pares estação × mês; todas as bases com os mesmos pares):**
 
 | Variável | Base | r | RMSE | Viés | NSE | KGE |
 |---|---|---|---|---|---|---|
 | tmed | CHELSA | 0,990 | 0,82 °C | −0,50 °C | 0,967 | 0,977 |
 | tmed | Xavier | 0,986 | 0,85 °C | +0,22 °C | 0,965 | 0,919 |
+| tmed | TerraClimate | 0,969 | 1,51 °C | −1,00 °C | 0,889 | 0,936 |
 | tmed | ERA5-Land | 0,949 | 1,63 °C | −0,75 °C | 0,871 | 0,875 |
 | pr_mes | Xavier | 0,922 | 44,0 mm | +5,0 mm | 0,846 | 0,903 |
 | pr_mes | CHELSA | 0,815 | 66,9 mm | −1,4 mm | 0,644 | 0,810 |
 | pr_mes | ERA5-Land | 0,815 | 66,2 mm | +2,0 mm | 0,650 | 0,803 |
+| pr_mes | TerraClimate | 0,820 | 68,6 mm | +8,8 mm | 0,625 | 0,803 |
 
 **Leitura e decisão.**
-- **Temperatura:** CHELSA e Xavier são equivalentes e muito bons; ERA5-Land fica atrás. A resolução mais
-  grossa do ERA5-Land penaliza estações em relevo.
-- **Precipitação:** Xavier é claramente a melhor. CHELSA e ERA5-Land empatam.
+- **Temperatura:** CHELSA e Xavier são equivalentes e muito bons. ERA5-Land e TerraClimate ficam atrás e
+  são frios; o TerraClimate tem o maior viés (≈ −1 °C em todos os meses). A resolução mais grossa das duas
+  penaliza estações em relevo.
+- **Precipitação:** Xavier é claramente a melhor. CHELSA, ERA5-Land e TerraClimate empatam em correlação e
+  eficiência; o CHELSA tem o menor viés e o TerraClimate o maior (+8,8 mm, +7,7%, concentrado de janeiro a
+  abril).
 
-![Dispersão observado × modelado, precipitação mensal](validacao/figuras/dispersao_pr.png)
-*Figura 1. Precipitação mensal observada nas estações × estimada por cada grade. Xavier segue a linha 1:1
-bem mais de perto; CHELSA e ERA5-Land têm dispersão parecida.*
+![Dispersão observado × modelado, temperatura e precipitação](validacao/figuras/dispersao_tmed_pr.png)
+*Figura 1. Temperatura média (em cima) e precipitação mensal (embaixo) observadas nas estações × estimadas
+por cada grade (cores = número de pares; tracejado = 1:1; linha preta = ajuste). Na temperatura, Xavier e
+CHELSA seguem a linha 1:1 de perto; ERA5-Land e TerraClimate ficam abaixo dela. Na chuva, Xavier é a mais
+próxima; as outras três têm dispersão parecida.*
 
 ![Ciclo sazonal da precipitação e viés mensal](validacao/figuras/ciclo_sazonal_pr.png)
-*Figura 2. Climatologia mensal da precipitação (média das estações) e viés de cada grade por mês. As três
-reproduzem bem o ciclo; o CHELSA subestima um pouco no fim do verão (março) e no fim do ano.*
+*Figura 2. Climatologia mensal da precipitação (média das estações) e viés de cada grade por mês. As quatro
+reproduzem bem o ciclo; o CHELSA subestima um pouco no fim do verão (março) e no fim do ano, e o
+TerraClimate superestima de janeiro a abril (+14 a +27 mm).*
 
 ![Viés espacial da temperatura](validacao/figuras/mapa_1.png)
-*Figura 3. Viés da temperatura média por estação. O CHELSA é levemente frio (mediana −0,46 °C) e o ERA5-Land
-mais frio (−0,92 °C), sobretudo no Nordeste e no litoral.*
+*Figura 3. Viés da temperatura média por estação. O CHELSA é levemente frio (mediana −0,46 °C); o ERA5-Land
+(−0,92 °C) e o TerraClimate (−0,87 °C) são mais frios, sobretudo no Nordeste, no litoral e nas serras do
+Sudeste.*
 
 - **Decisão: CHELSA como base das classificações.** Mesmo perdendo para o Xavier em chuva, o CHELSA reúne o
   que as classificações exigem: resolução de ~1 km (necessária para zoneamento em relevo), temperatura tão
   boa quanto a do Xavier, **ETP de Penman-Monteith** pronta (necessária para Holdridge e Thornthwaite) e
-  cobertura contínua, com o mesmo produto para todas as variáveis. Em chuva, fica empatado com o ERA5-Land.
+  cobertura contínua, com o mesmo produto para todas as variáveis. Em chuva, empata com o ERA5-Land e o
+  TerraClimate, com o menor viés dos três.
 
 ---
 
@@ -583,7 +592,7 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 ## 8. Síntese dos resultados
 
 1. **Base climática:** o CHELSA V2.1 é adequado. É equivalente ao Xavier em temperatura, empata com o
-   ERA5-Land em chuva e tem 1 km e ETP de Penman-Monteith. A normal de chuva foi regerada depois do
+   ERA5-Land e o TerraClimate em chuva (com o menor viés dos três) e tem 1 km e ETP de Penman-Monteith. A normal de chuva foi regerada depois do
    diagnóstico de um artefato de exportação.
 2. **Classificação isolada:** as **zonas climáticas homogêneas k10** separam melhor SOC e textura. Entre as
    clássicas, Holdridge (ETH) para SOC e Thornthwaite L2 para silte. Nenhuma estima argila.
@@ -629,7 +638,7 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 
 | Pasta | Conteúdo |
 |---|---|
-| `validacao/` | comparação estações × Xavier, CHELSA, ERA5-Land (`comparacao_v1.ipynb`, `baixar_era5.py`, `atualizar_dados_chelsa.py`) |
+| `validacao/` | comparação estações × Xavier, CHELSA, ERA5-Land e TerraClimate (`comparacao_v1.ipynb`, `baixar_era5.py`, `atualizar_dados_chelsa.py`) |
 | `climas/chelsa_climas_brasil/` | download e normais CHELSA, diagnóstico da chuva, Köppen, Holdridge, Thornthwaite |
 | `climas/dados_chelsa/` | dados locais (fora do git) e `assets_utilizados.md` (todos os assets, o que são e onde foram usados) |
 | `corelacao/` | comparação de climas (`comparacao_climas.ipynb`), experimento dos modelos (`experimento_clima_modelos.ipynb`), `docs/memoria_fabricio.md` (registro das decisões) |

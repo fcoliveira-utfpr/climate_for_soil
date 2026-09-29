@@ -690,3 +690,15 @@ Holdridge ETPM/ETH, Thornthwaite CAD100/CADsolo) e subiu nela, manualmente, os 1
 `zonas_climaticas_k10` para `CHELSA/` (conferido: 100% igual ao TIF local); só o `AWC_br` continua na raiz. Caminhos atualizados em `legendas.py`, `experimento_dados.py`, notebooks de
 classificação e documentação; todos os caminhos citados no código foram conferidos no GEE (existem). As
 menções aos caminhos antigos em entradas anteriores desta memória são históricas.
+
+## Validação com as quatro bases (2026-09-28)
+
+O TerraClimate não era para ter saído da validação: voltou como 4ª base (Xavier, CHELSA, ERA5-Land,
+TerraClimate). O CSV já estava na pasta com outro nome (`dados_climaticos_estacoes_2010_2019.csv`,
+renomeado para `validacao/dados_terraclimate.csv`; conferido: reproduz exatamente as métricas antigas do
+TerraClimate). `comparacao_v1.ipynb` agora salva as figuras em `validacao/figuras/` (150 dpi) e a
+dispersão virou um multiplot 2 × 4 (linhas = temperatura e chuva, colunas = bases),
+`dispersao_tmed_pr.png`, que é a nova Figura 1 do relatório (antes só chuva). Executado com o Python do
+Anaconda (tem geopandas para o contorno dos estados). Resultado do TerraClimate: temperatura r 0,969,
+RMSE 1,51 °C, viés −1,00 °C (frio em todos os meses); chuva r 0,820, RMSE 68,6 mm, viés +8,8 mm (+7,7%,
+sobretudo jan-abr). Conclusão inalterada: Xavier melhor em chuva; CHELSA a melhor base global.
