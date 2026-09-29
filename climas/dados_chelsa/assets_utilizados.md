@@ -11,9 +11,10 @@ Pastas citadas:
 
 ---
 
-## 1. Clima gerado neste projeto (`projects/fcoliveira/assets/`)
+## 1. Clima gerado neste projeto (`projects/fcoliveira/assets/CHELSA/`)
 
-CHELSA V2.1, normal 1991-2020, ~1 km (30″). Gerados localmente e subidos ao GEE pelo usuário.
+CHELSA V2.1, normal 1991-2020, ~1 km (30″). Gerados localmente e subidos ao GEE pelo usuário. Desde 28/09
+ficam na pasta `CHELSA/` (antes, na raiz `projects/fcoliveira/assets/`); só o `AWC_br` continua na raiz.
 
 | Asset | O que é | Onde foi usado |
 |---|---|---|
@@ -25,10 +26,32 @@ CHELSA V2.1, normal 1991-2020, ~1 km (30″). Gerados localmente e subidos ao GE
 | `Holdridge_CHELSA_BR_1991_2020_ETH` | Idem, com a ETP de Holdridge (58,93 × biotemperatura) | Idem |
 | `Thornthwaite_CHELSA_BR_1991_2020_CAD100` | Thornthwaite (1948) com balanço hídrico de CAD 100 mm e ETP Penman-Monteith; 10 bandas: umidade, subtipo, térmica, concentração, ETP, DEF, EXC, Ih, Ia, Im | Geração: `thornthwaite_chelsa.ipynb` / `thornthwaite.py`. Uso: `corelacao` (classes; DEF/EXC/Im no clima contínuo e nas zonas k10) e `climas/reproducao` |
 | `Thornthwaite_CHELSA_BR_1991_2020_CADsolo` | Idem, com a CAD do solo (AWC × 1000 × 1 m) | Idem |
-| `AWC_br` | **Tabela** de ~95 mil polígonos de solo com a água disponível (AWC, m³/m³); corpos d'água e afloramentos de rocha sem valor | `thornthwaite_chelsa.ipynb` (rasterizado na grade do CHELSA para a CAD do solo) |
+| `zonas_climaticas_k10` | Zonas climáticas homogêneas k10 (k-means sobre 9 variáveis do clima CHELSA do Brasil; banda `b1`, zonas 1-10 da mais quente para a mais fria, 0 = sem dado); mesma grade do CHELSA. Conferido contra o GeoTIFF local (300 pixels, 100% iguais) | Geração: `corelacao/codigo/zonas_clima.py` (mapa local subido pelo usuário). Nos códigos, as zonas são atribuídas pelos centróides, não lidas do asset; o asset serve para mapas a 30 m no GEE |
+| `zonas_climaticas_k15` | Idem, com 15 zonas (sensibilidade); banda `b1` | Geração: `zonas_clima.py`. Não é lido pelo código |
+| `AWC_br` (**na raiz**: `projects/fcoliveira/assets/AWC_br`) | **Tabela** de ~95 mil polígonos de solo com a água disponível (AWC, m³/m³); corpos d'água e afloramentos de rocha sem valor | `thornthwaite_chelsa.ipynb` (rasterizado na grade do CHELSA para a CAD do solo) |
 
 **Obsoleto, já apagado do GEE:** `Holdridge_CHELSA_BR_1991_2020` (versão única, com a numeração das zonas
 tropicais deslocada; substituído pelas versões ETPM e ETH).
+
+## 1b. Produtos da reprodução (`projects/fcoliveira/assets/CHELSA/`)
+
+Mapas de 0-30 cm da **versão fiel** (com a textura da coleção 2 como covariável), grade de 0,05° (~5 km),
+EPSG:4326, gerados por `climas/reproducao/codigo/mapas_{textura,soc}.py` e subidos manualmente pelo usuário
+em 28/09. Os mapas da versão sem C2 ficaram só locais. O upload manual nomeia as bandas `b1`, `b2`…
+
+| Asset | O que é |
+|---|---|
+| `textura_0_30cm_<cenário>` (9) | Textura de 0-30 cm (%): `b1` = areia, `b2` = silte, `b3` = argila |
+| `soc_0_30cm_<cenário>` (9) | Estoque de SOC 0-30 cm em 2023 (t/ha), com a correção de Duan: `b1` |
+| `covariaveis_soc_extras_5km` | As 24 covariáveis extras do SOC em 2023 na grade de 5 km (`b1`…`b24`, na ordem de `covariaveis_gee.extras_soc`) |
+
+Cenários: `koppen_ipef`, `sem_clima`, `koppen_chelsa`, `holdridge_etpm`, `holdridge_eth`, `th_cad100`,
+`th_cadsolo`, `clima_continuo`, `zonas_k10`. Nenhum desses assets é lido pelo código (os mapas são lidos dos
+GeoTIFFs locais em `climas/dados_reproducao/mapas/`).
+
+**Também na pasta, não gerado aqui:** `mapbiomas_soil_collection3_soc_class_000_030cm`, 40 bandas
+`soc_class_1985`…`soc_class_2024` a 30 m (classes de SOC 0-30 cm do MapBiomas Solo C3). Não é usado pelo
+código.
 
 ## 2. Clima de diagnóstico e versões antigas (`projects/fcoliveira/assets/`)
 
@@ -99,5 +122,5 @@ para as dinâmicas, valores em 300 linhas: 100% iguais).
 |---|---|---|
 | `https://os.unil.cloud.switch.ch/chelsa02/chelsa/global/monthly/{var}/{ano}/CHELSA_{var}_{mes}_{ano}_V.2.1.tif` | CHELSA V2.1 mensal global (tas, pr, pet), 1991-2020 | `chelsa_climas_brasil/baixar_recortar.py` → `climas/dados_chelsa/mensal_recortado/`; normais em `climas/dados_chelsa/normal_1991_2020/`; `validacao/atualizar_dados_chelsa.py` |
 | `climas/dados_chelsa/{koppen,holdridge,thornthwaite,awc}/*.tif` | GeoTIFFs locais das classificações e do AWC rasterizado (os mesmos dos assets da seção 1) | `corelacao/codigo/zonas_clima.py`; `climas/reproducao/codigo/mapas_textura.py` (clima de cada pixel) |
-| `climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (e `k15`) | Zonas climáticas homogêneas (k-means sobre o clima do Brasil). **Ainda não é asset** | `corelacao` (experimento) e `climas/reproducao` (cenário zonas k10) |
-| `climas/dados_reproducao/mapas/*.tif` | Mapas de textura e SOC 0-30 cm (~5 km) dos 9 cenários de clima, com e sem textura C2. **Ainda não são assets** | `climas/reproducao/reproducao_resultados.ipynb` |
+| `climas/dados_chelsa/zonas/zonas_climaticas_k10.tif` (e `k15`) | Zonas climáticas homogêneas (k-means sobre o clima do Brasil). Os dois também são assets (seção 1) | `corelacao` (experimento) e `climas/reproducao` (cenário zonas k10) |
+| `climas/dados_reproducao/mapas/*.tif` | Mapas de textura e SOC 0-30 cm (~5 km) dos 9 cenários de clima, com e sem textura C2. Os da versão fiel também são assets (seção 1b); os sem C2, não | `climas/reproducao/reproducao_resultados.ipynb` |

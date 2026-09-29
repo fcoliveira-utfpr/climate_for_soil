@@ -110,7 +110,7 @@ mais frio (−0,92 °C), sobretudo no Nordeste e no litoral.*
 - `gerar_normal_multibanda.py`: calcula a média de cada mês ao longo de 1991-2020 (tolerante a anos
   faltantes) e grava **uma imagem de 12 bandas por variável**.
 - Os três GeoTIFFs sobem ao GEE como assets separados
-  (`projects/fcoliveira/assets/chelsa_brasil_{tas,pr,pet}_normal_1991_2020`).
+  (`projects/fcoliveira/assets/CHELSA/chelsa_brasil_{tas,pr,pet}_normal_1991_2020`).
 
 ### 3.2 Por que três assets separados: o diagnóstico da chuva
 
@@ -617,8 +617,8 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 **Próximos passos sugeridos:**
 1. Pedir acesso de leitura à `c03_soc_v2025_11_26_trep` e conferir as covariáveis extraídas contra as de
    produção.
-2. Gerar os mapas a 30 m no GEE para o Köppen IPEF e o clima contínuo (e as zonas k10, que precisam virar
-   asset).
+2. Gerar os mapas a 30 m no GEE para o Köppen IPEF e o clima contínuo (e as zonas k10, já em asset:
+   `projects/fcoliveira/assets/CHELSA/zonas_climaticas_k10`).
 3. Discutir com o MapBiomas o uso da textura da coleção 2 como covariável.
 4. Ajustar hiperparâmetros **dentro** da validação espacial e testar a média de GBM e random forest.
 5. Mapear a incerteza (random forest quantílico).

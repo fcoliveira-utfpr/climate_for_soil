@@ -5,15 +5,15 @@ Os assets novos (CHELSA V2.1, normal 1991-2020) são gerados em climas/chelsa_cl
 O Köppen IPEF (referência) vem embutido como dummies nas duas matrizes de pontos.
 """
 
-ASSET_KOPPEN = 'projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020'
+ASSET_KOPPEN = 'projects/fcoliveira/assets/CHELSA/Koppen_CHELSA_BR_1991_2020'
 # Holdridge em duas versões da ETP na razão ETP/P: Penman-Monteith do CHELSA (ETPM) e a de Holdridge,
 # 58,93 x biotemperatura (ETH). A biotemperatura (faixa térmica, L1) é a mesma nas duas.
-ASSET_HOLDRIDGE_ETPM = 'projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETPM'
-ASSET_HOLDRIDGE_ETH = 'projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETH'
-ASSET_TH100 = 'projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CAD100'
-ASSET_THSOLO = 'projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CADsolo'
+ASSET_HOLDRIDGE_ETPM = 'projects/fcoliveira/assets/CHELSA/Holdridge_CHELSA_BR_1991_2020_ETPM'
+ASSET_HOLDRIDGE_ETH = 'projects/fcoliveira/assets/CHELSA/Holdridge_CHELSA_BR_1991_2020_ETH'
+ASSET_TH100 = 'projects/fcoliveira/assets/CHELSA/Thornthwaite_CHELSA_BR_1991_2020_CAD100'
+ASSET_THSOLO = 'projects/fcoliveira/assets/CHELSA/Thornthwaite_CHELSA_BR_1991_2020_CADsolo'
 # Temperatura média mensal (12 bandas, °C): só para o diagnóstico da fronteira A/C do Köppen.
-ASSET_TAS = 'projects/fcoliveira/assets/chelsa_brasil_tas_normal_1991_2020'
+ASSET_TAS = 'projects/fcoliveira/assets/CHELSA/chelsa_brasil_tas_normal_1991_2020'
 
 # --- Köppen-Geiger (koppen_gee.LEGENDA) ---------------------------------------------------------
 KOPPEN = {1: 'Af', 2: 'Am', 3: 'As', 4: 'Aw', 5: 'BSh', 6: 'BSk', 7: 'BWh', 8: 'BWk',

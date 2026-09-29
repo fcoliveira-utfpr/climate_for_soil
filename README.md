@@ -185,10 +185,12 @@ Normais CHELSA V2.1 1991-2020 (~1 km) e classificações derivadas, geradas nest
 
 | Asset | Conteúdo |
 |---|---|
-| `projects/fcoliveira/assets/chelsa_brasil_{tas,pr,pet}_normal_1991_2020` | temperatura, precipitação e ETP de Penman-Monteith mensais (12 bandas cada) |
-| `projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020` | Köppen-Geiger (31 classes) |
-| `projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_{ETPM,ETH}` | zonas de vida de Holdridge, com as duas ETPs |
-| `projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_{CAD100,CADsolo}` | Thornthwaite com balanço hídrico (10 bandas: classes, ETP, DEF, EXC, índices) |
+| `projects/fcoliveira/assets/CHELSA/chelsa_brasil_{tas,pr,pet}_normal_1991_2020` | temperatura, precipitação e ETP de Penman-Monteith mensais (12 bandas cada) |
+| `projects/fcoliveira/assets/CHELSA/Koppen_CHELSA_BR_1991_2020` | Köppen-Geiger (31 classes) |
+| `projects/fcoliveira/assets/CHELSA/Holdridge_CHELSA_BR_1991_2020_{ETPM,ETH}` | zonas de vida de Holdridge, com as duas ETPs |
+| `projects/fcoliveira/assets/CHELSA/Thornthwaite_CHELSA_BR_1991_2020_{CAD100,CADsolo}` | Thornthwaite com balanço hídrico (10 bandas: classes, ETP, DEF, EXC, índices) |
+| `projects/fcoliveira/assets/CHELSA/zonas_climaticas_{k10,k15}` | zonas climáticas homogêneas (k-means) |
+| `projects/fcoliveira/assets/CHELSA/{textura,soc}_0_30cm_<cenário>` | mapas da reprodução, versão fiel, ~5 km: textura (`b1` areia, `b2` silte, `b3` argila, %) e SOC 2023 (`b1`, t/ha) |
 
 A lista completa, incluindo datasets públicos e as covariáveis do MapBiomas, está em
 [assets_utilizados.md](climas/dados_chelsa/assets_utilizados.md).

@@ -40,18 +40,18 @@ Todos são assets do Google Earth Engine. Os do MapBiomas têm acesso restrito (
 
 | Asset | O que é |
 |---|---|
-| `projects/fcoliveira/assets/chelsa_brasil_tas_normal_1991_2020` | Temperatura média mensal (12 bandas, °C) |
-| `projects/fcoliveira/assets/chelsa_brasil_pr_normal_1991_2020` | Precipitação mensal (12 bandas, mm) |
-| `projects/fcoliveira/assets/chelsa_brasil_pet_normal_1991_2020` | ETP de Penman-Monteith mensal (12 bandas, mm) |
-| `projects/fcoliveira/assets/Koppen_CHELSA_BR_1991_2020` | Köppen-Geiger (Alvares et al. 2013; sazonalidade C por Kottek et al. 2006), id da classe 1-31 |
-| `projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETPM` | Zonas de vida de Holdridge (38 zonas, numeração de Jungkunst et al. 2021), razão ETP/P com a ETP de Penman-Monteith |
-| `projects/fcoliveira/assets/Holdridge_CHELSA_BR_1991_2020_ETH` | Idem, com a ETP de Holdridge (58,93 × biotemperatura) |
-| `projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CAD100` | Thornthwaite (1948) com balanço hídrico de CAD 100 mm; 10 bandas: umidade, subtipo, térmica, concentração, ETP, DEF, EXC, Ih, Ia, Im |
-| `projects/fcoliveira/assets/Thornthwaite_CHELSA_BR_1991_2020_CADsolo` | Idem, com CAD do solo (AWC × 1000 × 1 m) |
+| `projects/fcoliveira/assets/CHELSA/chelsa_brasil_tas_normal_1991_2020` | Temperatura média mensal (12 bandas, °C) |
+| `projects/fcoliveira/assets/CHELSA/chelsa_brasil_pr_normal_1991_2020` | Precipitação mensal (12 bandas, mm) |
+| `projects/fcoliveira/assets/CHELSA/chelsa_brasil_pet_normal_1991_2020` | ETP de Penman-Monteith mensal (12 bandas, mm) |
+| `projects/fcoliveira/assets/CHELSA/Koppen_CHELSA_BR_1991_2020` | Köppen-Geiger (Alvares et al. 2013; sazonalidade C por Kottek et al. 2006), id da classe 1-31 |
+| `projects/fcoliveira/assets/CHELSA/Holdridge_CHELSA_BR_1991_2020_ETPM` | Zonas de vida de Holdridge (38 zonas, numeração de Jungkunst et al. 2021), razão ETP/P com a ETP de Penman-Monteith |
+| `projects/fcoliveira/assets/CHELSA/Holdridge_CHELSA_BR_1991_2020_ETH` | Idem, com a ETP de Holdridge (58,93 × biotemperatura) |
+| `projects/fcoliveira/assets/CHELSA/Thornthwaite_CHELSA_BR_1991_2020_CAD100` | Thornthwaite (1948) com balanço hídrico de CAD 100 mm; 10 bandas: umidade, subtipo, térmica, concentração, ETP, DEF, EXC, Ih, Ia, Im |
+| `projects/fcoliveira/assets/CHELSA/Thornthwaite_CHELSA_BR_1991_2020_CADsolo` | Idem, com CAD do solo (AWC × 1000 × 1 m) |
 
 **Usado indiretamente** (na geração do Thornthwaite CAD do solo, não pelo código daqui):
 `projects/fcoliveira/assets/AWC_br` — polígonos de solo com a água disponível (AWC, m³/m³).
 
 **Arquivos locais** (não são assets; ficam em `climas/dados_chelsa/`, fora do git): as mesmas normais
 CHELSA e o Thornthwaite CAD 100 mm em GeoTIFF, lidos por `zonas_clima.py` para ajustar e mapear as zonas
-climáticas homogêneas (`zonas/zonas_climaticas_k10.tif`, que pode virar asset).
+climáticas homogêneas (`zonas/zonas_climaticas_k10.tif`, também no GEE como `projects/fcoliveira/assets/CHELSA/zonas_climaticas_k10`).
