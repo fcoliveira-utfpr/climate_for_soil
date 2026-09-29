@@ -147,20 +147,19 @@ a pixel, estatísticas por UF e o padrão espacial do DR.
   do método.
 
 **Decisão.** Regerar os assets do zero a partir da reconstrução local, **um asset por variável**, em vez de
-tentar corrigir o asset antigo. Todos os notebooks foram adaptados para os três assets separados.
+tentar corrigir o asset antigo.
 
 ---
 
 ## 4. Classificações climáticas a partir do CHELSA
 
 Todas são geradas a partir das normais da seção 3, exportadas como GeoTIFF e subidas como asset no GEE.
-Em cada uma, a revisão do método encontrou e corrigiu erros herdados dos scripts JavaScript originais.
 
 ### 4.1 Holdridge (zonas de vida)
 
 **Método.** Biotemperatura (média das temperaturas mensais limitadas a 0-30 °C, com correção de latitude),
 precipitação anual e razão ETP/P, classificadas nas 38 zonas de vida. O resultado passa por um filtro de moda
-3 × 3 (`focalMode`, como no script original) e é recortado pelo contorno do Brasil.
+3 × 3 (`focalMode`) e é recortado pelo contorno do Brasil.
 
 **Decisões e correções, em ordem:**
 1. **Correção de latitude só nos meses acima de 24 °C.** A primeira versão aplicava
@@ -170,14 +169,8 @@ precipitação anual e razão ETP/P, classificadas nas 38 zonas de vida. O resul
    espúrias.
 2. **Numeração e nomes das 38 zonas.** O usuário segue Jungkunst et al. (2021, *J. Plant Nutr. Soil Sci.*
    184:5-11), com a numeração de Leemans (1990). Comparando a tabela do script com a Fig. 1 do artigo (cada
-   faixa térmica começa numa linha de ETP/P diferente: tropical em 32, subtropical e temperado quente em 16,
-   temperado frio em 8…), constatou-se que a tabela estava certa no temperado quente e no subtropical, mas
-   **deslocada em uma zona no tropical** (e no temperado frio, boreal e subpolar). Na prática, a região com
-   ETP/P de 0,5-1, que cobre ~43% do Brasil e quase toda a Amazônia, recebia o número de "Tropical dry
-   forest" em vez de **37, "Tropical moist forest"**. A tabela foi corrigida pela figura do artigo; a
-   partição do mapa não mudou, só os números e nomes.
-3. **Qual ETP usar.** Holdridge, Leemans e o artigo usam **ETP = 58,93 × biotemperatura**; o script usava a
-   ETP de Penman-Monteith do CHELSA. Com a ETP de Holdridge, **23% dos pixels mudam de zona** e o país fica
+   faixa térmica começa numa linha de ETP/P diferente: tropical em 32, subtropical e temperado quente em 16, temperado frio em 8…).
+3. **Qual ETP usar.** Holdridge, Leemans e o artigo usam **ETP = 58,93 × biotemperatura**; o script usava a ETP de Penman-Monteith do CHELSA. Com a ETP de Holdridge, **23% dos pixels mudam de zona** e o país fica
    mais úmido (Subtropical moist forest passa de 8% para 20% da área). Como a escolha não era óbvia, foram
    geradas **duas versões** (`…_ETPM` e `…_ETH`) para decidir com dados (seção 5).
 
