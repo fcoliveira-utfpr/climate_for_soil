@@ -9,7 +9,10 @@ do MapBiomas Solo (coleção 3) melhoram? E como ficam os mapas?
   `mapas_soc.py`.
 - `resultados/`: tabelas agregadas e figuras (versionadas).
 - **`../dados_reproducao/`** (fora do git): dados por ponto (restritos), pilhas de covariáveis e os mapas
-  gerados (GeoTIFF), que podem virar assets no GEE.
+  gerados (GeoTIFF). Os mapas da versão fiel também estão no GEE (`projects/fcoliveira/assets/CHELSA/`).
+- **[Mapas interativos no GEE](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)** (código
+  em [`../../mapas_gee.js`](../../mapas_gee.js)): SOC, areia, silte, argila e diferença de SOC em relação ao
+  Köppen, nos 9 cenários de clima.
 
 ## Como o modelo do MapBiomas foi reproduzido
 

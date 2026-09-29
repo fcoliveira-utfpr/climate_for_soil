@@ -254,8 +254,7 @@ corte artificial no subtipo, visível no Amapá. Foi mantida a troca e a limita�
 ### 5.1 Por que a análise foi reestruturada
 
 A análise original seguia um roteiro de orientação: Kruskal-Wallis, ANOVA, Dunn, correlação
-ponto-bisserial, Spearman, regressões e importância de variáveis em random forest, com Köppen e o Holdridge do
-MapBiomas. Ela respondia muitas perguntas ao mesmo tempo, sem uma decisão clara. Com as novas classificações
+ponto-bisserial, Spearman, regressões e importância de variáveis em random forest, com Köppen e o Holdridge. Ela respondia muitas perguntas ao mesmo tempo, sem uma decisão clara. Com as novas classificações
 disponíveis, a análise foi refeita em torno de **uma pergunta**: qual classificação climática serve melhor de
 base para estimar SOC e textura? As análises antigas foram removidas (continuam no histórico do git).
 
@@ -384,7 +383,7 @@ melhora o modelo completo?**
 
 ### 6.3 Zonas climáticas homogêneas (k10)
 
-O pedido foi de zonas definidas a partir das variáveis climáticas. O k-means foi ajustado **nos pixels do
+Foram definidas zonas a partir das variáveis climáticas. O k-means foi ajustado **nos pixels do
 Brasil** (300 mil, amostrados com peso pela área), e não nos locais de solo, por três razões: as zonas
 descrevem o clima do país, viram um mapa aplicável em qualquer pixel e não são moldadas pela amostra
 concentrada em RO e RS. As zonas também não usam SOC nem textura, então não há vazamento. Foram usadas 9
@@ -429,7 +428,7 @@ As zonas supervisionadas (F3/F4) usam o alvo, então a árvore é ajustada **só
 ### 7.1 Motivação
 
 O experimento da seção 6 usou um modelo simplificado (random forest em tudo, uma linha por local). Para que
-a recomendação valha para o MapBiomas, o teste foi repetido **reproduzindo fielmente** os modelos deles, com
+a recomendação valha, o teste foi repetido buscando **reproduzir** os modelos deles, com
 **todos os climas** e **mapas**, em dois experimentos: primeiro a textura, depois o SOC (a ordem do pipeline
 deles, porque o SOC usa a textura como covariável).
 
@@ -539,6 +538,11 @@ contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 6,7 t/ha); os dem
 ![Mapas de argila: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_argila_semC2.png)
 *Figura 13. Argila de 0-30 cm (%), versão sem textura C2: Köppen IPEF, clima contínuo e a diferença.*
 
+**Mapas interativos.** Os mapas de SOC, areia, silte e argila de todos os cenários (versão fiel), a diferença
+de SOC em relação ao Köppen, o clima CHELSA e as classificações climáticas podem ser explorados no Google
+Earth Engine: [mapas interativos](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)
+(exige conta no GEE; código em `mapas_gee.js`).
+
 
 ### 7.6 Métricas do MapBiomas e comparação com a validação oficial
 
@@ -636,6 +640,7 @@ muda o R² em ±0,03-0,05, e **o ganho do clima contínuo se mantém em todos os
 | `climas/dados_chelsa/` | dados locais (fora do git) e `assets_utilizados.md` (todos os assets, o que são e onde foram usados) |
 | `corelacao/` | comparação de climas (`comparacao_climas.ipynb`), experimento dos modelos (`experimento_clima_modelos.ipynb`), `docs/memoria_fabricio.md` (registro das decisões) |
 | `climas/reproducao/` | reprodução dos modelos do MapBiomas C3 (`reproducao_resultados.ipynb`, `codigo/rodar.sh`) |
+| `mapas_gee.js` | visualizador dos mapas no GEE ([link](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)) |
 | biblioteca `agrometeorologiapy` (repositório próprio, v0.2.0) | balanço hídrico vetorizado e correções usadas no Thornthwaite |
 
 **Reprodução resumida:**
