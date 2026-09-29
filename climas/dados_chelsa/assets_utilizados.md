@@ -66,7 +66,7 @@ código.
 |---|---|---|
 | `FAO/GAUL/2015/level0` | Limite do Brasil (FAO GAUL) | `holdridge_chelsa.ipynb`, `koppen_chelsa.ipynb`, `thornthwaite_chelsa.ipynb` (recorte e máscara do Brasil), `diagnostico_chuva_CHELSA_1991_2020.ipynb` |
 | `FAO/GAUL/2015/level1` | Limites estaduais (FAO GAUL) | Mapas dos notebooks de Holdridge, Köppen e diagnóstico |
-| `IDAHO_EPSCOR/TERRACLIMATE` | TerraClimate mensal (~4 km) | `diagnostico_chuva_CHELSA_1991_2020.ipynb` (comparação da chuva) |
+| `IDAHO_EPSCOR/TERRACLIMATE` | TerraClimate mensal (~4 km) | `diagnostico_chuva_CHELSA_1991_2020.ipynb` (comparação da chuva); `validacao/dados_terraclimate.csv` (temperatura e chuva nas estações, 2010-2019, usado em `comparacao_v1.ipynb`; extraído fora deste repositório, no Colab, sem script aqui) |
 | `ECMWF/ERA5_LAND/MONTHLY_AGGR` | ERA5-Land mensal (temperatura e precipitação) | `validacao/baixar_era5.py` → `validacao/dados_era5.csv` |
 | `MERIT/DEM/v1_0_3` | Elevação MERIT DEM (covariável `elevation` do MapBiomas) | `climas/reproducao/codigo/covariaveis_gee.py` (mapas) |
 
