@@ -129,7 +129,7 @@ senão, fica a resposta direta. Em caso de empate, fica a direta (a da produçã
 - as 12 do CHELSA e do balanço hídrico (temperatura média, do mês mais frio e do mais quente,
   biotemperatura, chuva anual, do mês mais seco e sazonalidade, ETP, ETP/P, DEF, EXC, Im);
 - as decenais do GT de clima do MapBiomas Solo (`projects/mapbiomas-workspace/SOLOS/COVARIAVEIS/`),
-  conferidas em 08/10/2026:
+  conferidas em 07/10/2026:
 
   | Asset | Banda | Imagens | Grade |
   |---|---|---|---|
@@ -230,6 +230,6 @@ Organização: `codigo/`, `resultados/{tabelas,figuras}/` versionados; dados por
 6. **Avaliação temporal:** painel de trajetórias 1985-2024 + comparação com o SOC oficial da C3.
 7. **Matriz do MapBiomas:** não pedir; a nossa saída tem nome próprio (`matriz_soc_c3_espaco_tempo`).
 
-**Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 08/10/2026. Entram temperatura e
+**Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 07/10/2026. Entram temperatura e
 chuva decenais (1971-2026). O CDD do GT está vazio; o CDD decenal é calculado por nós a partir da chuva
 diária do Xavier (`codigo/cdd_brdwgd.py`).
