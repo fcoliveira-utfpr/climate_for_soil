@@ -14,7 +14,7 @@ troca do clima quase não mudou a textura.
 | **Zonas k10** | dummies das 10 zonas climáticas homogêneas | melhor classificação nas análises anteriores |
 | **Holdridge ETH** | dummies das zonas de vida com a ETP original de Holdridge (58,93 × biotemperatura) | melhor classificação clássica para SOC |
 | **Thornthwaite CAD do solo** | dummies do nível **L2** (classe de umidade + subtipo), CAD = AWC do solo | balanço hídrico |
-| **Clima contínuo** | variáveis numéricas escolhidas numa etapa de seleção (§4.3), a partir das 12 do CHELSA e do balanço hídrico e das 3 decenais do GT de clima | melhor cenário da reprodução anterior; agora com clima que pode variar por década |
+| **Clima contínuo** | variáveis numéricas escolhidas numa etapa de seleção (§4.3), a partir das 12 do CHELSA e do balanço hídrico e das 2 decenais do GT de clima (temperatura e chuva) | melhor cenário da reprodução anterior; agora com clima que pode variar por década |
 | Sem clima (controle interno) | nenhuma | mede quanto o clima acrescenta; custo quase zero |
 
 **Saída com nome próprio.** A matriz reconstruída não é a do MapBiomas e não deve ter o mesmo nome. Sugestão:
@@ -135,12 +135,12 @@ senão, fica a resposta direta. Em caso de empate, fica a direta (a da produçã
   |---|---|---|---|
   | `GT_DECADE_TMEAN_CONTI_2026` | `tmean_10yr_mean` (°C) | 56, anos 1971-2026 | 0,1° |
   | `GT_DECADE_PRECIPITATION_CONTI_2026` | `prec_10yr_mean` (mm) | 56, anos 1971-2026 | 0,1° |
-  | `GT_DECADE_CDD_CONTI_2026` (dias secos consecutivos) | — | **0: coleção vazia** | — |
 
   A imagem do ano Y é a **média dos 10 anos anteriores** (Y−10 a Y−1; propriedades `startYear`/`endYear`).
   A grade de 0,1° é a do Xavier (BR-DWGD), provável fonte. Cada linha da matriz recebe a imagem do **seu
   ano**, ou seja, o clima da década que antecede a amostra. São as únicas covariáveis de clima que **mudam
-  no tempo**. O CDD entra se a coleção for preenchida; por ora, só temperatura e chuva.
+  no tempo**. O CDD (dias secos consecutivos, `GT_DECADE_CDD_CONTI_2026`) não é considerado: a coleção está
+vazia.
 
 Seleção, sempre **dentro da validação** (aninhada, sem olhar as dobras de teste):
 1. tirar as redundantes: em pares com |r| > 0,9, fica a de maior importância;
@@ -217,5 +217,5 @@ Organização: `codigo/`, `resultados/{tabelas,figuras}/` versionados; dados por
 6. **Avaliação temporal:** painel de trajetórias 1985-2024 + comparação com o SOC oficial da C3.
 7. **Matriz do MapBiomas:** não pedir; a nossa saída tem nome próprio (`matriz_soc_c3_espaco_tempo`).
 
-**Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 08/10/2026. Temperatura e chuva
-estão completas (1971-2026); a coleção de CDD está vazia.
+**Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 08/10/2026. Entram temperatura e
+chuva decenais (1971-2026); o CDD fica de fora (coleção vazia).
