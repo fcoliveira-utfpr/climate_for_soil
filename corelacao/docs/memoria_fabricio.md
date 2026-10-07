@@ -702,3 +702,73 @@ dispersão virou um multiplot 2 × 4 (linhas = temperatura e chuva, colunas = ba
 Anaconda (tem geopandas para o contorno dos estados). Resultado do TerraClimate: temperatura r 0,969,
 RMSE 1,51 °C, viés −1,00 °C (frio em todos os meses); chuva r 0,820, RMSE 68,6 mm, viés +8,8 mm (+7,7%,
 sobretudo jan-abr). Conclusão inalterada: Xavier melhor em chuva; CHELSA a melhor base global.
+
+## Mapas interativos no GEE (2026-09-29)
+
+`mapas_gee.js` (raiz do repositório): visualizador para o Code Editor com o clima CHELSA, as
+classificações e os mapas de SOC, areia, silte, argila e diferença de SOC nos 9 cenários (versão fiel).
+Link do usuário: https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5 (no README e no
+relatório). Os assets precisam de leitura pública para outras pessoas verem.
+
+## refinamento/: projeto de downscaling para 30 m entregue ao Vitor (2026-10-07)
+
+O usuário tinha começado no outro PC (commit e14ea63: correção por *lapse rate* do CHELSA validada em 255
+estações, ganho pequeno, correlação elevação × erro ~0,05). Apagou tudo e pediu um briefing para o Vitor:
+`refinamento/instrucoes.md` (commit 27403be). Pontos: temperatura média e chuva a 30 m **por modelos, sem
+interpolação**; base = dados observados do Xavier (Drive, 1961-2025, 1.194 estações e 14.170 pluviômetros);
+INMET 2000-2026 para validação independente; método do Xavier (IDW p=2 / ADW, 5 vizinhas, ajuste de relevo
+−0,006 °C/m) como referência MX a ser batida; escada estatístico → ML; comparações C1-C15; entrega em tiles
+para upload manual no GEE. O PDF do artigo do Xavier (2022) não vai para o git (direitos autorais); o
+documento tem o DOI.
+
+## analise_espaco_tempo/: avaliação espaço-temporal do SOC C3, 1985-2024 (iniciada em 2026-10-07)
+
+**Pedido:** refazer a comparação de climas só para SOC, seguindo o pipeline de produção da C3 (script JS de
+matriz enviado pelo usuário + scripts R públicos em `mapbiomas/brazil-soil`), na série 1985-2024, com
+avaliação espacial **e temporal**, sem gerar mapas. Plano completo em
+`climas/analise_espaco_tempo/planejamento.md`.
+
+**Decisões do usuário:**
+- cenários: Köppen IPEF (ref.), zonas k10, Holdridge ETH, Thornthwaite CAD do solo **L2**, **clima contínuo**
+  com seleção de variáveis (12 CHELSA/BHC + temperatura e chuva decenais do GT + CDD decenal); "sem clima"
+  como controle interno;
+- resposta: log se validar melhor, senão `carbono_gm2_qmap` direto (como a produção);
+- textura C3 mantida como covariável, sem variante sem textura;
+- validação temporal em 4 períodos de 10 anos; avaliação temporal = painel de trajetórias + SOC oficial C3;
+- não pedir a matriz do MapBiomas; nossa saída com nome próprio (`matriz_soc_c3_espaco_tempo`,
+  `painel_soc_c3_1985_2024`, em `climas/dados_espaco_tempo/`, fora do git).
+
+**O que se descobriu sobre a produção C3 do SOC:**
+- matriz `c03_soc_v2025_11_26_trep` e a exportada `c03_soc_v2025_trainingFinal`: sem acesso; os pontos
+  (`ORIGINAIS/.../2025_11_26_soildata_soc_trep`), as covariáveis novas (WRB, FAO black soil, distâncias,
+  geomorfometria, IBGE), a textura C3 (`PRODUTOS_C03/psd_final`) e o **SOC oficial anual 1985-2024**
+  (`PRODUTOS_C03/mapbiomas_soil_collection3_soc_t_ha_000_030cm`, bandas `carbon_YYYY`) estão acessíveis;
+- modelo: `ranger`, resposta **sem log**; treino final com `carbono_gm2` (400 árvores), validação com
+  `carbono_gm2_qmap` (300 árvores), mtry 24, min.node.size 2, max.depth 40; "sem vazamento" = bootstrap por
+  perfil (réplicas `trep` no grupo do perfil original);
+- filtros: seguir o R (`26_soc_filter_matrix.R`); o JS tem `'resingas'` (erro) e limiar diferente de
+  `black_soil_prob` (> 10 no JS, > 50 no R);
+- o Köppen é a única variável de clima do modelo de produção; a textura covariável é a da própria C3.
+
+**Clima decenal do GT de clima** (`SOLOS/COVARIAVEIS/`, leitura liberada em 07/10): `GT_DECADE_TMEAN_CONTI_2026`
+(`tmean_10yr_mean`) e `GT_DECADE_PRECIPITATION_CONTI_2026` (`prec_10yr_mean`), 56 imagens 1971-2026, 0,1°,
+imagem do ano Y = média de Y−10 a Y−1. `GT_DECADE_CDD_CONTI_2026` está **vazia**.
+
+**CDD calculado por nós:** `climas/analise_espaco_tempo/codigo/cdd_brdwgd.py`. CDD anual ETCCDI (chuva
+< 1 mm; a sequência atravessa a virada do ano) da chuva diária do Xavier no GEE
+(`projects/sat-io/open-datasets/BR-DWGD/PR`, 1961-2022, `mm = b1 × 0,006866665 + 225`), por arrays (o
+`iterate` dia a dia era complexo demais para o GEE). Decenal = média de Y−10 a Y−1; 2024 usa 9 anos
+(grade pública até 2022). Assets na pasta nova **`projects/fcoliveira/assets/Climas2/`**:
+`CDD_ANUAL_BRDWGD` (1961-2022) e `CDD_DECENAL_BRDWGD` (1971-2024). Teste: Petrolina 97 dias (2010) e
+208 (2012), Manaus 14 e 9; Boa Vista baixo (15-17), porque a grade interpolada encurta as estiagens onde há
+poucos pluviômetros.
+
+**Estado em 2026-10-07 e como retomar:**
+1. [em andamento] 62 exportações do CDD anual para `Climas2/CDD_ANUAL_BRDWGD`. Conferir se todas
+   terminaram (`ee.ImageCollection(...).size()` = 62); se faltar ano, rodar `python cdd_brdwgd.py anual
+   <ano> <ano>`.
+2. [próximo] `python cdd_brdwgd.py decenal` (54 tarefas) e conferir os valores nos pontos de teste.
+3. Etapa 1 do plano: portar `carbon/0_covariate_source` (GitHub) para Python e conferir contra matrizes
+   legíveis.
+4. Etapas 2-8 do plano (§6): matriz, painel 1985-2024, climas nos pontos, fidelidade (OOB do MapBiomas no
+   cenário Köppen), validações V2-V4, trajetórias × SOC oficial, notebook.
