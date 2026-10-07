@@ -14,7 +14,7 @@ troca do clima quase não mudou a textura.
 | **Zonas k10** | dummies das 10 zonas climáticas homogêneas | melhor classificação nas análises anteriores |
 | **Holdridge ETH** | dummies das zonas de vida com a ETP original de Holdridge (58,93 × biotemperatura) | melhor classificação clássica para SOC |
 | **Thornthwaite CAD do solo** | dummies do nível **L2** (classe de umidade + subtipo), CAD = AWC do solo | balanço hídrico |
-| **Clima contínuo** | variáveis numéricas escolhidas numa etapa de seleção (§4.3), a partir das 12 do CHELSA e do balanço hídrico e das 2 decenais do GT de clima (temperatura e chuva) | melhor cenário da reprodução anterior; agora com clima que pode variar por década |
+| **Clima contínuo** | variáveis numéricas escolhidas numa etapa de seleção (§4.3), a partir das 12 do CHELSA e do balanço hídrico, das 2 decenais do GT de clima (temperatura e chuva) e do CDD decenal calculado do Xavier | melhor cenário da reprodução anterior; agora com clima que pode variar por década |
 | Sem clima (controle interno) | nenhuma | mede quanto o clima acrescenta; custo quase zero |
 
 **Saída com nome próprio.** A matriz reconstruída não é a do MapBiomas e não deve ter o mesmo nome. Sugestão:
@@ -139,12 +139,25 @@ senão, fica a resposta direta. Em caso de empate, fica a direta (a da produçã
   A imagem do ano Y é a **média dos 10 anos anteriores** (Y−10 a Y−1; propriedades `startYear`/`endYear`).
   A grade de 0,1° é a do Xavier (BR-DWGD), provável fonte. Cada linha da matriz recebe a imagem do **seu
   ano**, ou seja, o clima da década que antecede a amostra. São as únicas covariáveis de clima que **mudam
-  no tempo**. O CDD (dias secos consecutivos, `GT_DECADE_CDD_CONTI_2026`) não é considerado: a coleção está
-vazia.
+  no tempo**.
+- **CDD decenal (dias secos consecutivos), calculado por nós.** A coleção do GT (`GT_DECADE_CDD_CONTI_2026`)
+  está vazia, então o CDD é gerado por [`codigo/cdd_brdwgd.py`](codigo/cdd_brdwgd.py) no mesmo padrão:
+  - CDD anual (índice ETCCDI) = maior sequência de dias com chuva < 1 mm no ano; a estiagem que vem do ano
+    anterior continua contando (importante no norte, onde a seca vai de dezembro a março);
+  - fonte: chuva diária do Xavier no GEE (`projects/sat-io/open-datasets/BR-DWGD/PR`, 1961-2022, 0,1°, a
+    mesma grade das decenais do GT);
+  - CDD decenal do ano Y = média do CDD anual de Y−10 a Y−1. A grade pública vai até 2022, então **2024 usa
+    9 anos** (2014-2022), registrado na propriedade `n_anos`;
+  - saídas: `projects/fcoliveira/assets/Climas2/CDD_ANUAL_BRDWGD` (1961-2022) e
+    `.../CDD_DECENAL_BRDWGD` (1971-2024, banda `cdd_10yr_mean`);
+  - teste (`python cdd_brdwgd.py teste`): CDD de 2010 e 2012 em Petrolina 97 e 208 dias (seca de 2012),
+    Cuiabá 77 e 88, Curitiba 23 e 27, Manaus 14 e 9, Boa Vista 17 e 15. **Limitação:** uma grade interpolada
+    espalha chuvas fracas e encurta as sequências secas, sobretudo onde há poucos pluviômetros (Boa Vista
+    deveria ter estiagem mais longa). O CDD da grade tende a ser menor que o de um pluviômetro.
 
 Seleção, sempre **dentro da validação** (aninhada, sem olhar as dobras de teste):
 1. tirar as redundantes: em pares com |r| > 0,9, fica a de maior importância;
-2. comparar conjuntos: **só CHELSA/BHC**, **só GT decenal**, **CHELSA/BHC + GT decenal**;
+2. comparar conjuntos: **só CHELSA/BHC**, **só decenais** (temperatura, chuva e CDD), **CHELSA/BHC + decenais**;
 3. dentro do melhor conjunto, eliminação para trás por importância por permutação, enquanto o MEC na
    validação espacial (V2) não piorar;
 4. conferir o conjunto escolhido também na validação temporal (V3), já que as decenais podem ajudar no
@@ -218,4 +231,5 @@ Organização: `codigo/`, `resultados/{tabelas,figuras}/` versionados; dados por
 7. **Matriz do MapBiomas:** não pedir; a nossa saída tem nome próprio (`matriz_soc_c3_espaco_tempo`).
 
 **Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 08/10/2026. Entram temperatura e
-chuva decenais (1971-2026); o CDD fica de fora (coleção vazia).
+chuva decenais (1971-2026). O CDD do GT está vazio; o CDD decenal é calculado por nós a partir da chuva
+diária do Xavier (`codigo/cdd_brdwgd.py`).
