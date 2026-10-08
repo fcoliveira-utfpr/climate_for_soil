@@ -1,0 +1,27 @@
+versao,filtro,removidas,restam
+js,rocha fora de afloramento,1071,34164
+js,areia fora de areia,273,33891
+js,rocha com NDVI > 147,420,33471
+js,rocha com solo escuro > 10,186,33285
+js,rocha com argila > 0,45,33240
+js,areia com argila > 0,66,33174
+js,areia com solo escuro > 10,462,32712
+js,areia com Wetsols > 10,279,32433
+js,IFN em restinga,4439,27994
+js,YEAR_index -26 em restinga,112,27882
+js,solo escuro > 10 em areia (uso),1,27881
+js,solo escuro em textura arenosa (> 70),451,27430
+js,água: EVI2 < 100 e recorrência > 0,5,27425
+r,rocha fora de afloramento,1071,34164
+r,areia fora de areia,273,33891
+r,rocha com NDVI > 147,420,33471
+r,rocha com solo escuro > 10,186,33285
+r,rocha com argila > 0,45,33240
+r,areia com argila > 0,66,33174
+r,areia com solo escuro > 10,462,32712
+r,areia com Wetsols > 10,279,32433
+r,IFN em restinga,24,32409
+r,YEAR_index -26 em restinga,2,32407
+r,solo escuro > 10 em areia (uso),1,32406
+r,solo escuro em textura arenosa (> 70),2,32404
+r,água: EVI2 < 100 e recorrência > 0,5,32399
