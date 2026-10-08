@@ -1,0 +1,8 @@
+clim_t_media
+clim_biotemp
+clim_p_anual
+clim_p_mes_seco
+clim_p_sazonalidade
+clim_etp_anual
+clim_def_anual
+dec_prec
