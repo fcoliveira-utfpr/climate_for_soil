@@ -1,0 +1,244 @@
+cenario,esquema,resposta,camadas,rep,n,me,mae,mse,rmse,mec,slope
+cont_ambos,v2,direta,0-30 cm,1,10678,-7.257,24.12,2811,53.02,0.3054,1.219
+cont_ambos,v2,direta,0-30 cm,2,10678,-7.538,24.17,2816,53.07,0.3042,1.313
+cont_ambos,v2,direta,0-30 cm,3,10678,-9.286,24.51,3199,56.56,0.2094,1.743
+cont_ambos,v2,direta,"0-30 cm, amostras reais",1,9787,-7.202,22.04,2352,48.5,0.2301,1.287
+cont_ambos,v2,direta,"0-30 cm, amostras reais",2,9787,-7.232,22.14,2364,48.63,0.2261,1.306
+cont_ambos,v2,direta,"0-30 cm, amostras reais",3,9787,-8.04,22.41,2530,50.3,0.172,1.503
+cont_ambos,v2,direta,todas,1,27425,-0.1909,20.69,1701,41.25,0.3482,1.012
+cont_ambos,v2,direta,todas,2,27425,-0.6955,20.54,1666,40.82,0.3616,1.117
+cont_ambos,v2,direta,todas,3,27425,-2.742,20.68,1907,43.67,0.2695,1.621
+cont_ambos,v3,direta,0-30 cm,1,10678,-10.69,25.4,3414,58.43,0.1563,1.748
+cont_ambos,v3,direta,0-30 cm,2,10678,-10.62,25.5,3461,58.83,0.1448,1.658
+cont_ambos,v3,direta,0-30 cm,3,10678,-10.81,25.43,3452,58.76,0.1469,1.712
+cont_ambos,v3,direta,"0-30 cm, amostras reais",1,9787,-9.794,22.89,2703,51.99,0.1153,1.399
+cont_ambos,v3,direta,"0-30 cm, amostras reais",2,9787,-9.651,22.98,2724,52.19,0.1083,1.334
+cont_ambos,v3,direta,"0-30 cm, amostras reais",3,9787,-9.841,22.93,2724,52.19,0.1085,1.359
+cont_ambos,v3,direta,todas,1,27425,-3.998,21.42,2069,45.49,0.2073,1.661
+cont_ambos,v3,direta,todas,2,27425,-3.932,21.49,2085,45.67,0.2011,1.602
+cont_ambos,v3,direta,todas,3,27425,-3.902,21.38,2066,45.45,0.2085,1.663
+cont_ambos,v4,direta,0-30 cm,1,10678,-9.931,25.51,3422,58.5,0.1543,1.485
+cont_ambos,v4,direta,0-30 cm,2,10678,-10.2,25.6,3463,58.85,0.1442,1.508
+cont_ambos,v4,direta,0-30 cm,3,10678,-10.59,25.55,3413,58.42,0.1567,1.629
+cont_ambos,v4,direta,"0-30 cm, amostras reais",1,9787,-9.297,23,2718,52.14,0.1103,1.228
+cont_ambos,v4,direta,"0-30 cm, amostras reais",2,9787,-9.429,23.12,2739,52.33,0.1036,1.228
+cont_ambos,v4,direta,"0-30 cm, amostras reais",3,9787,-9.872,23.05,2726,52.21,0.1078,1.309
+cont_ambos,v4,direta,todas,1,27425,-3.164,21.41,2050,45.28,0.2146,1.449
+cont_ambos,v4,direta,todas,2,27425,-3.419,21.48,2071,45.51,0.2064,1.487
+cont_ambos,v4,direta,todas,3,27425,-3.848,21.45,2063,45.42,0.2097,1.585
+cont_chelsa,v2,direta,0-30 cm,1,10678,-7.064,24.06,2806,52.97,0.3067,1.184
+cont_chelsa,v2,direta,0-30 cm,2,10678,-7.424,24.23,2837,53.27,0.2989,1.282
+cont_chelsa,v2,direta,0-30 cm,3,10678,-9.067,24.43,3132,55.97,0.2261,1.756
+cont_chelsa,v2,direta,"0-30 cm, amostras reais",1,9787,-6.986,22.01,2339,48.36,0.2345,1.245
+cont_chelsa,v2,direta,"0-30 cm, amostras reais",2,9787,-7.13,22.18,2378,48.77,0.2215,1.284
+cont_chelsa,v2,direta,"0-30 cm, amostras reais",3,9787,-7.838,22.35,2494,49.94,0.1836,1.524
+cont_chelsa,v2,direta,todas,1,27425,-0.1689,20.65,1711,41.36,0.3445,0.9887
+cont_chelsa,v2,direta,todas,2,27425,-0.716,20.56,1681,40.99,0.3561,1.119
+cont_chelsa,v2,direta,todas,3,27425,-2.545,20.59,1854,43.06,0.2896,1.633
+cont_chelsa,v3,direta,0-30 cm,1,10678,-11.25,25.54,3499,59.15,0.1355,1.755
+cont_chelsa,v3,direta,0-30 cm,2,10678,-11.23,25.39,3469,58.9,0.1429,1.829
+cont_chelsa,v3,direta,0-30 cm,3,10678,-11.22,25.43,3484,59.02,0.1392,1.809
+cont_chelsa,v3,direta,"0-30 cm, amostras reais",1,9787,-10.24,22.95,2731,52.26,0.1062,1.42
+cont_chelsa,v3,direta,"0-30 cm, amostras reais",2,9787,-10.22,22.86,2723,52.18,0.1088,1.481
+cont_chelsa,v3,direta,"0-30 cm, amostras reais",3,9787,-10.26,22.86,2726,52.22,0.1076,1.478
+cont_chelsa,v3,direta,todas,1,27425,-4.31,21.31,2084,45.65,0.2017,1.705
+cont_chelsa,v3,direta,todas,2,27425,-4.388,21.27,2080,45.6,0.2033,1.744
+cont_chelsa,v3,direta,todas,3,27425,-4.219,21.32,2082,45.63,0.2025,1.738
+cont_chelsa,v4,direta,0-30 cm,1,10678,-10.18,25.5,3439,58.65,0.1502,1.526
+cont_chelsa,v4,direta,0-30 cm,2,10678,-10.7,25.69,3529,59.4,0.1281,1.544
+cont_chelsa,v4,direta,0-30 cm,3,10678,-10.52,25.42,3352,57.9,0.1718,1.658
+cont_chelsa,v4,direta,"0-30 cm, amostras reais",1,9787,-9.48,22.96,2716,52.12,0.1109,1.267
+cont_chelsa,v4,direta,"0-30 cm, amostras reais",2,9787,-9.856,23.13,2768,52.61,0.09409,1.269
+cont_chelsa,v4,direta,"0-30 cm, amostras reais",3,9787,-9.842,22.96,2687,51.83,0.1206,1.372
+cont_chelsa,v4,direta,todas,1,27425,-3.312,21.31,2051,45.29,0.2142,1.489
+cont_chelsa,v4,direta,todas,2,27425,-3.906,21.46,2108,45.92,0.1922,1.507
+cont_chelsa,v4,direta,todas,3,27425,-3.8,21.28,2013,44.87,0.2288,1.623
+cont_decenal,v2,direta,0-30 cm,1,10678,-7.316,24.36,2903,53.88,0.2827,1.31
+cont_decenal,v2,direta,0-30 cm,2,10678,-7.956,24.46,2955,54.36,0.2699,1.486
+cont_decenal,v2,direta,0-30 cm,3,10678,-9.109,24.67,3231,56.84,0.2017,1.858
+cont_decenal,v2,direta,"0-30 cm, amostras reais",1,9787,-6.944,22.2,2388,48.87,0.2182,1.395
+cont_decenal,v2,direta,"0-30 cm, amostras reais",2,9787,-7.252,22.4,2442,49.42,0.2007,1.399
+cont_decenal,v2,direta,"0-30 cm, amostras reais",3,9787,-7.716,22.53,2549,50.49,0.1656,1.563
+cont_decenal,v2,direta,todas,1,27425,-0.8424,20.78,1737,41.68,0.3344,1.105
+cont_decenal,v2,direta,todas,2,27425,-1.374,20.71,1724,41.52,0.3395,1.291
+cont_decenal,v2,direta,todas,3,27425,-2.984,20.82,1923,43.86,0.2631,1.697
+cont_decenal,v3,direta,0-30 cm,1,10678,-9.19,25.45,3332,57.72,0.1767,1.752
+cont_decenal,v3,direta,0-30 cm,2,10678,-9.416,25.65,3355,57.92,0.171,1.766
+cont_decenal,v3,direta,0-30 cm,3,10678,-9.217,25.58,3373,58.08,0.1665,1.762
+cont_decenal,v3,direta,"0-30 cm, amostras reais",1,9787,-8.289,22.93,2640,51.38,0.1361,1.424
+cont_decenal,v3,direta,"0-30 cm, amostras reais",2,9787,-8.486,23.15,2663,51.6,0.1284,1.394
+cont_decenal,v3,direta,"0-30 cm, amostras reais",3,9787,-8.239,23,2652,51.5,0.1319,1.41
+cont_decenal,v3,direta,todas,1,27425,-3.132,21.59,2028,45.04,0.2229,1.688
+cont_decenal,v3,direta,todas,2,27425,-3.279,21.67,2040,45.17,0.2183,1.692
+cont_decenal,v3,direta,todas,3,27425,-3.052,21.68,2046,45.24,0.216,1.69
+cont_decenal,v4,direta,0-30 cm,1,10678,-9.078,25.72,3443,58.67,0.1493,1.556
+cont_decenal,v4,direta,0-30 cm,2,10678,-9.218,25.64,3423,58.51,0.1542,1.687
+cont_decenal,v4,direta,0-30 cm,3,10678,-9.427,25.48,3320,57.62,0.1797,1.682
+cont_decenal,v4,direta,"0-30 cm, amostras reais",1,9787,-8.276,23.08,2704,52,0.1151,1.277
+cont_decenal,v4,direta,"0-30 cm, amostras reais",2,9787,-8.271,23.08,2692,51.89,0.1189,1.334
+cont_decenal,v4,direta,"0-30 cm, amostras reais",3,9787,-8.736,22.97,2649,51.47,0.133,1.4
+cont_decenal,v4,direta,todas,1,27425,-2.976,21.73,2084,45.65,0.2015,1.501
+cont_decenal,v4,direta,todas,2,27425,-3.124,21.67,2064,45.43,0.2093,1.619
+cont_decenal,v4,direta,todas,3,27425,-3.14,21.49,1995,44.66,0.2358,1.633
+cont_sel,v2,direta,0-30 cm,1,10678,-6.988,24.14,2840,53.29,0.2982,1.195
+cont_sel,v2,direta,0-30 cm,2,10678,-7.717,24.2,2850,53.38,0.2958,1.364
+cont_sel,v2,direta,0-30 cm,3,10678,-9.156,24.53,3174,56.34,0.2157,1.828
+cont_sel,v2,direta,"0-30 cm, amostras reais",1,9787,-6.866,22.04,2372,48.7,0.2237,1.233
+cont_sel,v2,direta,"0-30 cm, amostras reais",2,9787,-7.262,22.19,2388,48.87,0.2183,1.323
+cont_sel,v2,direta,"0-30 cm, amostras reais",3,9787,-7.911,22.45,2536,50.36,0.1698,1.58
+cont_sel,v2,direta,todas,1,27425,-0.3322,20.6,1713,41.38,0.3438,1.007
+cont_sel,v2,direta,todas,2,27425,-1.021,20.52,1672,40.9,0.3593,1.197
+cont_sel,v2,direta,todas,3,27425,-2.693,20.69,1883,43.4,0.2785,1.705
+cont_sel,v3,direta,0-30 cm,1,10678,-10.65,25.45,3421,58.49,0.1546,1.778
+cont_sel,v3,direta,0-30 cm,2,10678,-10.44,25.47,3387,58.19,0.1632,1.809
+cont_sel,v3,direta,0-30 cm,3,10678,-10.15,25.27,3356,57.93,0.1707,1.778
+cont_sel,v3,direta,"0-30 cm, amostras reais",1,9787,-9.638,22.94,2706,52.02,0.1144,1.404
+cont_sel,v3,direta,"0-30 cm, amostras reais",2,9787,-9.435,23,2693,51.9,0.1185,1.408
+cont_sel,v3,direta,"0-30 cm, amostras reais",3,9787,-9.292,22.82,2664,51.62,0.1279,1.438
+cont_sel,v3,direta,todas,1,27425,-3.844,21.35,2039,45.16,0.2187,1.747
+cont_sel,v3,direta,todas,2,27425,-3.96,21.46,2054,45.32,0.213,1.737
+cont_sel,v3,direta,todas,3,27425,-3.572,21.37,2031,45.07,0.2218,1.712
+cont_sel,v4,direta,0-30 cm,1,10678,-9.731,25.54,3414,58.43,0.1564,1.614
+cont_sel,v4,direta,0-30 cm,2,10678,-9.929,25.61,3465,58.87,0.1437,1.629
+cont_sel,v4,direta,0-30 cm,3,10678,-9.916,25.5,3377,58.11,0.1657,1.604
+cont_sel,v4,direta,"0-30 cm, amostras reais",1,9787,-8.819,22.95,2697,51.93,0.1172,1.283
+cont_sel,v4,direta,"0-30 cm, amostras reais",2,9787,-9.097,23.06,2728,52.23,0.1071,1.296
+cont_sel,v4,direta,"0-30 cm, amostras reais",3,9787,-9.214,22.99,2697,51.93,0.1173,1.313
+cont_sel,v4,direta,todas,1,27425,-3.244,21.41,2033,45.08,0.2213,1.58
+cont_sel,v4,direta,todas,2,27425,-3.345,21.43,2058,45.36,0.2117,1.601
+cont_sel,v4,direta,todas,3,27425,-3.462,21.47,2038,45.14,0.2192,1.592
+holdridge_eth,v2,direta,0-30 cm,1,10678,-7.666,24.58,2932,54.14,0.2756,1.305
+holdridge_eth,v2,direta,0-30 cm,2,10678,-8.167,24.79,3010,54.87,0.2562,1.381
+holdridge_eth,v2,direta,0-30 cm,3,10678,-9.628,25.06,3281,57.28,0.1892,1.897
+holdridge_eth,v2,direta,"0-30 cm, amostras reais",1,9787,-6.996,22.44,2410,49.09,0.2113,1.33
+holdridge_eth,v2,direta,"0-30 cm, amostras reais",2,9787,-7.305,22.63,2480,49.8,0.1883,1.325
+holdridge_eth,v2,direta,"0-30 cm, amostras reais",3,9787,-8.016,22.84,2572,50.71,0.1583,1.574
+holdridge_eth,v2,direta,todas,1,27425,-0.968,21,1758,41.93,0.3264,1.096
+holdridge_eth,v2,direta,todas,2,27425,-1.466,21.07,1774,42.11,0.3205,1.234
+holdridge_eth,v2,direta,todas,3,27425,-3.167,21.15,1956,44.22,0.2508,1.775
+holdridge_eth,v3,direta,0-30 cm,1,10678,-10.38,25.82,3372,58.07,0.1667,1.824
+holdridge_eth,v3,direta,0-30 cm,2,10678,-10.68,25.89,3399,58.3,0.1603,1.831
+holdridge_eth,v3,direta,0-30 cm,3,10678,-10.53,25.78,3400,58.31,0.16,1.873
+holdridge_eth,v3,direta,"0-30 cm, amostras reais",1,9787,-9.368,23.26,2668,51.65,0.1269,1.466
+holdridge_eth,v3,direta,"0-30 cm, amostras reais",2,9787,-9.68,23.31,2686,51.82,0.1209,1.465
+holdridge_eth,v3,direta,"0-30 cm, amostras reais",3,9787,-9.497,23.2,2675,51.72,0.1245,1.496
+holdridge_eth,v3,direta,todas,1,27425,-3.705,21.79,2046,45.23,0.2162,1.777
+holdridge_eth,v3,direta,todas,2,27425,-3.673,21.77,2040,45.17,0.2183,1.788
+holdridge_eth,v3,direta,todas,3,27425,-3.821,21.76,2060,45.38,0.2109,1.822
+holdridge_eth,v4,direta,0-30 cm,1,10678,-10.19,26.24,3522,59.35,0.1296,1.622
+holdridge_eth,v4,direta,0-30 cm,2,10678,-10.6,26.19,3504,59.19,0.1343,1.724
+holdridge_eth,v4,direta,0-30 cm,3,10678,-10.69,26.12,3428,58.55,0.1528,1.782
+holdridge_eth,v4,direta,"0-30 cm, amostras reais",1,9787,-9.051,23.53,2739,52.33,0.1036,1.278
+holdridge_eth,v4,direta,"0-30 cm, amostras reais",2,9787,-9.397,23.48,2734,52.29,0.105,1.332
+holdridge_eth,v4,direta,"0-30 cm, amostras reais",3,9787,-9.72,23.46,2707,52.03,0.114,1.405
+holdridge_eth,v4,direta,todas,1,27425,-3.672,21.97,2117,46.01,0.189,1.611
+holdridge_eth,v4,direta,todas,2,27425,-3.781,21.92,2090,45.72,0.1993,1.698
+holdridge_eth,v4,direta,todas,3,27425,-3.943,21.86,2059,45.38,0.211,1.747
+koppen_ipef,v2,direta,0-30 cm,1,10678,-7.516,24.71,2931,54.14,0.2757,1.253
+koppen_ipef,v2,direta,0-30 cm,2,10678,-8.015,24.86,3026,55.01,0.2524,1.296
+koppen_ipef,v2,direta,0-30 cm,3,10678,-9.905,25.19,3399,58.3,0.1602,1.844
+koppen_ipef,v2,direta,"0-30 cm, amostras reais",1,9787,-6.897,22.44,2406,49.05,0.2125,1.311
+koppen_ipef,v2,direta,"0-30 cm, amostras reais",2,9787,-7.192,22.62,2484,49.84,0.1868,1.266
+koppen_ipef,v2,direta,"0-30 cm, amostras reais",3,9787,-8.117,22.84,2631,51.29,0.1389,1.515
+koppen_ipef,v2,direta,todas,1,27425,-0.8512,21.19,1769,42.06,0.3222,1.052
+koppen_ipef,v2,direta,todas,2,27425,-1.262,21.26,1797,42.39,0.3116,1.151
+koppen_ipef,v2,direta,todas,3,27425,-3.399,21.29,2024,44.99,0.2246,1.74
+koppen_ipef,v3,direta,0-30 cm,1,10678,-10.19,25.63,3416,58.44,0.156,1.856
+koppen_ipef,v3,direta,0-30 cm,2,10678,-10.35,25.62,3373,58.08,0.1664,1.808
+koppen_ipef,v3,direta,0-30 cm,3,10678,-10.39,25.62,3424,58.51,0.1541,1.886
+koppen_ipef,v3,direta,"0-30 cm, amostras reais",1,9787,-9.086,23,2672,51.69,0.1254,1.503
+koppen_ipef,v3,direta,"0-30 cm, amostras reais",2,9787,-9.334,23.03,2669,51.66,0.1266,1.482
+koppen_ipef,v3,direta,"0-30 cm, amostras reais",3,9787,-9.245,23,2688,51.85,0.1201,1.505
+koppen_ipef,v3,direta,todas,1,27425,-3.446,21.76,2061,45.39,0.2105,1.797
+koppen_ipef,v3,direta,todas,2,27425,-3.541,21.82,2056,45.34,0.2125,1.768
+koppen_ipef,v3,direta,todas,3,27425,-3.472,21.77,2059,45.38,0.2111,1.815
+koppen_ipef,v4,direta,0-30 cm,1,10678,-10.05,26.05,3501,59.17,0.1348,1.646
+koppen_ipef,v4,direta,0-30 cm,2,10678,-10.21,26,3506,59.21,0.1336,1.719
+koppen_ipef,v4,direta,0-30 cm,3,10678,-10.22,25.97,3441,58.66,0.1498,1.728
+koppen_ipef,v4,direta,"0-30 cm, amostras reais",1,9787,-8.846,23.25,2713,52.09,0.1119,1.321
+koppen_ipef,v4,direta,"0-30 cm, amostras reais",2,9787,-8.938,23.24,2724,52.19,0.1085,1.336
+koppen_ipef,v4,direta,"0-30 cm, amostras reais",3,9787,-9.159,23.25,2709,52.05,0.1132,1.359
+koppen_ipef,v4,direta,todas,1,27425,-3.483,22.04,2119,46.03,0.1883,1.604
+koppen_ipef,v4,direta,todas,2,27425,-3.627,22.06,2123,46.08,0.1867,1.651
+koppen_ipef,v4,direta,todas,3,27425,-3.498,21.85,2052,45.3,0.2137,1.688
+sem_clima,v2,direta,0-30 cm,1,10678,-7.287,24.67,2933,54.16,0.2753,1.243
+sem_clima,v2,direta,0-30 cm,2,10678,-7.932,24.77,3016,54.92,0.2547,1.388
+sem_clima,v2,direta,0-30 cm,3,10678,-9.202,25,3271,57.19,0.1918,1.816
+sem_clima,v2,direta,"0-30 cm, amostras reais",1,9787,-6.69,22.44,2399,48.98,0.2148,1.299
+sem_clima,v2,direta,"0-30 cm, amostras reais",2,9787,-6.996,22.6,2478,49.78,0.1889,1.312
+sem_clima,v2,direta,"0-30 cm, amostras reais",3,9787,-7.596,22.79,2578,50.77,0.1562,1.491
+sem_clima,v2,direta,todas,1,27425,-0.8882,21.02,1762,41.97,0.325,1.059
+sem_clima,v2,direta,todas,2,27425,-1.58,21.03,1779,42.18,0.3183,1.258
+sem_clima,v2,direta,todas,3,27425,-3.204,21.08,1957,44.24,0.2503,1.718
+sem_clima,v3,direta,0-30 cm,1,10678,-9.783,25.72,3396,58.27,0.1609,1.823
+sem_clima,v3,direta,0-30 cm,2,10678,-9.958,25.68,3385,58.18,0.1637,1.897
+sem_clima,v3,direta,0-30 cm,3,10678,-9.923,25.81,3443,58.67,0.1493,1.813
+sem_clima,v3,direta,"0-30 cm, amostras reais",1,9787,-8.69,23.07,2656,51.54,0.1306,1.464
+sem_clima,v3,direta,"0-30 cm, amostras reais",2,9787,-8.843,23.05,2651,51.49,0.1322,1.521
+sem_clima,v3,direta,"0-30 cm, amostras reais",3,9787,-8.742,23.11,2678,51.75,0.1235,1.444
+sem_clima,v3,direta,todas,1,27425,-3.42,21.82,2071,45.5,0.2067,1.757
+sem_clima,v3,direta,todas,2,27425,-3.357,21.74,2048,45.25,0.2154,1.808
+sem_clima,v3,direta,todas,3,27425,-3.479,21.88,2091,45.73,0.1989,1.736
+sem_clima,v4,direta,0-30 cm,1,10678,-9.66,26.02,3465,58.87,0.1438,1.671
+sem_clima,v4,direta,0-30 cm,2,10678,-9.691,25.9,3428,58.55,0.153,1.719
+sem_clima,v4,direta,0-30 cm,3,10678,-9.814,25.75,3384,58.17,0.1639,1.746
+sem_clima,v4,direta,"0-30 cm, amostras reais",1,9787,-8.485,23.28,2694,51.9,0.1183,1.329
+sem_clima,v4,direta,"0-30 cm, amostras reais",2,9787,-8.538,23.25,2688,51.85,0.1201,1.336
+sem_clima,v4,direta,"0-30 cm, amostras reais",3,9787,-8.812,23.1,2671,51.68,0.1258,1.4
+sem_clima,v4,direta,todas,1,27425,-3.451,21.94,2101,45.84,0.195,1.619
+sem_clima,v4,direta,todas,2,27425,-3.323,21.89,2067,45.46,0.2081,1.665
+sem_clima,v4,direta,todas,3,27425,-3.549,21.73,2042,45.19,0.2178,1.7
+th_cadsolo,v2,direta,0-30 cm,1,10678,-7.764,24.45,2893,53.79,0.2852,1.316
+th_cadsolo,v2,direta,0-30 cm,2,10678,-8.305,24.79,2978,54.57,0.2642,1.394
+th_cadsolo,v2,direta,0-30 cm,3,10678,-9.78,24.94,3264,57.13,0.1936,1.941
+th_cadsolo,v2,direta,"0-30 cm, amostras reais",1,9787,-7.432,22.42,2394,48.93,0.2164,1.363
+th_cadsolo,v2,direta,"0-30 cm, amostras reais",2,9787,-7.71,22.75,2471,49.71,0.1911,1.352
+th_cadsolo,v2,direta,"0-30 cm, amostras reais",3,9787,-8.416,22.81,2568,50.68,0.1594,1.659
+th_cadsolo,v2,direta,todas,1,27425,-0.6988,20.93,1727,41.56,0.3383,1.121
+th_cadsolo,v2,direta,todas,2,27425,-1.003,21.08,1754,41.88,0.3281,1.198
+th_cadsolo,v2,direta,todas,3,27425,-2.983,21.07,1945,44.1,0.2548,1.77
+th_cadsolo,v3,direta,0-30 cm,1,10678,-10.01,25.47,3351,57.88,0.1721,1.879
+th_cadsolo,v3,direta,0-30 cm,2,10678,-9.874,25.45,3334,57.74,0.1762,1.84
+th_cadsolo,v3,direta,0-30 cm,3,10678,-10.2,25.49,3349,57.87,0.1724,1.867
+th_cadsolo,v3,direta,"0-30 cm, amostras reais",1,9787,-9.239,22.97,2649,51.46,0.1331,1.554
+th_cadsolo,v3,direta,"0-30 cm, amostras reais",2,9787,-9.179,23,2643,51.41,0.1349,1.539
+th_cadsolo,v3,direta,"0-30 cm, amostras reais",3,9787,-9.441,23.01,2648,51.46,0.1331,1.552
+th_cadsolo,v3,direta,todas,1,27425,-2.977,21.6,2016,44.91,0.2275,1.786
+th_cadsolo,v3,direta,todas,2,27425,-3.09,21.59,2023,44.98,0.225,1.747
+th_cadsolo,v3,direta,todas,3,27425,-3.166,21.65,2036,45.12,0.2201,1.775
+th_cadsolo,v4,direta,0-30 cm,1,10678,-10.04,25.93,3495,59.12,0.1364,1.674
+th_cadsolo,v4,direta,0-30 cm,2,10678,-10.21,26.05,3471,58.91,0.1424,1.726
+th_cadsolo,v4,direta,0-30 cm,3,10678,-10.11,25.62,3358,57.95,0.1702,1.807
+th_cadsolo,v4,direta,"0-30 cm, amostras reais",1,9787,-9.126,23.28,2717,52.13,0.1105,1.383
+th_cadsolo,v4,direta,"0-30 cm, amostras reais",2,9787,-9.242,23.45,2723,52.18,0.1088,1.351
+th_cadsolo,v4,direta,"0-30 cm, amostras reais",3,9787,-9.498,23.09,2662,51.6,0.1286,1.518
+th_cadsolo,v4,direta,todas,1,27425,-3.236,21.87,2105,45.88,0.1935,1.598
+th_cadsolo,v4,direta,todas,2,27425,-3.319,21.94,2086,45.67,0.201,1.666
+th_cadsolo,v4,direta,todas,3,27425,-3.12,21.53,2002,44.74,0.2332,1.722
+zonas_k10,v2,direta,0-30 cm,1,10678,-7.413,24.36,2905,53.9,0.2821,1.281
+zonas_k10,v2,direta,0-30 cm,2,10678,-7.833,24.63,2987,54.65,0.2619,1.379
+zonas_k10,v2,direta,0-30 cm,3,10678,-9.52,25.03,3343,57.81,0.1741,1.838
+zonas_k10,v2,direta,"0-30 cm, amostras reais",1,9787,-6.9,22.22,2383,48.82,0.2199,1.325
+zonas_k10,v2,direta,"0-30 cm, amostras reais",2,9787,-7.048,22.49,2462,49.62,0.1941,1.32
+zonas_k10,v2,direta,"0-30 cm, amostras reais",3,9787,-7.899,22.77,2607,51.06,0.1466,1.505
+zonas_k10,v2,direta,todas,1,27425,-0.6408,20.89,1737,41.68,0.3344,1.118
+zonas_k10,v2,direta,todas,2,27425,-1.06,21,1761,41.97,0.3252,1.218
+zonas_k10,v2,direta,todas,3,27425,-3.108,21.15,1992,44.63,0.2368,1.726
+zonas_k10,v3,direta,0-30 cm,1,10678,-9.983,25.63,3403,58.34,0.1591,1.776
+zonas_k10,v3,direta,0-30 cm,2,10678,-9.993,25.61,3364,58,0.1689,1.794
+zonas_k10,v3,direta,0-30 cm,3,10678,-10.1,25.68,3414,58.43,0.1563,1.821
+zonas_k10,v3,direta,"0-30 cm, amostras reais",1,9787,-8.94,23.03,2666,51.64,0.1273,1.435
+zonas_k10,v3,direta,"0-30 cm, amostras reais",2,9787,-9.031,23.03,2655,51.53,0.131,1.445
+zonas_k10,v3,direta,"0-30 cm, amostras reais",3,9787,-9.06,23.06,2675,51.72,0.1245,1.458
+zonas_k10,v3,direta,todas,1,27425,-3.26,21.66,2049,45.27,0.215,1.737
+zonas_k10,v3,direta,todas,2,27425,-3.395,21.71,2052,45.29,0.214,1.729
+zonas_k10,v3,direta,todas,3,27425,-3.304,21.67,2050,45.28,0.2146,1.765
+zonas_k10,v4,direta,0-30 cm,1,10678,-9.572,25.82,3491,59.08,0.1374,1.641
+zonas_k10,v4,direta,0-30 cm,2,10678,-10.02,25.96,3529,59.4,0.1281,1.669
+zonas_k10,v4,direta,0-30 cm,3,10678,-10.03,25.79,3394,58.26,0.1613,1.732
+zonas_k10,v4,direta,"0-30 cm, amostras reais",1,9787,-8.465,23.08,2703,51.99,0.1152,1.316
+zonas_k10,v4,direta,"0-30 cm, amostras reais",2,9787,-8.786,23.23,2731,52.26,0.106,1.301
+zonas_k10,v4,direta,"0-30 cm, amostras reais",3,9787,-9.059,23.17,2677,51.74,0.1238,1.372
+zonas_k10,v4,direta,todas,1,27425,-3.021,21.9,2103,45.86,0.1941,1.593
+zonas_k10,v4,direta,todas,2,27425,-3.417,21.99,2127,46.12,0.185,1.638
+zonas_k10,v4,direta,todas,3,27425,-3.446,21.73,2043,45.2,0.2172,1.702
