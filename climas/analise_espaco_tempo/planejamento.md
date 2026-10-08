@@ -18,7 +18,7 @@ troca do clima quase não mudou a textura.
 | Sem clima (controle interno) | nenhuma | mede quanto o clima acrescenta; custo quase zero |
 
 **Saída com nome próprio.** A matriz reconstruída não é a do MapBiomas e não deve ter o mesmo nome. Sugestão:
-`matriz_soc_c3_espaco_tempo` (treino) e `painel_soc_c3_1985_2024` (predição local × ano), em
+`matriz_soc_c3_fabricio` (treino) e `painel_soc_c3_fabricio_1985_2024` (predição local × ano), em
 `climas/dados_espaco_tempo/`.
 
 ---
@@ -78,12 +78,21 @@ feito com a textura em `climas/reproducao/codigo/covariaveis_gee.py`).
 
 ### 3.3 Filtros (regras da produção)
 
-Seguir o `26_soc_filter_matrix.R` (versão R) em vez do script JS, porque o JS tem dois desvios:
-- usa `'resingas'` (erro de digitação) nos filtros de restinga; o R usa `restingas`;
+Há duas versões dos filtros, que diferem em dois pontos:
+- o JS usa `'resingas'` (erro de digitação) nos dois filtros de restinga, que por isso não removem nada; o R
+  usa `restingas`;
 - no filtro solo escuro × textura arenosa, o JS usa `black_soil_prob > 10` e o R usa `> 50`.
 
-Depois dos filtros, como no R: remover covariáveis constantes e covariáveis binárias com menos de 30
-ocorrências. Registrar quantas linhas cada filtro remove e comparar com os números anotados no script.
+**Revisto em 08/10/2026:** a matriz que de fato treinou e validou o modelo (`c03_soc_v2025_trainingFinal`,
+27.425 linhas, 14.704 ids, 13.108 grupos, 136 colunas) foi gerada pelo **script JS**
+([`codigo/referencia/soc_trainingFinal_c3_2025_11_26.js`](codigo/referencia/soc_trainingFinal_c3_2025_11_26.js)),
+não pelo R (que termina em 32.399 linhas). Para ficar o mais próximo da produção, a regra passa a ser
+**o JS, com os desvios dele**. Aplicar as duas versões, registrar quantas linhas cada filtro remove e
+conferir qual chega a 27.425 linhas; se for o JS, fica o JS.
+
+Seleção de colunas: as listas `covariates_names_static/dynamic` do mesmo script (já incorporam o que o R
+26 e o 28 removeram: constantes, binárias com menos de 30 ocorrências, quase sem variância, correlação
+≥ 0,95 e importância zero). Não é preciso repetir essas etapas.
 
 ### 3.4 Painel de predição (sem mapas)
 
@@ -228,7 +237,7 @@ Organização: `codigo/`, `resultados/{tabelas,figuras}/` versionados; dados por
 4. **Textura da C3:** mantida como covariável; sem variante sem textura.
 5. **Validação temporal:** quatro períodos de 10 anos (1985-1994, 1995-2004, 2005-2014, 2015-2024).
 6. **Avaliação temporal:** painel de trajetórias 1985-2024 + comparação com o SOC oficial da C3.
-7. **Matriz do MapBiomas:** não pedir; a nossa saída tem nome próprio (`matriz_soc_c3_espaco_tempo`).
+7. **Matriz do MapBiomas:** não pedir; a nossa saída tem nome próprio (`matriz_soc_c3_fabricio`).
 
 **Acesso:** os assets `GT_DECADE_*_2026` foram liberados para esta conta em 07/10/2026. Entram temperatura e
 chuva decenais (1971-2026). O CDD do GT está vazio; o CDD decenal é calculado por nós a partir da chuva
