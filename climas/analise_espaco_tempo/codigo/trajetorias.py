@@ -11,7 +11,8 @@
 
 Saídas: resultados/tabelas/trajetorias_*.csv e resultados/figuras/trajetorias_*.png
 
-Uso: python trajetorias.py
+Uso: python trajetorias.py            # itens 1-4
+    python trajetorias.py variacao   # item 4b: variação observada × prevista (oof)
 """
 import json
 
@@ -163,5 +164,40 @@ def main():
         print(f'\n== {nome}\n{t.round(3).to_string(index=False)}')
 
 
-if __name__ == '__main__':
+if __name__ == '__main__' and len(__import__('sys').argv) == 1:
     main()
+
+
+def variacao_observada():
+    """Locais com coleta em anos diferentes na mesma profundidade (matriz filtrada, sem réplicas): variação
+    observada entre a primeira e a última coleta × variação prevista fora da amostra (oof de V2, V3 e V4,
+    média das repetições). Única verdade de campo para a variação no tempo."""
+    m = pd.read_parquet(cfg.DADOS / 'matriz_cenarios.parquet',
+                        columns=['id', 'year', 'longitude', 'latitude', 'profundidade', 'carbono_gm2_qmap'])
+    m['linha'] = np.arange(len(m))
+    m = m[~m.id.str.startswith('trep')]
+    m['local'] = m.longitude.round(4).astype(str) + '_' + m.latitude.round(4).astype(str)
+    g = m.groupby(['local', 'profundidade'])
+    m = m[g.year.transform('nunique') >= 2]
+    linhas = []
+    for arq in sorted((cfg.DADOS / 'oof').glob('*_direta.parquet')):
+        cen, esq, _ = arq.stem.rsplit('_', 2)
+        o = pd.read_parquet(arq)
+        o['linha'] -= 1
+        pred = o.groupby('linha').pred.mean()
+        x = m.assign(pred=m.linha.map(pred)).dropna(subset=['pred'])
+        x = x.groupby(['local', 'profundidade', 'year'])[['carbono_gm2_qmap', 'pred']].mean().reset_index()
+        par = x.sort_values('year').groupby(['local', 'profundidade']).agg(
+            obs_ini=('carbono_gm2_qmap', 'first'), obs_fim=('carbono_gm2_qmap', 'last'),
+            pred_ini=('pred', 'first'), pred_fim=('pred', 'last'))
+        dobs, dpred = (par.obs_fim - par.obs_ini) / 100, (par.pred_fim - par.pred_ini) / 100
+        linhas.append({'cenario': cen, 'esquema': esq, 'pares': len(par), 'delta_obs_medio': dobs.mean(),
+                       'delta_pred_medio': dpred.mean(), 'r_delta': np.corrcoef(dobs, dpred)[0, 1],
+                       'concordancia_sinal': (np.sign(dobs) == np.sign(dpred)).mean()})
+    return pd.DataFrame(linhas)
+
+
+if __name__ == '__main__' and 'variacao' in __import__('sys').argv:
+    t = variacao_observada()
+    t.to_csv(cfg.TABELAS / 'trajetorias_variacao_observada.csv', index=False, float_format='%.4g')
+    print(t.round(3).to_string(index=False))
