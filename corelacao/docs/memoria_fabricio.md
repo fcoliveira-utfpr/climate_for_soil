@@ -801,7 +801,12 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    +0,023 na V3; CHELSA e Thornthwaite CAD solo positivos em V3 e V4; Holdridge negativo na V4; juntar CHELSA
    + decenal não soma (redundância). Seleção aninhada `cont_sel` (pares |r| > 0,9, `selecao_continuas.R`)
    rodando. GEE do projeto entrou em modo restrito (cota não comercial) em 08/10; extrações já feitas.
-7. [em andamento] Etapa 7: painel (13.680 locais × 40 anos; coordenadas casadas por vizinho mais próximo,
-   porque o sampleRegions devolve o centro do pixel), SOC oficial extraído, `prever_painel.R` e
-   `trajetorias.py` prontos.
-8. Ao final: `relatorio_tecnicov2.md` na raiz (pedido do usuário).
+7. [ok] Etapa 7 e mapa oficial: `carbon/2_model_prediction` mostra que o mapa usa `smileRandomForest`
+   com **maxNodes 40** (árvores rasas), não o ranger max.depth 40 validado; emulado no sklearn
+   (`fidelidade_gee.py`) + pós-processamento (máscaras uso 23/24/30 e textura 1, correção 1985-87,
+   arredondamento): r 0,92 / MEC 0,80 contra o oficial. Modelo do mapa acerta menos (MEC V2 reais 0,18 ×
+   0,24) e subestima ~7 t/ha. Validação refeita com ele (`validacao_gee.py`): decenal é o único que ganha do
+   Köppen em V2/V3/V4; CHELSA +0,034 na V2 mas piora na V3. Queda de ~1 t/ha em 2021 em tudo (oficial
+   inclusive), causa em aberto. 289 pares com coleta repetida: nenhum modelo acerta o sinal.
+8. [ok] `relatorio_tecnicov2.md` na raiz (commit 1eb1948).
+9. [próximo] Capítulo 2 do relatório (pedido): mesmas configurações, outros algoritmos, contra amostras reais.
