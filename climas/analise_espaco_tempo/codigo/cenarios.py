@@ -8,7 +8,7 @@ Junta à matriz reconstruída (= trainingFinal) os climas dos locais (climas.py)
 - dobras (perfil e réplicas trep sempre juntos):
   V2 espacial: blocos de 2°, 5 dobras equilibradas em linhas, 3 repetições (fold_v2_1..3);
   V3 temporal: 4 períodos de 10 anos pelo ano do perfil original (as réplicas vão com ele);
-  V4 espaço-temporal: teste = dobra espacial f (repetição 1) e período p; treino = fora dos dois.
+  V4 espaço-temporal: teste = dobra espacial f (da repetição r) e período p; treino = fora dos dois.
 
 Saídas: climas/dados_espaco_tempo/matriz_cenarios.parquet (restrita) e codigo/cenarios.json (colunas de
 cada cenário).
@@ -41,6 +41,8 @@ CONTINUOS = {
     'cont_chelsa': cfg.CLIMA_CONTINUO,
     'cont_decenal': cfg.CLIMA_DECENAL,
     'cont_ambos': cfg.CLIMA_CONTINUO + cfg.CLIMA_DECENAL,
+    # seleção aninhada em validacao.R (pares |r| > 0,9); aqui ficam as candidatas
+    'cont_sel': cfg.CLIMA_CONTINUO + cfg.CLIMA_DECENAL,
 }
 
 

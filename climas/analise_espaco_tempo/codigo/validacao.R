@@ -3,8 +3,9 @@
 #
 # Esquemas (dobras de cenarios.py; perfil e réplicas sempre juntos):
 #   v2  espacial: blocos de 2°, 5 dobras x 3 repetições
-#   v3  temporal: deixa um período de 10 anos de fora (4 dobras)
-#   v4  espaço-temporal: teste = dobra espacial f (rep. 1) e período p; treino = fora dos dois (20 modelos)
+#   v3  temporal: deixa um período de 10 anos de fora (4 dobras x 3 sementes)
+#   v4  espaço-temporal: teste = dobra espacial f e período p; treino = fora dos dois (20 modelos x 3
+#       repetições, cada uma com a sua partição espacial)
 # Resposta 'log': log(qmap + 1) e volta com a correção de Duan (smearing) dos resíduos OOB do treino.
 #
 # Saída: climas/dados_espaco_tempo/oof/<cenario>_<esquema>_<resposta>.parquet (id, rep, dobra, pred em
@@ -37,6 +38,9 @@ m <- as.data.table(read_parquet(file.path(dados_dir, "matriz_cenarios.parquet"))
 y_g <- m$carbono_gm2_qmap
 nthreads <- max(1L, parallel::detectCores() - 1L)
 
+source(file.path(script_dir, "selecao_continuas.R"))
+selecoes <- list()
+
 ajustar_prever <- function(X, treino, teste, semente) {
   y <- if (resposta == "log") log(y_g[treino] + 1) else y_g[treino]
   fit <- ranger(x = X[treino], y = y, num.trees = 300L, mtry = min(24L, ncol(X)),
@@ -56,13 +60,18 @@ particoes <- function(esquema) {   # lista de (rep, dobra, treino, teste)
       f_col <- m[[paste0("fold_v2_", r)]]
       for (f in 1:5) out[[length(out) + 1]] <- list(rep = r, dobra = f, treino = f_col != f, teste = f_col == f)
     }
-  } else if (esquema == "v3") {
-    for (p in 1:4) out[[length(out) + 1]] <- list(rep = 1, dobra = p, treino = m$periodo != p, teste = m$periodo == p)
-  } else if (esquema == "v4") {
-    for (f in 1:5) for (p in 1:4) {
-      out[[length(out) + 1]] <- list(rep = 1, dobra = (f - 1) * 4 + p,
-                                     treino = m$fold_v2_1 != f & m$periodo != p,
-                                     teste = m$fold_v2_1 == f & m$periodo == p)
+  } else if (esquema == "v3") {      # mesmas dobras; as repetições mudam só a semente do ranger
+    for (r in 1:3) for (p in 1:4) {
+      out[[length(out) + 1]] <- list(rep = r, dobra = p, treino = m$periodo != p, teste = m$periodo == p)
+    }
+  } else if (esquema == "v4") {      # repetição r usa a partição espacial fold_v2_r
+    for (r in 1:3) {
+      f_col <- m[[paste0("fold_v2_", r)]]
+      for (f in 1:5) for (p in 1:4) {
+        out[[length(out) + 1]] <- list(rep = r, dobra = (f - 1) * 4 + p,
+                                       treino = f_col != f & m$periodo != p,
+                                       teste = f_col == f & m$periodo == p)
+      }
     }
   } else stop("esquema desconhecido: ", esquema)
   out
@@ -71,16 +80,28 @@ particoes <- function(esquema) {   # lista de (rep, dobra, treino, teste)
 for (cen in cen_nomes) {
   cols <- c(cfg$base, unlist(cfg$cenarios[[cen]]))
   X <- m[, ..cols]
+  if (cen == "cont_sel") stopifnot(resposta == "direta")
   for (esq in esquemas) {
     arq <- file.path(oof_dir, sprintf("%s_%s_%s.parquet", cen, esq, resposta))
     if (file.exists(arq)) { cat("já existe:", basename(arq), "\n"); next }
     t0 <- Sys.time()
     res <- rbindlist(lapply(particoes(esq), function(pt) {
       te <- which(pt$teste)
+      tr <- which(pt$treino)
+      semente <- 1984L + pt$rep * 100L + pt$dobra
+      Xf <- X
+      if (cen == "cont_sel") {
+        manter <- selecionar_continuas(m, y_g, tr, cfg, nthreads, semente)
+        selecoes[[length(selecoes) + 1]] <<- data.table(esquema = esq, rep = pt$rep, dobra = pt$dobra,
+                                                        mantidas = paste(manter, collapse = ","))
+        Xf <- m[, c(cfg$base, manter), with = FALSE]
+      }
       data.table(linha = te, id = m$id[te], rep = pt$rep, dobra = pt$dobra,
-                 pred = ajustar_prever(X, which(pt$treino), te, 1984L + pt$rep * 100L + pt$dobra))
+                 pred = ajustar_prever(Xf, tr, te, semente))
     }))
     write_parquet(res, arq)
+    if (cen == "cont_sel") fwrite(rbindlist(selecoes), file.path(script_dir, "..", "resultados", "tabelas",
+                                                                 "selecao_continuas_dobras.csv"))
     cat(sprintf("%s %s %s: %d colunas, %d predições, %s\n", cen, esq, resposta, ncol(X), nrow(res),
                 format(Sys.time() - t0, digits = 3)))
   }

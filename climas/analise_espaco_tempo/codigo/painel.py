@@ -12,11 +12,12 @@ import sys
 
 import ee
 import pandas as pd
+from scipy.spatial import cKDTree
 
 import config as cfg
 import covariaveis_c3 as c3
 from gee_utils import conectar
-from preparar_dados import baixar_featurecollection, ponto_id
+from preparar_dados import baixar_featurecollection
 
 PASTA = f'{cfg.PASTA_GEE}/painel'
 ANOS = range(1985, 2025)
@@ -45,22 +46,31 @@ def exportar():
         print(f'  {nome}: {t.id}', flush=True)
 
 
-def _baixar(nome):
-    df = baixar_featurecollection(f'{PASTA}/{nome}')
-    df['ponto_id'] = ponto_id(df)
+TOLERANCIA = 2e-4          # graus (~20 m)
+
+
+def _casar(df, originais, arvore):
+    """sampleRegions devolve a geometria no centro do pixel da imagem amostrada (~5 m do ponto, e em grades
+    diferentes nas estáticas e nas dinâmicas); cada linha recebe o ponto_id do local original mais próximo."""
+    dist, i = arvore.query(df[['longitude', 'latitude']].to_numpy())
+    if dist.max() > TOLERANCIA or pd.Series(i).duplicated().any():
+        raise ValueError(f'casamento ambíguo: distância máx. {dist.max():.2e}°')
+    df['ponto_id'] = originais.ponto_id.to_numpy()[i]
     return df.drop(columns=['longitude', 'latitude', 'system:index'], errors='ignore')
 
 
 def baixar():
-    est = baixar_featurecollection(f'{PASTA}/estaticas')
-    est['ponto_id'] = ponto_id(est)
-    est = est.drop(columns=['system:index'], errors='ignore')
+    originais = pd.read_parquet(cfg.DADOS / 'climas_locais.parquet', columns=['ponto_id'])
+    originais[['longitude', 'latitude']] = originais.ponto_id.str.split('_', expand=True).astype(float)
+    arvore = cKDTree(originais[['longitude', 'latitude']].to_numpy())
+    est = _casar(baixar_featurecollection(f'{PASTA}/estaticas'), originais, arvore)
     partes = []
     for a in ANOS:
-        d = _baixar(f'dinamicas_{a}')
+        d = _casar(baixar_featurecollection(f'{PASTA}/dinamicas_{a}'), originais, arvore)
         d['year'] = a
         partes.append(d)
     painel = pd.concat(partes, ignore_index=True).merge(est, on='ponto_id', how='inner')
+    painel = painel.merge(originais, on='ponto_id')
     painel['profundidade'] = 30
     for c in ('IFN_index', 'YEAR_index', 'PSEUDOROCK_index', 'PSEUDOSAND_index'):
         painel[c] = 0

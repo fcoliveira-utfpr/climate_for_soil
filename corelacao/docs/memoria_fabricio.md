@@ -795,5 +795,13 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    em R_LIBS_USER): OOB padrão MEC 0,73 / RMSE 26,67 (MapBiomas 0,73 / 26,73); sem vazamento 0,58 / 33,23
    (0,58 / 33,29); camada mais funda 0,54 / 38,38 (0,54 / 38,48). Mesmo top 5 de importância. Preditoras =
    as 131 de `covariaveis_modelo_c3.txt` (o `ano` não entra: não existia na matriz de produção).
-6. [próximo] Etapa 6: decisão log × direto (§4.3a) e V2-V4 nos cenários (precisa juntar os climas).
-7. Etapas 7-8 do plano (§6).
+6. [ok] Etapa 6: resposta direta (log perde: MEC V2 0-30 0,19 × 0,29). V2/V3/V4 com 3 repetições em 8
+   cenários (`cenarios.py`, `validacao.R`, `metricas.py`; tabelas `validacao_*.csv`). Ganhos sobre o Köppen
+   pequenos (< 0,025 MEC); no tempo (V3) até "sem clima" ganha do Köppen em todas as repetições; decenal
+   +0,023 na V3; CHELSA e Thornthwaite CAD solo positivos em V3 e V4; Holdridge negativo na V4; juntar CHELSA
+   + decenal não soma (redundância). Seleção aninhada `cont_sel` (pares |r| > 0,9, `selecao_continuas.R`)
+   rodando. GEE do projeto entrou em modo restrito (cota não comercial) em 08/10; extrações já feitas.
+7. [em andamento] Etapa 7: painel (13.680 locais × 40 anos; coordenadas casadas por vizinho mais próximo,
+   porque o sampleRegions devolve o centro do pixel), SOC oficial extraído, `prever_painel.R` e
+   `trajetorias.py` prontos.
+8. Ao final: `relatorio_tecnicov2.md` na raiz (pedido do usuário).

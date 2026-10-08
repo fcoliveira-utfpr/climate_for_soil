@@ -230,6 +230,23 @@
    "dec_tmean",
    "dec_prec",
    "dec_cdd"
+  ],
+  "cont_sel": [
+   "clim_t_media",
+   "clim_t_mes_frio",
+   "clim_t_mes_quente",
+   "clim_biotemp",
+   "clim_p_anual",
+   "clim_p_mes_seco",
+   "clim_p_sazonalidade",
+   "clim_etp_anual",
+   "clim_etp_p",
+   "clim_def_anual",
+   "clim_exc_anual",
+   "clim_im",
+   "dec_tmean",
+   "dec_prec",
+   "dec_cdd"
   ]
  }
 }
