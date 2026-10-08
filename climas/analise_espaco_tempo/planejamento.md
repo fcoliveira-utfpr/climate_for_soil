@@ -83,12 +83,18 @@ Há duas versões dos filtros, que diferem em dois pontos:
   usa `restingas`;
 - no filtro solo escuro × textura arenosa, o JS usa `black_soil_prob > 10` e o R usa `> 50`.
 
-**Revisto em 08/10/2026:** a matriz que de fato treinou e validou o modelo (`c03_soc_v2025_trainingFinal`,
-27.425 linhas, 14.704 ids, 13.108 grupos, 136 colunas) foi gerada pelo **script JS**
+**Revisto e conferido em 08/10/2026:** a matriz que de fato treinou e validou o modelo
+(`c03_soc_v2025_trainingFinal`) foi gerada pelo **script JS**
 ([`codigo/referencia/soc_trainingFinal_c3_2025_11_26.js`](codigo/referencia/soc_trainingFinal_c3_2025_11_26.js)),
-não pelo R (que termina em 32.399 linhas). Para ficar o mais próximo da produção, a regra passa a ser
-**o JS, com os desvios dele**. Aplicar as duas versões, registrar quantas linhas cada filtro remove e
-conferir qual chega a 27.425 linhas; se for o JS, fica o JS.
+e a regra passa a ser **o JS, com os desvios dele**. Resultado na matriz reconstruída
+([`codigo/matriz.py`](codigo/matriz.py), tabela `resultados/tabelas/filtros_matriz.csv`):
+- **versão R:** as 13 contagens anotadas no `26_soc_filter_matrix.R` saem idênticas (1071, 273, ... 5;
+  32.399 linhas);
+- **versão JS:** 27.425 linhas, 14.704 ids e 13.108 grupos, **exatamente** a `trainingFinal`. O
+  `'resingas'` não deixa de filtrar: no GEE a comparação com a propriedade inexistente dá nulo e o `.not()`
+  de `and(IFN_index == 1, nulo)` descarta o ponto, então saem **todas** as linhas do IFN (4.429) e todas
+  as de `YEAR_index == -26` (106), não só as de restinga. Os dados do IFN, portanto, não entram no modelo
+  de produção.
 
 Seleção de colunas: as listas `covariates_names_static/dynamic` do mesmo script (já incorporam o que o R
 26 e o 28 removeram: constantes, binárias com menos de 30 ocorrências, quase sem variância, correlação

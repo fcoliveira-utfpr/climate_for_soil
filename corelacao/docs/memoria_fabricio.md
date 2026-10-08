@@ -776,10 +776,20 @@ como está. Conferência (`conferir_covariaveis.py`, 300 linhas de cada matriz):
 `mb_edges` — o que explica a correlação água × bordas anotada no R 26 ("WHY?"); a banda é descartada na
 produção.
 
+**Matriz reconstruída (2026-10-08):** `codigo/matriz.py` (asset `projects/fcoliveira/assets/SOC_C3_FABRICIO/
+matriz_soc_c3_fabricio_bruta`, 35.235 linhas; parquet em `climas/dados_espaco_tempo/`). Filtros R: as 13
+contagens do R 26 idênticas (32.399). Filtros JS: **27.425 linhas / 14.704 ids / 13.108 grupos = exatamente a
+trainingFinal**, porque o `'resingas'` no GEE dá nulo e o `.not()` descarta **todo o IFN e todo o
+YEAR_index -26**. Fica a versão JS (`matriz_soc_c3_fabricio.parquet`). Saídas com nome próprio pedido pelo
+usuário: `matriz_soc_c3_fabricio`, `painel_soc_c3_fabricio_1985_2024`.
+Climas nos locais (`codigo/climas.py`): 14.631 locais; decenais por local × ano 1985-2024 sem faltas.
+Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 anos de dinâmicas).
+
 **Estado em 2026-10-08 e como retomar:**
 1. [ok] CDD anual completo (62 imagens).
-2. [em andamento] CDD decenal: 54 tarefas disparadas em 08/10 (27 prontas na última checagem). Conferir
+2. [em andamento] CDD decenal: completo (54 imagens), valores conferidos nos pontos de teste. Antes:
    `size()` = 54 e os valores nos pontos de teste.
-3. [ok] Etapa 1 do plano (covariáveis C3 + conferência).
-4. [próximo] Etapa 2: extrair a pilha nos 35.235 pontos, cada um no seu ano, e aplicar os filtros do R 26.
-5. Etapas 3-8 do plano (§6).
+3. [ok] Etapas 1 (covariáveis), 2 (matriz = trainingFinal) e 4 (climas).
+4. [em andamento] Etapa 3: tarefas do painel no GEE; depois `python painel.py baixar`.
+5. [próximo] Etapa 5: reproduzir o OOB do MapBiomas (ranger, 300 árvores, mtry 24, qmap) no cenário Köppen.
+6. Etapas 6-8 do plano (§6).

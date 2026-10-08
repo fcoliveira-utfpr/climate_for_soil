@@ -4,9 +4,10 @@ Como em carbon/1_data_matrix: para cada ano dos pontos, a pilha de covariaveis_c
 (sampleRegions, 30 m) nos pontos daquele ano; tudo vai para um asset numa única exportação. Depois, os
 filtros da matriz em duas versões:
 - 'js': o script que gerou a c03_soc_v2025_trainingFinal (referencia/soc_trainingFinal_c3_2025_11_26.js),
-  com 'resingas' (os filtros de restinga não removem nada) e black_soil_prob > 10 no filtro de areia;
+  com 'resingas' (no GEE, os dois filtros de restinga removem todo o IFN e todo o YEAR_index -26) e
+  black_soil_prob > 10 no filtro de areia;
 - 'r': soildata/26_soc_filter_matrix.R (restingas e black_soil_prob > 50).
-Por plano (§3.3), fica a versão JS; a tabela de filtros mostra qual chega às 27.425 linhas da produção.
+Fica a versão JS, que reproduz exatamente a trainingFinal; a versão R reproduz as contagens anotadas no R 26.
 
 Uso:
     python matriz.py exportar     # dispara a tarefa no GEE
@@ -33,9 +34,11 @@ FILTROS = [
     ('areia com argila > 0', lambda d, v: (d.PSEUDOSAND_index == 1) & (d.argila_000_030cm > 0)),
     ('areia com solo escuro > 10', lambda d, v: (d.PSEUDOSAND_index == 1) & (d.black_soil_prob > 10)),
     ('areia com Wetsols > 10', lambda d, v: (d.PSEUDOSAND_index == 1) & (d.Wetsols > 10)),
-    # JS: ee.Filter.gt('resingas', 0) numa propriedade que não existe -> nunca descarta.
-    ('IFN em restinga', lambda d, v: (d.IFN_index == 1) & (d.restingas > 0) & (v == 'r')),
-    ('YEAR_index -26 em restinga', lambda d, v: (d.YEAR_index == -26) & (d.restingas > 0) & (v == 'r')),
+    # JS: ee.Filter.gt('resingas', 0) compara uma propriedade que não existe e dá nulo; o .not() de
+    # and(IFN == 1, nulo) também é falso, então saem TODAS as linhas do IFN e todas as de YEAR_index -26
+    # (não só as de restinga). É o que reproduz a trainingFinal (27.425 linhas, 14.704 ids, 13.108 grupos).
+    ('IFN em restinga', lambda d, v: (d.IFN_index == 1) & ((d.restingas > 0) | (v == 'js'))),
+    ('YEAR_index -26 em restinga', lambda d, v: (d.YEAR_index == -26) & ((d.restingas > 0) | (v == 'js'))),
     ('solo escuro > 10 em areia (uso)', lambda d, v: (d.black_soil_prob > 10) & (d.areia > 0)),
     ('solo escuro em textura arenosa (> 70)',
      lambda d, v: (d.black_soil_prob > (10 if v == 'js' else 50)) & (d.areia_000_030cm > 70)),
