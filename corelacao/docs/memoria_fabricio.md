@@ -791,5 +791,9 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    `size()` = 54 e os valores nos pontos de teste.
 3. [ok] Etapas 1 (covariáveis), 2 (matriz = trainingFinal) e 4 (climas).
 4. [em andamento] Etapa 3: tarefas do painel no GEE; depois `python painel.py baixar`.
-5. [próximo] Etapa 5: reproduzir o OOB do MapBiomas (ranger, 300 árvores, mtry 24, qmap) no cenário Köppen.
-6. Etapas 6-8 do plano (§6).
+5. [ok] Etapa 5 (`codigo/fidelidade_oob.R`; R 4.6.1 + ranger 0.18 instalados em 08/10 via winget, pacotes
+   em R_LIBS_USER): OOB padrão MEC 0,73 / RMSE 26,67 (MapBiomas 0,73 / 26,73); sem vazamento 0,58 / 33,23
+   (0,58 / 33,29); camada mais funda 0,54 / 38,38 (0,54 / 38,48). Mesmo top 5 de importância. Preditoras =
+   as 131 de `covariaveis_modelo_c3.txt` (o `ano` não entra: não existia na matriz de produção).
+6. [próximo] Etapa 6: decisão log × direto (§4.3a) e V2-V4 nos cenários (precisa juntar os climas).
+7. Etapas 7-8 do plano (§6).
