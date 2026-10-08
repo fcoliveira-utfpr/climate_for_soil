@@ -735,8 +735,8 @@ avaliação espacial **e temporal**, sem gerar mapas. Plano completo em
 - resposta: log se validar melhor, senão `carbono_gm2_qmap` direto (como a produção);
 - textura C3 mantida como covariável, sem variante sem textura;
 - validação temporal em 4 períodos de 10 anos; avaliação temporal = painel de trajetórias + SOC oficial C3;
-- não pedir a matriz do MapBiomas; nossa saída com nome próprio (`matriz_soc_c3_espaco_tempo`,
-  `painel_soc_c3_1985_2024`, em `climas/dados_espaco_tempo/`, fora do git).
+- não pedir a matriz do MapBiomas; nossa saída com nome próprio (`matriz_soc_c3_fabricio`,
+  `painel_soc_c3_fabricio_1985_2024`, em `climas/dados_espaco_tempo/`, fora do git).
 
 **O que se descobriu sobre a produção C3 do SOC:**
 - matriz `c03_soc_v2025_11_26_trep` e a exportada `c03_soc_v2025_trainingFinal`: sem acesso; os pontos
@@ -763,12 +763,23 @@ imagem do ano Y = média de Y−10 a Y−1. `GT_DECADE_CDD_CONTI_2026` está **v
 208 (2012), Manaus 14 e 9; Boa Vista baixo (15-17), porque a grade interpolada encurta as estiagens onde há
 poucos pluviômetros.
 
-**Estado em 2026-10-07 e como retomar:**
-1. [em andamento] 62 exportações do CDD anual para `Climas2/CDD_ANUAL_BRDWGD`. Conferir se todas
-   terminaram (`ee.ImageCollection(...).size()` = 62); se faltar ano, rodar `python cdd_brdwgd.py anual
-   <ano> <ano>`.
-2. [próximo] `python cdd_brdwgd.py decenal` (54 tarefas) e conferir os valores nos pontos de teste.
-3. Etapa 1 do plano: portar `carbon/0_covariate_source` (GitHub) para Python e conferir contra matrizes
-   legíveis.
-4. Etapas 2-8 do plano (§6): matriz, painel 1985-2024, climas nos pontos, fidelidade (OOB do MapBiomas no
-   cenário Köppen), validações V2-V4, trajetórias × SOC oficial, notebook.
+**Covariáveis da C3 portadas (2026-10-08):** `climas/analise_espaco_tempo/codigo/covariaveis_c3.py`
+(`estaticas()`, `dinamicas(ano)`, `pilha(ano)`), tradução literal de `carbon/0_covariate_source`, com as
+listas `covariates_names_static/dynamic` do script que gera a `c03_soc_v2025_trainingFinal` (enviado pelo
+usuário, salvo em `codigo/referencia/soc_trainingFinal_c3_2025_11_26.js`; as bandas de imagem coincidem com
+`carbon/1_data_matrix`). Esse script JS é que fez os filtros da `trainingFinal` (27.425 linhas), então o
+§3.3 do plano passou a seguir o JS (com `'resingas'` e `black_soil_prob > 10`), e não o R 26 (32.399). Fogo acumulado: cópia pública da coleção 4.1 (o asset do workspace não abre). O
+`applyGapFill` do original preenche pixels vazios **com a banda vizinha** (não com o ano vizinho); portado
+como está. Conferência (`conferir_covariaveis.py`, 300 linhas de cada matriz): todas as estáticas iguais a
+`c03_psd_v2025_11_18` em 100% (elevation 93%, diferença de ~1 pixel do MERIT) e as dinâmicas iguais a
+`carbon_datac2v2` em 100%, exceto `mb_water_recurrence_dynamic` (1%): o gapfill enche a água vazia com
+`mb_edges` — o que explica a correlação água × bordas anotada no R 26 ("WHY?"); a banda é descartada na
+produção.
+
+**Estado em 2026-10-08 e como retomar:**
+1. [ok] CDD anual completo (62 imagens).
+2. [em andamento] CDD decenal: 54 tarefas disparadas em 08/10 (27 prontas na última checagem). Conferir
+   `size()` = 54 e os valores nos pontos de teste.
+3. [ok] Etapa 1 do plano (covariáveis C3 + conferência).
+4. [próximo] Etapa 2: extrair a pilha nos 35.235 pontos, cada um no seu ano, e aplicar os filtros do R 26.
+5. Etapas 3-8 do plano (§6).
