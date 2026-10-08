@@ -140,6 +140,10 @@ A textura da C3 fica como covariável em todos os cenários, como na produção 
 Critério: **MEC em t/ha, em 0-30 cm**, e viés (ME). Se o log for melhor, ele é usado em todos os cenários;
 senão, fica a resposta direta. Em caso de empate, fica a direta (a da produção).
 
+**Decidido em 08/10/2026: resposta direta.** Köppen, V2 (3 repetições), 0-30 cm: direta MEC 0,29, RMSE 53,5,
+ME −3,3 t/ha; log + Duan MEC 0,19, RMSE 57,1, ME −9,2 (pior nas três repetições). Todas as camadas: 0,34 ×
+0,26. Tabela: `resultados/tabelas/validacao_metricas.csv`.
+
 **(b) Quais variáveis entram no clima contínuo.** Candidatas:
 - as 12 do CHELSA e do balanço hídrico (temperatura média, do mês mais frio e do mais quente,
   biotemperatura, chuva anual, do mês mais seco e sazonalidade, ETP, ETP/P, DEF, EXC, Im);
