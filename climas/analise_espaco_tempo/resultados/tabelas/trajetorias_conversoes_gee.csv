@@ -1,0 +1,21 @@
+evento,cenario,n,delta_medio_t_ha,delta_mediano_t_ha
+natural -> agropecuária,koppen_ipef,4256,-0.5761,0
+natural -> agropecuária,sem_clima,4256,-0.5632,0
+natural -> agropecuária,zonas_k10,4256,-0.5797,0
+natural -> agropecuária,holdridge_eth,4256,-0.5113,0
+natural -> agropecuária,th_cadsolo,4256,-0.3482,0
+natural -> agropecuária,cont_chelsa,4256,-0.3776,0
+natural -> agropecuária,cont_decenal,4256,-0.5303,0
+natural -> agropecuária,cont_ambos,4256,-0.383,0
+natural -> agropecuária,cont_sel,4256,-0.4248,0
+natural -> agropecuária,soc_oficial_t_ha,4256,-0.9861,-1
+pastagem -> lavoura,koppen_ipef,550,-0.003636,0
+pastagem -> lavoura,sem_clima,550,0.1127,0
+pastagem -> lavoura,zonas_k10,550,0.03091,0
+pastagem -> lavoura,holdridge_eth,550,0.01818,0
+pastagem -> lavoura,th_cadsolo,550,0.01273,0
+pastagem -> lavoura,cont_chelsa,550,-0.06,0
+pastagem -> lavoura,cont_decenal,550,-0.05636,0
+pastagem -> lavoura,cont_ambos,550,-0.1145,0
+pastagem -> lavoura,cont_sel,550,-0.04364,0
+pastagem -> lavoura,soc_oficial_t_ha,550,0.01273,0

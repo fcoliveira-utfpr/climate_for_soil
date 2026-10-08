@@ -11,8 +11,9 @@
 
 Saídas: resultados/tabelas/trajetorias_*.csv e resultados/figuras/trajetorias_*.png
 
-Uso: python trajetorias.py            # itens 1-4
-    python trajetorias.py variacao   # item 4b: variação observada × prevista (oof)
+Uso: python trajetorias.py            # itens 1-4, ranger (painel_predicoes.parquet)
+    python trajetorias.py gee        # itens 1-3 com o modelo do mapa (painel_predicoes_gee.parquet)
+    python trajetorias.py variacao [gee]   # item 4b: variação observada × prevista (oof)
 """
 import json
 
@@ -28,7 +29,7 @@ from metricas import error_statistics
 BIOMAS = ['Amazonia', 'Caatinga', 'Cerrado', 'Mata_Atlantica', 'Pampa', 'Pantanal']
 ROTULOS = {'koppen_ipef': 'Köppen IPEF', 'sem_clima': 'Sem clima', 'zonas_k10': 'Zonas k10',
            'holdridge_eth': 'Holdridge ETH', 'th_cadsolo': 'Thornthwaite CAD solo',
-           'cont_chelsa': 'Contínuo CHELSA', 'cont_decenal': 'Contínuo decenal', 'cont_ambos': 'Contínuo ambos'}
+           'cont_chelsa': 'Contínuo CHELSA', 'cont_decenal': 'Contínuo decenal', 'cont_ambos': 'Contínuo ambos', 'cont_sel': 'Contínuo selecionado'}
 HORIZONTE = 5          # anos depois da conversão
 
 
@@ -39,8 +40,11 @@ def inclinacao(df, col):
     return 10 * (g._xy.sum() - g._x.sum() * g[col].mean()) / (g._xx.sum() - g._x.sum() ** 2 / g.size())
 
 
+SUF = '_gee' if 'gee' in __import__('sys').argv else ''
+
+
 def carregar():
-    pred = pd.read_parquet(cfg.DADOS / 'painel_predicoes.parquet')
+    pred = pd.read_parquet(cfg.DADOS / f'painel_predicoes{SUF}.parquet')
     of = pd.read_parquet(cfg.DADOS / 'soc_oficial_c3.parquet')
     usos = ['vegNatural', 'agropecuaria', 'pastagem', 'lavouras']
     p = pd.read_parquet(cfg.PAINEL, columns=['ponto_id', 'year'] + usos + BIOMAS)
@@ -128,7 +132,7 @@ def figuras(d, cenarios, anual):
     ax.set(xlabel='ano', ylabel='SOC 0-30 cm (t/ha), média dos locais', title='Trajetória média 1985-2024')
     ax.legend(fontsize=8, ncol=2)
     fig.tight_layout()
-    fig.savefig(cfg.FIGURAS / 'trajetorias_media.png', dpi=150)
+    fig.savefig(cfg.FIGURAS / f'trajetorias_media{SUF}.png', dpi=150)
     plt.close(fig)
 
     biomas = sorted(d.bioma.unique())
@@ -142,7 +146,7 @@ def figuras(d, cenarios, anual):
     fig.legend(['SOC oficial C3'] + [ROTULOS.get(c, c) for c in cenarios], loc='lower center', ncol=5, fontsize=8)
     fig.supylabel('SOC 0-30 cm (t/ha)')
     fig.tight_layout(rect=(0, 0.07, 1, 1))
-    fig.savefig(cfg.FIGURAS / 'trajetorias_biomas.png', dpi=150)
+    fig.savefig(cfg.FIGURAS / f'trajetorias_biomas{SUF}.png', dpi=150)
     plt.close(fig)
 
 
@@ -150,11 +154,11 @@ def main():
     d, cenarios = carregar()
     cfg.TABELAS.mkdir(parents=True, exist_ok=True)
     fid, anual = fidelidade(d)
-    fid.to_csv(cfg.TABELAS / 'trajetorias_fidelidade.csv', index=False, float_format='%.4g')
+    fid.to_csv(cfg.TABELAS / f'trajetorias_fidelidade{SUF}.csv', index=False, float_format='%.4g')
     ef = efeito_clima(d, cenarios)
-    ef.to_csv(cfg.TABELAS / 'trajetorias_efeito_clima.csv', index=False, float_format='%.4g')
+    ef.to_csv(cfg.TABELAS / f'trajetorias_efeito_clima{SUF}.csv', index=False, float_format='%.4g')
     cv = conversoes(d, cenarios)
-    cv.to_csv(cfg.TABELAS / 'trajetorias_conversoes.csv', index=False, float_format='%.4g')
+    cv.to_csv(cfg.TABELAS / f'trajetorias_conversoes{SUF}.csv', index=False, float_format='%.4g')
     rep = coletas_repetidas()
     rep.to_csv(cfg.TABELAS / 'trajetorias_coletas_repetidas.csv', index=False)
     figuras(d, cenarios, anual)
@@ -164,7 +168,7 @@ def main():
         print(f'\n== {nome}\n{t.round(3).to_string(index=False)}')
 
 
-if __name__ == '__main__' and len(__import__('sys').argv) == 1:
+if __name__ == '__main__' and 'variacao' not in __import__('sys').argv:
     main()
 
 
@@ -180,7 +184,7 @@ def variacao_observada():
     g = m.groupby(['local', 'profundidade'])
     m = m[g.year.transform('nunique') >= 2]
     linhas = []
-    for arq in sorted((cfg.DADOS / 'oof').glob('*_direta.parquet')):
+    for arq in sorted((cfg.DADOS / ('oof_gee' if SUF else 'oof')).glob('*_direta.parquet')):
         cen, esq, _ = arq.stem.rsplit('_', 2)
         o = pd.read_parquet(arq)
         o['linha'] -= 1
@@ -199,5 +203,5 @@ def variacao_observada():
 
 if __name__ == '__main__' and 'variacao' in __import__('sys').argv:
     t = variacao_observada()
-    t.to_csv(cfg.TABELAS / 'trajetorias_variacao_observada.csv', index=False, float_format='%.4g')
+    t.to_csv(cfg.TABELAS / f'trajetorias_variacao_observada{SUF}.csv', index=False, float_format='%.4g')
     print(t.round(3).to_string(index=False))
