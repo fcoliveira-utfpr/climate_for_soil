@@ -1,0 +1,5 @@
+modelo,media_t_ha,media_oficial,me,mae,rmse,mec,r_local_ano,iguais_pct,dif_ate_1_pct,inclinacao_media,inclinacao_oficial,r_inclinacao,r_media_anual,variacao_anual,variacao_anual_oficial
+GEE emulado (maxNodes 40) + pós-processamento,47.22,48.07,-0.8482,2.679,8.909,0.7971,0.917,18.37,48.76,-0.2147,-0.2756,0.8926,0.9668,0.1505,0.1773
+ranger da validação (max.depth 40) + pós-processamento,51.68,48.07,3.613,9.257,19.33,0.0448,0.8148,6.184,15.3,0.07963,-0.2756,0.769,0.3895,0.7267,0.1773
+"GEE emulado, sem pós-processamento",48.07,48.07,0.003583,3.539,11.61,0.6553,0.8459,0,32.53,0.01279,-0.2756,0.3121,0.5641,0.1399,0.1773
+"ranger, sem pós-processamento",52.53,48.07,4.466,10.13,21.1,-0.1379,0.7541,0,9.111,0.327,-0.2756,0.2133,-0.06555,0.7573,0.1773
