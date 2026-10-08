@@ -1,0 +1,5 @@
+cenario,esquema,resposta,camadas,mec,rmse,me,ganho_mec,ganho_mec_min,ganho_mec_max,ganho_rmse,reps
+koppen_ipef,v2,direta,0-30 cm,0.2931,53.48,-3.281,0,0,0,0,3
+koppen_ipef,v2,direta,todas,0.3439,41.38,-0.6493,0,0,0,0,3
+koppen_ipef,v2,log,0-30 cm,0.1946,57.06,-9.184,0,0,0,0,3
+koppen_ipef,v2,log,todas,0.2592,43.93,-6.456,0,0,0,0,3
