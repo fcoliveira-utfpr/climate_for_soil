@@ -29,8 +29,14 @@
 
 // --- Parâmetros -------------------------------------------------------------------------------------
 var ANOS = [2000, 2020];
-var NUM_ARVORES = 300;
-var MAXNODES_PROFUNDO = null;            // null = sem limite (versão C); teste valores se faltar memória
+var USAR_MODELOS_SALVOS = true;          // true: carrega os modelos já treinados (rápido); false: treina aqui
+var MODELOS = 'projects/fcoliveira/assets/SOC_C3_FABRICIO/modelos/rf_';   // gerados por gee_modelos.py
+// Versão C: o modelo sem limite de nós (41,7 MB) não cabe na memória do mapa interativo; na tela usa-se o de
+// 1.000 folhas por árvore (6,8 MB; MEC 0,248 contra 0,251 na validação espacial) e na exportação o completo.
+var MODELO_C_MAPA = 'C_decenal_1000';        // ou 'C_decenal_3000' (18,9 MB, mais lento)
+var MODELO_C_EXPORT = 'C_decenal_profundo';  // sem limite de nós (só em exportação)
+var NUM_ARVORES = 300;                   // só para USAR_MODELOS_SALVOS = false
+var MAXNODES_PROFUNDO = null;            // null = sem limite (versão C)
 var USAR_MASCARA_AREIA = false;          // MB_2024_SANDMASK (exige acesso ao asset)
 
 var EXPORTAR = false;                    // true: uma tarefa por ano e versão
@@ -104,11 +110,18 @@ function floresta(maxNodes) {
   if (maxNodes !== null) p.maxNodes = maxNodes;
   return ee.Classifier.smileRandomForest(p).setOutputMode('REGRESSION');
 }
-var VERSOES = {
+// Treinar 300 árvores profundas a cada tile estoura o tempo do mapa interativo ("Computation timed out"):
+// por isso os três modelos foram treinados uma vez (mesmo treino, mesmos parâmetros) e salvos como asset.
+var VERSOES = USAR_MODELOS_SALVOS ? {
+  A_oficial_koppen: ee.Classifier.load(MODELOS + 'A_oficial_koppen'),
+  B_decenal: ee.Classifier.load(MODELOS + 'B_decenal'),
+  C_decenal_profundo: ee.Classifier.load(MODELOS + MODELO_C_MAPA)
+} : {
   A_oficial_koppen: floresta(40).train(datatraining, 'carbono_gm2_qmap', ENTRADAS_OFICIAL),
   B_decenal: floresta(40).train(datatraining, 'carbono_gm2_qmap', ENTRADAS_DECENAL),
   C_decenal_profundo: floresta(MAXNODES_PROFUNDO).train(datatraining, 'carbono_gm2_qmap', ENTRADAS_DECENAL)
 };
+var C_EXPORT = USAR_MODELOS_SALVOS ? ee.Classifier.load(MODELOS + MODELO_C_EXPORT) : VERSOES.C_decenal_profundo;
 
 // --- Covariáveis no ano -------------------------------------------------------------------------------
 var modulo = require('users/taciaraz/mapbiomas_solo:collection3/carbon/0_covariate_source');
@@ -149,13 +162,13 @@ var textura = ee.Image('projects/mapbiomas-workspace/SOLOS/PRODUTOS_C03/mapbioma
 var oficial = ee.Image(OFICIAL);
 var mascaraBrasil = oficial.select(0).mask().selfMask();
 
-function prever(nome, ano) {
+function prever(nome, ano, classificador) {
   var uso = lulc.select('classification_' + ano);
   var zeros = ee.Image()
     .blend(uso.eq(23).selfMask()).blend(uso.eq(24).selfMask()).blend(uso.eq(30).selfMask())
     .blend(textura.eq(1).selfMask())
     .multiply(0);
-  var pred = covariaveis(ano).classify(VERSOES[nome]).rename('soc_t_ha');
+  var pred = covariaveis(ano).classify(classificador || VERSOES[nome]).rename('soc_t_ha');
   if (USAR_MASCARA_AREIA) {
     pred = pred.blend(ee.Image(COV + 'MB_2024_SANDMASK').selfMask().multiply(1000).rename('soc_t_ha'));
   }
@@ -176,7 +189,7 @@ ANOS.forEach(function (ano) {
   Map.addLayer(of, visSOC, ano + ' SOC oficial C3', false);
   Map.addLayer(a, visSOC, ano + ' A oficial reproduzido (Köppen, maxNodes 40)', false);
   Map.addLayer(b, visSOC, ano + ' B decenal (maxNodes 40)', false);
-  Map.addLayer(c, visSOC, ano + ' C decenal, árvores profundas', ano === ANOS[ANOS.length - 1]);
+  Map.addLayer(c, visSOC, ano + ' C decenal, árvores profundas (' + MODELO_C_MAPA + ')', ano === ANOS[ANOS.length - 1]);
   Map.addLayer(a.subtract(of), visDif, ano + ' A - oficial (conferência)', false);
   Map.addLayer(b.subtract(a), visDif, ano + ' B - A (efeito do clima decenal)', false);
   Map.addLayer(c.subtract(a), visDif, ano + ' C - A (clima + árvores profundas)', false);
@@ -216,8 +229,9 @@ if (EXPORTAR) {
   ANOS.forEach(function (ano) {
     Object.keys(VERSOES).forEach(function (nome) {
       var id = nome + '_' + ano + '_' + ESCALA_EXPORT + 'm';
+      var clf = nome === 'C_decenal_profundo' ? C_EXPORT : VERSOES[nome];
       Export.image.toAsset({
-        image: prever(nome, ano),
+        image: prever(nome, ano, clf),
         description: 'soc_' + id,
         assetId: SAIDA + '/' + id,
         pyramidingPolicy: {'.default': 'mean'},
