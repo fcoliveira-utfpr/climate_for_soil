@@ -22,6 +22,10 @@ de 1985 a 2024. Continua o [relatório v1](relatorio_tecnico.md) (seções 6 e 7
 9. [Limitações e próximos passos](#9-limitações-e-próximos-passos)
 10. [Anexo: arquivos, comandos e reprodução](#10-anexo-arquivos-comandos-e-reprodução)
 
+**Capítulo 2: outros algoritmos**
+
+11. [Capítulo 2: outros algoritmos nas mesmas condições](#11-capítulo-2-outros-algoritmos-nas-mesmas-condições)
+
 ---
 
 ## 1. Visão geral e perguntas
@@ -683,3 +687,108 @@ Ambiente: Python 3.13 (earthengine-api, pandas, scikit-learn 1.9), R 4.6.1 com `
 Referências do pipeline de produção: `mapbiomas/brazil-soil`, `soil_30m_landsat/collection_03beta/carbon/`
 (`0_covariate_source`, `1_data_matrix`, `2_model_prediction`) e `soildata/24` a `30`; cópia do script da
 `trainingFinal` em `codigo/referencia/`.
+
+---
+
+# Capítulo 2
+
+## 11. Capítulo 2: outros algoritmos nas mesmas condições
+
+### 11.1 Pergunta e desenho
+
+**Algum outro algoritmo chega mais perto do carbono medido do que o random forest do MapBiomas?** Tudo igual
+ao capítulo 1 (matriz = `trainingFinal`, 118 covariáveis + o clima do cenário, dobras V2/V3/V4 com 3
+repetições, perfil e réplicas na mesma dobra); muda só o algoritmo. Cenários: os 4 melhores do capítulo 1
+(contínuo decenal, contínuo selecionado, Thornthwaite CAD do solo, contínuo CHELSA) e o Köppen.
+Código: `codigo/capitulo2.py`.
+
+| Algoritmo | Configuração |
+|---|---|
+| **ranger validado** (referência) | random forest do MapBiomas: 300 árvores, mtry 24, min.node.size 2, max.depth 40 (capítulo 1) |
+| **modelo do mapa** (referência) | `smileRandomForest` com maxNodes 40, emulado (capítulo 1, §6) |
+| rf_ajustado | random forest do scikit-learn, 500 árvores, 1/3 das variáveis por divisão, folha mínima 5 |
+| lgbm_l2 | LightGBM 4.7, perda quadrática, taxa 0,03, 31 folhas, 80% das linhas e 50% das colunas por árvore |
+| lgbm_tweedie | o mesmo, perda Tweedie (valores positivos com cauda longa) |
+| xgb | XGBoost 3.4 (histograma), profundidade 6, taxa 0,03, 80% / 50% |
+| média ranger + GBM | média simples das predições do ranger e de cada GBM (sem ajuste extra) |
+
+Nos boostings, o número de árvores sai de parada antecipada (100 rodadas sem melhora) num conjunto interno
+com 20% dos **blocos espaciais do treino** da dobra; o modelo é então reajustado em todo o treino com ~25% mais
+árvores. O teste nunca é visto. No `cont_sel`, os candidatos usam as 8 variáveis escolhidas no modelo final
+do capítulo 1, enquanto as referências fizeram a seleção dentro de cada dobra; por isso a comparação entre
+algoritmos é mais limpa nos outros cenários.
+
+### 11.2 Resultados: amostras reais, 0-30 cm
+
+**MEC por algoritmo e cenário** (média das 3 repetições):
+
+| Algoritmo | V2 Köppen | V2 melhor clima | V3 Köppen | V3 melhor clima | V4 Köppen | V4 melhor clima |
+|---|---|---|---|---|---|---|
+| **ranger validado** | **0,240** | 0,255 (selecionado) | **0,172** | 0,184 (decenal) | **0,152** | **0,159** (decenal) |
+| modelo do mapa | 0,179 | 0,213 (CHELSA) | 0,124 | 0,134 (Thornthwaite) | 0,111 | 0,122 (decenal) |
+| rf_ajustado | 0,221 | 0,237 (selecionado) | 0,153 | 0,158 (decenal) | 0,134 | 0,140 (decenal) |
+| lgbm_l2 | 0,231 | 0,256 (selecionado) | 0,163 | 0,173 (decenal) | 0,128 | 0,133 (decenal) |
+| lgbm_tweedie | 0,227 | 0,245 (decenal) | 0,161 | 0,173 (selecionado) | 0,130 | 0,132 (selecionado) |
+| xgb | 0,229 | 0,253 (Thornthwaite) | 0,164 | 0,164 (Köppen) | 0,121 | 0,141 (Thornthwaite) |
+| média ranger + lgbm_l2 | **0,243** | **0,263** (selecionado) | **0,174** | **0,185** (decenal) | 0,147 | 0,153 (decenal) |
+| média ranger + lgbm_tweedie | 0,242 | 0,259 (selecionado) | 0,173 | **0,185** (selecionado) | 0,148 | 0,153 (decenal) |
+| média ranger + xgb | **0,243** | 0,258 (decenal) | **0,174** | 0,176 (decenal) | 0,143 | 0,157 (Thornthwaite) |
+
+**Ganho sobre o ranger validado, no cenário Köppen** (mesmas dobras; [mínimo; máximo] nas repetições):
+
+| Algoritmo | V2 | V3 | V4 |
+|---|---|---|---|
+| modelo do mapa | −0,061 [−0,081; −0,048] | −0,048 [−0,053; −0,044] | −0,041 [−0,047; −0,037] |
+| rf_ajustado | −0,020 [−0,038; −0,008] | −0,019 [−0,022; −0,015] | −0,018 [−0,030; −0,011] |
+| lgbm_l2 | −0,009 [−0,012; −0,002] | −0,009 [−0,015; −0,005] | −0,024 [−0,027; −0,016] |
+| lgbm_tweedie | −0,014 [−0,016; −0,011] | −0,010 [−0,018; −0,001] | −0,022 [−0,029; −0,017] |
+| xgb | −0,011 [−0,014; −0,007] | −0,008 [−0,012; −0,004] | −0,031 [−0,035; −0,026] |
+| média ranger + lgbm_l2 | **+0,003** [+0,001; +0,006] | +0,002 [−0,001; +0,004] | −0,005 [−0,007; −0,002] |
+| média ranger + xgb | **+0,003** [+0,002; +0,004] | **+0,002** [+0,001; +0,003] | −0,009 [−0,010; −0,008] |
+
+**Erros em t/ha, cenário Köppen** (RMSE / MAE / ME / slope):
+
+| Algoritmo | V2 | V3 | V4 |
+|---|---|---|---|
+| ranger validado | 48,2 / 21,8 / −2,0 / 1,18 | 50,3 / 22,6 / −4,1 / 1,26 | 50,9 / 23,1 / −3,8 / 1,16 |
+| modelo do mapa | 50,1 / 22,6 / −7,4 / 1,36 | 51,7 / 23,0 / −9,2 / 1,50 | 52,1 / 23,3 / −9,0 / 1,34 |
+| rf_ajustado | 48,8 / 21,8 / −2,6 / 1,16 | 50,9 / 22,6 / −4,7 / 1,17 | 51,4 / 23,0 / −4,6 / 1,08 |
+| lgbm_l2 | 48,5 / 22,3 / −2,1 / **1,01** | 50,6 / 23,4 / −3,2 / **1,04** | 51,6 / 23,6 / −3,7 / **0,96** |
+| lgbm_tweedie | 48,6 / **21,4** / −4,9 / 1,30 | 50,6 / **22,6** / −6,6 / 1,23 | 51,6 / **22,9** / −7,0 / 1,14 |
+| xgb | 48,5 / 22,4 / **−1,4** / 0,98 | 50,5 / 23,1 / −3,4 / 1,06 | 51,8 / 23,8 / −3,9 / 0,92 |
+| média ranger + lgbm_l2 | **48,1** / 21,9 / −2,1 / 1,13 | **50,2** / 22,8 / −3,7 / 1,19 | 51,1 / 23,2 / −3,8 / 1,10 |
+
+### 11.3 Leitura
+
+1. **Nenhum algoritmo sozinho supera o random forest do MapBiomas (ranger validado).** Os três boostings
+   perdem de 0,008 a 0,031 de MEC em todas as repetições; o random forest mais conservador (folha mínima 5,
+   1/3 das variáveis) perde ~0,02. Árvores profundas com folhas pequenas, como no ranger, são o que melhor
+   aproveita esta matriz.
+2. **A única melhora sobre o ranger é a média ranger + GBM, e é pequena:** +0,002 a +0,003 de MEC no espaço
+   e no tempo (em todas as repetições com o XGBoost), mas perde na V4 (lugar e época novos ao mesmo tempo).
+3. **O maior ganho disponível não é de algoritmo nem de clima: é usar no mapa o modelo que foi validado.**
+   Trocar as árvores rasas do GEE (maxNodes 40) pelo ranger sobe o MEC em 0,04-0,06 e reduz o viés de −7 a
+   −9 t/ha para −2 a −4 t/ha. É mais que o dobro do ganho de qualquer troca de clima.
+4. **Os boostings corrigem a calibração** (slope ~1,0 contra 1,16-1,26 do ranger; o ranger "achata" as
+   predições), e o **Tweedie tem o menor erro absoluto** (MAE), mas com viés de −5 a −7 t/ha (prevê perto da
+   mediana). Para quem usa o mapa em totais (estoque regional), o viés pesa mais que o MAE; o ranger e o
+   LightGBM quadrático são melhores nisso.
+5. **A conclusão sobre o clima é robusta ao algoritmo.** O clima decenal ganha do Köppen em **26 das 27**
+   combinações (9 algoritmos × 3 esquemas; a exceção é o XGBoost na V3, −0,008), e o contínuo selecionado
+   ou o decenal é o melhor clima em quase todas. O Köppen só é o melhor uma vez (XGBoost, V3).
+6. **O teto é baixo para todos:** com amostras reais, o melhor MEC fica em 0,26 (espaço), 0,19 (tempo) e
+   0,16 (lugar e época novos). O limite está nos dados (ruído local, cauda longa, poucas amostras em alguns
+   períodos), não no algoritmo.
+
+### 11.4 Recomendação
+
+| Uso | Recomendação |
+|---|---|
+| Mapa anual de produção | **ranger (o modelo validado) no lugar do `smileRandomForest` com maxNodes 40**, com o clima decenal no lugar do Köppen; se possível no GEE, aumentar maxNodes (ou rodar o modelo fora do GEE) |
+| Melhor MEC possível nos pontos | média ranger + LightGBM com o contínuo selecionado (V2 0,263) ou o decenal (V3 0,185) |
+| Menor erro absoluto pontual | LightGBM Tweedie (MAE ~21,4 t/ha na V2), aceitando o viés negativo |
+
+Tabelas: `resultados/tabelas/cap2_metricas.csv` (por repetição) e `cap2_resumo.csv` (médias e ganhos sobre o
+ranger, nos recortes amostras reais 0-30 cm, todas 0-30 cm e todas as linhas). Predições fora da amostra em
+`climas/dados_espaco_tempo/oof_cap2/` (fora do git). Reprodução: `python capitulo2.py rodar` e
+`python capitulo2.py metricas`.
