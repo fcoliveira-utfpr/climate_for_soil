@@ -809,4 +809,8 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    Köppen em V2/V3/V4; CHELSA +0,034 na V2 mas piora na V3. Queda de ~1 t/ha em 2021 em tudo (oficial
    inclusive), causa em aberto. 289 pares com coleta repetida: nenhum modelo acerta o sinal.
 8. [ok] `relatorio_tecnicov2.md` na raiz (commit 1eb1948).
-9. [próximo] Capítulo 2 do relatório (pedido): mesmas configurações, outros algoritmos, contra amostras reais.
+9. [ok] Capítulo 2 (`capitulo2.py`, §11 do relatório v2): RF ajustado, LightGBM (L2 e Tweedie), XGBoost e
+   médias ranger + GBM, 5 cenários, V2/V3/V4. Nenhum algoritmo sozinho supera o ranger; média ranger + GBM
+   +0,002-0,003; o maior ganho é usar o ranger no mapa no lugar do maxNodes 40 (+0,04-0,06 MEC). Decenal ganha
+   do Köppen em 26 de 27 algoritmo × esquema. GEE passou a usar o projeto mapbiomas-brazil; scripts JS do
+   CDD anual e decenal publicados em users/fcoliveira/mapbiomas.
