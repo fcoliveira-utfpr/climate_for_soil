@@ -13,7 +13,7 @@ RAIZ = Path(__file__).resolve().parent
 ARQUIVO_ESTACOES = RAIZ / "dados_chelsa.csv"  # so para reaproveitar a lista de estacoes
 ARQUIVO_SAIDA = RAIZ / "dados_era5.csv"
 
-PROJETO = "fcoliveira"
+PROJETO = "mapbiomas-brazil"
 ANO_INICIO, ANO_FIM = 2010, 2019
 COLECAO = "ECMWF/ERA5_LAND/MONTHLY_AGGR"
 ESCALA_M = 11132  # resolucao nativa do ERA5-Land (~0.1 grau)

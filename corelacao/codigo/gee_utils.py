@@ -1,8 +1,12 @@
 """Inicializacao comum: credencial Earth Engine e, como alternativa, ADC do gcloud."""
+import os
+
 import ee
 import google.auth
 
-PROJETO_PADRAO = "fcoliveira"
+# Projeto do GEE para processamento e cota (o mapbiomas-brazil tem mais acesso que a conta pessoal
+# fcoliveira); EE_PROJECT sobrescreve. Os assets em projects/fcoliveira/assets continuam legíveis.
+PROJETO_PADRAO = os.environ.get("EE_PROJECT", "mapbiomas-brazil")
 
 
 def conectar(projeto=None):
