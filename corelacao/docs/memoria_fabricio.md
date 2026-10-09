@@ -814,3 +814,12 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    +0,002-0,003; o maior ganho é usar o ranger no mapa no lugar do maxNodes 40 (+0,04-0,06 MEC). Decenal ganha
    do Köppen em 26 de 27 algoritmo × esquema. GEE passou a usar o projeto mapbiomas-brazil; scripts JS do
    CDD anual e decenal publicados em users/fcoliveira/mapbiomas.
+10. [ok, 2026-10-09] Simulação de mapas no GEE: script `simulacao_mapas_soc` em users/fcoliveira/mapbiomas
+   (cópia em `codigo/gee/`), anos 2000 e 2020: A oficial reproduzido (Köppen, maxNodes 40), B decenal,
+   C decenal com árvores profundas. Usa o módulo de produção `users/taciaraz/mapbiomas_solo:collection3/
+   carbon/0_covariate_source` (legível; já com fogo público e Holdridge do MapBiomas). Treino:
+   `SOC_C3_FABRICIO/matriz_soc_c3_fabricio_treino` (`gee_treino.py`, matriz bruta + decenais; filtros no
+   script dão 27.425). Modelos salvos com `gee_modelos.py` em `SOC_C3_FABRICIO/modelos/rf_*` (treinar a cada
+   tile estourava o tempo). C sem limite = 41,7 MB, estoura a memória interativa: na tela usa `C_decenal_1000`
+   (6,8 MB, MEC 0,248 × 0,251), na exportação o completo (1°×1° a 30 m = 13 min). Versão A confere com o
+   oficial nos pontos (r 0,95). Máscara do Brasil = extensão do mapa oficial (biomas_IBGE_250mil ilegível).
