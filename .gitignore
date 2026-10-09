@@ -12,3 +12,4 @@ refinamento/dados_observados_xavier/
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
+climas/dados_espaco_tempo/
