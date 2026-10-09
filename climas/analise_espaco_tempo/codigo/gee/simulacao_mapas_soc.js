@@ -202,24 +202,28 @@ if (ANOS.length > 1) {
                'Variação ' + ini + '-' + fim + ' C', false);
 }
 
-// Clique no mapa: valores das quatro versões no ponto.
-var painel = ui.Panel({style: {position: 'bottom-left', width: '330px'}});
+// Clique no mapa: valores das quatro versões no ponto (uma consulta por versão, para não somar a memória
+// dos modelos; erro ou ponto fora do produto aparecem no painel em vez de interromper o script).
+var painel = ui.Panel({style: {position: 'bottom-left', width: '360px'}});
 painel.add(ui.Label('Clique no mapa para ver o SOC (t/ha) no ponto'));
 Map.add(painel);
+function valorNoPonto(img, pt, rotulo, linha) {
+  img.rename('v').reduceRegion(ee.Reducer.first(), pt, 30).evaluate(function (res, erro) {
+    var txt = erro ? 'erro (' + erro + ')' : (res && res.v !== null && res.v !== undefined ? res.v : 'sem valor');
+    linha.setValue(linha.getValue() + '  ' + rotulo + ': ' + txt);
+  });
+}
 Map.onClick(function (coords) {
   var pt = ee.Geometry.Point([coords.lon, coords.lat]);
   painel.clear();
   painel.add(ui.Label('Lon ' + coords.lon.toFixed(4) + ', lat ' + coords.lat.toFixed(4)));
   ANOS.forEach(function (ano) {
-    var img = ee.Image.cat([
-      oficial.select(['carbon_' + ano], ['oficial']),
-      prever('A_oficial_koppen', ano).rename('A'),
-      prever('B_decenal', ano).rename('B'),
-      prever('C_decenal_profundo', ano).rename('C')
-    ]);
-    img.reduceRegion(ee.Reducer.first(), pt, 30).evaluate(function (v) {
-      painel.add(ui.Label(ano + ': oficial ' + v.oficial + ' | A ' + v.A + ' | B ' + v.B + ' | C ' + v.C));
-    });
+    var linha = ui.Label(ano + ':');
+    painel.add(linha);
+    valorNoPonto(oficial.select('carbon_' + ano), pt, 'oficial', linha);
+    valorNoPonto(prever('A_oficial_koppen', ano), pt, 'A', linha);
+    valorNoPonto(prever('B_decenal', ano), pt, 'B', linha);
+    valorNoPonto(prever('C_decenal_profundo', ano), pt, 'C', linha);
   });
 });
 
