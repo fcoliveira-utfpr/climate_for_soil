@@ -35,7 +35,7 @@ var USAR_MASCARA_AREIA = false;          // MB_2024_SANDMASK (exige acesso ao as
 
 var EXPORTAR = false;                    // true: uma tarefa por ano e versão
 var ESCALA_EXPORT = 30;                  // 30 m como o produto; 250 m para uma prévia nacional rápida
-var REGIAO_EXPORT = null;                // null = Brasil (limite dos biomas); ou desenhe uma geometria
+var REGIAO_EXPORT = null;                // null = Brasil (extensão do mapa oficial); ou desenhe uma geometria
 var SAIDA = 'projects/fcoliveira/assets/SOC_C3_FABRICIO/simulacao_mapas';   // ImageCollection
 
 var TREINO = 'projects/fcoliveira/assets/SOC_C3_FABRICIO/matriz_soc_c3_fabricio_treino';
@@ -145,8 +145,9 @@ function covariaveis(ano) {
 var lulc = ee.Image('projects/mapbiomas-public/assets/brazil/lulc/collection10/mapbiomas_brazil_collection10_integration_v2');
 var textura = ee.Image('projects/mapbiomas-workspace/SOLOS/PRODUTOS_C03/mapbiomas_soil_collection3_textural_group')
   .select('textural_group_000_030cm');
-var biomas = ee.FeatureCollection('projects/mapbiomas-workspace/AUXILIAR/biomas_IBGE_250mil');
-var mascaraBrasil = ee.Image().paint(biomas, 1).selfMask();
+// Área do produto: a do próprio mapa oficial da C3 (o contorno dos biomas em AUXILIAR não é legível).
+var oficial = ee.Image(OFICIAL);
+var mascaraBrasil = oficial.select(0).mask().selfMask();
 
 function prever(nome, ano) {
   var uso = lulc.select('classification_' + ano);
@@ -165,7 +166,6 @@ function prever(nome, ano) {
 }
 
 // --- Mapa ---------------------------------------------------------------------------------------------
-var oficial = ee.Image(OFICIAL);
 var visSOC = {min: 0, max: 120, palette: ['#fff7bc', '#fec44f', '#d95f0e', '#8c510a', '#543005', '#252525']};
 var visDif = {min: -15, max: 15, palette: ['#2166ac', '#67a9cf', '#f7f7f7', '#ef8a62', '#b2182b']};
 Map.setOptions('HYBRID');
@@ -212,7 +212,7 @@ Map.onClick(function (coords) {
 
 // --- Exportação ---------------------------------------------------------------------------------------
 if (EXPORTAR) {
-  var regiao = REGIAO_EXPORT || biomas.geometry().bounds();
+  var regiao = REGIAO_EXPORT || oficial.geometry().bounds();
   ANOS.forEach(function (ano) {
     Object.keys(VERSOES).forEach(function (nome) {
       var id = nome + '_' + ano + '_' + ESCALA_EXPORT + 'm';
