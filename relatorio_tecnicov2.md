@@ -363,6 +363,38 @@ No modelo de produção, as variáveis mais importantes são profundidade (9,6%)
 restinga (6,4%), argila (4,3%) e ESPODOSSOLO (4,0%). As variáveis contínuas entram logo depois da
 profundidade e da elevação; as dummies de classe quase não são usadas.
 
+### 5.7 Por que o Köppen fica tão perto dos outros cenários
+
+O Köppen não vai bem (8º de 9 cenários), mas fica perto dos demais porque **quase tudo o que ele informa já
+está nas outras covariáveis**. Teste nos 12.029 locais de amostras reais, com blocos espaciais de 2° fora do
+treino (random forest):
+
+| Prever, só com as 117 covariáveis que não são de clima | Acerto |
+|---|---|
+| Classe Köppen L2 (7 classes) | **81%** de acurácia |
+| Classe Köppen L2, só com biomas e fitofisionomias | 71% |
+| Classe Köppen L2, só com a elevação | 39% |
+| Temperatura média (CHELSA) | R² 0,93 |
+| Chuva do mês mais seco | R² 0,81 |
+| Chuva decenal (`dec_prec`) | R² 0,74 |
+| Chuva anual | R² 0,59 |
+
+1. **Redundância:** a vegetação mapeada pelo IBGE (biomas, fitofisionomias) é, em boa parte, uma tradução do
+   clima; o modelo já sabe o Köppen de 4 em cada 5 locais. Por isso "sem clima" empata com ele.
+2. **Resolução:** nos locais com amostra só aparecem 7 classes L2, e Am, Cf, Aw e Cw cobrem 89% deles; uma
+   dummy não tem gradiente. As 13 dummies somam 2,8% da importância (§5.6).
+3. **O que o clima contínuo acrescenta é o regime de chuva**, a parte menos previsível pelas outras
+   covariáveis (chuva anual R² 0,59); a temperatura (0,93) já vem da elevação e do bioma.
+4. **O SOC responde ao clima sobretudo através da vegetação e do solo**, que já estão no modelo; profundidade,
+   elevação, restinga, argila e Espodossolo dominam.
+5. **Ruído local e cauda longa** (mediana 47 t/ha, máximo > 1.300) mantêm o MEC baixo para todos e espremem
+   as diferenças entre cenários em centésimos.
+6. **No tempo, as dummies atrapalham:** dão ao modelo mais um jeito de reconhecer regiões, o que não vale em
+   outra época (V3: sem clima > Köppen em todas as repetições).
+
+O clima decenal se destaca justamente por trazer o que as outras covariáveis não têm: a variação entre
+décadas.
+
 ---
 
 ## 6. O modelo que gera o mapa oficial
