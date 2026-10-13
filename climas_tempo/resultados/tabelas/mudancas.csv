@@ -1,0 +1,6 @@
+sistema,area_mudou_pct,principais_transicoes
+koppen,16.67,Am -> Aw; Af -> Am; Aw -> BSh; Am -> Af; As -> BSh
+holdridge,24.08,29 Subtropical moist forest -> 28 Subtropical dry forest; 37 Tropical moist forest -> 29 Subtropical moist forest; 37 Tropical moist forest -> 38 Tropical wet forest; 36 Tropical dry forest -> 28 Subtropical dry forest; 35 Tropical very dry forest -> 27 Subtropical thorn steppe
+thornthwaite,52.47,B1 -> C2; C2 -> C1; B3 -> B2; B2 -> B1; A -> B4
+thornthwaite_L2,57.63,
+k10,31.53,Zona 4 -> Zona 1; Zona 3 -> Zona 4; Zona 8 -> Zona 6; Zona 5 -> Zona 3; Zona 8 -> Zona 7
