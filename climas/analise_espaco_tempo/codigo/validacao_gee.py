@@ -9,7 +9,7 @@ Saída: climas/dados_espaco_tempo/oof_gee/<cenario>_<esquema>_direta.parquet, no
 (linha contada a partir de 1). Combinações já gravadas são puladas.
 
 Uso: python validacao_gee.py [cenarios separados por vírgula | todos] [esquemas, padrão v2,v3,v4]
-Variáveis de ambiente opcionais (capítulo 3): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF.
+Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO.
 """
 import json
 import os
@@ -93,7 +93,8 @@ def main():
             pd.concat(partes, ignore_index=True).to_parquet(arq, index=False)
             print(f'{cen} {esq}: {len(cols)} colunas, {time.time() - t0:.0f} s', flush=True)
     if selecoes:
-        pd.DataFrame(selecoes).to_csv(cfg.TABELAS / 'selecao_continuas_dobras_gee.csv', index=False)
+        pd.DataFrame(selecoes).to_csv(os.environ.get('VAL_SELECAO', cfg.TABELAS / 'selecao_continuas_dobras_gee.csv'),
+                                      index=False)
 
 
 if __name__ == '__main__':

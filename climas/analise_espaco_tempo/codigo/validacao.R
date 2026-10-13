@@ -12,7 +12,7 @@
 # g/m²). Combinações já gravadas são puladas (dá para retomar).
 #
 # Uso: Rscript validacao.R <cenarios separados por vírgula | todos> <esquemas: v2,v3,v4> <direta|log>
-# Variáveis de ambiente opcionais (capítulo 3): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF.
+# Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO.
 
 .libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths()))
 suppressPackageStartupMessages({
@@ -101,8 +101,8 @@ for (cen in cen_nomes) {
                  pred = ajustar_prever(Xf, tr, te, semente))
     }))
     write_parquet(res, arq)
-    if (cen == "cont_sel") fwrite(rbindlist(selecoes), file.path(script_dir, "..", "resultados", "tabelas",
-                                                                 "selecao_continuas_dobras.csv"))
+    if (cen == "cont_sel") fwrite(rbindlist(selecoes), Sys.getenv("VAL_SELECAO", file.path(
+      script_dir, "..", "resultados", "tabelas", "selecao_continuas_dobras.csv")))
     cat(sprintf("%s %s %s: %d colunas, %d predições, %s\n", cen, esq, resposta, ncol(X), nrow(res),
                 format(Sys.time() - t0, digits = 3)))
   }
