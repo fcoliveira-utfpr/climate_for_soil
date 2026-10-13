@@ -8,7 +8,8 @@ Figuras (climas_tempo/resultados/figuras/):
 Tabelas (climas_tempo/resultados/tabelas/): area_classes_decadas.csv, mudancas.csv, conferencia_chelsa.csv
 
 Todas as classificações com filtro de moda 3 x 3 (classificar.py). Na conferência, os mapas do v1 só têm o
-filtro no Holdridge.
+filtro no Holdridge; o k10 do Xavier (reajustado) é comparado ao do CHELSA após o melhor pareamento
+de zonas.
 Thornthwaite nas figuras: classe de umidade (L1); nas tabelas de mudança, também o L2 (umidade + subtipo).
 Área: pixels de 0,1° ponderados por cos(latitude).
 
@@ -41,11 +42,17 @@ PAL_KOPPEN = ["#0000FF", "#0078FF", "#46A0FF", "#96C8FF", "#F5A623", "#FFDA8C", 
               "#C8FF50", "#64FF50", "#32C800", "#FFFF00", "#C8C800", "#969600", "#C8FFC8", "#96FF96",
               "#64C864", "#B4A0FA", "#8C78F0", "#6450E6", "#3C2CB4", "#E0C8FF", "#C8A0FF", "#B478FF",
               "#9650FF", "#D2D2FF", "#AAAAFF", "#8282FF", "#5A5AFF", "#B4B4B4", "#696969"]
-PAL_HOLDRIDGE = ['#4d4d4d', '#6b6b6b', '#8a8a8a', '#a8a8a8', '#bdbdbd', '#c7e9c0', '#a1d99b', '#74c476',
-                 '#fdd0a2', '#fdae6b', '#31a354', '#238b45', '#006d2c', '#fdd49e', '#fdbb84', '#9ecae1',
-                 '#6baed6', '#3182bd', '#fee8c8', '#fdbb84', '#fdd0a2', '#9ecae1', '#6baed6', '#3182bd',
-                 '#fef0d9', '#fdcc8a', '#fdae6b', '#9ecae1', '#6baed6', '#3182bd', '#fef0d9', '#fdd49e',
-                 '#fdbb84', '#fdae6b', '#fd8d3c', '#e6550d', '#a63603', '#7f2704']
+# Holdridge: uma família de cores por faixa térmica (a paleta do relatório v1 repetia os azuis entre
+# temperado quente e subtropical). Desertos e estepes em tons claros; florestas do seco ao pluvial.
+PAL_HOLDRIDGE = [
+    '#ffffff', '#e5e5e5',                                                    # 1-2 polar
+    '#d9d9d9', '#bdbdbd', '#969696', '#737373',                              # 3-6 subpolar
+    '#efedf5', '#dadaeb', '#bcbddc', '#9e9ac8', '#756bb1',                   # 7-11 boreal
+    '#f7f4f9', '#e7e1ef', '#d4b9da', '#c994c7', '#df65b0', '#ce1256',        # 12-17 temperado frio
+    '#f7fcb9', '#d9f0a3', '#addd8e', '#78c679', '#41ab5d', '#238443', '#005a32',   # 18-24 temperado quente
+    '#f7fbff', '#deebf7', '#c6dbef', '#9ecae1', '#6baed6', '#3182bd', '#08519c',   # 25-31 subtropical
+    '#fff5eb', '#fee6ce', '#fdd0a2', '#fdae6b', '#fd8d3c', '#d94801', '#8c2d04',   # 32-38 tropical
+]
 PAL_UMIDADE = ["#4575b4", "#abd9e9", "#a6d96a", "#fee08b", "#fec44f", "#fe9929", "#ec7014", "#cc4c02",
                "#8c2d04"]
 PAL_K10 = [plt.cm.tab10(i) for i in range(10)]
@@ -55,7 +62,8 @@ SISTEMAS = {   # nome: (rótulo, legenda {código: texto}, paleta, função que 
     'holdridge': ('Holdridge (ETP original)', {k: f'{k} {v}' for k, v in HOLDRIDGE_ZONAS_EN.items()},
                   PAL_HOLDRIDGE, lambda x: x),
     'thornthwaite': ('Thornthwaite, CAD do solo: classe de umidade', TH_UMIDADE, PAL_UMIDADE, lambda x: x // 100),
-    'k10': ('Zonas climáticas k10', {k: f'Zona {k}' for k in range(1, 11)}, PAL_K10, lambda x: x),
+    'k10': ('Zonas climáticas k10 (reajustadas no Xavier)', {k: f'Zona {k}' for k in range(1, 11)},
+            PAL_K10, lambda x: x),
 }
 
 
@@ -167,6 +175,13 @@ def conferencia(n91, g, peso, ext):
                       dst_crs='EPSG:4326', resampling=Resampling.mode, src_nodata=0, dst_nodata=0)
         x = SISTEMAS[nome][3](n91[nome])
         ok = (x > 0) & (dst > 0)
+        if nome == 'k10':
+            # zonas reajustadas no Xavier têm numeração própria: compara após o melhor pareamento de zonas
+            from scipy.optimize import linear_sum_assignment
+            tab = pd.crosstab(pd.Series(dst[ok]), pd.Series(x[ok]), values=peso[ok], aggfunc='sum').fillna(0)
+            lin, col = linear_sum_assignment(-tab.to_numpy())
+            par = dict(zip(tab.columns[col], tab.index[lin]))
+            x = np.vectorize(lambda z: par.get(z, 0))(x).astype(x.dtype)
         igual = 100 * peso[ok & (x == dst)].sum() / peso[ok].sum()
         linhas.append({'sistema': nome, 'concordancia_area_pct': igual, 'pixels_comparados': int(ok.sum())})
         pares[nome] = (dst, x)

@@ -11,8 +11,11 @@ relatório v1, aqui estendido a todos os sistemas; a janela tem ~33 km, no CHELS
     holdridge     classificacao_holdridge_grade(T, P, lat), ETP original  -> id 1-38 (HOLDRIDGE_ZONAS_EN)
     thornthwaite  classificacao_thornthwaite_grade(P, ETo, lat, CAD do solo) -> umidade (1-9) e subtipo (1-10);
                   código L2 = 100 x umidade + subtipo
-    k10           centróides de corelacao/codigo/zonas_clima.py nas 9 variáveis do clima contínuo
-                  (T, P, ETo e balanço hídrico com CAD 100, como no relatório v1)
+    k10           zonas climáticas homogêneas reajustadas no Xavier (decisão do usuário): k-means com k = 10
+                  nas mesmas 9 variáveis e transformações do relatório v1 (corelacao/codigo/zonas_clima.py),
+                  ajustado na normal 1991-2020 do Xavier com peso pela área (cos da latitude), zonas numeradas
+                  da mais quente para a mais fria; depois cada década recebe a zona do centróide mais próximo.
+                  Centróides em climas_tempo/resultados/tabelas/zonas_k10_xavier_*.csv
 CAD do solo: AWC (mm/m, 1 m de solo) do relatório v1 (climas/dados_chelsa/awc), média em cada pixel de 0,1°.
 
 Saídas (fora do git), em climas_tempo/dados/:
@@ -33,6 +36,7 @@ import rasterio
 from rasterio.enums import Resampling
 from rasterio.transform import Affine
 from rasterio.warp import reproject
+from sklearn.cluster import KMeans
 
 from agrometeorologiapy.classificacao_climatica import (classificacao_holdridge_grade, classificacao_koppen_grade,
                                                         classificacao_thornthwaite_grade)
@@ -46,6 +50,7 @@ MENSAL = DADOS / 'xavier_mensal'
 AWC = RAIZ / 'climas' / 'dados_chelsa' / 'awc' / 'AWC_BR_grade_CHELSA.tif'
 ANOS_DADOS = range(1961, 2023)
 DECADAS = [(1985, 1994), (1995, 2004), (2005, 2014), (2015, 2024)]
+TAB = RAIZ / 'climas_tempo' / 'resultados' / 'tabelas'
 
 
 def carregar():
@@ -95,6 +100,39 @@ def moda3x3(cls, valido):
     return np.where(valido & (cls > 0), out, 0).astype(cls.dtype)
 
 
+def continuas(T, P, E, lat):
+    """As 9 variáveis das zonas k10 (balanço hídrico com CAD 100, como no relatório v1)."""
+    b100 = classificacao_thornthwaite_grade(P, E, lat, CAD=100.0)
+    return {
+        'clim_t_media': T.mean(0), 'clim_t_mes_frio': T.min(0), 'clim_p_anual': P.sum(0),
+        'clim_p_mes_seco': P.min(0),
+        'clim_p_sazonalidade': P.std(0) / np.maximum(P.mean(0), 1e-6),
+        'clim_etp_anual': E.sum(0), 'clim_def_anual': b100['DEF_anual'], 'clim_exc_anual': b100['EXC_anual'],
+        'clim_im': b100['Im'],
+    }
+
+
+def ajustar_k10(cont, lat, k=10, semente=2026):
+    """k-means como em zonas_clima.ajustar, com peso pela área (cos da latitude) no lugar da amostragem."""
+    df = pd.DataFrame({c: v.ravel() for c, v in cont.items()})
+    ok = df.notna().all(axis=1).to_numpy()
+    x = zc.transformar(df[ok])
+    media, dp = x.mean(), x.std()
+    km = KMeans(n_clusters=k, n_init=10, random_state=semente).fit(
+        ((x - media) / dp).to_numpy(), sample_weight=np.cos(np.radians(lat.ravel()[ok])))
+    cent = pd.DataFrame(km.cluster_centers_ * dp.to_numpy() + media.to_numpy(), columns=zc.VARIAVEIS_ZONA)
+    cent = cent.iloc[np.argsort(-cent.clim_t_media.to_numpy())].reset_index(drop=True)
+    cent.index = np.arange(1, k + 1)
+    cent.index.name = 'zona'
+    TAB.mkdir(parents=True, exist_ok=True)
+    fisico = cent.copy()
+    for c in zc.EM_LOG:
+        fisico[c] = np.expm1(fisico[c])
+    fisico.to_csv(TAB / f'zonas_k{k}_xavier_centroides.csv', float_format='%.4g')
+    pd.DataFrame({'media': media, 'dp': dp}).to_csv(TAB / f'zonas_k{k}_xavier_padronizacao.csv')
+    return cent, media, dp
+
+
 def classificar(T, P, E, lat, cad, valido, centroides):
     """As quatro classificações de uma normal (12, H, W)."""
     T, P, E = (np.where(valido, x, np.nan) for x in (T, P, E))
@@ -103,14 +141,7 @@ def classificar(T, P, E, lat, cad, valido, centroides):
     th = classificacao_thornthwaite_grade(P, E, lat, CAD=np.where(np.isfinite(cad), cad, np.nan))
     th_l2 = (th['umidade'].astype(np.uint16) * 100 + th['subtipo']).astype(np.uint16)
     th_l2[th['umidade'] == 0] = 0
-    b100 = classificacao_thornthwaite_grade(P, E, lat, CAD=100.0)          # balanço com CAD 100 (k10)
-    cont = {
-        'clim_t_media': T.mean(0), 'clim_t_mes_frio': T.min(0), 'clim_p_anual': P.sum(0),
-        'clim_p_mes_seco': P.min(0),
-        'clim_p_sazonalidade': P.std(0) / np.maximum(P.mean(0), 1e-6),
-        'clim_etp_anual': E.sum(0), 'clim_def_anual': b100['DEF_anual'], 'clim_exc_anual': b100['EXC_anual'],
-        'clim_im': b100['Im'],
-    }
+    cont = continuas(T, P, E, lat)
     df = pd.DataFrame({c: v.ravel() for c, v in cont.items()})
     ok = df.notna().all(axis=1).to_numpy()
     zona = np.zeros(df.shape[0], np.uint8)
@@ -126,8 +157,12 @@ def main():
     cad = cad_solo(transf, h, w)
     brasil = np.isfinite(P).all(axis=(0, 1))
     np.savez_compressed(DADOS / 'grade.npz', lat=lat, lon=lon, brasil=brasil, cad=cad)
-    centroides = zc.carregar(10)
     anos_dados = np.array(list(ANOS_DADOS))
+    # k10 reajustado na normal 1991-2020 do Xavier (T e ETo até 07/2020)
+    i91 = np.where((anos_dados >= 1991) & (anos_dados <= 2020))[0]
+    t91, p91, e91 = (np.where(brasil, normal(X, i91)[0], np.nan) for X in (T, P, E))
+    centroides = ajustar_k10(continuas(t91, p91, e91, lat), lat)
+    print('k10 reajustado no Xavier 1991-2020', flush=True)
     dec = {s: [] for s in ('koppen', 'holdridge', 'thornthwaite', 'k10')}
     n_T, n_P = [], []
     conts = {}
@@ -146,8 +181,7 @@ def main():
                         **{s: np.stack(v) for s, v in dec.items()}, **{c: np.stack(v) for c, v in conts.items()})
 
     # normal 1991-2020 (T e ETo até 07/2020): conferência com os mapas do CHELSA do relatório v1
-    idx = np.where((anos_dados >= 1991) & (anos_dados <= 2020))[0]
-    cls, _ = classificar(normal(T, idx)[0], normal(P, idx)[0], normal(E, idx)[0], lat, cad, brasil, centroides)
+    cls, _ = classificar(t91, p91, e91, lat, cad, brasil, centroides)
     np.savez_compressed(DADOS / 'classes_1991_2020.npz', **cls)
     print('normal 1991-2020 ok', flush=True)
 
