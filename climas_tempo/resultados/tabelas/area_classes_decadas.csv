@@ -1,0 +1,158 @@
+sistema,decada,classe,area_pct
+koppen,1985-1994,Af,18.792
+koppen,1985-1994,Am,20.191
+koppen,1985-1994,As,2.960
+koppen,1985-1994,Aw,42.870
+koppen,1985-1994,BSh,5.147
+koppen,1985-1994,Cfa,6.988
+koppen,1985-1994,Cfb,1.120
+koppen,1985-1994,Cwa,1.671
+koppen,1985-1994,Cwb,0.262
+koppen,1995-2004,Af,18.329
+koppen,1995-2004,Am,18.079
+koppen,1995-2004,As,3.235
+koppen,1995-2004,Aw,45.968
+koppen,1995-2004,BSh,6.281
+koppen,1995-2004,Cfa,5.687
+koppen,1995-2004,Cfb,0.930
+koppen,1995-2004,Cwa,1.333
+koppen,1995-2004,Cwb,0.157
+koppen,2005-2014,Af,17.172
+koppen,2005-2014,Am,17.673
+koppen,2005-2014,As,1.470
+koppen,2005-2014,Aw,48.430
+koppen,2005-2014,BSh,7.297
+koppen,2005-2014,BWh,0.079
+koppen,2005-2014,Cfa,5.712
+koppen,2005-2014,Cfb,0.771
+koppen,2005-2014,Cwa,1.230
+koppen,2005-2014,Cwb,0.168
+koppen,2015-2024,Af,17.585
+koppen,2015-2024,Am,19.073
+koppen,2015-2024,As,1.613
+koppen,2015-2024,Aw,46.677
+koppen,2015-2024,BSh,7.330
+koppen,2015-2024,BWh,0.316
+koppen,2015-2024,Cfa,5.733
+koppen,2015-2024,Cfb,0.519
+koppen,2015-2024,Cwa,1.034
+koppen,2015-2024,Cwb,0.121
+holdridge,1985-1994,22 Warm temperate moist forest,1.152
+holdridge,1985-1994,23 Warm temperate wet forest,0.005
+holdridge,1985-1994,27 Subtropical thorn steppe,1.583
+holdridge,1985-1994,28 Subtropical dry forest,10.908
+holdridge,1985-1994,29 Subtropical moist forest,22.951
+holdridge,1985-1994,30 Subtropical wet forest,0.020
+holdridge,1985-1994,35 Tropical very dry forest,3.385
+holdridge,1985-1994,36 Tropical dry forest,7.936
+holdridge,1985-1994,37 Tropical moist forest,49.700
+holdridge,1985-1994,38 Tropical wet forest,2.360
+holdridge,1995-2004,22 Warm temperate moist forest,0.971
+holdridge,1995-2004,23 Warm temperate wet forest,0.097
+holdridge,1995-2004,27 Subtropical thorn steppe,1.837
+holdridge,1995-2004,28 Subtropical dry forest,11.991
+holdridge,1995-2004,29 Subtropical moist forest,23.928
+holdridge,1995-2004,30 Subtropical wet forest,0.037
+holdridge,1995-2004,35 Tropical very dry forest,4.035
+holdridge,1995-2004,36 Tropical dry forest,7.824
+holdridge,1995-2004,37 Tropical moist forest,47.745
+holdridge,1995-2004,38 Tropical wet forest,1.535
+holdridge,2005-2014,22 Warm temperate moist forest,0.900
+holdridge,2005-2014,23 Warm temperate wet forest,0.120
+holdridge,2005-2014,26 Subtropical desert bush,0.006
+holdridge,2005-2014,27 Subtropical thorn steppe,2.858
+holdridge,2005-2014,28 Subtropical dry forest,12.004
+holdridge,2005-2014,29 Subtropical moist forest,25.787
+holdridge,2005-2014,30 Subtropical wet forest,0.042
+holdridge,2005-2014,34 Tropical thorn steppe,0.007
+holdridge,2005-2014,35 Tropical very dry forest,3.876
+holdridge,2005-2014,36 Tropical dry forest,6.888
+holdridge,2005-2014,37 Tropical moist forest,45.415
+holdridge,2005-2014,38 Tropical wet forest,2.098
+holdridge,2015-2024,22 Warm temperate moist forest,0.643
+holdridge,2015-2024,23 Warm temperate wet forest,0.032
+holdridge,2015-2024,26 Subtropical desert bush,0.061
+holdridge,2015-2024,27 Subtropical thorn steppe,2.912
+holdridge,2015-2024,28 Subtropical dry forest,17.310
+holdridge,2015-2024,29 Subtropical moist forest,23.877
+holdridge,2015-2024,30 Subtropical wet forest,0.067
+holdridge,2015-2024,35 Tropical very dry forest,3.309
+holdridge,2015-2024,36 Tropical dry forest,5.914
+holdridge,2015-2024,37 Tropical moist forest,42.049
+holdridge,2015-2024,38 Tropical wet forest,3.826
+thornthwaite,1985-1994,A,14.080
+thornthwaite,1985-1994,B4,11.559
+thornthwaite,1985-1994,B3,14.695
+thornthwaite,1985-1994,B2,12.339
+thornthwaite,1985-1994,B1,14.377
+thornthwaite,1985-1994,C2,13.313
+thornthwaite,1985-1994,C1,8.450
+thornthwaite,1985-1994,D,9.262
+thornthwaite,1985-1994,E,1.926
+thornthwaite,1995-2004,A,8.774
+thornthwaite,1995-2004,B4,9.071
+thornthwaite,1995-2004,B3,15.446
+thornthwaite,1995-2004,B2,15.539
+thornthwaite,1995-2004,B1,14.704
+thornthwaite,1995-2004,C2,13.780
+thornthwaite,1995-2004,C1,10.456
+thornthwaite,1995-2004,D,9.204
+thornthwaite,1995-2004,E,3.026
+thornthwaite,2005-2014,A,9.396
+thornthwaite,2005-2014,B4,9.824
+thornthwaite,2005-2014,B3,13.935
+thornthwaite,2005-2014,B2,13.692
+thornthwaite,2005-2014,B1,12.907
+thornthwaite,2005-2014,C2,16.379
+thornthwaite,2005-2014,C1,11.241
+thornthwaite,2005-2014,D,8.674
+thornthwaite,2005-2014,E,3.953
+thornthwaite,2015-2024,A,12.641
+thornthwaite,2015-2024,B4,10.295
+thornthwaite,2015-2024,B3,11.287
+thornthwaite,2015-2024,B2,12.658
+thornthwaite,2015-2024,B1,11.037
+thornthwaite,2015-2024,C2,15.120
+thornthwaite,2015-2024,C1,12.890
+thornthwaite,2015-2024,D,10.115
+thornthwaite,2015-2024,E,3.955
+k10,1985-1994,Zona 1,3.922
+k10,1985-1994,Zona 2,5.905
+k10,1985-1994,Zona 3,27.216
+k10,1985-1994,Zona 4,20.878
+k10,1985-1994,Zona 5,12.995
+k10,1985-1994,Zona 6,4.667
+k10,1985-1994,Zona 7,4.708
+k10,1985-1994,Zona 8,11.432
+k10,1985-1994,Zona 9,3.356
+k10,1985-1994,Zona 10,4.921
+k10,1995-2004,Zona 1,7.238
+k10,1995-2004,Zona 2,6.855
+k10,1995-2004,Zona 3,21.797
+k10,1995-2004,Zona 4,24.166
+k10,1995-2004,Zona 5,11.478
+k10,1995-2004,Zona 6,6.633
+k10,1995-2004,Zona 7,6.434
+k10,1995-2004,Zona 8,7.904
+k10,1995-2004,Zona 9,1.476
+k10,1995-2004,Zona 10,6.019
+k10,2005-2014,Zona 1,9.964
+k10,2005-2014,Zona 2,7.611
+k10,2005-2014,Zona 3,22.093
+k10,2005-2014,Zona 4,20.433
+k10,2005-2014,Zona 5,11.437
+k10,2005-2014,Zona 6,7.971
+k10,2005-2014,Zona 7,5.669
+k10,2005-2014,Zona 8,7.345
+k10,2005-2014,Zona 9,3.242
+k10,2005-2014,Zona 10,4.235
+k10,2015-2024,Zona 1,11.686
+k10,2015-2024,Zona 2,8.246
+k10,2015-2024,Zona 3,23.706
+k10,2015-2024,Zona 4,17.293
+k10,2015-2024,Zona 5,10.968
+k10,2015-2024,Zona 6,8.504
+k10,2015-2024,Zona 7,6.961
+k10,2015-2024,Zona 8,5.354
+k10,2015-2024,Zona 9,3.007
+k10,2015-2024,Zona 10,4.275
