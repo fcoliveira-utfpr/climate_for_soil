@@ -823,3 +823,18 @@ Painel (`codigo/painel.py`): 13.680 locais reais, 41 tarefas (estáticas + 40 an
    tile estourava o tempo). C sem limite = 41,7 MB, estoura a memória interativa: na tela usa `C_decenal_1000`
    (6,8 MB, MEC 0,248 × 0,251), na exportação o completo (1°×1° a 30 m = 13 min). Versão A confere com o
    oficial nos pontos (r 0,95). Máscara do Brasil = extensão do mapa oficial (biomas_IBGE_250mil ilegível).
+
+
+## climas_tempo/: classificações climáticas por década do Xavier (capítulo 3, 2026-10-13)
+
+Pasta `climas_tempo/`, relatório `relatorio_tecnicov3.md`. Köppen, Holdridge (ETP original), Thornthwaite
+(CAD do solo) e zonas k10 por década (1985-1994, 1995-2004, 2005-2014, 2015-2024, alinhadas à série do
+MapBiomas), do Xavier/BR-DWGD (GEE: T e ETo até 07/2020, chuva até 2022; escalas T ×0,001068148+15,
+P ×0,006866665+225, ETo ×0,051181102), classificadas localmente com a `agrometeorologiapy` 0.3.0 do usuário
+(validada: Köppen 100%, Holdridge 98,9% contra o v1). Decisões do usuário: moda 3×3 em todas; k10 reajustado
+no Xavier 1991-2020; paleta do Holdridge por faixa térmica.
+Resultados: decenal − estático (mesmo sistema e fonte) ~0 ou negativo na V3/V4 → o Köppen perde por ser
+classe, não por ser estático; contínuo decenal (v2) segue o melhor no tempo. Holdridge do Xavier foi a
+melhor classificação (melhor cenário de todos com o modelo do mapa), mas com o CHELSA tinha sido o pior:
+depende da fronteira dos 24 °C (sensível à fonte). Holdridge não enxerga o aquecimento (biotemp fixa em
+24,1 °C com T +1 °C). Thornthwaite decenal piora no tempo (ruído da ETo).

@@ -1,0 +1,595 @@
+modelo,cenario,esquema,recorte,rep,n,me,mae,mse,rmse,mec,slope
+ranger,holdridge_dec,v2,"0-30 cm, amostras reais",1,9787,-1.645,21.67,2247,47.4,0.2645,1.114
+ranger,holdridge_dec,v2,"0-30 cm, amostras reais",2,9787,-1.676,21.68,2258,47.52,0.261,1.17
+ranger,holdridge_dec,v2,"0-30 cm, amostras reais",3,9787,-2.655,21.95,2395,48.94,0.216,1.326
+ranger,holdridge_dec,v2,0-30 cm,1,10678,-2.166,23.57,2736,52.31,0.3239,1.073
+ranger,holdridge_dec,v2,0-30 cm,2,10678,-2.486,23.48,2714,52.09,0.3295,1.206
+ranger,holdridge_dec,v2,0-30 cm,3,10678,-4.452,23.96,3061,55.33,0.2435,1.518
+ranger,holdridge_dec,v2,todas,1,27425,0.6384,19.38,1636,40.45,0.3733,0.9768
+ranger,holdridge_dec,v2,todas,2,27425,0.07877,19.28,1598,39.97,0.388,1.108
+ranger,holdridge_dec,v2,todas,3,27425,-1.672,19.44,1793,42.34,0.3132,1.372
+ranger,holdridge_dec,v3,"0-30 cm, amostras reais",1,9787,-3.242,22.87,2484,49.84,0.187,1.202
+ranger,holdridge_dec,v3,"0-30 cm, amostras reais",2,9787,-3.153,22.94,2499,49.99,0.182,1.182
+ranger,holdridge_dec,v3,"0-30 cm, amostras reais",3,9787,-3.206,22.86,2499,49.99,0.1821,1.197
+ranger,holdridge_dec,v3,0-30 cm,1,10678,-4.064,25.1,3087,55.56,0.2372,1.456
+ranger,holdridge_dec,v3,0-30 cm,2,10678,-4.009,25.15,3097,55.65,0.2347,1.438
+ranger,holdridge_dec,v3,0-30 cm,3,10678,-4.066,25.13,3113,55.79,0.2309,1.455
+ranger,holdridge_dec,v3,todas,1,27425,-1.272,20.65,1846,42.96,0.2929,1.354
+ranger,holdridge_dec,v3,todas,2,27425,-1.049,20.7,1841,42.9,0.2949,1.35
+ranger,holdridge_dec,v3,todas,3,27425,-1.257,20.67,1853,43.04,0.2902,1.357
+ranger,holdridge_dec,v4,"0-30 cm, amostras reais",1,9787,-2.792,23.44,2585,50.85,0.1538,1.063
+ranger,holdridge_dec,v4,"0-30 cm, amostras reais",2,9787,-3.258,23.5,2592,50.91,0.1516,1.071
+ranger,holdridge_dec,v4,"0-30 cm, amostras reais",3,9787,-3.35,23.23,2561,50.61,0.1618,1.123
+ranger,holdridge_dec,v4,0-30 cm,1,10678,-3.841,25.87,3282,57.29,0.1891,1.31
+ranger,holdridge_dec,v4,0-30 cm,2,10678,-4.422,25.87,3260,57.09,0.1946,1.366
+ranger,holdridge_dec,v4,0-30 cm,3,10678,-4.326,25.64,3218,56.73,0.2049,1.402
+ranger,holdridge_dec,v4,todas,1,27425,-0.8074,21.35,1986,44.57,0.239,1.247
+ranger,holdridge_dec,v4,todas,2,27425,-1.228,21.27,1949,44.15,0.2532,1.294
+ranger,holdridge_dec,v4,todas,3,27425,-1.1,21.15,1911,43.71,0.2679,1.327
+ranger,holdridge_est,v2,"0-30 cm, amostras reais",1,9787,-1.52,21.67,2251,47.44,0.2634,1.091
+ranger,holdridge_est,v2,"0-30 cm, amostras reais",2,9787,-1.72,21.78,2276,47.71,0.2551,1.151
+ranger,holdridge_est,v2,"0-30 cm, amostras reais",3,9787,-2.638,21.93,2379,48.77,0.2214,1.334
+ranger,holdridge_est,v2,0-30 cm,1,10678,-1.928,23.54,2735,52.3,0.3241,1.054
+ranger,holdridge_est,v2,0-30 cm,2,10678,-2.58,23.57,2746,52.4,0.3216,1.185
+ranger,holdridge_est,v2,0-30 cm,3,10678,-4.378,23.78,3012,54.88,0.2557,1.529
+ranger,holdridge_est,v2,todas,1,27425,0.7553,19.43,1640,40.49,0.3718,0.9584
+ranger,holdridge_est,v2,todas,2,27425,-0.08363,19.32,1618,40.22,0.3803,1.094
+ranger,holdridge_est,v2,todas,3,27425,-1.751,19.39,1769,42.06,0.3223,1.357
+ranger,holdridge_est,v3,"0-30 cm, amostras reais",1,9787,-3.537,22.88,2506,50.06,0.1796,1.218
+ranger,holdridge_est,v3,"0-30 cm, amostras reais",2,9787,-3.441,22.78,2484,49.84,0.1871,1.222
+ranger,holdridge_est,v3,"0-30 cm, amostras reais",3,9787,-3.66,22.82,2491,49.91,0.1846,1.229
+ranger,holdridge_est,v3,0-30 cm,1,10678,-4.38,25.18,3134,55.99,0.2255,1.478
+ranger,holdridge_est,v3,0-30 cm,2,10678,-4.281,24.96,3077,55.48,0.2396,1.473
+ranger,holdridge_est,v3,0-30 cm,3,10678,-4.486,25.06,3089,55.58,0.2368,1.485
+ranger,holdridge_est,v3,todas,1,27425,-1.492,20.68,1866,43.19,0.2853,1.369
+ranger,holdridge_est,v3,todas,2,27425,-1.435,20.6,1836,42.85,0.2965,1.371
+ranger,holdridge_est,v3,todas,3,27425,-1.633,20.63,1852,43.03,0.2906,1.393
+ranger,holdridge_est,v4,"0-30 cm, amostras reais",1,9787,-3.34,23.36,2583,50.82,0.1546,1.117
+ranger,holdridge_est,v4,"0-30 cm, amostras reais",2,9787,-3.574,23.3,2593,50.92,0.1514,1.109
+ranger,holdridge_est,v4,"0-30 cm, amostras reais",3,9787,-3.736,23.19,2545,50.44,0.1671,1.16
+ranger,holdridge_est,v4,0-30 cm,1,10678,-4.378,25.8,3277,57.24,0.1904,1.382
+ranger,holdridge_est,v4,0-30 cm,2,10678,-4.726,25.67,3267,57.16,0.1927,1.403
+ranger,holdridge_est,v4,0-30 cm,3,10678,-4.559,25.59,3165,56.26,0.218,1.435
+ranger,holdridge_est,v4,todas,1,27425,-1.226,21.31,1983,44.53,0.2404,1.294
+ranger,holdridge_est,v4,todas,2,27425,-1.482,21.17,1955,44.21,0.2511,1.317
+ranger,holdridge_est,v4,todas,3,27425,-1.409,21.1,1886,43.42,0.2776,1.343
+ranger,k10_dec,v2,"0-30 cm, amostras reais",1,9787,-1.657,21.75,2254,47.48,0.2622,1.128
+ranger,k10_dec,v2,"0-30 cm, amostras reais",2,9787,-2,21.8,2317,48.13,0.2417,1.185
+ranger,k10_dec,v2,"0-30 cm, amostras reais",3,9787,-2.563,21.78,2411,49.1,0.2108,1.32
+ranger,k10_dec,v2,0-30 cm,1,10678,-2.356,23.66,2740,52.35,0.3229,1.097
+ranger,k10_dec,v2,0-30 cm,2,10678,-3.13,23.62,2804,52.95,0.3072,1.252
+ranger,k10_dec,v2,0-30 cm,3,10678,-4.524,23.75,3072,55.42,0.241,1.522
+ranger,k10_dec,v2,todas,1,27425,0.214,19.59,1645,40.56,0.3697,0.9953
+ranger,k10_dec,v2,todas,2,27425,-0.4797,19.56,1658,40.72,0.3648,1.14
+ranger,k10_dec,v2,todas,3,27425,-2.065,19.58,1826,42.73,0.3005,1.372
+ranger,k10_dec,v3,"0-30 cm, amostras reais",1,9787,-3.541,22.68,2518,50.18,0.1759,1.235
+ranger,k10_dec,v3,"0-30 cm, amostras reais",2,9787,-3.628,22.7,2523,50.23,0.1741,1.228
+ranger,k10_dec,v3,"0-30 cm, amostras reais",3,9787,-3.635,22.71,2498,49.98,0.1825,1.241
+ranger,k10_dec,v3,0-30 cm,1,10678,-4.542,24.99,3151,56.13,0.2214,1.512
+ranger,k10_dec,v3,0-30 cm,2,10678,-4.644,25.01,3168,56.29,0.2172,1.504
+ranger,k10_dec,v3,0-30 cm,3,10678,-4.593,25.06,3127,55.92,0.2275,1.5
+ranger,k10_dec,v3,todas,1,27425,-1.68,20.64,1875,43.3,0.2817,1.398
+ranger,k10_dec,v3,todas,2,27425,-1.734,20.73,1892,43.5,0.275,1.389
+ranger,k10_dec,v3,todas,3,27425,-1.737,20.73,1872,43.27,0.2827,1.387
+ranger,k10_dec,v4,"0-30 cm, amostras reais",1,9787,-3.395,23.14,2593,50.92,0.1513,1.154
+ranger,k10_dec,v4,"0-30 cm, amostras reais",2,9787,-3.255,23.19,2586,50.85,0.1536,1.143
+ranger,k10_dec,v4,"0-30 cm, amostras reais",3,9787,-3.922,23.12,2593,50.92,0.1512,1.185
+ranger,k10_dec,v4,0-30 cm,1,10678,-4.55,25.6,3285,57.32,0.1882,1.45
+ranger,k10_dec,v4,0-30 cm,2,10678,-4.532,25.63,3269,57.17,0.1923,1.452
+ranger,k10_dec,v4,0-30 cm,3,10678,-5.009,25.63,3273,57.21,0.1914,1.485
+ranger,k10_dec,v4,todas,1,27425,-1.478,21.23,1982,44.52,0.2407,1.357
+ranger,k10_dec,v4,todas,2,27425,-1.423,21.28,1970,44.39,0.2451,1.344
+ranger,k10_dec,v4,todas,3,27425,-1.643,21.24,1940,44.05,0.2567,1.372
+ranger,k10_est,v2,"0-30 cm, amostras reais",1,9787,-1.631,21.67,2272,47.67,0.2562,1.125
+ranger,k10_est,v2,"0-30 cm, amostras reais",2,9787,-2.011,21.87,2330,48.27,0.2372,1.199
+ranger,k10_est,v2,"0-30 cm, amostras reais",3,9787,-2.595,21.77,2398,48.97,0.2152,1.333
+ranger,k10_est,v2,0-30 cm,1,10678,-2.261,23.62,2786,52.78,0.3116,1.09
+ranger,k10_est,v2,0-30 cm,2,10678,-3.2,23.69,2843,53.32,0.2976,1.269
+ranger,k10_est,v2,0-30 cm,3,10678,-4.523,23.72,3067,55.38,0.2422,1.523
+ranger,k10_est,v2,todas,1,27425,0.2282,19.52,1668,40.84,0.3611,0.995
+ranger,k10_est,v2,todas,2,27425,-0.5927,19.56,1679,40.97,0.3569,1.154
+ranger,k10_est,v2,todas,3,27425,-1.979,19.5,1818,42.63,0.3036,1.37
+ranger,k10_est,v3,"0-30 cm, amostras reais",1,9787,-3.586,22.66,2518,50.18,0.1759,1.232
+ranger,k10_est,v3,"0-30 cm, amostras reais",2,9787,-3.523,22.67,2519,50.19,0.1755,1.227
+ranger,k10_est,v3,"0-30 cm, amostras reais",3,9787,-3.551,22.7,2517,50.17,0.1762,1.224
+ranger,k10_est,v3,0-30 cm,1,10678,-4.607,24.94,3155,56.17,0.2205,1.517
+ranger,k10_est,v3,0-30 cm,2,10678,-4.558,24.93,3147,56.1,0.2225,1.519
+ranger,k10_est,v3,0-30 cm,3,10678,-4.532,24.98,3160,56.21,0.2193,1.489
+ranger,k10_est,v3,todas,1,27425,-1.546,20.64,1872,43.27,0.2827,1.399
+ranger,k10_est,v3,todas,2,27425,-1.622,20.65,1881,43.37,0.2793,1.398
+ranger,k10_est,v3,todas,3,27425,-1.722,20.63,1891,43.49,0.2755,1.385
+ranger,k10_est,v4,"0-30 cm, amostras reais",1,9787,-3.215,23.16,2579,50.78,0.1559,1.151
+ranger,k10_est,v4,"0-30 cm, amostras reais",2,9787,-3.079,23.61,2642,51.4,0.1353,1.007
+ranger,k10_est,v4,"0-30 cm, amostras reais",3,9787,-3.877,23.05,2596,50.95,0.1504,1.153
+ranger,k10_est,v4,0-30 cm,1,10678,-4.32,25.6,3248,56.99,0.1975,1.448
+ranger,k10_est,v4,0-30 cm,2,10678,-4.391,26.01,3336,57.75,0.1758,1.306
+ranger,k10_est,v4,0-30 cm,3,10678,-4.969,25.54,3274,57.22,0.1909,1.437
+ranger,k10_est,v4,todas,1,27425,-1.231,21.18,1953,44.19,0.2519,1.363
+ranger,k10_est,v4,todas,2,27425,-1.115,21.55,2007,44.8,0.2309,1.254
+ranger,k10_est,v4,todas,3,27425,-1.667,21.2,1950,44.16,0.2531,1.356
+ranger,koppen_dec,v2,"0-30 cm, amostras reais",1,9787,-2.051,21.74,2274,47.69,0.2557,1.154
+ranger,koppen_dec,v2,"0-30 cm, amostras reais",2,9787,-2.176,21.9,2305,48.01,0.2457,1.197
+ranger,koppen_dec,v2,"0-30 cm, amostras reais",3,9787,-3.052,22.01,2436,49.36,0.2026,1.326
+ranger,koppen_dec,v2,0-30 cm,1,10678,-2.983,23.64,2768,52.61,0.316,1.149
+ranger,koppen_dec,v2,0-30 cm,2,10678,-3.445,23.75,2802,52.94,0.3075,1.269
+ranger,koppen_dec,v2,0-30 cm,3,10678,-5.179,23.99,3124,55.89,0.2282,1.545
+ranger,koppen_dec,v2,todas,1,27425,-0.1039,19.56,1651,40.64,0.3673,1.027
+ranger,koppen_dec,v2,todas,2,27425,-0.7297,19.57,1652,40.64,0.3671,1.153
+ranger,koppen_dec,v2,todas,3,27425,-2.36,19.63,1836,42.85,0.2967,1.388
+ranger,koppen_dec,v3,"0-30 cm, amostras reais",1,9787,-3.742,22.85,2530,50.3,0.1719,1.235
+ranger,koppen_dec,v3,"0-30 cm, amostras reais",2,9787,-3.659,22.78,2525,50.25,0.1736,1.233
+ranger,koppen_dec,v3,"0-30 cm, amostras reais",3,9787,-3.626,22.86,2533,50.33,0.171,1.233
+ranger,koppen_dec,v3,0-30 cm,1,10678,-4.965,25.28,3219,56.73,0.2047,1.533
+ranger,koppen_dec,v3,0-30 cm,2,10678,-4.843,25.17,3179,56.39,0.2144,1.517
+ranger,koppen_dec,v3,0-30 cm,3,10678,-4.808,25.26,3202,56.58,0.2089,1.518
+ranger,koppen_dec,v3,todas,1,27425,-1.787,20.91,1924,43.86,0.263,1.415
+ranger,koppen_dec,v3,todas,2,27425,-1.891,20.83,1905,43.64,0.2703,1.407
+ranger,koppen_dec,v3,todas,3,27425,-1.86,20.9,1915,43.76,0.2664,1.401
+ranger,koppen_dec,v4,"0-30 cm, amostras reais",1,9787,-3.387,23.39,2609,51.08,0.1461,1.105
+ranger,koppen_dec,v4,"0-30 cm, amostras reais",2,9787,-3.342,23.37,2605,51.04,0.1473,1.109
+ranger,koppen_dec,v4,"0-30 cm, amostras reais",3,9787,-3.815,23.28,2601,51,0.1488,1.142
+ranger,koppen_dec,v4,0-30 cm,1,10678,-4.673,25.88,3298,57.43,0.185,1.403
+ranger,koppen_dec,v4,0-30 cm,2,10678,-4.753,25.92,3329,57.7,0.1773,1.405
+ranger,koppen_dec,v4,0-30 cm,3,10678,-5.052,25.77,3279,57.26,0.1898,1.445
+ranger,koppen_dec,v4,todas,1,27425,-1.488,21.45,1983,44.53,0.2404,1.316
+ranger,koppen_dec,v4,todas,2,27425,-1.582,21.47,2000,44.72,0.2337,1.323
+ranger,koppen_dec,v4,todas,3,27425,-1.727,21.42,1955,44.22,0.251,1.346
+ranger,koppen_est,v2,"0-30 cm, amostras reais",1,9787,-2.194,21.83,2314,48.1,0.2426,1.189
+ranger,koppen_est,v2,"0-30 cm, amostras reais",2,9787,-2.248,21.97,2352,48.5,0.2302,1.173
+ranger,koppen_est,v2,"0-30 cm, amostras reais",3,9787,-2.916,21.88,2433,49.33,0.2036,1.314
+ranger,koppen_est,v2,0-30 cm,1,10678,-3.321,23.83,2870,53.57,0.2909,1.192
+ranger,koppen_est,v2,0-30 cm,2,10678,-3.634,23.86,2894,53.8,0.2849,1.256
+ranger,koppen_est,v2,0-30 cm,3,10678,-4.995,23.84,3095,55.63,0.2353,1.535
+ranger,koppen_est,v2,todas,1,27425,-0.5121,19.72,1712,41.38,0.344,1.056
+ranger,koppen_est,v2,todas,2,27425,-0.911,19.71,1710,41.36,0.3447,1.152
+ranger,koppen_est,v2,todas,3,27425,-2.28,19.61,1820,42.66,0.3027,1.372
+ranger,koppen_est,v3,"0-30 cm, amostras reais",1,9787,-3.89,22.86,2535,50.35,0.1703,1.232
+ranger,koppen_est,v3,"0-30 cm, amostras reais",2,9787,-3.5,22.76,2524,50.24,0.1739,1.238
+ranger,koppen_est,v3,"0-30 cm, amostras reais",3,9787,-3.773,22.91,2551,50.51,0.1651,1.208
+ranger,koppen_est,v3,0-30 cm,1,10678,-5.08,25.23,3202,56.59,0.2088,1.529
+ranger,koppen_est,v3,0-30 cm,2,10678,-4.684,25.12,3183,56.42,0.2135,1.53
+ranger,koppen_est,v3,0-30 cm,3,10678,-4.939,25.32,3223,56.77,0.2037,1.489
+ranger,koppen_est,v3,todas,1,27425,-1.868,20.83,1904,43.63,0.2707,1.41
+ranger,koppen_est,v3,todas,2,27425,-1.688,20.77,1902,43.61,0.2713,1.413
+ranger,koppen_est,v3,todas,3,27425,-1.818,20.95,1921,43.83,0.2639,1.382
+ranger,koppen_est,v4,"0-30 cm, amostras reais",1,9787,-3.219,23.35,2599,50.98,0.1492,1.107
+ranger,koppen_est,v4,"0-30 cm, amostras reais",2,9787,-3.369,23.54,2629,51.27,0.1396,1.073
+ranger,koppen_est,v4,"0-30 cm, amostras reais",3,9787,-3.727,23.21,2590,50.89,0.1524,1.148
+ranger,koppen_est,v4,0-30 cm,1,10678,-4.523,25.86,3284,57.3,0.1887,1.408
+ranger,koppen_est,v4,0-30 cm,2,10678,-4.806,26.06,3355,57.92,0.1711,1.363
+ranger,koppen_est,v4,0-30 cm,3,10678,-4.858,25.72,3255,57.05,0.1957,1.435
+ranger,koppen_est,v4,todas,1,27425,-1.346,21.47,1978,44.48,0.242,1.316
+ranger,koppen_est,v4,todas,2,27425,-1.497,21.64,2018,44.92,0.227,1.288
+ranger,koppen_est,v4,todas,3,27425,-1.575,21.38,1933,43.97,0.2593,1.325
+ranger,thornthwaite_dec,v2,"0-30 cm, amostras reais",1,9787,-2.142,21.61,2251,47.44,0.2633,1.201
+ranger,thornthwaite_dec,v2,"0-30 cm, amostras reais",2,9787,-2.382,21.77,2298,47.94,0.2478,1.222
+ranger,thornthwaite_dec,v2,"0-30 cm, amostras reais",3,9787,-3.089,21.88,2411,49.1,0.2109,1.369
+ranger,thornthwaite_dec,v2,0-30 cm,1,10678,-3.046,23.5,2741,52.35,0.3228,1.203
+ranger,thornthwaite_dec,v2,0-30 cm,2,10678,-3.561,23.58,2778,52.71,0.3135,1.282
+ranger,thornthwaite_dec,v2,0-30 cm,3,10678,-5.075,23.86,3075,55.45,0.2403,1.581
+ranger,thornthwaite_dec,v2,todas,1,27425,0.05013,19.42,1628,40.35,0.3762,1.068
+ranger,thornthwaite_dec,v2,todas,2,27425,-0.6259,19.51,1636,40.44,0.3734,1.157
+ranger,thornthwaite_dec,v2,todas,3,27425,-2.193,19.6,1820,42.66,0.3027,1.411
+ranger,thornthwaite_dec,v3,"0-30 cm, amostras reais",1,9787,-3.956,22.65,2546,50.46,0.1667,1.268
+ranger,thornthwaite_dec,v3,"0-30 cm, amostras reais",2,9787,-4.12,22.66,2538,50.38,0.1692,1.279
+ranger,thornthwaite_dec,v3,"0-30 cm, amostras reais",3,9787,-3.823,22.74,2531,50.31,0.1716,1.268
+ranger,thornthwaite_dec,v3,0-30 cm,1,10678,-5.036,25,3217,56.72,0.2052,1.561
+ranger,thornthwaite_dec,v3,0-30 cm,2,10678,-5.24,25.04,3208,56.64,0.2074,1.566
+ranger,thornthwaite_dec,v3,0-30 cm,3,10678,-4.868,25.09,3176,56.36,0.2152,1.554
+ranger,thornthwaite_dec,v3,todas,1,27425,-1.803,20.72,1920,43.81,0.2645,1.438
+ranger,thornthwaite_dec,v3,todas,2,27425,-1.921,20.82,1928,43.91,0.2613,1.441
+ranger,thornthwaite_dec,v3,todas,3,27425,-1.766,20.84,1906,43.66,0.2698,1.42
+ranger,thornthwaite_dec,v4,"0-30 cm, amostras reais",1,9787,-3.509,23.13,2605,51.04,0.1474,1.19
+ranger,thornthwaite_dec,v4,"0-30 cm, amostras reais",2,9787,-3.755,23.21,2612,51.11,0.1451,1.174
+ranger,thornthwaite_dec,v4,"0-30 cm, amostras reais",3,9787,-3.878,22.95,2596,50.95,0.1505,1.221
+ranger,thornthwaite_dec,v4,0-30 cm,1,10678,-4.748,25.68,3337,57.77,0.1755,1.478
+ranger,thornthwaite_dec,v4,0-30 cm,2,10678,-5.043,25.73,3330,57.71,0.1771,1.473
+ranger,thornthwaite_dec,v4,0-30 cm,3,10678,-5.03,25.46,3282,57.29,0.189,1.526
+ranger,thornthwaite_dec,v4,todas,1,27425,-1.349,21.34,2009,44.83,0.2301,1.382
+ranger,thornthwaite_dec,v4,todas,2,27425,-1.453,21.45,1996,44.67,0.2355,1.366
+ranger,thornthwaite_dec,v4,todas,3,27425,-1.661,21.28,1954,44.21,0.2513,1.411
+ranger,thornthwaite_est,v2,"0-30 cm, amostras reais",1,9787,-2.202,21.56,2266,47.6,0.2584,1.272
+ranger,thornthwaite_est,v2,"0-30 cm, amostras reais",2,9787,-2.586,21.88,2341,48.39,0.2337,1.231
+ranger,thornthwaite_est,v2,"0-30 cm, amostras reais",3,9787,-2.956,21.9,2424,49.23,0.2066,1.337
+ranger,thornthwaite_est,v2,0-30 cm,1,10678,-3.326,23.4,2777,52.7,0.3138,1.29
+ranger,thornthwaite_est,v2,0-30 cm,2,10678,-3.965,23.69,2853,53.42,0.2949,1.319
+ranger,thornthwaite_est,v2,0-30 cm,3,10678,-5.005,23.8,3073,55.43,0.2408,1.566
+ranger,thornthwaite_est,v2,todas,1,27425,-0.3823,19.49,1652,40.64,0.3671,1.133
+ranger,thornthwaite_est,v2,todas,2,27425,-0.8366,19.71,1687,41.08,0.3535,1.175
+ranger,thornthwaite_est,v2,todas,3,27425,-2.086,19.69,1823,42.7,0.3015,1.383
+ranger,thornthwaite_est,v3,"0-30 cm, amostras reais",1,9787,-3.884,22.74,2537,50.37,0.1696,1.24
+ranger,thornthwaite_est,v3,"0-30 cm, amostras reais",2,9787,-3.68,22.63,2508,50.08,0.1791,1.261
+ranger,thornthwaite_est,v3,"0-30 cm, amostras reais",3,9787,-3.741,22.64,2544,50.44,0.1674,1.248
+ranger,thornthwaite_est,v3,0-30 cm,1,10678,-5.045,25.1,3199,56.56,0.2095,1.532
+ranger,thornthwaite_est,v3,0-30 cm,2,10678,-4.759,24.93,3147,56.09,0.2225,1.549
+ranger,thornthwaite_est,v3,0-30 cm,3,10678,-4.87,25.06,3223,56.78,0.2035,1.537
+ranger,thornthwaite_est,v3,todas,1,27425,-1.754,20.79,1902,43.61,0.2715,1.423
+ranger,thornthwaite_est,v3,todas,2,27425,-1.564,20.73,1881,43.37,0.2793,1.421
+ranger,thornthwaite_est,v3,todas,3,27425,-1.722,20.76,1919,43.8,0.2649,1.408
+ranger,thornthwaite_est,v4,"0-30 cm, amostras reais",1,9787,-3.531,23.08,2593,50.92,0.1512,1.183
+ranger,thornthwaite_est,v4,"0-30 cm, amostras reais",2,9787,-3.693,23.15,2604,51.03,0.1478,1.146
+ranger,thornthwaite_est,v4,"0-30 cm, amostras reais",3,9787,-3.912,23,2591,50.91,0.1518,1.186
+ranger,thornthwaite_est,v4,0-30 cm,1,10678,-4.774,25.57,3296,57.41,0.1855,1.47
+ranger,thornthwaite_est,v4,0-30 cm,2,10678,-5.073,25.64,3311,57.54,0.182,1.449
+ranger,thornthwaite_est,v4,0-30 cm,3,10678,-5.151,25.47,3265,57.14,0.1932,1.496
+ranger,thornthwaite_est,v4,todas,1,27425,-1.444,21.35,1989,44.59,0.2382,1.366
+ranger,thornthwaite_est,v4,todas,2,27425,-1.445,21.5,1988,44.59,0.2384,1.339
+ranger,thornthwaite_est,v4,todas,3,27425,-1.527,21.34,1948,44.13,0.2538,1.382
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",1,9787,-1.642,21.76,2260,47.53,0.2604,1.096
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",2,9787,-1.923,21.89,2320,48.17,0.2406,1.136
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",3,9787,-2.568,21.8,2385,48.83,0.2194,1.323
+ranger,koppen_ipef,v2,0-30 cm,1,10678,-2.338,23.75,2767,52.6,0.3164,1.051
+ranger,koppen_ipef,v2,0-30 cm,2,10678,-3.084,23.81,2829,53.19,0.301,1.166
+ranger,koppen_ipef,v2,0-30 cm,3,10678,-4.422,23.68,2987,54.65,0.262,1.513
+ranger,koppen_ipef,v2,todas,1,27425,0.2939,19.81,1688,41.09,0.3532,0.9248
+ranger,koppen_ipef,v2,todas,2,27425,-0.3047,19.72,1682,41.01,0.3557,1.056
+ranger,koppen_ipef,v2,todas,3,27425,-1.937,19.55,1768,42.05,0.3227,1.341
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",1,9787,-4.234,22.63,2531,50.31,0.1715,1.271
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",2,9787,-4.089,22.61,2534,50.34,0.1705,1.259
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",3,9787,-4.094,22.68,2526,50.26,0.1731,1.238
+ranger,koppen_ipef,v3,0-30 cm,1,10678,-5.306,24.96,3177,56.37,0.2149,1.548
+ranger,koppen_ipef,v3,0-30 cm,2,10678,-5.186,24.95,3192,56.5,0.2112,1.552
+ranger,koppen_ipef,v3,0-30 cm,3,10678,-5.119,25.05,3166,56.27,0.2177,1.512
+ranger,koppen_ipef,v3,todas,1,27425,-2.068,20.68,1889,43.46,0.2763,1.418
+ranger,koppen_ipef,v3,todas,2,27425,-2.08,20.66,1893,43.51,0.2748,1.426
+ranger,koppen_ipef,v3,todas,3,27425,-2.117,20.65,1889,43.46,0.2763,1.402
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",1,9787,-3.764,23.09,2597,50.96,0.1499,1.177
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",2,9787,-3.766,23.18,2609,51.08,0.1459,1.132
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",3,9787,-3.925,23.06,2566,50.66,0.16,1.177
+ranger,koppen_ipef,v4,0-30 cm,1,10678,-5.071,25.62,3304,57.48,0.1836,1.478
+ranger,koppen_ipef,v4,0-30 cm,2,10678,-5.181,25.66,3308,57.51,0.1827,1.456
+ranger,koppen_ipef,v4,0-30 cm,3,10678,-5.005,25.5,3199,56.56,0.2096,1.463
+ranger,koppen_ipef,v4,todas,1,27425,-1.937,21.28,1993,44.64,0.2366,1.371
+ranger,koppen_ipef,v4,todas,2,27425,-1.895,21.32,1979,44.48,0.2419,1.353
+ranger,koppen_ipef,v4,todas,3,27425,-1.762,21.21,1911,43.72,0.2678,1.353
+ranger,cont_decenal,v2,"0-30 cm, amostras reais",1,9787,-1.596,21.45,2237,47.3,0.2678,1.18
+ranger,cont_decenal,v2,"0-30 cm, amostras reais",2,9787,-1.858,21.63,2261,47.55,0.26,1.206
+ranger,cont_decenal,v2,"0-30 cm, amostras reais",3,9787,-2.726,21.62,2369,48.68,0.2245,1.347
+ranger,cont_decenal,v2,0-30 cm,1,10678,-1.989,23.29,2725,52.2,0.3266,1.132
+ranger,cont_decenal,v2,0-30 cm,2,10678,-2.734,23.41,2735,52.3,0.3241,1.259
+ranger,cont_decenal,v2,0-30 cm,3,10678,-4.327,23.43,2965,54.45,0.2674,1.545
+ranger,cont_decenal,v2,todas,1,27425,0.4646,19.16,1616,40.21,0.3807,1.025
+ranger,cont_decenal,v2,todas,2,27425,-0.1785,19.24,1608,40.1,0.384,1.133
+ranger,cont_decenal,v2,todas,3,27425,-1.736,19.15,1738,41.69,0.3341,1.371
+ranger,cont_decenal,v3,"0-30 cm, amostras reais",1,9787,-2.754,22.74,2497,49.97,0.1828,1.195
+ranger,cont_decenal,v3,"0-30 cm, amostras reais",2,9787,-3.061,22.73,2481,49.81,0.188,1.199
+ranger,cont_decenal,v3,"0-30 cm, amostras reais",3,9787,-2.875,22.8,2498,49.98,0.1824,1.193
+ranger,cont_decenal,v3,0-30 cm,1,10678,-3.641,25.02,3118,55.84,0.2295,1.448
+ranger,cont_decenal,v3,0-30 cm,2,10678,-3.781,24.97,3063,55.35,0.2431,1.431
+ranger,cont_decenal,v3,0-30 cm,3,10678,-3.6,25.02,3080,55.5,0.239,1.442
+ranger,cont_decenal,v3,todas,1,27425,-1.182,20.64,1874,43.29,0.2821,1.351
+ranger,cont_decenal,v3,todas,2,27425,-1.101,20.59,1824,42.71,0.3011,1.342
+ranger,cont_decenal,v3,todas,3,27425,-1.082,20.59,1838,42.87,0.296,1.354
+ranger,cont_decenal,v4,"0-30 cm, amostras reais",1,9787,-2.56,23.14,2571,50.71,0.1584,1.119
+ranger,cont_decenal,v4,"0-30 cm, amostras reais",2,9787,-2.84,23,2569,50.69,0.1591,1.137
+ranger,cont_decenal,v4,"0-30 cm, amostras reais",3,9787,-3.441,22.95,2572,50.71,0.1582,1.203
+ranger,cont_decenal,v4,0-30 cm,1,10678,-3.247,25.52,3228,56.81,0.2025,1.332
+ranger,cont_decenal,v4,0-30 cm,2,10678,-3.762,25.35,3234,56.87,0.2008,1.386
+ranger,cont_decenal,v4,0-30 cm,3,10678,-4.392,25.43,3244,56.96,0.1984,1.474
+ranger,cont_decenal,v4,todas,1,27425,-0.4972,21.09,1944,44.09,0.2551,1.252
+ranger,cont_decenal,v4,todas,2,27425,-0.7468,20.98,1936,44,0.2583,1.307
+ranger,cont_decenal,v4,todas,3,27425,-1.352,20.98,1929,43.92,0.2608,1.362
+ranger,sem_clima,v2,"0-30 cm, amostras reais",1,9787,-1.562,21.8,2256,47.5,0.2616,1.151
+ranger,sem_clima,v2,"0-30 cm, amostras reais",2,9787,-1.868,21.91,2306,48.02,0.2453,1.17
+ranger,sem_clima,v2,"0-30 cm, amostras reais",3,9787,-2.625,21.94,2425,49.25,0.2061,1.288
+ranger,sem_clima,v2,0-30 cm,1,10678,-2.41,23.69,2748,52.42,0.3209,1.142
+ranger,sem_clima,v2,0-30 cm,2,10678,-3.102,23.75,2809,53,0.3059,1.234
+ranger,sem_clima,v2,0-30 cm,3,10678,-4.505,23.82,3049,55.22,0.2465,1.502
+ranger,sem_clima,v2,todas,1,27425,-0.1425,19.46,1636,40.45,0.3733,1.038
+ranger,sem_clima,v2,todas,2,27425,-0.6491,19.64,1667,40.83,0.3612,1.12
+ranger,sem_clima,v2,todas,3,27425,-2.095,19.54,1797,42.4,0.3114,1.34
+ranger,sem_clima,v3,"0-30 cm, amostras reais",1,9787,-3.409,22.72,2509,50.09,0.1789,1.214
+ranger,sem_clima,v3,"0-30 cm, amostras reais",2,9787,-3.452,22.81,2497,49.97,0.1827,1.224
+ranger,sem_clima,v3,"0-30 cm, amostras reais",3,9787,-3.521,22.73,2487,49.87,0.1861,1.231
+ranger,sem_clima,v3,0-30 cm,1,10678,-4.438,25.03,3142,56.05,0.2237,1.489
+ranger,sem_clima,v3,0-30 cm,2,10678,-4.409,25.07,3088,55.57,0.237,1.498
+ranger,sem_clima,v3,0-30 cm,3,10678,-4.462,25.08,3099,55.67,0.2343,1.487
+ranger,sem_clima,v3,todas,1,27425,-1.75,20.64,1874,43.29,0.2822,1.387
+ranger,sem_clima,v3,todas,2,27425,-1.701,20.63,1838,42.87,0.296,1.387
+ranger,sem_clima,v3,todas,3,27425,-1.87,20.76,1869,43.24,0.2838,1.376
+ranger,sem_clima,v4,"0-30 cm, amostras reais",1,9787,-3.172,23.21,2579,50.78,0.156,1.162
+ranger,sem_clima,v4,"0-30 cm, amostras reais",2,9787,-3.408,23.18,2586,50.85,0.1535,1.147
+ranger,sem_clima,v4,"0-30 cm, amostras reais",3,9787,-3.567,23.12,2570,50.7,0.1588,1.169
+ranger,sem_clima,v4,0-30 cm,1,10678,-4.296,25.67,3256,57.06,0.1955,1.449
+ranger,sem_clima,v4,0-30 cm,2,10678,-4.707,25.63,3274,57.22,0.1909,1.449
+ranger,sem_clima,v4,0-30 cm,3,10678,-4.628,25.59,3218,56.73,0.2047,1.452
+ranger,sem_clima,v4,todas,1,27425,-1.472,21.23,1965,44.32,0.2473,1.342
+ranger,sem_clima,v4,todas,2,27425,-1.604,21.28,1963,44.31,0.248,1.341
+ranger,sem_clima,v4,todas,3,27425,-1.692,21.18,1923,43.85,0.2634,1.34
+mapa,holdridge_dec,v2,"0-30 cm, amostras reais",1,9787,-6.815,22.3,2376,48.75,0.2223,1.314
+mapa,holdridge_dec,v2,"0-30 cm, amostras reais",2,9787,-7.233,22.51,2442,49.42,0.2006,1.351
+mapa,holdridge_dec,v2,"0-30 cm, amostras reais",3,9787,-7.516,22.73,2525,50.25,0.1736,1.471
+mapa,holdridge_dec,v2,0-30 cm,1,10678,-7.311,24.44,2896,53.82,0.2844,1.291
+mapa,holdridge_dec,v2,0-30 cm,2,10678,-8.039,24.64,2976,54.55,0.2648,1.429
+mapa,holdridge_dec,v2,0-30 cm,3,10678,-8.895,24.84,3182,56.41,0.2139,1.782
+mapa,holdridge_dec,v2,todas,1,27425,-0.598,20.82,1730,41.6,0.3371,1.095
+mapa,holdridge_dec,v2,todas,2,27425,-1.306,20.84,1742,41.74,0.3325,1.267
+mapa,holdridge_dec,v2,todas,3,27425,-2.527,20.89,1888,43.45,0.2766,1.692
+mapa,holdridge_dec,v3,"0-30 cm, amostras reais",1,9787,-8.871,23.23,2645,51.43,0.1343,1.344
+mapa,holdridge_dec,v3,"0-30 cm, amostras reais",2,9787,-8.545,23.24,2624,51.23,0.141,1.361
+mapa,holdridge_dec,v3,"0-30 cm, amostras reais",3,9787,-8.543,23.2,2606,51.04,0.1472,1.361
+mapa,holdridge_dec,v3,0-30 cm,1,10678,-9.772,25.8,3362,57.98,0.1693,1.693
+mapa,holdridge_dec,v3,0-30 cm,2,10678,-9.448,25.74,3311,57.54,0.1819,1.708
+mapa,holdridge_dec,v3,0-30 cm,3,10678,-9.365,25.65,3255,57.05,0.1958,1.7
+mapa,holdridge_dec,v3,todas,1,27425,-3.205,21.75,2034,45.1,0.2209,1.641
+mapa,holdridge_dec,v3,todas,2,27425,-3.059,21.67,2006,44.79,0.2314,1.651
+mapa,holdridge_dec,v3,todas,3,27425,-2.997,21.71,1985,44.55,0.2397,1.658
+mapa,holdridge_dec,v4,"0-30 cm, amostras reais",1,9787,-8.266,23.53,2670,51.67,0.1261,1.155
+mapa,holdridge_dec,v4,"0-30 cm, amostras reais",2,9787,-8.673,23.52,2701,51.97,0.116,1.213
+mapa,holdridge_dec,v4,"0-30 cm, amostras reais",3,9787,-8.751,23.42,2679,51.76,0.123,1.221
+mapa,holdridge_dec,v4,0-30 cm,1,10678,-9.116,26.14,3386,58.19,0.1634,1.437
+mapa,holdridge_dec,v4,0-30 cm,2,10678,-9.689,26.14,3454,58.77,0.1467,1.556
+mapa,holdridge_dec,v4,0-30 cm,3,10678,-9.624,25.99,3400,58.31,0.16,1.54
+mapa,holdridge_dec,v4,todas,1,27425,-2.837,21.9,2049,45.26,0.2151,1.439
+mapa,holdridge_dec,v4,todas,2,27425,-3.237,21.9,2079,45.59,0.2035,1.539
+mapa,holdridge_dec,v4,todas,3,27425,-3.074,21.77,2031,45.06,0.2221,1.538
+mapa,holdridge_est,v2,"0-30 cm, amostras reais",1,9787,-6.767,22.33,2373,48.71,0.2233,1.302
+mapa,holdridge_est,v2,"0-30 cm, amostras reais",2,9787,-7.136,22.56,2450,49.5,0.1982,1.323
+mapa,holdridge_est,v2,"0-30 cm, amostras reais",3,9787,-7.479,22.77,2547,50.47,0.1663,1.448
+mapa,holdridge_est,v2,0-30 cm,1,10678,-7.192,24.42,2878,53.65,0.2889,1.289
+mapa,holdridge_est,v2,0-30 cm,2,10678,-7.93,24.66,2985,54.64,0.2624,1.396
+mapa,holdridge_est,v2,0-30 cm,3,10678,-8.847,24.85,3226,56.79,0.203,1.742
+mapa,holdridge_est,v2,todas,1,27425,-0.5874,20.81,1720,41.48,0.3409,1.101
+mapa,holdridge_est,v2,todas,2,27425,-1.275,20.88,1753,41.87,0.3283,1.252
+mapa,holdridge_est,v2,todas,3,27425,-2.483,20.92,1912,43.73,0.2674,1.655
+mapa,holdridge_est,v3,"0-30 cm, amostras reais",1,9787,-9.088,23.19,2644,51.42,0.1344,1.411
+mapa,holdridge_est,v3,"0-30 cm, amostras reais",2,9787,-8.724,23.27,2616,51.14,0.1439,1.399
+mapa,holdridge_est,v3,"0-30 cm, amostras reais",3,9787,-8.998,23.22,2638,51.36,0.1366,1.425
+mapa,holdridge_est,v3,0-30 cm,1,10678,-9.956,25.75,3363,57.99,0.1691,1.738
+mapa,holdridge_est,v3,0-30 cm,2,10678,-9.518,25.7,3274,57.22,0.1911,1.731
+mapa,holdridge_est,v3,0-30 cm,3,10678,-9.846,25.72,3330,57.7,0.1772,1.769
+mapa,holdridge_est,v3,todas,1,27425,-3.243,21.65,2011,44.84,0.2296,1.693
+mapa,holdridge_est,v3,todas,2,27425,-3.216,21.65,1991,44.62,0.2372,1.695
+mapa,holdridge_est,v3,todas,3,27425,-3.259,21.63,2004,44.77,0.2321,1.718
+mapa,holdridge_est,v4,"0-30 cm, amostras reais",1,9787,-8.647,23.49,2677,51.74,0.1239,1.21
+mapa,holdridge_est,v4,"0-30 cm, amostras reais",2,9787,-8.808,23.4,2673,51.7,0.1252,1.285
+mapa,holdridge_est,v4,"0-30 cm, amostras reais",3,9787,-8.922,23.33,2637,51.35,0.1369,1.297
+mapa,holdridge_est,v4,0-30 cm,1,10678,-9.512,26.11,3404,58.35,0.1588,1.496
+mapa,holdridge_est,v4,0-30 cm,2,10678,-9.814,25.94,3395,58.26,0.1612,1.642
+mapa,holdridge_est,v4,0-30 cm,3,10678,-9.593,25.83,3317,57.59,0.1804,1.583
+mapa,holdridge_est,v4,todas,1,27425,-3.063,21.9,2061,45.39,0.2105,1.47
+mapa,holdridge_est,v4,todas,2,27425,-3.398,21.77,2045,45.22,0.2166,1.611
+mapa,holdridge_est,v4,todas,3,27425,-3.029,21.61,1977,44.47,0.2424,1.578
+mapa,k10_dec,v2,"0-30 cm, amostras reais",1,9787,-6.848,22.42,2396,48.95,0.2158,1.306
+mapa,k10_dec,v2,"0-30 cm, amostras reais",2,9787,-7.22,22.62,2481,49.81,0.188,1.356
+mapa,k10_dec,v2,"0-30 cm, amostras reais",3,9787,-8.032,22.79,2607,51.06,0.1467,1.573
+mapa,k10_dec,v2,0-30 cm,1,10678,-7.439,24.65,2930,54.13,0.2759,1.269
+mapa,k10_dec,v2,0-30 cm,2,10678,-8.194,24.78,3031,55.06,0.251,1.458
+mapa,k10_dec,v2,0-30 cm,3,10678,-9.692,25.06,3339,57.78,0.175,1.933
+mapa,k10_dec,v2,todas,1,27425,-0.7833,21.08,1758,41.93,0.3264,1.091
+mapa,k10_dec,v2,todas,2,27425,-1.415,21.12,1786,42.26,0.3157,1.29
+mapa,k10_dec,v2,todas,3,27425,-3.188,21.19,1993,44.64,0.2366,1.793
+mapa,k10_dec,v3,"0-30 cm, amostras reais",1,9787,-8.694,23,2657,51.54,0.1304,1.462
+mapa,k10_dec,v3,"0-30 cm, amostras reais",2,9787,-8.863,23.05,2685,51.82,0.1212,1.473
+mapa,k10_dec,v3,"0-30 cm, amostras reais",3,9787,-8.905,23.08,2664,51.61,0.1282,1.5
+mapa,k10_dec,v3,0-30 cm,1,10678,-9.699,25.62,3372,58.07,0.1669,1.821
+mapa,k10_dec,v3,0-30 cm,2,10678,-9.969,25.72,3441,58.66,0.1497,1.84
+mapa,k10_dec,v3,0-30 cm,3,10678,-9.908,25.69,3383,58.16,0.1641,1.855
+mapa,k10_dec,v3,todas,1,27425,-3.206,21.76,2052,45.3,0.2139,1.752
+mapa,k10_dec,v3,todas,2,27425,-3.387,21.82,2091,45.72,0.1991,1.764
+mapa,k10_dec,v3,todas,3,27425,-3.219,21.79,2046,45.23,0.2161,1.789
+mapa,k10_dec,v4,"0-30 cm, amostras reais",1,9787,-8.676,23.3,2709,52.05,0.1133,1.333
+mapa,k10_dec,v4,"0-30 cm, amostras reais",2,9787,-8.637,23.28,2723,52.18,0.1088,1.306
+mapa,k10_dec,v4,"0-30 cm, amostras reais",3,9787,-9.151,23.18,2699,51.95,0.1167,1.391
+mapa,k10_dec,v4,0-30 cm,1,10678,-9.771,26.04,3474,58.94,0.1415,1.687
+mapa,k10_dec,v4,0-30 cm,2,10678,-9.863,26,3508,59.23,0.1331,1.684
+mapa,k10_dec,v4,0-30 cm,3,10678,-10.13,25.84,3429,58.56,0.1527,1.748
+mapa,k10_dec,v4,todas,1,27425,-3.277,21.94,2093,45.75,0.1982,1.656
+mapa,k10_dec,v4,todas,2,27425,-3.271,22.04,2115,45.99,0.1896,1.629
+mapa,k10_dec,v4,todas,3,27425,-3.526,21.78,2061,45.4,0.2102,1.713
+mapa,k10_est,v2,"0-30 cm, amostras reais",1,9787,-6.924,22.37,2410,49.09,0.2113,1.351
+mapa,k10_est,v2,"0-30 cm, amostras reais",2,9787,-7.234,22.57,2489,49.89,0.1854,1.379
+mapa,k10_est,v2,"0-30 cm, amostras reais",3,9787,-7.691,22.66,2559,50.58,0.1625,1.574
+mapa,k10_est,v2,0-30 cm,1,10678,-7.58,24.6,2961,54.41,0.2684,1.313
+mapa,k10_est,v2,0-30 cm,2,10678,-8.194,24.76,3057,55.29,0.2445,1.462
+mapa,k10_est,v2,0-30 cm,3,10678,-9.24,24.87,3263,57.12,0.1938,1.894
+mapa,k10_est,v2,todas,1,27425,-0.9376,21.04,1773,42.11,0.3207,1.128
+mapa,k10_est,v2,todas,2,27425,-1.511,21.12,1803,42.46,0.3094,1.307
+mapa,k10_est,v2,todas,3,27425,-3.027,21.1,1964,44.31,0.2477,1.766
+mapa,k10_est,v3,"0-30 cm, amostras reais",1,9787,-8.811,23.11,2692,51.88,0.119,1.433
+mapa,k10_est,v3,"0-30 cm, amostras reais",2,9787,-8.521,23.09,2683,51.79,0.1219,1.418
+mapa,k10_est,v3,"0-30 cm, amostras reais",3,9787,-8.962,23.12,2683,51.79,0.1219,1.45
+mapa,k10_est,v3,0-30 cm,1,10678,-9.93,25.75,3444,58.69,0.149,1.811
+mapa,k10_est,v3,0-30 cm,2,10678,-9.614,25.76,3443,58.68,0.1492,1.771
+mapa,k10_est,v3,0-30 cm,3,10678,-10.03,25.77,3427,58.54,0.1533,1.808
+mapa,k10_est,v3,todas,1,27425,-3.343,21.82,2087,45.68,0.2005,1.742
+mapa,k10_est,v3,todas,2,27425,-3.099,21.89,2093,45.75,0.1982,1.704
+mapa,k10_est,v3,todas,3,27425,-3.294,21.85,2075,45.55,0.2051,1.752
+mapa,k10_est,v4,"0-30 cm, amostras reais",1,9787,-8.43,23.27,2712,52.08,0.1123,1.302
+mapa,k10_est,v4,"0-30 cm, amostras reais",2,9787,-8.274,23.64,2775,52.68,0.09161,1.111
+mapa,k10_est,v4,"0-30 cm, amostras reais",3,9787,-9.078,23.15,2701,51.97,0.1161,1.386
+mapa,k10_est,v4,0-30 cm,1,10678,-9.578,25.98,3491,59.08,0.1374,1.661
+mapa,k10_est,v4,0-30 cm,2,10678,-9.589,26.36,3579,59.82,0.1157,1.457
+mapa,k10_est,v4,0-30 cm,3,10678,-10.12,25.8,3450,58.74,0.1476,1.74
+mapa,k10_est,v4,todas,1,27425,-3.193,21.94,2105,45.88,0.1936,1.622
+mapa,k10_est,v4,todas,2,27425,-3.165,22.29,2168,46.57,0.1693,1.436
+mapa,k10_est,v4,todas,3,27425,-3.535,21.8,2083,45.64,0.2018,1.705
+mapa,koppen_dec,v2,"0-30 cm, amostras reais",1,9787,-7.095,22.5,2429,49.28,0.2051,1.335
+mapa,koppen_dec,v2,"0-30 cm, amostras reais",2,9787,-7.336,22.59,2482,49.82,0.1877,1.343
+mapa,koppen_dec,v2,"0-30 cm, amostras reais",3,9787,-7.998,22.77,2574,50.73,0.1576,1.585
+mapa,koppen_dec,v2,0-30 cm,1,10678,-7.89,24.76,2982,54.61,0.2631,1.321
+mapa,koppen_dec,v2,0-30 cm,2,10678,-8.303,24.8,3030,55.05,0.2513,1.419
+mapa,koppen_dec,v2,0-30 cm,3,10678,-9.657,25.06,3306,57.5,0.1832,1.906
+mapa,koppen_dec,v2,todas,1,27425,-1.026,21.21,1788,42.29,0.3148,1.089
+mapa,koppen_dec,v2,todas,2,27425,-1.465,21.15,1789,42.29,0.3148,1.266
+mapa,koppen_dec,v2,todas,3,27425,-3.216,21.22,1974,44.42,0.2439,1.779
+mapa,koppen_dec,v3,"0-30 cm, amostras reais",1,9787,-9.061,23.2,2681,51.78,0.1224,1.45
+mapa,koppen_dec,v3,"0-30 cm, amostras reais",2,9787,-9.195,23.16,2675,51.72,0.1245,1.481
+mapa,koppen_dec,v3,"0-30 cm, amostras reais",3,9787,-9.007,23.21,2704,52,0.115,1.412
+mapa,koppen_dec,v3,0-30 cm,1,10678,-10.23,25.93,3453,58.76,0.1468,1.813
+mapa,koppen_dec,v3,0-30 cm,2,10678,-10.35,25.86,3434,58.6,0.1515,1.836
+mapa,koppen_dec,v3,0-30 cm,3,10678,-10.25,25.95,3490,59.07,0.1378,1.788
+mapa,koppen_dec,v3,todas,1,27425,-3.516,22.01,2098,45.81,0.196,1.719
+mapa,koppen_dec,v3,todas,2,27425,-3.408,21.92,2077,45.57,0.2044,1.764
+mapa,koppen_dec,v3,todas,3,27425,-3.362,22.02,2108,45.92,0.1922,1.707
+mapa,koppen_dec,v4,"0-30 cm, amostras reais",1,9787,-8.516,23.34,2714,52.1,0.1116,1.263
+mapa,koppen_dec,v4,"0-30 cm, amostras reais",2,9787,-8.644,23.32,2733,52.28,0.1054,1.256
+mapa,koppen_dec,v4,"0-30 cm, amostras reais",3,9787,-9.048,23.2,2715,52.11,0.1112,1.34
+mapa,koppen_dec,v4,0-30 cm,1,10678,-9.757,26.13,3519,59.32,0.1304,1.573
+mapa,koppen_dec,v4,0-30 cm,2,10678,-9.983,26.09,3544,59.53,0.1243,1.6
+mapa,koppen_dec,v4,0-30 cm,3,10678,-10.24,25.96,3505,59.21,0.1338,1.685
+mapa,koppen_dec,v4,todas,1,27425,-3.203,22.12,2128,46.14,0.1846,1.546
+mapa,koppen_dec,v4,todas,2,27425,-3.308,22.13,2130,46.15,0.1841,1.567
+mapa,koppen_dec,v4,todas,3,27425,-3.458,21.99,2105,45.88,0.1934,1.64
+mapa,koppen_est,v2,"0-30 cm, amostras reais",1,9787,-7.197,22.48,2451,49.5,0.1979,1.359
+mapa,koppen_est,v2,"0-30 cm, amostras reais",2,9787,-7.401,22.63,2526,50.26,0.1733,1.305
+mapa,koppen_est,v2,"0-30 cm, amostras reais",3,9787,-7.919,22.81,2609,51.08,0.1461,1.487
+mapa,koppen_est,v2,0-30 cm,1,10678,-8.091,24.76,3036,55.1,0.2499,1.363
+mapa,koppen_est,v2,0-30 cm,2,10678,-8.449,24.92,3136,56,0.2252,1.382
+mapa,koppen_est,v2,0-30 cm,3,10678,-9.636,25.11,3350,57.88,0.1722,1.819
+mapa,koppen_est,v2,todas,1,27425,-1.28,21.24,1815,42.6,0.3047,1.155
+mapa,koppen_est,v2,todas,2,27425,-1.702,21.23,1853,43.04,0.2902,1.26
+mapa,koppen_est,v2,todas,3,27425,-3.186,21.24,1993,44.64,0.2365,1.718
+mapa,koppen_est,v3,"0-30 cm, amostras reais",1,9787,-8.827,23.14,2678,51.75,0.1235,1.421
+mapa,koppen_est,v3,"0-30 cm, amostras reais",2,9787,-9.024,23.18,2668,51.65,0.1267,1.437
+mapa,koppen_est,v3,"0-30 cm, amostras reais",3,9787,-8.839,23.16,2692,51.88,0.119,1.414
+mapa,koppen_est,v3,0-30 cm,1,10678,-9.975,25.84,3436,58.61,0.1511,1.786
+mapa,koppen_est,v3,0-30 cm,2,10678,-10.16,25.82,3401,58.32,0.1597,1.795
+mapa,koppen_est,v3,0-30 cm,3,10678,-10.07,25.91,3483,59.02,0.1394,1.75
+mapa,koppen_est,v3,todas,1,27425,-3.31,21.97,2088,45.69,0.2001,1.702
+mapa,koppen_est,v3,todas,2,27425,-3.372,21.9,2064,45.43,0.2093,1.736
+mapa,koppen_est,v3,todas,3,27425,-3.31,21.97,2103,45.86,0.1941,1.696
+mapa,koppen_est,v4,"0-30 cm, amostras reais",1,9787,-8.305,23.35,2718,52.13,0.1105,1.226
+mapa,koppen_est,v4,"0-30 cm, amostras reais",2,9787,-8.364,23.45,2722,52.18,0.1089,1.222
+mapa,koppen_est,v4,"0-30 cm, amostras reais",3,9787,-8.921,23.21,2685,51.82,0.1211,1.334
+mapa,koppen_est,v4,0-30 cm,1,10678,-9.554,26.16,3512,59.26,0.1321,1.544
+mapa,koppen_est,v4,0-30 cm,2,10678,-9.705,26.19,3501,59.17,0.135,1.591
+mapa,koppen_est,v4,0-30 cm,3,10678,-9.947,25.91,3422,58.5,0.1545,1.653
+mapa,koppen_est,v4,todas,1,27425,-3.142,22.18,2132,46.18,0.1831,1.516
+mapa,koppen_est,v4,todas,2,27425,-3.1,22.22,2116,46,0.1892,1.548
+mapa,koppen_est,v4,todas,3,27425,-3.355,21.95,2065,45.44,0.2088,1.621
+mapa,thornthwaite_dec,v2,"0-30 cm, amostras reais",1,9787,-7.61,22.44,2408,49.07,0.2118,1.387
+mapa,thornthwaite_dec,v2,"0-30 cm, amostras reais",2,9787,-7.645,22.64,2481,49.81,0.1878,1.404
+mapa,thornthwaite_dec,v2,"0-30 cm, amostras reais",3,9787,-8.251,22.74,2579,50.78,0.1558,1.61
+mapa,thornthwaite_dec,v2,0-30 cm,1,10678,-8.331,24.62,2928,54.11,0.2766,1.377
+mapa,thornthwaite_dec,v2,0-30 cm,2,10678,-8.608,24.82,3022,54.97,0.2533,1.494
+mapa,thornthwaite_dec,v2,0-30 cm,3,10678,-9.827,24.97,3285,57.31,0.1884,1.933
+mapa,thornthwaite_dec,v2,todas,1,27425,-1.042,21.17,1741,41.72,0.3331,1.181
+mapa,thornthwaite_dec,v2,todas,2,27425,-1.467,21.21,1780,42.19,0.3182,1.322
+mapa,thornthwaite_dec,v2,todas,3,27425,-3.086,21.17,1951,44.17,0.2525,1.81
+mapa,thornthwaite_dec,v3,"0-30 cm, amostras reais",1,9787,-9.183,23.08,2684,51.8,0.1216,1.54
+mapa,thornthwaite_dec,v3,"0-30 cm, amostras reais",2,9787,-9.336,23.01,2671,51.68,0.1258,1.594
+mapa,thornthwaite_dec,v3,"0-30 cm, amostras reais",3,9787,-9.147,23.03,2689,51.85,0.12,1.531
+mapa,thornthwaite_dec,v3,0-30 cm,1,10678,-10.3,25.75,3424,58.52,0.1539,1.922
+mapa,thornthwaite_dec,v3,0-30 cm,2,10678,-10.39,25.62,3402,58.33,0.1593,1.946
+mapa,thornthwaite_dec,v3,0-30 cm,3,10678,-10.21,25.69,3439,58.64,0.1503,1.88
+mapa,thornthwaite_dec,v3,todas,1,27425,-3.37,21.95,2081,45.62,0.2028,1.851
+mapa,thornthwaite_dec,v3,todas,2,27425,-3.166,21.88,2056,45.34,0.2124,1.872
+mapa,thornthwaite_dec,v3,todas,3,27425,-3.212,21.87,2071,45.51,0.2065,1.806
+mapa,thornthwaite_dec,v4,"0-30 cm, amostras reais",1,9787,-8.911,23.28,2743,52.37,0.1024,1.377
+mapa,thornthwaite_dec,v4,"0-30 cm, amostras reais",2,9787,-9.079,23.28,2750,52.44,0.09993,1.361
+mapa,thornthwaite_dec,v4,"0-30 cm, amostras reais",3,9787,-9.26,23.04,2725,52.2,0.108,1.475
+mapa,thornthwaite_dec,v4,0-30 cm,1,10678,-10.04,26.12,3556,59.63,0.1214,1.714
+mapa,thornthwaite_dec,v4,0-30 cm,2,10678,-10.36,26.04,3558,59.65,0.1208,1.74
+mapa,thornthwaite_dec,v4,0-30 cm,3,10678,-10.41,25.81,3516,59.3,0.1311,1.843
+mapa,thornthwaite_dec,v4,todas,1,27425,-3.224,22.12,2142,46.28,0.1793,1.685
+mapa,thornthwaite_dec,v4,todas,2,27425,-3.398,22.15,2149,46.36,0.1765,1.686
+mapa,thornthwaite_dec,v4,todas,3,27425,-3.506,21.93,2114,45.97,0.1903,1.782
+mapa,thornthwaite_est,v2,"0-30 cm, amostras reais",1,9787,-7.392,22.47,2436,49.36,0.2026,1.433
+mapa,thornthwaite_est,v2,"0-30 cm, amostras reais",2,9787,-7.888,22.7,2550,50.5,0.1654,1.429
+mapa,thornthwaite_est,v2,"0-30 cm, amostras reais",3,9787,-8.237,22.71,2580,50.79,0.1555,1.579
+mapa,thornthwaite_est,v2,0-30 cm,1,10678,-8.251,24.69,2993,54.71,0.2605,1.43
+mapa,thornthwaite_est,v2,0-30 cm,2,10678,-9.06,24.91,3138,56.02,0.2246,1.58
+mapa,thornthwaite_est,v2,0-30 cm,3,10678,-9.744,24.93,3269,57.17,0.1923,1.873
+mapa,thornthwaite_est,v2,todas,1,27425,-1.327,21.11,1773,42.1,0.3209,1.234
+mapa,thornthwaite_est,v2,todas,2,27425,-1.822,21.28,1841,42.9,0.2948,1.393
+mapa,thornthwaite_est,v2,todas,3,27425,-3.011,21.19,1951,44.17,0.2525,1.773
+mapa,thornthwaite_est,v3,"0-30 cm, amostras reais",1,9787,-9.146,23.19,2710,52.06,0.113,1.477
+mapa,thornthwaite_est,v3,"0-30 cm, amostras reais",2,9787,-8.983,23.05,2690,51.86,0.1197,1.488
+mapa,thornthwaite_est,v3,"0-30 cm, amostras reais",3,9787,-9.135,23.01,2671,51.69,0.1256,1.512
+mapa,thornthwaite_est,v3,0-30 cm,1,10678,-10.36,25.94,3509,59.24,0.1329,1.849
+mapa,thornthwaite_est,v3,0-30 cm,2,10678,-10.11,25.71,3446,58.7,0.1485,1.858
+mapa,thornthwaite_est,v3,0-30 cm,3,10678,-10.23,25.66,3414,58.43,0.1564,1.859
+mapa,thornthwaite_est,v3,todas,1,27425,-3.4,22.04,2118,46.02,0.1887,1.775
+mapa,thornthwaite_est,v3,todas,2,27425,-3.141,21.85,2068,45.47,0.2078,1.797
+mapa,thornthwaite_est,v3,todas,3,27425,-3.137,21.87,2051,45.29,0.2141,1.804
+mapa,thornthwaite_est,v4,"0-30 cm, amostras reais",1,9787,-8.638,23.2,2699,51.95,0.1167,1.368
+mapa,thornthwaite_est,v4,"0-30 cm, amostras reais",2,9787,-8.913,23.27,2720,52.15,0.1098,1.352
+mapa,thornthwaite_est,v4,"0-30 cm, amostras reais",3,9787,-9.188,23.11,2700,51.96,0.1163,1.414
+mapa,thornthwaite_est,v4,0-30 cm,1,10678,-9.758,25.95,3462,58.84,0.1446,1.72
+mapa,thornthwaite_est,v4,0-30 cm,2,10678,-10.13,25.98,3486,59.04,0.1387,1.747
+mapa,thornthwaite_est,v4,0-30 cm,3,10678,-10.27,25.81,3450,58.74,0.1475,1.765
+mapa,thornthwaite_est,v4,todas,1,27425,-3.143,22.02,2093,45.75,0.1983,1.684
+mapa,thornthwaite_est,v4,todas,2,27425,-3.258,22.1,2101,45.84,0.195,1.695
+mapa,thornthwaite_est,v4,todas,3,27425,-3.339,21.86,2064,45.44,0.2091,1.74
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",1,9787,-6.897,22.44,2406,49.05,0.2125,1.311
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",2,9787,-7.192,22.62,2484,49.84,0.1868,1.266
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",3,9787,-8.117,22.84,2631,51.29,0.1389,1.515
+mapa,koppen_ipef,v2,0-30 cm,1,10678,-7.516,24.71,2931,54.14,0.2757,1.253
+mapa,koppen_ipef,v2,0-30 cm,2,10678,-8.015,24.86,3026,55.01,0.2524,1.296
+mapa,koppen_ipef,v2,0-30 cm,3,10678,-9.905,25.19,3399,58.3,0.1602,1.844
+mapa,koppen_ipef,v2,todas,1,27425,-0.8512,21.19,1769,42.06,0.3222,1.052
+mapa,koppen_ipef,v2,todas,2,27425,-1.262,21.26,1797,42.39,0.3116,1.151
+mapa,koppen_ipef,v2,todas,3,27425,-3.399,21.29,2024,44.99,0.2246,1.74
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",1,9787,-9.086,23,2672,51.69,0.1254,1.503
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",2,9787,-9.334,23.03,2669,51.66,0.1266,1.482
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",3,9787,-9.245,23,2688,51.85,0.1201,1.505
+mapa,koppen_ipef,v3,0-30 cm,1,10678,-10.19,25.63,3416,58.44,0.156,1.856
+mapa,koppen_ipef,v3,0-30 cm,2,10678,-10.35,25.62,3373,58.08,0.1664,1.808
+mapa,koppen_ipef,v3,0-30 cm,3,10678,-10.39,25.62,3424,58.51,0.1541,1.886
+mapa,koppen_ipef,v3,todas,1,27425,-3.446,21.76,2061,45.39,0.2105,1.797
+mapa,koppen_ipef,v3,todas,2,27425,-3.541,21.82,2056,45.34,0.2125,1.768
+mapa,koppen_ipef,v3,todas,3,27425,-3.472,21.77,2059,45.38,0.2111,1.815
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",1,9787,-8.846,23.25,2713,52.09,0.1119,1.321
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",2,9787,-8.938,23.24,2724,52.19,0.1085,1.336
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",3,9787,-9.159,23.25,2709,52.05,0.1132,1.359
+mapa,koppen_ipef,v4,0-30 cm,1,10678,-10.05,26.05,3501,59.17,0.1348,1.646
+mapa,koppen_ipef,v4,0-30 cm,2,10678,-10.21,26,3506,59.21,0.1336,1.719
+mapa,koppen_ipef,v4,0-30 cm,3,10678,-10.22,25.97,3441,58.66,0.1498,1.728
+mapa,koppen_ipef,v4,todas,1,27425,-3.483,22.04,2119,46.03,0.1883,1.604
+mapa,koppen_ipef,v4,todas,2,27425,-3.627,22.06,2123,46.08,0.1867,1.651
+mapa,koppen_ipef,v4,todas,3,27425,-3.498,21.85,2052,45.3,0.2137,1.688
+mapa,cont_decenal,v2,"0-30 cm, amostras reais",1,9787,-6.944,22.2,2388,48.87,0.2182,1.395
+mapa,cont_decenal,v2,"0-30 cm, amostras reais",2,9787,-7.252,22.4,2442,49.42,0.2007,1.399
+mapa,cont_decenal,v2,"0-30 cm, amostras reais",3,9787,-7.716,22.53,2549,50.49,0.1656,1.563
+mapa,cont_decenal,v2,0-30 cm,1,10678,-7.316,24.36,2903,53.88,0.2827,1.31
+mapa,cont_decenal,v2,0-30 cm,2,10678,-7.956,24.46,2955,54.36,0.2699,1.486
+mapa,cont_decenal,v2,0-30 cm,3,10678,-9.109,24.67,3231,56.84,0.2017,1.858
+mapa,cont_decenal,v2,todas,1,27425,-0.8424,20.78,1737,41.68,0.3344,1.105
+mapa,cont_decenal,v2,todas,2,27425,-1.374,20.71,1724,41.52,0.3395,1.291
+mapa,cont_decenal,v2,todas,3,27425,-2.984,20.82,1923,43.86,0.2631,1.697
+mapa,cont_decenal,v3,"0-30 cm, amostras reais",1,9787,-8.289,22.93,2640,51.38,0.1361,1.424
+mapa,cont_decenal,v3,"0-30 cm, amostras reais",2,9787,-8.486,23.15,2663,51.6,0.1284,1.394
+mapa,cont_decenal,v3,"0-30 cm, amostras reais",3,9787,-8.239,23,2652,51.5,0.1319,1.41
+mapa,cont_decenal,v3,0-30 cm,1,10678,-9.19,25.45,3332,57.72,0.1767,1.752
+mapa,cont_decenal,v3,0-30 cm,2,10678,-9.416,25.65,3355,57.92,0.171,1.766
+mapa,cont_decenal,v3,0-30 cm,3,10678,-9.217,25.58,3373,58.08,0.1665,1.762
+mapa,cont_decenal,v3,todas,1,27425,-3.132,21.59,2028,45.04,0.2229,1.688
+mapa,cont_decenal,v3,todas,2,27425,-3.279,21.67,2040,45.17,0.2183,1.692
+mapa,cont_decenal,v3,todas,3,27425,-3.052,21.68,2046,45.24,0.216,1.69
+mapa,cont_decenal,v4,"0-30 cm, amostras reais",1,9787,-8.276,23.08,2704,52,0.1151,1.277
+mapa,cont_decenal,v4,"0-30 cm, amostras reais",2,9787,-8.271,23.08,2692,51.89,0.1189,1.334
+mapa,cont_decenal,v4,"0-30 cm, amostras reais",3,9787,-8.736,22.97,2649,51.47,0.133,1.4
+mapa,cont_decenal,v4,0-30 cm,1,10678,-9.078,25.72,3443,58.67,0.1493,1.556
+mapa,cont_decenal,v4,0-30 cm,2,10678,-9.218,25.64,3423,58.51,0.1542,1.687
+mapa,cont_decenal,v4,0-30 cm,3,10678,-9.427,25.48,3320,57.62,0.1797,1.682
+mapa,cont_decenal,v4,todas,1,27425,-2.976,21.73,2084,45.65,0.2015,1.501
+mapa,cont_decenal,v4,todas,2,27425,-3.124,21.67,2064,45.43,0.2093,1.619
+mapa,cont_decenal,v4,todas,3,27425,-3.14,21.49,1995,44.66,0.2358,1.633
+mapa,sem_clima,v2,"0-30 cm, amostras reais",1,9787,-6.69,22.44,2399,48.98,0.2148,1.299
+mapa,sem_clima,v2,"0-30 cm, amostras reais",2,9787,-6.996,22.6,2478,49.78,0.1889,1.312
+mapa,sem_clima,v2,"0-30 cm, amostras reais",3,9787,-7.596,22.79,2578,50.77,0.1562,1.491
+mapa,sem_clima,v2,0-30 cm,1,10678,-7.287,24.67,2933,54.16,0.2753,1.243
+mapa,sem_clima,v2,0-30 cm,2,10678,-7.932,24.77,3016,54.92,0.2547,1.388
+mapa,sem_clima,v2,0-30 cm,3,10678,-9.202,25,3271,57.19,0.1918,1.816
+mapa,sem_clima,v2,todas,1,27425,-0.8882,21.02,1762,41.97,0.325,1.059
+mapa,sem_clima,v2,todas,2,27425,-1.58,21.03,1779,42.18,0.3183,1.258
+mapa,sem_clima,v2,todas,3,27425,-3.204,21.08,1957,44.24,0.2503,1.718
+mapa,sem_clima,v3,"0-30 cm, amostras reais",1,9787,-8.69,23.07,2656,51.54,0.1306,1.464
+mapa,sem_clima,v3,"0-30 cm, amostras reais",2,9787,-8.843,23.05,2651,51.49,0.1322,1.521
+mapa,sem_clima,v3,"0-30 cm, amostras reais",3,9787,-8.742,23.11,2678,51.75,0.1235,1.444
+mapa,sem_clima,v3,0-30 cm,1,10678,-9.783,25.72,3396,58.27,0.1609,1.823
+mapa,sem_clima,v3,0-30 cm,2,10678,-9.958,25.68,3385,58.18,0.1637,1.897
+mapa,sem_clima,v3,0-30 cm,3,10678,-9.923,25.81,3443,58.67,0.1493,1.813
+mapa,sem_clima,v3,todas,1,27425,-3.42,21.82,2071,45.5,0.2067,1.757
+mapa,sem_clima,v3,todas,2,27425,-3.357,21.74,2048,45.25,0.2154,1.808
+mapa,sem_clima,v3,todas,3,27425,-3.479,21.88,2091,45.73,0.1989,1.736
+mapa,sem_clima,v4,"0-30 cm, amostras reais",1,9787,-8.485,23.28,2694,51.9,0.1183,1.329
+mapa,sem_clima,v4,"0-30 cm, amostras reais",2,9787,-8.538,23.25,2688,51.85,0.1201,1.336
+mapa,sem_clima,v4,"0-30 cm, amostras reais",3,9787,-8.812,23.1,2671,51.68,0.1258,1.4
+mapa,sem_clima,v4,0-30 cm,1,10678,-9.66,26.02,3465,58.87,0.1438,1.671
+mapa,sem_clima,v4,0-30 cm,2,10678,-9.691,25.9,3428,58.55,0.153,1.719
+mapa,sem_clima,v4,0-30 cm,3,10678,-9.814,25.75,3384,58.17,0.1639,1.746
+mapa,sem_clima,v4,todas,1,27425,-3.451,21.94,2101,45.84,0.195,1.619
+mapa,sem_clima,v4,todas,2,27425,-3.323,21.89,2067,45.46,0.2081,1.665
+mapa,sem_clima,v4,todas,3,27425,-3.549,21.73,2042,45.19,0.2178,1.7
