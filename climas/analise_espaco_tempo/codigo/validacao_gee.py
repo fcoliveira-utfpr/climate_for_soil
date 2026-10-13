@@ -9,10 +9,13 @@ Saída: climas/dados_espaco_tempo/oof_gee/<cenario>_<esquema>_direta.parquet, no
 (linha contada a partir de 1). Combinações já gravadas são puladas.
 
 Uso: python validacao_gee.py [cenarios separados por vírgula | todos] [esquemas, padrão v2,v3,v4]
+Variáveis de ambiente opcionais (capítulo 3): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF.
 """
 import json
+import os
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -20,7 +23,7 @@ import pandas as pd
 import config as cfg
 from fidelidade_gee import modelo_gee
 
-PASTA = cfg.DADOS / 'oof_gee'
+PASTA = Path(os.environ.get('VAL_OOF', cfg.DADOS / 'oof_gee'))   # VAL_*: outra matriz/cenários (cap. 3)
 LIMIAR_R = 0.9
 
 
@@ -62,12 +65,12 @@ def selecionar(m, base, cont, treino, semente):
 
 
 def main():
-    meta = json.loads((cfg.PASTA / 'codigo' / 'cenarios.json').read_text(encoding='utf-8'))
+    meta = json.loads(Path(os.environ.get('VAL_CENARIOS', cfg.PASTA / 'codigo' / 'cenarios.json')).read_text(encoding='utf-8'))
     nomes = list(meta['cenarios']) if len(sys.argv) < 2 or sys.argv[1] == 'todos' else sys.argv[1].split(',')
     esquemas = sys.argv[2].split(',') if len(sys.argv) > 2 else ['v2', 'v3', 'v4']
-    m = pd.read_parquet(cfg.DADOS / 'matriz_cenarios.parquet')
+    m = pd.read_parquet(os.environ.get('VAL_MATRIZ', cfg.DADOS / 'matriz_cenarios.parquet'))
     y = m.carbono_gm2_qmap.to_numpy()
-    PASTA.mkdir(exist_ok=True)
+    PASTA.mkdir(parents=True, exist_ok=True)
     selecoes = []
     for cen in nomes:
         clima = meta['cenarios'][cen]

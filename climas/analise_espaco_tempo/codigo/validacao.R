@@ -12,6 +12,7 @@
 # g/m²). Combinações já gravadas são puladas (dá para retomar).
 #
 # Uso: Rscript validacao.R <cenarios separados por vírgula | todos> <esquemas: v2,v3,v4> <direta|log>
+# Variáveis de ambiente opcionais (capítulo 3): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF.
 
 .libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths()))
 suppressPackageStartupMessages({
@@ -25,16 +26,16 @@ args_all <- commandArgs(trailingOnly = FALSE)
 script_dir <- dirname(normalizePath(sub("^--file=", "", args_all[grep("^--file=", args_all)])))
 args <- commandArgs(trailingOnly = TRUE)
 dados_dir <- normalizePath(file.path(script_dir, "..", "..", "dados_espaco_tempo"))
-oof_dir <- file.path(dados_dir, "oof")
-dir.create(oof_dir, showWarnings = FALSE)
+oof_dir <- Sys.getenv("VAL_OOF", file.path(dados_dir, "oof"))   # VAL_*: outra matriz/cenários (cap. 3)
+dir.create(oof_dir, showWarnings = FALSE, recursive = TRUE)
 
-cfg <- fromJSON(file.path(script_dir, "cenarios.json"))
+cfg <- fromJSON(Sys.getenv("VAL_CENARIOS", file.path(script_dir, "cenarios.json")))
 cen_nomes <- if (args[1] == "todos") names(cfg$cenarios) else strsplit(args[1], ",")[[1]]
 esquemas <- strsplit(args[2], ",")[[1]]
 resposta <- args[3]
 stopifnot(resposta %in% c("direta", "log"), all(cen_nomes %in% names(cfg$cenarios)))
 
-m <- as.data.table(read_parquet(file.path(dados_dir, "matriz_cenarios.parquet")))
+m <- as.data.table(read_parquet(Sys.getenv("VAL_MATRIZ", file.path(dados_dir, "matriz_cenarios.parquet"))))
 y_g <- m$carbono_gm2_qmap
 nthreads <- max(1L, parallel::detectCores() - 1L)
 
