@@ -247,22 +247,188 @@ Brasil), o que deixa o país mais úmido no Xavier.
 
 ## 5. As classificações no modelo de SOC
 
-<!-- SOC -->
+### 5.1 Desenho
+
+Mesma matriz, covariáveis, dobras e modelos do relatório v2 (capítulos 1 e 2): matriz = `trainingFinal`
+reconstruída (27.425 linhas), 118 covariáveis da produção + o clima do cenário, validações **V2** (espacial,
+blocos de 2°), **V3** (temporal, deixa uma das quatro décadas de fora) e **V4** (espaço-temporal), 3
+repetições, perfil e réplicas sempre na mesma dobra. Dois modelos: o **ranger** que o MapBiomas validou e o
+**modelo do mapa** (`smileRandomForest` com maxNodes 40, emulado). Métricas `error_statistics` do MapBiomas
+em t/ha, aqui **só nas amostras reais de 0-30 cm** (9.787 linhas, sem réplicas `trep` e sem pseudoamostras).
+
+Cenários novos (`codigo/cenarios_tempo.py`), cada sistema em duas versões, com dummies hierárquicas como as
+do Köppen na produção (descartadas as com menos de 30 ocorrências):
+
+| Cenário | Clima | Dummies | Classe difere da versão estática em |
+|---|---|---|---|
+| `koppen_est` / `koppen_dec` | Köppen do Xavier: normal 1991-2020 / década da amostra | 21 / 21 | 10,0% das linhas |
+| `holdridge_est` / `holdridge_dec` | Holdridge (ETP original) do Xavier | 12 / 12 | 13,4% |
+| `thornthwaite_est` / `thornthwaite_dec` | Thornthwaite (CAD do solo) do Xavier | 28 / 29 | 42,0% |
+| `k10_est` / `k10_dec` | zonas k10 reajustadas no Xavier | 10 / 10 | 14,7% |
+
+Referências do relatório v2: Köppen IPEF (produção), contínuo decenal e sem clima. Cada amostra recebe a
+classe da sua década pelo ano da linha (as réplicas `trep`, com o ano recuado, recebem a da década do seu
+ano); 141 pontos do litoral, fora da grade de 0,1°, recebem a classe do pixel válido mais próximo.
+Validação: `validacao.R` e `validacao_gee.py` do relatório v2, com a matriz e os cenários do capítulo 3
+(variáveis `VAL_MATRIZ`, `VAL_CENARIOS`, `VAL_OOF`); métricas: `codigo/metricas_cap3.py`.
+
+### 5.2 Resultados
+
+MEC nas amostras reais de 0-30 cm e, entre parênteses, o ganho sobre o Köppen IPEF [mínimo; máximo nas 3
+repetições].
+
+**ranger (o modelo validado):**
+
+| Cenário | V2 espacial | V3 temporal | V4 espaço-tempo |
+|---|---|---|---|
+| **Köppen IPEF** (produção) | 0,240 | 0,172 | 0,152 |
+| Sem clima | 0,238 (−0,002) | 0,183 (+0,011) | 0,156 (+0,004) |
+| Contínuo decenal (v2) | **0,251** (+0,011) | **0,184** (+0,013) | **0,159** (+0,007) |
+| Köppen Xavier, estático | 0,225 (−0,015 [−0,018; −0,010]) | 0,170 (−0,002) | 0,147 (−0,005) |
+| Köppen Xavier, decenal | 0,235 (−0,005) | 0,172 (0,000) | 0,147 (−0,005) |
+| Holdridge Xavier, estático | 0,247 (+0,006 [+0,002; +0,014]) | **0,184** (+0,012 [+0,008; +0,017]) | 0,158 (+0,006 [+0,005; +0,007]) |
+| Holdridge Xavier, decenal | 0,247 (+0,007) | **0,184** (+0,012 [+0,009; +0,015]) | 0,156 (+0,004 [+0,002; +0,006]) |
+| Thornthwaite Xavier, estático | 0,233 (−0,007) | 0,172 (0,000) | 0,150 (−0,002) |
+| Thornthwaite Xavier, decenal | 0,241 (+0,001) | 0,169 (−0,003 [−0,005; −0,001]) | 0,148 (−0,004 [−0,010; −0,001]) |
+| k10 Xavier, estático | 0,236 (−0,004) | 0,176 (+0,004) | 0,147 (−0,005) |
+| k10 Xavier, decenal | 0,238 (−0,002) | 0,178 (+0,006) | 0,152 (0,000) |
+
+**Modelo do mapa (`smileRandomForest`, maxNodes 40):**
+
+| Cenário | V2 espacial | V3 temporal | V4 espaço-tempo |
+|---|---|---|---|
+| **Köppen IPEF** (produção) | 0,179 | 0,124 | 0,111 |
+| Sem clima | 0,187 (+0,007) | 0,129 (+0,005) | 0,121 (+0,010) |
+| Contínuo decenal (v2) | 0,195 (+0,015) | 0,132 (+0,008) | 0,122 (+0,011) |
+| Köppen Xavier, estático | 0,172 (−0,007) | 0,123 (−0,001) | 0,113 (+0,002) |
+| Köppen Xavier, decenal | 0,183 (+0,004) | 0,121 (−0,003) | 0,109 (−0,002) |
+| Holdridge Xavier, estático | 0,196 (+0,017 [+0,011; +0,027]) | 0,138 (+0,014 [+0,009; +0,017]) | **0,129** (+0,017 [+0,012; +0,024]) |
+| Holdridge Xavier, decenal | **0,199** (+0,019 [+0,010; +0,035]) | **0,141** (+0,017 [+0,009; +0,027]) | 0,122 (+0,010 [+0,007; +0,014]) |
+| Thornthwaite Xavier, estático | 0,174 (−0,005) | 0,119 (−0,005) | 0,114 (+0,003) |
+| Thornthwaite Xavier, decenal | 0,185 (+0,006) | 0,122 (−0,002) | 0,103 (−0,008 [−0,010; −0,005]) |
+| k10 Xavier, estático | 0,186 (+0,007) | 0,121 (−0,003) | 0,107 (−0,005) |
+| k10 Xavier, decenal | 0,184 (+0,004) | 0,127 (+0,003) | 0,113 (+0,002) |
+
+**A pergunta do capítulo: decenal − estática, mesmo sistema e mesma fonte** (MEC; [mínimo; máximo]):
+
+| Sistema | Modelo | V2 espacial | V3 temporal | V4 espaço-tempo |
+|---|---|---|---|---|
+| Köppen | ranger | +0,009 [−0,001; +0,015] | +0,002 [0,000; +0,006] | 0,000 [−0,004; +0,008] |
+| Köppen | mapa | **+0,011** [+0,007; +0,014] | −0,002 [−0,004; −0,001] | −0,004 [−0,010; +0,001] |
+| Holdridge | ranger | +0,001 | 0,000 | −0,002 [−0,005; 0,000] |
+| Holdridge | mapa | +0,003 | +0,003 | −0,007 [−0,014; +0,002] |
+| Thornthwaite | ranger | **+0,008** [+0,004; +0,014] | −0,003 | −0,003 [−0,004; −0,001] |
+| Thornthwaite | mapa | +0,011 [0,000; +0,022] | +0,003 | **−0,011** [−0,014; −0,008] |
+| k10 | ranger | +0,002 | +0,002 | +0,005 [−0,005; +0,018] |
+| k10 | mapa | −0,003 | +0,006 | +0,006 [+0,001; +0,017] |
+
+Tabelas completas: `climas_tempo/resultados/tabelas/cap3_metricas.csv`, `cap3_resumo.csv` (também nos
+recortes "todas as linhas" e "0-30 cm") e `cap3_dec_vs_est.csv`.
+
+### 5.3 Leitura
+
+1. **Atualizar a classificação por década não melhora a estimativa no tempo.** Na V3 e na V4, a diferença
+   entre a versão decenal e a estática do mesmo sistema fica em torno de zero ou negativa, nos quatro sistemas
+   e nos dois modelos. Onde a versão decenal ganha é na **V2 (espaço)**, o que não é efeito de tempo (ver 2).
+2. **O ganho decenal na V2 é efeito de resolução.** O Köppen estático do Xavier (grade de 0,1° com moda de
+   ~33 km) perde até do Köppen IPEF (100 m) na V2 (−0,015 com o ranger); as quatro versões decenais,
+   ligeiramente diferentes entre si, devolvem parte do detalhe espacial perdido.
+3. **Logo, o Köppen perde por ser classe, não por ser estático.** A classificação que muda no tempo continua
+   sem gradiente e quase toda redundante com biomas e fitofisionomias (v2, §5.7). O que ajuda no tempo é o
+   **clima contínuo decenal**, que traz a variação entre décadas como número (v2: melhor na V3).
+4. **O Thornthwaite decenal piora no tempo** (V3/V4 negativas em todas as repetições em parte dos casos): as
+   mudanças de classe vêm em boa parte do ruído da ETo interpolada (§4.3) e confundem o modelo.
+5. **O Holdridge do Xavier é a melhor classificação**, estático ou decenal: ganha do Köppen IPEF nos três
+   esquemas e nos dois modelos, empata com o contínuo decenal na V3 com o ranger (0,184) e, com o modelo do
+   mapa, é o melhor cenário de todos (V2 0,199; V3 0,141; V4 0,129). No relatório v2, o Holdridge do CHELSA
+   tinha sido o pior. A diferença está na **fronteira tropical/subtropical** (biotemperatura de 24 °C): nas
+   amostras reais, só 76% das linhas caem na mesma zona nas duas fontes, e 1.445 linhas são *Tropical moist
+   forest* no CHELSA e *Subtropical moist forest* no Xavier (o Xavier é ~0,7 °C mais quente, e a correção de
+   latitude desconta mais). Essa fronteira separa melhor o carbono das amostras, mas o resultado **depende da
+   fonte de dados**, o que pede cautela.
+6. **As zonas k10 continuam neutras**, como no v2.
+7. **Os ganhos continuam pequenos** (até ~0,02 de MEC). Nenhuma classificação, estática ou decenal, chega perto
+   do ganho de usar no mapa o modelo validado (ranger × maxNodes 40: +0,04 a +0,06; v2, §11).
 
 ---
 
 ## 6. Síntese
 
-<!-- SINTESE -->
+1. **Mapas.** Com o Xavier, as quatro classificações mostram o clima do Brasil mudando de 1985 a 2024: o
+   Köppen tem 17% da área mudando de classe (Aw avança, BSh cresce de 5% para 7%, surge BWh no semiárido); as
+   zonas k10, 28% (a zona mais quente e seca dobra de área); o Thornthwaite, 52% (ressecamento por ETo maior
+   com chuva estável, ampliado pelo ruído da ETo); e o Holdridge, 24%, mas sem enxergar o aquecimento (a
+   biotemperatura fica em 24,1 °C enquanto a temperatura sobe 1 °C).
+2. **A biblioteca `agrometeorologiapy` 0.3.0 está correta** e reproduz os mapas do relatório v1 (Köppen 100%,
+   Holdridge 98,9%).
+3. **Classificar por década não melhora a estimativa do SOC no tempo.** A diferença decenal − estática é
+   ~0 ou negativa na V3 e na V4 em todos os sistemas. O Köppen perde por ser **classe** (sem gradiente e
+   redundante), não por ser estático; o que funciona no tempo é o **clima contínuo decenal** (relatório v2).
+4. **O Holdridge do Xavier foi a melhor classificação**, à frente do Köppen IPEF em todos os esquemas e
+   modelos e, com o modelo do mapa, à frente de todos os cenários; mas com o CHELSA ele tinha sido o pior. O
+   resultado depende da fonte e da posição da fronteira dos 24 °C.
+5. **Recomendação para o MapBiomas Solo:** trocar o Köppen pelo clima contínuo decenal (relatório v2) segue
+   sendo a opção mais consistente. Se a preferência for manter uma classificação, o Holdridge do Xavier é o
+   candidato, com a ressalva do item 4. Nenhuma troca de clima rende tanto quanto usar no mapa o modelo que
+   foi validado.
 
 ---
 
 ## 7. Limitações e próximos passos
 
-<!-- LIMITACOES -->
+**Limitações**
+
+- **Temperatura e ETo do Xavier terminam em 07/2020 no GEE:** a década 2015-2024 tem 5 a 6 anos de
+  temperatura e 8 de chuva. A versão 3.2.3 do BR-DWGD, fora do GEE, vai até 2024 e poderia completar a década.
+- **Resolução:** 0,1° com moda 3 × 3 (~33 km) é muito mais grosseira que o Köppen IPEF (100 m) e o CHELSA
+  (1 km); parte dos resultados (§5.3, item 2) é efeito de resolução.
+- **ETo interpolada:** os "anéis" em torno das estações (§4.5) ampliam as mudanças do Thornthwaite e do k10.
+- **Holdridge sensível à fonte:** o resultado inverteu entre CHELSA e Xavier (§5.3, item 5); não foi testado
+  com uma terceira base.
+- **Sem trajetórias:** os cenários do capítulo 3 não foram levados ao painel 1985-2024 nem ao mapa.
+- As limitações do relatório v2 continuam valendo (emulação do modelo do GEE, máscara de areia ilegível,
+  verdade de campo temporal restrita a 289 pares).
+
+**Próximos passos**
+
+1. Completar 2020-2024 com o BR-DWGD 3.2.3 (fora do GEE) e refazer a última década.
+2. Testar o Holdridge com uma terceira base (ex.: ERA5-Land ou TerraClimate) para ver se o resultado se
+   sustenta.
+3. Testar a classificação decenal sem a moda 3 × 3 (ou com janela menor), para separar o efeito de
+   resolução.
+4. Levar o melhor cenário (Holdridge do Xavier ou contínuo decenal) ao painel e ao script de simulação de
+   mapas no GEE (`simulacao_mapas_soc`).
 
 ---
 
 ## 8. Anexo: arquivos, comandos e reprodução
 
-<!-- ANEXO -->
+Código em `climas_tempo/codigo/` (versionado); dados por pixel e por ponto em `climas_tempo/dados/` (fora
+do git); figuras e tabelas em `climas_tempo/resultados/`; decisões em `climas_tempo/planejamento.md`.
+
+| Etapa | Comando (em `climas_tempo/codigo/`) | Saída principal |
+|---|---|---|
+| 1. Dados mensais do Xavier (GEE) | `python baixar_xavier.py 1961 2022` | `dados/xavier_mensal/<ano>.npz` |
+| 2. Classificações por década e k10 | `python classificar.py` | `dados/classes_decadas.npz`, `classes_1991_2020.npz`, `resultados/tabelas/zonas_k10_xavier_*.csv` |
+| 3. Mapas e tabelas | `python mapas.py` | `resultados/figuras/*.png`, `area_classes_decadas.csv`, `mudancas.csv`, `conferencia_chelsa.csv` |
+| 4. Classes nos pontos de SOC | `python cenarios_tempo.py` | `dados/matriz_cap3.parquet`, `codigo/cenarios_cap3.json` |
+| 5. Validação, ranger | ver abaixo | `dados/oof_ranger/*.parquet` |
+| 6. Validação, modelo do mapa | ver abaixo | `dados/oof_mapa/*.parquet` |
+| 7. Métricas | `python metricas_cap3.py` | `resultados/tabelas/cap3_*.csv` |
+
+Validações (PowerShell, em `climas/analise_espaco_tempo/codigo/`):
+
+```powershell
+$env:VAL_MATRIZ = "C:\Python\MapBiomas_analises\climas_tempo\dados\matriz_cap3.parquet"
+$env:VAL_CENARIOS = "C:\Python\MapBiomas_analises\climas_tempo\codigo\cenarios_cap3.json"
+$env:VAL_OOF = "C:\Python\MapBiomas_analises\climas_tempo\dados\oof_ranger"
+& "C:\Program Files\R\R-4.6.1\bin\Rscript.exe" validacao.R todos v2,v3,v4 direta
+$env:VAL_OOF = "C:\Python\MapBiomas_analises\climas_tempo\dados\oof_mapa"
+python validacao_gee.py todos
+```
+
+Ambiente: Python 3.13 com `agrometeorologiapy` 0.3.0 (`pip install git+https://github.com/fcoliveira-utfpr/agrometeorologiapy`),
+earthengine-api, rasterio, scikit-learn, scipy, pandas, matplotlib; R 4.6.1 com `ranger`, `data.table`,
+`arrow`, `jsonlite`; GEE pelo projeto `mapbiomas-brazil`. Depende dos dados do relatório v2
+(`climas/dados_espaco_tempo/matriz_cenarios.parquet` e as predições de referência em `oof/` e `oof_gee/`) e
+da AWC do relatório v1 (`climas/dados_chelsa/awc/`).
