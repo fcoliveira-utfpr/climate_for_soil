@@ -838,3 +838,16 @@ classe, não por ser estático; contínuo decenal (v2) segue o melhor no tempo. 
 melhor classificação (melhor cenário de todos com o modelo do mapa), mas com o CHELSA tinha sido o pior:
 depende da fronteira dos 24 °C (sensível à fonte). Holdridge não enxerga o aquecimento (biotemp fixa em
 24,1 °C com T +1 °C). Thornthwaite decenal piora no tempo (ruído da ETo).
+
+
+## clima_decenal/: 39 variáveis climáticas decenais (capítulo 4, relatório v4, 2026-10-14)
+
+ETo Penman-Monteith FAO-56 mensal pelo Rn com a `agrometeorologiapy` (boc_saldo r=0,23, BOL com Rs/Rso<=1,
+G eq. 44, es médio de Tmax/Tmin; altitude ETOPO1) a partir de Tmax/Tmin/UR/Rs/u2 do Xavier: r 0,998 com a ETo
+do Xavier. 38 variáveis em média móvel Y-10..Y-1 (temperatura, chuva, energia, balanço hídrico CAD 100 e do
+solo) + dec_cdd, nos pontos (`matriz_cd.parquet`). 85 pares |r|>0,9. Resultado: só a temperatura decenal
+ajuda no tempo (ranger V4 0,163, melhor; mapa melhor em V3/V4; permutação +0,025 em V3/V4); balanço hídrico,
+energia e chuva decenais ajudam no espaço e atrapalham no tempo (marcadores de período); todas juntas = pior
+V4 (0,109); seleção aninhada = melhor V3 (0,195). Positivas nos 3 esquemas: ARM CAD solo, CDD, T mês frio,
+biotemp, Tmax. Próximo passo sugerido: validar conjunto curto (T decenal + CDD + ARM solo) e híbrido
+(T decenal + BH estático).
