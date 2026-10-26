@@ -851,3 +851,31 @@ energia e chuva decenais ajudam no espaço e atrapalham no tempo (marcadores de 
 V4 (0,109); seleção aninhada = melhor V3 (0,195). Positivas nos 3 esquemas: ARM CAD solo, CDD, T mês frio,
 biotemp, Tmax. Próximo passo sugerido: validar conjunto curto (T decenal + CDD + ARM solo) e híbrido
 (T decenal + BH estático).
+
+## koppen_movel30/: Köppen dinâmico por média móvel de 30 anos (capítulo 5, relatório v5, iniciado em 2026-10-25)
+
+**Pedido:** classificar o clima com uma janela móvel de 30 anos (Köppen do ano Y = normal de Y−30 a Y−1,
+andando um ano por vez) e usar essa classificação como **dinâmica** no modelo de SOC; comparar **só** este
+cenário (`koppen_movel30`) com o **Köppen IPEF estático**. Dados do Xavier. Pasta `climas/koppen_movel30/`
+(plano em `planejamento.md`); dados em `climas/dados_koppen_movel30/` (fora do git).
+
+**Feito no Mac em 2026-10-25:**
+- Xavier mensal 1961-2022 baixado de novo (`climas_tempo/codigo/baixar_xavier.py`, ~17 min; GEE responde com
+  `mapbiomas-brazil` e com `fcoliveira`).
+- `codigo/classificar_movel30.py`: 40 mapas (1985-2024), `classificacao_koppen_grade` (agrometeorologiapy
+  **1.0.1** neste Mac; o cap. 3 usou a 0.3.0) + moda 3 × 3. Janelas: 1985 tem 24 anos (Xavier começa em 1961),
+  completas de 1991 a 2020, temperatura 29/28/27/26 anos em 2021-2024 (T até 07/2020), chuva 29 em 2024.
+- `codigo/mapas.py`: 15,8% da área tem classe diferente entre 1985 e 2024 (Am→Aw 4,2%, Af→Am 2,9%, Aw→BSh
+  2,3%); semiárido BSh ~4% → ~7% da área, Aw 42,8% → 46%; BWh aparece a partir de 2021; trocas concentradas nas
+  fronteiras (sul de MS/SP/PR, borda da Amazônia, Nordeste). Maior troca anual: 2,6% (2016). Conferência: 2021
+  (janela 1991-2020) concorda em 87,8% da área com o Köppen do CHELSA 1991-2020 (fontes diferentes).
+- `codigo/cenarios.py` e `codigo/metricas.py` escritos (padrão do cap. 3), **não rodados**.
+
+**Estado e como retomar:**
+1. [bloqueio] Etapas 4-6 precisam da matriz e das predições do relatório v2 (`climas/dados_espaco_tempo/`:
+   `matriz_cenarios.parquet`, `oof/`, `oof_gee/`), que estão só no outro PC, e do pacote `ranger` (falta no R
+   deste Mac). Opções: copiar a pasta para cá e instalar o ranger, ou rodar as etapas 4-6 no outro PC.
+2. Rodar: `python cenarios.py`; depois a validação com a matriz nova:
+   `VAL_MATRIZ=climas/dados_koppen_movel30/matriz_movel30.parquet VAL_CENARIOS=climas/koppen_movel30/codigo/cenarios_movel30.json VAL_OOF=climas/dados_koppen_movel30/oof_ranger Rscript climas/analise_espaco_tempo/codigo/validacao.R koppen_movel30 v2,v3,v4 direta`
+   e o mesmo com `validacao_gee.py koppen_movel30` e `VAL_OOF=.../oof_mapa`; depois `python metricas.py`.
+3. Trajetórias 1985-2024 no painel e `relatorio_tecnicov5.md`.
