@@ -6,9 +6,12 @@ Saída (restrita): climas/dados_espaco_tempo/painel_predicoes_gee.parquet (ponto
 cenário, t/ha, já pós-processada; os 3 locais da provável máscara de areia ficam fora).
 
 Uso: python prever_painel_gee.py
+Variáveis de ambiente opcionais (capítulo 5): VAL_MATRIZ, VAL_CENARIOS, VAL_PAINEL, VAL_PREDICOES.
 """
 import json
+import os
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -19,9 +22,9 @@ from validacao_gee import selecionar
 
 
 def main():
-    meta = json.loads((cfg.PASTA / 'codigo' / 'cenarios.json').read_text(encoding='utf-8'))
-    m = pd.read_parquet(cfg.DADOS / 'matriz_cenarios.parquet')
-    p = pd.read_parquet(cfg.DADOS / 'painel_cenarios.parquet')
+    meta = json.loads(Path(os.environ.get('VAL_CENARIOS', cfg.PASTA / 'codigo' / 'cenarios.json')).read_text(encoding='utf-8'))
+    m = pd.read_parquet(os.environ.get('VAL_MATRIZ', cfg.DADOS / 'matriz_cenarios.parquet'))
+    p = pd.read_parquet(os.environ.get('VAL_PAINEL', cfg.DADOS / 'painel_cenarios.parquet'))
     masc = pd.read_parquet(cfg.DADOS / 'mascaras_mapa.parquet')
     oficial = pd.read_parquet(cfg.DADOS / 'soc_oficial_c3.parquet')
     areia = oficial.groupby('ponto_id').soc_oficial_t_ha.apply(lambda s: (s == 10).any())
@@ -41,7 +44,7 @@ def main():
         p['_pred'] = np.concatenate([rf.predict(X[i:i + 50000]) for i in range(0, len(X), 50000)]) / 100
         out[cen] = pos_processar(p, '_pred').to_numpy()
         print(f'{cen}: {time.time() - t0:.0f} s, média {out[cen].mean():.2f} t/ha', flush=True)
-    out.to_parquet(cfg.DADOS / 'painel_predicoes_gee.parquet', index=False)
+    out.to_parquet(os.environ.get('VAL_PREDICOES', cfg.DADOS / 'painel_predicoes_gee.parquet'), index=False)
 
 
 if __name__ == '__main__':

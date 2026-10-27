@@ -1,0 +1,109 @@
+modelo,cenario,esquema,recorte,rep,n,me,mae,mse,rmse,mec,slope
+ranger,koppen_movel30,v2,"0-30 cm, amostras reais",1,9787,-1.964,21.82,2268,47.62,0.2577,1.151
+ranger,koppen_movel30,v2,"0-30 cm, amostras reais",2,9787,-2.102,21.89,2323,48.2,0.2395,1.15
+ranger,koppen_movel30,v2,"0-30 cm, amostras reais",3,9787,-2.942,21.99,2457,49.57,0.1957,1.297
+ranger,koppen_movel30,v2,0-30 cm,1,10678,-2.731,23.66,2739,52.34,0.3232,1.134
+ranger,koppen_movel30,v2,0-30 cm,2,10678,-3.168,23.66,2798,52.9,0.3086,1.198
+ranger,koppen_movel30,v2,0-30 cm,3,10678,-4.917,23.95,3134,55.98,0.2257,1.502
+ranger,koppen_movel30,v2,todas,1,27425,0.04016,19.48,1623,40.29,0.3781,1.033
+ranger,koppen_movel30,v2,todas,2,27425,-0.3358,19.58,1652,40.64,0.3671,1.081
+ranger,koppen_movel30,v2,todas,3,27425,-2.223,19.68,1845,42.96,0.2931,1.349
+ranger,koppen_movel30,v3,"0-30 cm, amostras reais",1,9787,-3.299,22.9,2498,49.98,0.1824,1.206
+ranger,koppen_movel30,v3,"0-30 cm, amostras reais",2,9787,-3.465,22.81,2520,50.2,0.1753,1.207
+ranger,koppen_movel30,v3,"0-30 cm, amostras reais",3,9787,-3.452,22.82,2513,50.13,0.1776,1.214
+ranger,koppen_movel30,v3,0-30 cm,1,10678,-4.316,25.2,3113,55.79,0.2309,1.478
+ranger,koppen_movel30,v3,0-30 cm,2,10678,-4.58,25.14,3165,56.25,0.2181,1.496
+ranger,koppen_movel30,v3,0-30 cm,3,10678,-4.593,25.17,3160,56.22,0.2191,1.499
+ranger,koppen_movel30,v3,todas,1,27425,-1.527,20.86,1867,43.21,0.2846,1.376
+ranger,koppen_movel30,v3,todas,2,27425,-1.485,20.73,1876,43.32,0.2812,1.378
+ranger,koppen_movel30,v3,todas,3,27425,-1.586,20.84,1899,43.58,0.2725,1.386
+ranger,koppen_movel30,v4,"0-30 cm, amostras reais",1,9787,-3.066,23.31,2581,50.81,0.1551,1.128
+ranger,koppen_movel30,v4,"0-30 cm, amostras reais",2,9787,-3.144,23.47,2611,51.1,0.1453,1.08
+ranger,koppen_movel30,v4,"0-30 cm, amostras reais",3,9787,-3.418,23.26,2589,50.89,0.1524,1.122
+ranger,koppen_movel30,v4,0-30 cm,1,10678,-4.305,25.76,3270,57.18,0.192,1.419
+ranger,koppen_movel30,v4,0-30 cm,2,10678,-4.532,25.94,3311,57.54,0.1818,1.379
+ranger,koppen_movel30,v4,0-30 cm,3,10678,-4.516,25.69,3233,56.86,0.201,1.426
+ranger,koppen_movel30,v4,todas,1,27425,-1.268,21.38,1980,44.5,0.2415,1.324
+ranger,koppen_movel30,v4,todas,2,27425,-1.279,21.51,1985,44.55,0.2395,1.3
+ranger,koppen_movel30,v4,todas,3,27425,-1.417,21.28,1929,43.92,0.2611,1.34
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",1,9787,-1.642,21.76,2260,47.53,0.2604,1.096
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",2,9787,-1.923,21.89,2320,48.17,0.2406,1.136
+ranger,koppen_ipef,v2,"0-30 cm, amostras reais",3,9787,-2.568,21.8,2385,48.83,0.2194,1.323
+ranger,koppen_ipef,v2,0-30 cm,1,10678,-2.338,23.75,2767,52.6,0.3164,1.051
+ranger,koppen_ipef,v2,0-30 cm,2,10678,-3.084,23.81,2829,53.19,0.301,1.166
+ranger,koppen_ipef,v2,0-30 cm,3,10678,-4.422,23.68,2987,54.65,0.262,1.513
+ranger,koppen_ipef,v2,todas,1,27425,0.2939,19.81,1688,41.09,0.3532,0.9248
+ranger,koppen_ipef,v2,todas,2,27425,-0.3047,19.72,1682,41.01,0.3557,1.056
+ranger,koppen_ipef,v2,todas,3,27425,-1.937,19.55,1768,42.05,0.3227,1.341
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",1,9787,-4.234,22.63,2531,50.31,0.1715,1.271
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",2,9787,-4.089,22.61,2534,50.34,0.1705,1.259
+ranger,koppen_ipef,v3,"0-30 cm, amostras reais",3,9787,-4.094,22.68,2526,50.26,0.1731,1.238
+ranger,koppen_ipef,v3,0-30 cm,1,10678,-5.306,24.96,3177,56.37,0.2149,1.548
+ranger,koppen_ipef,v3,0-30 cm,2,10678,-5.186,24.95,3192,56.5,0.2112,1.552
+ranger,koppen_ipef,v3,0-30 cm,3,10678,-5.119,25.05,3166,56.27,0.2177,1.512
+ranger,koppen_ipef,v3,todas,1,27425,-2.068,20.68,1889,43.46,0.2763,1.418
+ranger,koppen_ipef,v3,todas,2,27425,-2.08,20.66,1893,43.51,0.2748,1.426
+ranger,koppen_ipef,v3,todas,3,27425,-2.117,20.65,1889,43.46,0.2763,1.402
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",1,9787,-3.764,23.09,2597,50.96,0.1499,1.177
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",2,9787,-3.766,23.18,2609,51.08,0.1459,1.132
+ranger,koppen_ipef,v4,"0-30 cm, amostras reais",3,9787,-3.925,23.06,2566,50.66,0.16,1.177
+ranger,koppen_ipef,v4,0-30 cm,1,10678,-5.071,25.62,3304,57.48,0.1836,1.478
+ranger,koppen_ipef,v4,0-30 cm,2,10678,-5.181,25.66,3308,57.51,0.1827,1.456
+ranger,koppen_ipef,v4,0-30 cm,3,10678,-5.005,25.5,3199,56.56,0.2096,1.463
+ranger,koppen_ipef,v4,todas,1,27425,-1.937,21.28,1993,44.64,0.2366,1.371
+ranger,koppen_ipef,v4,todas,2,27425,-1.895,21.32,1979,44.48,0.2419,1.353
+ranger,koppen_ipef,v4,todas,3,27425,-1.762,21.21,1911,43.72,0.2678,1.353
+mapa,koppen_movel30,v2,"0-30 cm, amostras reais",1,9787,-7.191,22.42,2396,48.95,0.2159,1.337
+mapa,koppen_movel30,v2,"0-30 cm, amostras reais",2,9787,-7.364,22.61,2492,49.92,0.1842,1.288
+mapa,koppen_movel30,v2,"0-30 cm, amostras reais",3,9787,-7.928,22.78,2578,50.77,0.1563,1.495
+mapa,koppen_movel30,v2,0-30 cm,1,10678,-7.758,24.59,2895,53.81,0.2846,1.299
+mapa,koppen_movel30,v2,0-30 cm,2,10678,-8.23,24.81,3043,55.16,0.2482,1.351
+mapa,koppen_movel30,v2,0-30 cm,3,10678,-9.447,24.95,3256,57.06,0.1955,1.812
+mapa,koppen_movel30,v2,todas,1,27425,-0.8265,21.06,1734,41.64,0.3357,1.098
+mapa,koppen_movel30,v2,todas,2,27425,-1.313,21.14,1795,42.36,0.3125,1.204
+mapa,koppen_movel30,v2,todas,3,27425,-2.965,21.14,1943,44.08,0.2557,1.727
+mapa,koppen_movel30,v3,"0-30 cm, amostras reais",1,9787,-8.835,23.19,2682,51.78,0.1223,1.377
+mapa,koppen_movel30,v3,"0-30 cm, amostras reais",2,9787,-8.625,23.22,2663,51.6,0.1285,1.369
+mapa,koppen_movel30,v3,"0-30 cm, amostras reais",3,9787,-8.651,23.15,2668,51.65,0.1267,1.377
+mapa,koppen_movel30,v3,0-30 cm,1,10678,-9.94,25.81,3409,58.39,0.1577,1.756
+mapa,koppen_movel30,v3,0-30 cm,2,10678,-9.648,25.8,3387,58.2,0.163,1.682
+mapa,koppen_movel30,v3,0-30 cm,3,10678,-9.755,25.75,3392,58.24,0.1618,1.754
+mapa,koppen_movel30,v3,todas,1,27425,-3.175,21.94,2065,45.45,0.2088,1.706
+mapa,koppen_movel30,v3,todas,2,27425,-3.134,21.9,2059,45.38,0.2112,1.647
+mapa,koppen_movel30,v3,todas,3,27425,-3.087,21.94,2072,45.51,0.2064,1.682
+mapa,koppen_movel30,v4,"0-30 cm, amostras reais",1,9787,-8.318,23.39,2697,51.93,0.1173,1.249
+mapa,koppen_movel30,v4,"0-30 cm, amostras reais",2,9787,-8.285,23.42,2717,52.12,0.1107,1.213
+mapa,koppen_movel30,v4,"0-30 cm, amostras reais",3,9787,-8.771,23.3,2712,52.08,0.1123,1.278
+mapa,koppen_movel30,v4,0-30 cm,1,10678,-9.471,26.17,3474,58.94,0.1417,1.558
+mapa,koppen_movel30,v4,0-30 cm,2,10678,-9.539,26.09,3483,59.02,0.1394,1.58
+mapa,koppen_movel30,v4,0-30 cm,3,10678,-9.852,25.97,3469,58.9,0.1429,1.626
+mapa,koppen_movel30,v4,todas,1,27425,-3.056,22.16,2103,45.86,0.1942,1.524
+mapa,koppen_movel30,v4,todas,2,27425,-2.969,22.13,2101,45.84,0.1949,1.546
+mapa,koppen_movel30,v4,todas,3,27425,-3.32,21.94,2092,45.74,0.1983,1.599
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",1,9787,-6.897,22.44,2406,49.05,0.2125,1.311
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",2,9787,-7.192,22.62,2484,49.84,0.1868,1.266
+mapa,koppen_ipef,v2,"0-30 cm, amostras reais",3,9787,-8.117,22.84,2631,51.29,0.1389,1.515
+mapa,koppen_ipef,v2,0-30 cm,1,10678,-7.516,24.71,2931,54.14,0.2757,1.253
+mapa,koppen_ipef,v2,0-30 cm,2,10678,-8.015,24.86,3026,55.01,0.2524,1.296
+mapa,koppen_ipef,v2,0-30 cm,3,10678,-9.905,25.19,3399,58.3,0.1602,1.844
+mapa,koppen_ipef,v2,todas,1,27425,-0.8512,21.19,1769,42.06,0.3222,1.052
+mapa,koppen_ipef,v2,todas,2,27425,-1.262,21.26,1797,42.39,0.3116,1.151
+mapa,koppen_ipef,v2,todas,3,27425,-3.399,21.29,2024,44.99,0.2246,1.74
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",1,9787,-9.086,23,2672,51.69,0.1254,1.503
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",2,9787,-9.334,23.03,2669,51.66,0.1266,1.482
+mapa,koppen_ipef,v3,"0-30 cm, amostras reais",3,9787,-9.245,23,2688,51.85,0.1201,1.505
+mapa,koppen_ipef,v3,0-30 cm,1,10678,-10.19,25.63,3416,58.44,0.156,1.856
+mapa,koppen_ipef,v3,0-30 cm,2,10678,-10.35,25.62,3373,58.08,0.1664,1.808
+mapa,koppen_ipef,v3,0-30 cm,3,10678,-10.39,25.62,3424,58.51,0.1541,1.886
+mapa,koppen_ipef,v3,todas,1,27425,-3.446,21.76,2061,45.39,0.2105,1.797
+mapa,koppen_ipef,v3,todas,2,27425,-3.541,21.82,2056,45.34,0.2125,1.768
+mapa,koppen_ipef,v3,todas,3,27425,-3.472,21.77,2059,45.38,0.2111,1.815
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",1,9787,-8.846,23.25,2713,52.09,0.1119,1.321
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",2,9787,-8.938,23.24,2724,52.19,0.1085,1.336
+mapa,koppen_ipef,v4,"0-30 cm, amostras reais",3,9787,-9.159,23.25,2709,52.05,0.1132,1.359
+mapa,koppen_ipef,v4,0-30 cm,1,10678,-10.05,26.05,3501,59.17,0.1348,1.646
+mapa,koppen_ipef,v4,0-30 cm,2,10678,-10.21,26,3506,59.21,0.1336,1.719
+mapa,koppen_ipef,v4,0-30 cm,3,10678,-10.22,25.97,3441,58.66,0.1498,1.728
+mapa,koppen_ipef,v4,todas,1,27425,-3.483,22.04,2119,46.03,0.1883,1.604
+mapa,koppen_ipef,v4,todas,2,27425,-3.627,22.06,2123,46.08,0.1867,1.651
+mapa,koppen_ipef,v4,todas,3,27425,-3.498,21.85,2052,45.3,0.2137,1.688

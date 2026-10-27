@@ -1,0 +1,7 @@
+modelo,cenario,soc_medio,inclinacao_media,inclinacao_mediana,r_inclinacao_koppen,r_inclinacao_oficial,variacao_anual_media,dif_media_koppen,dif_abs_media_koppen
+ranger,koppen_ipef,52.53,0.327,0.2632,1,0.2133,0.7574,0,0
+ranger,koppen_movel30,52.58,0.3505,0.2868,0.8902,0.2106,0.7915,0.05347,2.008
+ranger,soc_oficial,48.06,-0.2754,-0.04128,0.2133,1,0.1775,,
+mapa,koppen_ipef,47.22,-0.2147,0,1,0.8926,0.1505,0,0
+mapa,koppen_movel30,47.31,-0.2741,0,0.9803,0.8809,0.1732,0.0965,1.047
+mapa,soc_oficial,48.07,-0.2756,-0.04128,0.8926,1,0.1773,,

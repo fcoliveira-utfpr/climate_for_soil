@@ -1,0 +1,13 @@
+modelo,locais,n_locais,serie,soc_medio,inclinacao_media,r_inclinacao_oficial,variacao_anual_media,dif_media_ipef,dif_abs_media_ipef
+ranger,não mudaram,9798,koppen_ipef,52.5,0.3166,0.1633,0.7545,0,0
+ranger,não mudaram,9798,koppen_movel30,52.51,0.3327,0.1654,0.7463,0.005573,1.828
+ranger,não mudaram,9798,soc_oficial_t_ha,48.17,-0.2062,1,0.1693,-4.336,10.12
+ranger,mudaram de classe,3882,koppen_ipef,52.59,0.3534,0.3084,0.7645,0,0
+ranger,mudaram de classe,3882,koppen_movel30,52.76,0.3952,0.2763,0.9058,0.1744,2.462
+ranger,mudaram de classe,3882,soc_oficial_t_ha,47.78,-0.45,1,0.198,-4.81,10.16
+mapa,não mudaram,9797,koppen_ipef,47.13,-0.1455,0.9624,0.1355,0,0
+mapa,não mudaram,9797,koppen_movel30,47.23,-0.1811,0.9635,0.1355,0.1065,1.023
+mapa,não mudaram,9797,soc_oficial_t_ha,48.17,-0.2064,1,0.1693,1.046,2.649
+mapa,mudaram de classe,3880,koppen_ipef,47.45,-0.3893,0.8632,0.1882,0,0
+mapa,mudaram de classe,3880,koppen_movel30,47.52,-0.5091,0.8479,0.2683,0.07114,1.107
+mapa,mudaram de classe,3880,soc_oficial_t_ha,47.8,-0.4503,1,0.1975,0.3495,2.755

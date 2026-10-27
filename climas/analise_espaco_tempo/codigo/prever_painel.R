@@ -5,6 +5,7 @@
 # cenário em t/ha) e resultados/tabelas/importancia_cenarios.csv (importância por impureza, versionada).
 #
 # Uso: Rscript prever_painel.R
+# Variáveis de ambiente opcionais (capítulo 5): VAL_MATRIZ, VAL_CENARIOS, VAL_PAINEL, VAL_PREDICOES, VAL_IMPORTANCIA.
 
 .libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths()))
 suppressPackageStartupMessages({
@@ -19,9 +20,9 @@ script_dir <- dirname(normalizePath(sub("^--file=", "", args_all[grep("^--file="
 dados_dir <- normalizePath(file.path(script_dir, "..", "..", "dados_espaco_tempo"))
 tab_dir <- file.path(script_dir, "..", "resultados", "tabelas")
 
-cfg <- fromJSON(file.path(script_dir, "cenarios.json"))
-m <- as.data.table(read_parquet(file.path(dados_dir, "matriz_cenarios.parquet")))
-painel <- as.data.table(read_parquet(file.path(dados_dir, "painel_cenarios.parquet")))
+cfg <- fromJSON(Sys.getenv("VAL_CENARIOS", file.path(script_dir, "cenarios.json")))
+m <- as.data.table(read_parquet(Sys.getenv("VAL_MATRIZ", file.path(dados_dir, "matriz_cenarios.parquet"))))
+painel <- as.data.table(read_parquet(Sys.getenv("VAL_PAINEL", file.path(dados_dir, "painel_cenarios.parquet"))))
 nthreads <- max(1L, parallel::detectCores() - 1L)
 source(file.path(script_dir, "selecao_continuas.R"))
 
@@ -43,5 +44,5 @@ for (cen in names(cfg$cenarios)) {
                            posicao = rank(-vi, ties.method = "first"), clima = names(vi) %in% clima)
   cat(sprintf("%s: OOB R² %.4f, %s\n", cen, fit$r.squared, format(Sys.time() - t0, digits = 3)))
 }
-write_parquet(pred, file.path(dados_dir, "painel_predicoes.parquet"))
-fwrite(rbindlist(imp), file.path(tab_dir, "importancia_cenarios.csv"))
+write_parquet(pred, Sys.getenv("VAL_PREDICOES", file.path(dados_dir, "painel_predicoes.parquet")))
+fwrite(rbindlist(imp), Sys.getenv("VAL_IMPORTANCIA", file.path(tab_dir, "importancia_cenarios.csv")))

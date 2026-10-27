@@ -1,0 +1,13 @@
+modelo,evento,cenario,n,delta_medio_t_ha,delta_mediano_t_ha
+ranger,natural -> agropecuária,koppen_ipef,4257,-1.534,-0.6558
+ranger,natural -> agropecuária,koppen_movel30,4257,-1.716,-0.7027
+ranger,natural -> agropecuária,soc_oficial_t_ha,4257,-0.9859,-1
+ranger,pastagem -> lavoura,koppen_ipef,550,0.09975,0.1339
+ranger,pastagem -> lavoura,koppen_movel30,550,0.2252,0.1518
+ranger,pastagem -> lavoura,soc_oficial_t_ha,550,0.01273,0
+mapa,natural -> agropecuária,koppen_ipef,4256,-0.5761,0
+mapa,natural -> agropecuária,koppen_movel30,4256,-0.6797,0
+mapa,natural -> agropecuária,soc_oficial_t_ha,4256,-0.9861,-1
+mapa,pastagem -> lavoura,koppen_ipef,550,-0.003636,0
+mapa,pastagem -> lavoura,koppen_movel30,550,0.05636,0
+mapa,pastagem -> lavoura,soc_oficial_t_ha,550,0.01273,0
