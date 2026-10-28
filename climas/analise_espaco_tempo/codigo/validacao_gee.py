@@ -9,7 +9,8 @@ Saída: climas/dados_espaco_tempo/oof_gee/<cenario>_<esquema>_direta.parquet, no
 (linha contada a partir de 1). Combinações já gravadas são puladas.
 
 Uso: python validacao_gee.py [cenarios separados por vírgula | todos] [esquemas, padrão v2,v3,v4]
-Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO.
+Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO;
+(capítulo 6) VAL_SEMENTE, a semente base dos modelos (padrão 1984).
 """
 import json
 import os
@@ -80,7 +81,7 @@ def main():
                 continue
             t0, partes = time.time(), []
             for rep, dobra, tr, te in particoes(m, esq):
-                semente = 1984 + rep * 100 + dobra
+                semente = int(os.environ.get('VAL_SEMENTE', 1984)) + rep * 100 + dobra
                 cols = meta['base'] + (selecionar(m, meta['base'], clima, tr, semente) if cen == 'cont_sel' else clima)
                 if cen == 'cont_sel':
                     selecoes.append({'esquema': esq, 'rep': rep, 'dobra': dobra,

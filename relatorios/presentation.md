@@ -8,7 +8,7 @@ title: Clima para estimativas de SOC no MapBiomas Solo
 
 **Existe uma representação do clima melhor que o Köppen para o modelo de carbono orgânico do solo?**
 
-Síntese dos relatórios técnicos v1 a v5 (outubro de 2026)
+Síntese dos relatórios técnicos v1 a v6 (outubro de 2026)
 Fabrício Correia de Oliveira (UTFPR)
 
 ---
@@ -25,7 +25,7 @@ Fabrício Correia de Oliveira (UTFPR)
 
 ---
 
-## Caminho percorrido: 5 experimentos
+## Caminho percorrido: 6 experimentos
 
 | | Experimento | Tratamentos de clima testados |
 |---|---|---|
@@ -34,10 +34,11 @@ Fabrício Correia de Oliveira (UTFPR)
 | **v3** | Classificações que mudam por **década** | Köppen, Holdridge, Thornthwaite, k10: estático × decenal (Xavier) |
 | **v4** | 39 variáveis decenais (ETo pelo Rn, balanço hídrico) | 5 grupos: temperatura, chuva, energia, balanço hídrico (2 CADs); todas; com seleção |
 | **v5** | Köppen **dinâmico** por média móvel de 30 anos | Köppen recalculado a cada ano (normal Y−30 a Y−1) |
+| **v6** | Validação final em **partições novas** | conjunto curto (temperatura + CDD + ARM), híbrido (temperatura + hídrico estático), contra as referências |
 
 ---
 
-## Como foi feito (comum a v2-v5)
+## Como foi feito (comum a v2-v6)
 
 - **Matriz de treino idêntica à de produção** (`trainingFinal`: 27.425 linhas); o OOB publicado pelo MapBiomas
   foi reproduzido na 2ª casa decimal (MEC 0,73 e 0,58).
@@ -182,6 +183,8 @@ Köppen recalculado **a cada ano** com a normal completa dos 30 anos anteriores 
 
 ## Quanto cada clima melhora sobre o Köppen
 
+Relatórios v2 a v5, nas partições originais da validação.
+
 ![w:1150](figuras/ganho_clima_barras.png)
 
 - **Azul:** a família **decenal** (média móvel dos 10 anos anteriores). As duas versões ganham do Köppen nos
@@ -225,6 +228,53 @@ Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor),
 
 ---
 
+## v6: a validação final, em partições novas
+
+O conjunto curto do v4 foi escolhido olhando as mesmas dobras que o avaliaram. No v6 ele é testado em
+**partições novas** (independentes das antigas) e com **sementes novas**, contra as referências.
+
+![w:1100](../clima_final/resultados/figuras/ganhos_final.png)
+
+- **Conjunto curto** (7 de temperatura decenal + CDD + ARM com a CAD do solo): ganha do Köppen nas **6
+  combinações, em todas as repetições** (pior repetição +0,009). É o único cenário com isso.
+- **Híbrido** (temperatura + normais hídricas estáticas): **perde no tempo** para a temperatura sozinha, em
+  todas as repetições.
+
+---
+
+## v6: métricas do conjunto final
+
+Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada célula: MEC / RMSE (t/ha).
+
+| Modelo | Esquema | Köppen IPEF | Contínuo decenal (v2) | Temperatura decenal | **Conjunto curto** |
+|---|---|---|---|---|---|
+| ranger | V2 espacial | 0,229 / 48,5 | 0,245 / 48,0 | 0,242 / 48,1 | **0,247 / 48,0** |
+| ranger | V3 temporal | 0,176 / 50,2 | 0,176 / 50,2 | 0,193 / 49,7 | **0,198 / 49,5** |
+| ranger | V4 espaço-tempo | 0,161 / 50,6 | 0,168 / 50,4 | 0,175 / 50,2 | **0,177 / 50,1** |
+| mapa | V2 espacial | 0,181 / 50,0 | 0,190 / 49,7 | 0,189 / 49,8 | **0,199 / 49,5** |
+| mapa | V3 temporal | 0,123 / 51,8 | 0,130 / 51,5 | **0,142 / 51,2** | 0,139 / 51,3 |
+| mapa | V4 espaço-tempo | 0,114 / 52,0 | 0,131 / 51,5 | **0,137 / 51,4** | **0,137 / 51,4** |
+
+- O conjunto curto melhora o MEC do Köppen em **8 a 20%** e reduz o RMSE em 0,5 a 0,7 t/ha.
+- Sobre a temperatura sozinha, o ganho é pequeno e vem do **espaço** (mapa V2 +0,009, em todas as repetições).
+- O contínuo decenal do v2 perdeu o ganho na V3 do ranger com as sementes novas (0,000): é o menos estável no
+  tempo.
+
+---
+
+## v6: o que muda nas trajetórias
+
+![w:1150](../clima_final/resultados/figuras/trajetorias_final_gee.png)
+
+- Com o conjunto curto, o SOC do mapa cai **3,4 t/ha de 1985 a 2024** (−0,78 t/ha/década), contra 1,3 t/ha no
+  oficial. A queda é maior na Amazônia (−1,0 t/ha/década) e na Mata Atlântica (−0,95).
+- **Por quê:** a temperatura decenal subiu 1,1 °C nos locais (23,4 → 24,5 °C), o CDD subiu 6,7 dias e o ARM
+  caiu 4,5 mm. O modelo aplica ao aquecimento a relação que aprendeu no espaço (lugar mais quente = menos
+  carbono).
+- **Atenção:** a direção faz sentido, mas a **magnitude não tem validação** no tempo.
+
+---
+
 ## Quadro geral dos tratamentos
 
 | Tratamento | Espaço (V2) | Tempo (V3) | Espaço-tempo (V4) | Veredito |
@@ -236,7 +286,9 @@ Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor),
 | Holdridge Xavier | **+** | **+** | **+** | melhor classe; depende da fonte |
 | Contínuo estático (CHELSA) | **++** | − (mapa) | ≈ | melhor no espaço |
 | **Contínuo decenal** | **+** | **+** | **+** | ganha nos 3 esquemas, nos 2 modelos e em 26/27 algoritmos |
-| **Temperatura decenal** | **+** | **++** | **+** | maior ganho no tempo |
+| **Temperatura decenal** | **+** | **++** | **++** | maior ganho no tempo |
+| **Conjunto curto (v6)** | **++** | **++** | **++** | **ganha nos 6 casos em todas as repetições, também em partições novas** |
+| Híbrido: temperatura + hídrico estático (v6) | + | − | − | as normais hídricas tiram ganho no tempo |
 | 39 variáveis decenais juntas | ≈ | − | −− | redundância e ruído |
 | Estratificar por zona (v1) | − | | | piora |
 
@@ -249,8 +301,10 @@ Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor),
 2. **Gradiente vence classe.** Variáveis contínuas ajudam mais que qualquer classificação, estática, decenal
    ou móvel.
 3. **No tempo, menos é mais.** O que funciona é um clima decenal **curto e centrado na temperatura**; chuva e
-   balanço hídrico decenais adicionam ruído.
-4. **Os ganhos de clima são pequenos** (0,01-0,03 de MEC, até ~1 t/ha de RMSE). O maior ganho disponível é
+   balanço hídrico (decenais ou estáticos) adicionam ruído no tempo.
+4. **O clima decenal muda a trajetória do mapa:** traz uma queda de SOC associada ao aquecimento, que precisa
+   de validação temporal.
+5. **Os ganhos de clima são pequenos** (0,01-0,03 de MEC, até ~1 t/ha de RMSE). O maior ganho disponível é
    **usar no mapa o modelo validado** (+0,04 a +0,06).
 
 ---
@@ -259,36 +313,34 @@ Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor),
 
 | # | Abordagem | Variáveis | Quando usar |
 |---|---|---|---|
-| **1** | **Clima decenal** (média móvel dos 10 anos anteriores) | contínuo decenal: temperatura e chuva + CDD (GT de clima + Xavier); ou a temperatura decenal (7 variáveis) | **mapa anual 1985-2024** (escolha principal) |
-| **2** | **Híbrido contínuo: estático no espaço, decenal no tempo** | normais 1991-2020 (chuva do mês seco, ETP, DEF, biotemperatura, sazonalidade) + temperatura e chuva decenais, com seleção de redundância | melhor estimativa pontual / **ranger** |
+| **1** | **Conjunto curto decenal** (média móvel dos 10 anos anteriores) | 7 de temperatura (média, máxima, mínima, mês quente, mês frio, amplitude, biotemperatura) + CDD + ARM com a CAD do solo | **mapa anual 1985-2024** (escolha principal) |
+| **2** | **Contínuo decenal operacional** | temperatura e chuva decenais do GT de clima + CDD (3 variáveis) | implantação imediata, com os dados que o MapBiomas já tem |
 | **3** | **Uma classificação com gradiente físico**: Holdridge (Xavier) ou Thornthwaite (CAD do solo) | dummies L1-L2 | quando a equipe **precisa de uma classe** interpretável |
 
 ---
 
-## Por que 1: clima decenal
+## Por que 1: conjunto curto decenal
 
-- As duas versões testadas ganham do Köppen nas **6 combinações** de modelo e esquema, de forma consistente
-  entre as repetições. A família tem o **1º e o 3º maiores ganhos médios** de todos os tratamentos.
-- **Contínuo decenal (3 variáveis):** +0,011 a +0,015 de MEC.
-  - É o mais testado: ganha do Köppen em 26 de 27 combinações de algoritmo e esquema.
-  - Entre os cenários levados ao painel, é o único que muda a **dinâmica** das trajetórias, e não só o
-    nível. Isso é coerente com um produto anual.
-  - **Barato:** temperatura e chuva já existem no GT de clima do MapBiomas.
-- **Temperatura decenal (v4):** tem os maiores ganhos no tempo (+0,018 a +0,019 na V3) e é o grupo que a
-  importância por permutação aponta como útil fora da amostra.
-  - Ainda não foi testada com outros algoritmos nem levada às trajetórias.
+- **Venceu a validação final (v6):** ganha do Köppen nas 6 combinações de modelo e esquema, em **todas as
+  repetições** e em partições que não foram usadas para escolhê-lo: +0,017 a +0,023 de MEC.
+- É o **maior ganho médio** de todos os cenários testados, nos dois modelos (+0,019).
+- **Por que essas variáveis:**
+  - a **temperatura** é o único clima que ajuda no tempo (v4) e tem tendência suave e bem medida;
+  - o **CDD** e o **ARM com a CAD do solo** acrescentam no espaço sem perder no tempo (o ARM traz a água que o
+    solo consegue guardar).
+- **Núcleo mínimo:** só as 7 de temperatura já entregam quase todo o ganho.
+- **Custo:** as variáveis foram calculadas aqui (Xavier + `agrometeorologiapy`); precisam ser publicadas como
+  assets anuais no GEE.
 
 ---
 
-## Por que 2: híbrido estático + decenal com seleção
+## Por que 2: contínuo decenal operacional
 
-- No espaço, as **normais estáticas** são as que mais ajudam: +0,034 no modelo do mapa e +0,015 no ranger.
-- No tempo, elas atrapalham se forem usadas sozinhas, e o decenal compensa isso.
-- A **seleção aninhada** (descartar uma variável de cada par com |r| > 0,9, dentro da dobra) é o que ganha do
-  Köppen **nos três esquemas com o ranger** (+0,015, +0,010, +0,002).
-- Combinado com o ranger + LightGBM, deu o **maior MEC observado** no espaço (0,263).
-- O v4 mostra o desenho certo: **hídricas e energia na versão estática** (informação espacial sem ruído
-  temporal) e **temperatura na decenal**.
+- Usa os dados que o MapBiomas **já tem**: temperatura e chuva decenais do GT de clima, mais o CDD.
+- Ganha do Köppen em **5 das 6** combinações no v6 e em **26 de 27** combinações de algoritmo no v2.
+- É o **passo intermediário**: troca o Köppen por clima que muda no tempo sem novo processamento.
+- **Limite:** é o menos estável no tempo. Com as sementes novas, o ganho na V3 do ranger caiu para zero; a
+  chuva decenal traz ruído (v4).
 
 ---
 
@@ -311,23 +363,24 @@ Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor),
 - **Manter o Köppen IPEF**: no modelo do mapa ele perde até para o modelo sem clima.
 - **Köppen decenal ou dinâmico de 30 anos**: empate. Ele continua sendo classe, com oscilação na fronteira.
 - **Colocar todas as variáveis climáticas**: com 39 variáveis decenais a V4 cai 0,05.
-- **Balanço hídrico decenal**: vira marcador de período e piora no tempo.
+- **Balanço hídrico no modelo de tempo, decenal ou estático**: o decenal vira marcador de período (v4) e as
+  normais estáticas tiram o ganho da temperatura no tempo (v6).
 - **Um modelo por zona climática**: cada modelo fica com poucos dados.
 
 ---
 
 ## Próximos passos
 
-1. Validar o **conjunto curto** do v4 (temperatura decenal + CDD + ARM com a CAD do solo) e o **híbrido**
-   (temperatura decenal + balanço hídrico estático) nas mesmas V2/V3/V4.
-2. Levar a abordagem escolhida ao **mapa com o ranger** (ou aumentar o maxNodes no GEE).
+1. **Publicar as 9 variáveis do conjunto curto como assets anuais no GEE** (1985-2024, grade do Xavier),
+   para o script de produção do MapBiomas.
+2. Levar o conjunto curto ao **mapa com o ranger** (ou aumentar o maxNodes no GEE): é o maior ganho disponível.
 3. Completar 2020-2024 com o Xavier atualizado (no GEE, a temperatura acaba em 07/2020).
-4. **Validação temporal independente:** buscar locais com coletas repetidas, porque hoje nenhum modelo acerta
-   a variação no tempo.
+4. **Validar a queda temporal do SOC:** testar janelas mais longas para a temperatura (20-30 anos) e comparar
+   com experimentos de longa duração e locais com coletas repetidas.
 
 ---
 
 # Obrigado
 
-Relatórios completos em `relatorios/`: `relatorio_tecnico.md` (v1) a `relatorio_tecnicov5.md`
+Relatórios completos em `relatorios/`: `relatorio_tecnico.md` (v1) a `relatorio_tecnicov6.md`
 Código e resultados: GitHub `fcoliveira-utfpr/climate_for_soil`

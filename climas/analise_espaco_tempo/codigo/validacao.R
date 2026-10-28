@@ -12,7 +12,8 @@
 # g/m²). Combinações já gravadas são puladas (dá para retomar).
 #
 # Uso: Rscript validacao.R <cenarios separados por vírgula | todos> <esquemas: v2,v3,v4> <direta|log>
-# Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO.
+# Variáveis de ambiente opcionais (capítulos 3 e 4): VAL_MATRIZ, VAL_CENARIOS, VAL_OOF, VAL_SELECAO;
+# (capítulo 6) VAL_SEMENTE, a semente base dos modelos (padrão 1984).
 
 .libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths()))
 suppressPackageStartupMessages({
@@ -38,6 +39,7 @@ stopifnot(resposta %in% c("direta", "log"), all(cen_nomes %in% names(cfg$cenario
 m <- as.data.table(read_parquet(Sys.getenv("VAL_MATRIZ", file.path(dados_dir, "matriz_cenarios.parquet"))))
 y_g <- m$carbono_gm2_qmap
 nthreads <- max(1L, parallel::detectCores() - 1L)
+semente_base <- as.integer(Sys.getenv("VAL_SEMENTE", "1984"))
 
 source(file.path(script_dir, "selecao_continuas.R"))
 selecoes <- list()
@@ -89,7 +91,7 @@ for (cen in cen_nomes) {
     res <- rbindlist(lapply(particoes(esq), function(pt) {
       te <- which(pt$teste)
       tr <- which(pt$treino)
-      semente <- 1984L + pt$rep * 100L + pt$dobra
+      semente <- semente_base + pt$rep * 100L + pt$dobra
       Xf <- X
       if (cen == "cont_sel") {
         manter <- selecionar_continuas(m, y_g, tr, cfg, nthreads, semente)
