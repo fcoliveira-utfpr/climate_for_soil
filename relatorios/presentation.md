@@ -97,8 +97,8 @@ Em negrito: mesmo sinal nas 3 repetições.
    **tirar o clima** é melhor que ele.
 2. **Clima contínuo estático** (normais CHELSA) é o melhor **no espaço**, mas **piora no tempo** com o
    modelo do mapa.
-3. **Clima contínuo decenal** (temperatura e chuva dos 10 anos anteriores + dias secos consecutivos) é o
-   **único que ganha do Köppen nos três esquemas com o modelo do mapa**.
+3. **Clima contínuo decenal** (temperatura e chuva dos 10 anos anteriores + dias secos consecutivos) é,
+   entre os cenários do v2, o **único que ganha do Köppen nos três esquemas com o modelo do mapa**.
 4. **Robusto ao algoritmo:** o decenal ganha do Köppen em **26 de 27** combinações (9 algoritmos × 3
    esquemas).
 5. **Achado lateral:** o mapa usa árvores rasas (maxNodes 40). Usar o ranger validado no mapa dá
@@ -180,6 +180,51 @@ Köppen recalculado **a cada ano** com a normal completa dos 30 anos anteriores 
 
 ---
 
+## Quanto cada clima melhora sobre o Köppen
+
+![w:1150](figuras/ganho_clima_barras.png)
+
+- **Azul:** a família **decenal** (média móvel dos 10 anos anteriores). As duas versões ganham do Köppen nos
+  **6 painéis**, quase sempre nas 3 repetições. Pelo ganho médio, a temperatura decenal fica em 1º e o
+  contínuo decenal em 3º (o 2º é o Holdridge do Xavier).
+- **Contínuo estático (CHELSA):** é o maior ganho no espaço com o mapa (+0,034), mas **piora no tempo**
+  (−0,016).
+- **39 variáveis juntas:** desabam no espaço-tempo (−0,043).
+
+---
+
+## Todos os tratamentos, todos os esquemas
+
+![w:900](figuras/ganho_clima_mapa_calor.png)
+
+- Ganho **consistente** (mesmo sinal nas 3 repetições) em pelo menos 5 das 6 combinações: só a **temperatura
+  decenal** (6), o **Holdridge do Xavier** (6) e o **contínuo decenal** (5).
+- Thornthwaite e zonas k10 também ficam positivos nas 6, mas com ganhos pequenos e que oscilam entre as
+  repetições.
+- **Temperatura decenal** tem o maior ganho em 3 das 6 colunas (V3 nos dois modelos e V4 no ranger).
+
+---
+
+## Métricas: Köppen × clima decenal
+
+Amostras reais de 0-30 cm, média das 3 repetições. **MEC** (maior é melhor), **RMSE** e **ME** em t/ha.
+
+| Modelo | Esquema | Köppen IPEF | Sem clima | **Contínuo decenal** | **Temperatura decenal** |
+|---|---|---|---|---|---|
+| ranger | V2 espacial | 0,240 / 48,2 / −2,0 | 0,238 / 48,3 / −2,0 | **0,251** / 47,8 / −2,1 | **0,251** / 47,9 / −1,9 |
+| ranger | V3 temporal | 0,172 / 50,3 / −4,1 | 0,182 / 50,0 / −3,5 | **0,184** / 49,9 / −2,9 | **0,191** / 49,7 / −3,2 |
+| ranger | V4 espaço-tempo | 0,152 / 50,9 / −3,8 | 0,156 / 50,8 / −3,4 | **0,159** / 50,7 / −2,9 | **0,163** / 50,6 / −3,1 |
+| mapa | V2 espacial | 0,179 / 50,1 / −7,4 | 0,187 / 49,8 / −7,1 | **0,195** / 49,6 / −7,3 | **0,198** / 49,5 / −7,2 |
+| mapa | V3 temporal | 0,124 / 51,7 / −9,2 | 0,129 / 51,6 / −8,8 | **0,132** / 51,5 / −8,3 | **0,142** / 51,2 / −9,2 |
+| mapa | V4 espaço-tempo | 0,111 / 52,1 / −9,0 | 0,121 / 51,8 / −8,6 | **0,122** / 51,8 / −8,4 | **0,127** / 51,7 / −8,8 |
+
+(cada célula: MEC / RMSE / ME)
+
+- Sobre o Köppen, o decenal melhora o MEC em **5 a 15%** e reduz o RMSE em 0,2 a 0,6 t/ha.
+- No ranger, o viés no tempo também diminui: o ME vai de −4,1 para −2,9 t/ha na V3.
+
+---
+
 ## Quadro geral dos tratamentos
 
 | Tratamento | Espaço (V2) | Tempo (V3) | Espaço-tempo (V4) | Veredito |
@@ -188,9 +233,10 @@ Köppen recalculado **a cada ano** com a normal completa dos 30 anos anteriores 
 | Köppen decenal / móvel 30 anos | ≈ | ≈ | ≈ | não ajuda |
 | Zonas k10 | ≈ / + | ≈ | ≈ | neutro no modelo de produção |
 | Thornthwaite (CAD do solo) | + | **+** | + | melhor classe na v2 |
-| Holdridge Xavier | **+** | **+** | **+** | melhor classe na v3; depende da fonte |
+| Holdridge Xavier | **+** | **+** | **+** | melhor classe; depende da fonte |
 | Contínuo estático (CHELSA) | **++** | − (mapa) | ≈ | melhor no espaço |
-| **Contínuo decenal** | **+** | **+** | **+** | o único que ganha nos 3 esquemas, nos 2 modelos |
+| **Contínuo decenal** | **+** | **+** | **+** | ganha nos 3 esquemas, nos 2 modelos e em 26/27 algoritmos |
+| **Temperatura decenal** | **+** | **++** | **+** | maior ganho no tempo |
 | 39 variáveis decenais juntas | ≈ | − | −− | redundância e ruído |
 | Estratificar por zona (v1) | − | | | piora |
 
@@ -213,22 +259,24 @@ Köppen recalculado **a cada ano** com a normal completa dos 30 anos anteriores 
 
 | # | Abordagem | Variáveis | Quando usar |
 |---|---|---|---|
-| **1** | **Contínuo decenal** | temperatura e chuva dos 10 anos anteriores + CDD decenal (GT de clima + Xavier) | **mapa anual 1985-2024** (escolha principal) |
+| **1** | **Clima decenal** (média móvel dos 10 anos anteriores) | contínuo decenal: temperatura e chuva + CDD (GT de clima + Xavier); ou a temperatura decenal (7 variáveis) | **mapa anual 1985-2024** (escolha principal) |
 | **2** | **Híbrido contínuo: estático no espaço, decenal no tempo** | normais 1991-2020 (chuva do mês seco, ETP, DEF, biotemperatura, sazonalidade) + temperatura e chuva decenais, com seleção de redundância | melhor estimativa pontual / **ranger** |
 | **3** | **Uma classificação com gradiente físico**: Holdridge (Xavier) ou Thornthwaite (CAD do solo) | dummies L1-L2 | quando a equipe **precisa de uma classe** interpretável |
 
 ---
 
-## Por que 1: contínuo decenal
+## Por que 1: clima decenal
 
-- É o **único** tratamento que ganha do Köppen **nos três esquemas** com o **modelo do mapa** e em todas as
-  repetições: +0,015, +0,008 e +0,011.
-- **Robusto:** ganha do Köppen em 26 de 27 combinações de algoritmo e esquema.
-- É o **único** clima que muda a **dinâmica** das trajetórias, e não só o nível. Coerente com um produto
-  anual.
-- **Barato:** são 3 variáveis, e temperatura e chuva já existem no GT de clima do MapBiomas.
-- **Ajuste do v4:** priorizar a **temperatura** decenal, que é o grupo que ajuda no tempo. Ainda precisa ser
-  validado de forma independente.
+- As duas versões testadas ganham do Köppen nas **6 combinações** de modelo e esquema, de forma consistente
+  entre as repetições. A família tem o **1º e o 3º maiores ganhos médios** de todos os tratamentos.
+- **Contínuo decenal (3 variáveis):** +0,011 a +0,015 de MEC.
+  - É o mais testado: ganha do Köppen em 26 de 27 combinações de algoritmo e esquema.
+  - Entre os cenários levados ao painel, é o único que muda a **dinâmica** das trajetórias, e não só o
+    nível. Isso é coerente com um produto anual.
+  - **Barato:** temperatura e chuva já existem no GT de clima do MapBiomas.
+- **Temperatura decenal (v4):** tem os maiores ganhos no tempo (+0,018 a +0,019 na V3) e é o grupo que a
+  importância por permutação aponta como útil fora da amostra.
+  - Ainda não foi testada com outros algoritmos nem levada às trajetórias.
 
 ---
 
