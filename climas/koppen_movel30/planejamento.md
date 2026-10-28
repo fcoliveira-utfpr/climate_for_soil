@@ -103,7 +103,7 @@ BR-DWGD, NetCDF) cobre anos mais recentes que o asset do GEE.
 | 4. Cenários nos pontos | `codigo/cenarios.py` | `matriz_movel30.parquet`, `cenarios_movel30.json` |
 | 5. Validação V2/V3/V4 (ranger e modelo do mapa) | `validacao.R`, `validacao_gee.py` com `VAL_*` | `resultados/tabelas/validacao_*.csv` |
 | 6. Trajetórias | `prever_painel*` com `VAL_*` | tabelas e figuras |
-| 7. Relatório | — | `relatorio_tecnicov5.md` (raiz) |
+| 7. Relatório | — | `relatorios/relatorio_tecnicov5.md` |
 
 Dados por pixel e por ponto em `climas/dados_koppen_movel30/` (fora do git).
 

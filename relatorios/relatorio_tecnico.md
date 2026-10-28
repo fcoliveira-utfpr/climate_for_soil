@@ -84,18 +84,18 @@ estação.
   eficiência; o CHELSA tem o menor viés e o TerraClimate o maior (+8,8 mm, +7,7%, concentrado de janeiro a
   abril).
 
-![Dispersão observado × modelado, temperatura e precipitação](validacao/figuras/dispersao_tmed_pr.png)
+![Dispersão observado × modelado, temperatura e precipitação](../validacao/figuras/dispersao_tmed_pr.png)
 *Figura 1. Temperatura média (em cima) e precipitação mensal (embaixo) observadas nas estações × estimadas
 por cada grade (cores = número de pares; tracejado = 1:1; linha preta = ajuste). Na temperatura, Xavier e
 CHELSA seguem a linha 1:1 de perto; ERA5-Land e TerraClimate ficam abaixo dela. Na chuva, Xavier é a mais
 próxima; as outras três têm dispersão parecida.*
 
-![Ciclo sazonal da precipitação e viés mensal](validacao/figuras/ciclo_sazonal_pr.png)
+![Ciclo sazonal da precipitação e viés mensal](../validacao/figuras/ciclo_sazonal_pr.png)
 *Figura 2. Climatologia mensal da precipitação (média das estações) e viés de cada grade por mês. As quatro
 reproduzem bem o ciclo; o CHELSA subestima um pouco no fim do verão (março) e no fim do ano, e o
 TerraClimate superestima de janeiro a abril (+14 a +27 mm).*
 
-![Viés espacial da temperatura](validacao/figuras/mapa_1.png)
+![Viés espacial da temperatura](../validacao/figuras/mapa_1.png)
 *Figura 3. Viés da temperatura média por estação. O CHELSA é levemente frio (mediana −0,46 °C); o ERA5-Land
 (−0,92 °C) e o TerraClimate (−0,87 °C) são mais frios, sobretudo no Nordeste, no litoral e nas serras do
 Sudeste.*
@@ -174,7 +174,7 @@ precipitação anual e razão ETP/P, classificadas nas 38 zonas de vida. O resul
    mais úmido (Subtropical moist forest passa de 8% para 20% da área). Como a escolha não era óbvia, foram
    geradas **duas versões** (`…_ETPM` e `…_ETH`) para decidir com dados (seção 5).
 
-![Holdridge com as duas ETPs](climas/chelsa_climas_brasil/figuras/holdridge_etpm_eth.png)
+![Holdridge com as duas ETPs](../climas/chelsa_climas_brasil/figuras/holdridge_etpm_eth.png)
 *Figura 4. Zonas de vida de Holdridge com a ETP de Penman-Monteith (esquerda) e a ETP de Holdridge
 (direita). A Amazônia é Tropical moist forest (37) nas duas; com a ETP de Holdridge, o Sul e o Sudeste ficam
 mais úmidos (Subtropical moist forest, 29, avança sobre a Subtropical dry forest, 28).*
@@ -196,7 +196,7 @@ corretos. Foram encontrados dois erros:
 **Detalhe técnico.** Os assets de classes devem subir com `--pyramiding_policy=mode`. Com a política
 padrão (média), as escalas reduzidas mostram classes intermediárias falsas.
 
-![Köppen CHELSA](climas/chelsa_climas_brasil/figuras/koppen_chelsa.png)
+![Köppen CHELSA](../climas/chelsa_climas_brasil/figuras/koppen_chelsa.png)
 *Figura 5. Köppen-Geiger a partir do CHELSA 1991-2020, já com as correções. Aw domina o Brasil Central
 (47% da área), Af/Am a Amazônia, BSh o semiárido, Cfa/Cfb o Sul e Cwa/Cwb as serras do Sudeste.*
 
@@ -234,7 +234,7 @@ subtipo sazonal, eficiência térmica e concentração estival da ETP.
 Isso decorre do próprio método: no equilíbrio anual, EXC − DEF = P − ETP, qualquer que seja a CAD. Ela só
 redistribui água entre excedente e deficiência.
 
-![Thornthwaite: umidade e subtipo](climas/chelsa_climas_brasil/figuras/thornthwaite_umidade_subtipo.png)
+![Thornthwaite: umidade e subtipo](../climas/chelsa_climas_brasil/figuras/thornthwaite_umidade_subtipo.png)
 *Figura 6. Thornthwaite com CAD de 100 mm: classe de umidade (esquerda), do superúmido (A) no noroeste
 amazônico ao árido (E) no sertão, e subtipo sazonal (direita): r (pouca deficiência) na Amazônia ocidental
 e no Sul, w (deficiência no inverno) no Brasil Central, d (pouco excedente) no semiárido. A linha reta no
@@ -321,11 +321,11 @@ R² fora da amostra, blocos de 2°:
   desempenho; a ETP de Holdridge é igual ou melhor para SOC e é a definição original.
 - **Classe climática sozinha explica pouco:** o teto para SOC é R² ≈ 0,09-0,10.
 
-![R² espacial de cada classificação](corelacao/resultados/figuras/comparacao_r2_espacial.png)
+![R² espacial de cada classificação](../corelacao/resultados/figuras/comparacao_r2_espacial.png)
 *Figura 7. R² fora da amostra (blocos de 2°) de cada sistema e nível, com o intervalo de 95% entre as 50
 repetições. A linha tracejada marca o melhor de cada variável — as zonas k10 (rosa) nas quatro.*
 
-![R² por esquema de validação](corelacao/resultados/figuras/comparacao_esquemas_validacao.png)
+![R² por esquema de validação](../corelacao/resultados/figuras/comparacao_esquemas_validacao.png)
 *Figura 8. O mesmo R² em cada esquema de validação, para o melhor nível de cada sistema. Com dobras
 aleatórias o R² é otimista (vizinhos no treino); ele cai com blocos maiores. A 5°, o Holdridge alcança as
 zonas k10 no SOC; no silte, as zonas lideram em todos os esquemas.*
@@ -392,7 +392,7 @@ k = 15 como sensibilidade. As zonas numeram-se da mais quente para a mais fria e
 a Amazônia úmida, 2 e 7 o semiárido e seco-subúmido, 9-10 o Sul. A zona atribuída ao ponto bate 100% com o
 mapa.
 
-![Zonas climáticas homogêneas k10](corelacao/resultados/figuras/zonas_k10.png)
+![Zonas climáticas homogêneas k10](../corelacao/resultados/figuras/zonas_k10.png)
 *Figura 9. As 10 zonas climáticas homogêneas, ajustadas por k-means sobre o clima CHELSA dos pixels do
 Brasil. A legenda traz a temperatura média, a chuva anual e o índice de umidade (Im) do centro de cada zona.*
 
@@ -516,7 +516,7 @@ R² de referência (Köppen IPEF): textura 0,82-0,85 (fiel) e 0,29-0,33 (sem C2)
   pouco maior que o dele. As outras covariáveis (bioma, fitofisionomia, índices espectrais) já carregam o que
   a classificação sabe.
 
-![Ganho de R² de cada clima em relação ao Köppen](climas/reproducao/resultados/figuras/ganho_vs_koppen.png)
+![Ganho de R² de cada clima em relação ao Köppen](../climas/reproducao/resultados/figuras/ganho_vs_koppen.png)
 *Figura 10. Ganho de R² de cada clima em relação ao Köppen IPEF, na versão fiel (em cima) e sem a textura da
 coleção 2 (embaixo). Azul: melhor em todas as repetições; laranja: pior em todas; cinza: depende do sorteio.
 Note as escalas: na versão fiel, os ganhos na textura são de milésimos.*
@@ -526,16 +526,16 @@ Note as escalas: na versão fiel, os ganhos na textura são de milésimos.*
   do litoral Sul/Sudeste, e **mais no noroeste do Amazonas, no Acre, em faixas do Centro-Oeste e na costa do
   Nordeste**.
 
-![Mapas de SOC: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_soc_fiel.png)
+![Mapas de SOC: Köppen × clima contínuo](../climas/reproducao/resultados/figuras/mapa_soc_fiel.png)
 *Figura 11. Estoque de SOC de 0-30 cm em 2023 (t/ha), versão fiel: com o Köppen IPEF, com o clima contínuo e
 a diferença entre eles (vermelho = mais carbono com o clima contínuo). Os mapas de SOC têm a correção de
 Duan (seção 7.6).*
 
-![Diferença de SOC de cada clima em relação ao Köppen](climas/reproducao/resultados/figuras/dif_soc_semC2.png)
+![Diferença de SOC de cada clima em relação ao Köppen](../climas/reproducao/resultados/figuras/dif_soc_semC2.png)
 *Figura 12. Diferença de SOC (t/ha) de cada cenário em relação ao Köppen, versão sem textura C2. O clima
 contínuo é o que mais redistribui o carbono (|Δ| médio ≈ 6,7 t/ha); os demais ficam entre 2,8 (sem clima) e 3,4 t/ha.*
 
-![Mapas de argila: Köppen × clima contínuo](climas/reproducao/resultados/figuras/mapa_argila_semC2.png)
+![Mapas de argila: Köppen × clima contínuo](../climas/reproducao/resultados/figuras/mapa_argila_semC2.png)
 *Figura 13. Argila de 0-30 cm (%), versão sem textura C2: Köppen IPEF, clima contínuo e a diferença.*
 
 **Mapas interativos.** Os mapas de SOC, areia, silte e argila de todos os cenários (versão fiel), a diferença

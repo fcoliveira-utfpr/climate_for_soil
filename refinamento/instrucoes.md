@@ -11,7 +11,7 @@ manualmente como asset no Google Earth Engine (GEE)**.
 
 Este repositório (`climate_for_soil`) usa o clima como base para estimar carbono e textura do solo. Hoje a
 base climática é o **CHELSA V2.1** (normal 1991-2020, ~1 km), validado contra estações em
-[`validacao/`](../validacao/) e descrito na seção 2 do [relatório técnico](../relatorio_tecnico.md):
+[`validacao/`](../validacao/) e descrito na seção 2 do [relatório técnico](../relatorios/relatorio_tecnico.md):
 
 | Base | Temperatura (RMSE, viés) | Precipitação mensal (RMSE, viés) |
 |---|---|---|

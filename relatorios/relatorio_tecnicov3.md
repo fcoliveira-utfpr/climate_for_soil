@@ -136,7 +136,7 @@ família de cores por faixa térmica (a paleta do v1 repetia os azuis entre temp
 
 ### 4.1 Köppen-Geiger
 
-![Köppen por década](climas_tempo/resultados/figuras/koppen_decadas.png)
+![Köppen por década](../climas_tempo/resultados/figuras/koppen_decadas.png)
 *Figura 1. Köppen-Geiger por década, Xavier.*
 
 | Classe (% da área) | 1985-1994 | 1995-2004 | 2005-2014 | 2015-2024 |
@@ -155,7 +155,7 @@ centro do semiárido a partir de 2005-2014; o Cfb das serras do Sul encolhe.
 
 ### 4.2 Holdridge (ETP original)
 
-![Holdridge por década](climas_tempo/resultados/figuras/holdridge_decadas.png)
+![Holdridge por década](../climas_tempo/resultados/figuras/holdridge_decadas.png)
 *Figura 2. Zonas de vida de Holdridge por década, Xavier.*
 
 | Zona (% da área) | 1985-1994 | 1995-2004 | 2005-2014 | 2015-2024 |
@@ -184,7 +184,7 @@ esquentam. Como o Brasil está em média na fronteira tropical/subtropical (24 �
 
 ### 4.3 Thornthwaite (CAD do solo)
 
-![Thornthwaite por década](climas_tempo/resultados/figuras/thornthwaite_decadas.png)
+![Thornthwaite por década](../climas_tempo/resultados/figuras/thornthwaite_decadas.png)
 *Figura 3. Classe de umidade de Thornthwaite por década, Xavier.*
 
 | Classe de umidade (% da área) | 1985-1994 | 1995-2004 | 2005-2014 | 2015-2024 |
@@ -206,7 +206,7 @@ do Xavier depende de vento, radiação e umidade, interpolados de bem menos esta
 
 ### 4.4 Zonas k10 (reajustadas no Xavier)
 
-![k10 por década](climas_tempo/resultados/figuras/k10_decadas.png)
+![k10 por década](../climas_tempo/resultados/figuras/k10_decadas.png)
 *Figura 4. Zonas climáticas k10 por década, Xavier.*
 
 | Zona (% da área) | 1985-1994 | 1995-2004 | 2005-2014 | 2015-2024 |
@@ -226,7 +226,7 @@ A zona mais quente e com seca marcada (1) dobra de área; a zona amena (9) cai p
 
 ### 4.5 Mudança de classe e conferência com o CHELSA
 
-![Mudanças](climas_tempo/resultados/figuras/mudancas_1985_2024.png)
+![Mudanças](../climas_tempo/resultados/figuras/mudancas_1985_2024.png)
 *Figura 5. Pixels que mudaram de classe entre 1985-1994 e 2015-2024.*
 
 | Sistema | Área que mudou de classe | Principais transições | Concordância Xavier × CHELSA, 1991-2020 |
@@ -236,7 +236,7 @@ A zona mais quente e com seca marcada (1) dobra de área; a zona amena (9) cai p
 | Thornthwaite (umidade) | 52,5% (L2: 57,6%) | B1 → C2, C2 → C1, B3 → B2 | 41% |
 | k10 | 27,7% | 4 → 1, 3 → 4, 9 → 6 | 76% (após parear as zonas) |
 
-![Conferência com o CHELSA](climas_tempo/resultados/figuras/conferencia_chelsa.png)
+![Conferência com o CHELSA](../climas_tempo/resultados/figuras/conferencia_chelsa.png)
 *Figura 6. Normal 1991-2020: CHELSA (relatório v1, em cima) e Xavier (embaixo).*
 
 A concordância alta no Köppen confirma que o Xavier e o CHELSA descrevem o mesmo clima; a baixa no

@@ -529,11 +529,11 @@ próximo (tolerância de 20 m, casamento 1 para 1). Predições: `prever_painel.
 
 ### 7.2 Trajetória média e efeito do clima (modelo do mapa)
 
-![Trajetória média 1985-2024, modelo do mapa](climas/analise_espaco_tempo/resultados/figuras/trajetorias_media_gee.png)
+![Trajetória média 1985-2024, modelo do mapa](../climas/analise_espaco_tempo/resultados/figuras/trajetorias_media_gee.png)
 *Figura 1. SOC médio de 0-30 cm nos 13.677 locais, 1985-2024: oficial (preto), o Köppen reproduzido
 (tracejado) e os demais cenários, todos com o modelo do mapa e o pós-processamento.*
 
-![Trajetórias por bioma, modelo do mapa](climas/analise_espaco_tempo/resultados/figuras/trajetorias_biomas_gee.png)
+![Trajetórias por bioma, modelo do mapa](../climas/analise_espaco_tempo/resultados/figuras/trajetorias_biomas_gee.png)
 *Figura 2. O mesmo, por bioma.*
 
 | Cenário (modelo do mapa) | SOC médio (t/ha) | Tendência média (t/ha/década) | r da tendência com o Köppen | r da tendência com o oficial | Variação ano a ano | Diferença média absoluta para o Köppen (t/ha) |

@@ -13,7 +13,7 @@ coleção 3**, reproduzidos em Python, com mapas.
 > clima do Brasil) são a melhor classificação. O Köppen IPEF, hoje, praticamente não acrescenta informação
 > ao modelo de SOC.
 
-**Relatório completo:** [relatorio_tecnico.md](relatorio_tecnico.md) (metodologia, decisões, resultados,
+**Relatório completo:** [relatorio_tecnico.md](relatorios/relatorio_tecnico.md) (metodologia, decisões, resultados,
 13 figuras). **Registro de decisões:** [corelacao/docs/memoria_fabricio.md](corelacao/docs/memoria_fabricio.md).
 **Todos os assets do GEE usados:** [climas/dados_chelsa/assets_utilizados.md](climas/dados_chelsa/assets_utilizados.md).
 **Mapas interativos no Google Earth Engine:** [abrir no Code Editor](https://code.earthengine.google.com/11cf918a76a34b07e73edd850b25f0c5)
@@ -155,7 +155,7 @@ relação ao Köppen e as classificações climáticas podem ser explorados no G
 ```
 .
 ├── README.md
-├── relatorio_tecnico.md                 # relatório técnico completo
+├── relatorios/                          # relatórios técnicos v1 a v5 (relatorio_tecnico*.md)
 ├── mapas_gee.js                         # visualizador dos mapas no GEE (Code Editor)
 ├── validacao/                           # estações × Xavier, CHELSA, ERA5-Land, TerraClimate
 │   ├── comparacao_v1.ipynb

@@ -49,7 +49,7 @@ Só dois cenários, iguais em tudo menos no clima:
 chuva mensal = soma. No asset do GEE a temperatura termina em 07/2020 e a chuva em 2022.
 
 **Janelas.** Para cada ano Y de 1985 a 2024, normal mensal de T e de chuva sobre os anos Y−30 a Y−1
-disponíveis ([janelas.csv](climas/koppen_movel30/resultados/tabelas/janelas.csv)):
+disponíveis ([janelas.csv](../climas/koppen_movel30/resultados/tabelas/janelas.csv)):
 
 | Anos Y | Anos com T | Anos com chuva | Observação |
 |---|---|---|---|
@@ -74,14 +74,14 @@ Métricas do MapBiomas em t/ha, 0-30 cm.
 
 ## 3. O Köppen móvel: quanto o clima mudou de classe
 
-![Köppen móvel por ano](climas/koppen_movel30/resultados/figuras/koppen_movel30_anos.png)
+![Köppen móvel por ano](../climas/koppen_movel30/resultados/figuras/koppen_movel30_anos.png)
 
 **Consistência.** O mapa de 2021 (janela 1991-2020) concorda em **87,8%** da área com o Köppen do CHELSA
-1991-2020 do v1 ([conferencia_chelsa.csv](climas/koppen_movel30/resultados/tabelas/conferencia_chelsa.csv)),
+1991-2020 do v1 ([conferencia_chelsa.csv](../climas/koppen_movel30/resultados/tabelas/conferencia_chelsa.csv)),
 com as diferenças nas fronteiras entre classes.
 
 **Quanto muda.** Em 2024, **15,8%** da área do Brasil está em classe diferente da de 1985
-([mudancas.csv](climas/koppen_movel30/resultados/tabelas/mudancas.csv)):
+([mudancas.csv](../climas/koppen_movel30/resultados/tabelas/mudancas.csv)):
 
 | Transição 1985 → 2024 | Área do Brasil (%) |
 |---|---|
@@ -95,10 +95,10 @@ com as diferenças nas fronteiras entre classes.
 São as transições esperadas: secamento no arco do desmatamento (Am → Aw, Af → Am), expansão do semiárido
 (Aw → BSh, As → BSh) e aquecimento no Sudeste (Cwa → Aw).
 
-![Mudanças 1985-2024](climas/koppen_movel30/resultados/figuras/mudancas_movel30.png)
+![Mudanças 1985-2024](../climas/koppen_movel30/resultados/figuras/mudancas_movel30.png)
 
 **Ano a ano**, a cada ano entre 0,9% e 2,7% da área troca de classe (média 1,6%,
-[mudancas_por_ano.csv](climas/koppen_movel30/resultados/tabelas/mudancas_por_ano.csv)). As janelas incompletas
+[mudancas_por_ano.csv](../climas/koppen_movel30/resultados/tabelas/mudancas_por_ano.csv)). As janelas incompletas
 de 2021-2024 não produzem um salto: 2021 troca 2,1% (dentro da faixa dos anos completos) e 2022-2024 trocam
 1,0-1,5%, abaixo da média.
 
@@ -112,7 +112,7 @@ ou mais, e só 2.961 locais terminam 2024 em classe diferente da de 1985 (1.361 
 ## 4. Validação fora da amostra
 
 MEC em 0-30 cm, só amostras reais; entre parênteses, o ganho sobre o Köppen IPEF e, entre colchetes, o mínimo e
-o máximo nas 3 repetições ([movel30_resumo.csv](climas/koppen_movel30/resultados/tabelas/movel30_resumo.csv)):
+o máximo nas 3 repetições ([movel30_resumo.csv](../climas/koppen_movel30/resultados/tabelas/movel30_resumo.csv)):
 
 | Modelo | Cenário | V2 espacial | V3 temporal | V4 espaço-temporal |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ Com todas as amostras de 0-30 cm a leitura é a mesma (ranger: −0,007, +0,008,
 
 **Importância.** No modelo final do ranger, as dummies do Köppen móvel somam 3,2% da importância por impureza
 (a melhor na posição 27, `Cfb`), contra 2,8% do Köppen IPEF (melhor na posição 29)
-([importancia_movel30.csv](climas/koppen_movel30/resultados/tabelas/importancia_movel30.csv)). O OOB R² é
+([importancia_movel30.csv](../climas/koppen_movel30/resultados/tabelas/importancia_movel30.csv)). O OOB R² é
 praticamente o mesmo (0,726 contra 0,727).
 
 ---
@@ -141,9 +141,9 @@ praticamente o mesmo (0,726 contra 0,727).
 
 Modelos finais (matriz inteira) dos dois cenários aplicados ao painel local × ano, 0-30 cm, comparados entre
 si e com o SOC oficial da C3 nos mesmos locais e anos
-([trajetorias_movel30_*.csv](climas/koppen_movel30/resultados/tabelas/)).
+([trajetorias_movel30_*.csv](../climas/koppen_movel30/resultados/tabelas/)).
 
-**Efeito geral** ([trajetorias_movel30_efeito_clima.csv](climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_efeito_clima.csv)):
+**Efeito geral** ([trajetorias_movel30_efeito_clima.csv](../climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_efeito_clima.csv)):
 
 | Modelo | Série | SOC médio (t/ha) | Tendência média (t/ha/década) | r da tendência com a oficial | Variação anual média (t/ha) | Diferença absoluta média para o IPEF (t/ha) |
 |---|---|---|---|---|---|---|
@@ -158,11 +158,11 @@ tendência com o mapa oficial igual. Local a local, ele desloca o SOC previsto e
 relação ao IPEF.
 
 **Locais que mudaram de classe × que não mudaram**
-([trajetorias_movel30_grupos.csv](climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_grupos.csv)):
+([trajetorias_movel30_grupos.csv](../climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_grupos.csv)):
 
-![Trajetórias, ranger](climas/koppen_movel30/resultados/figuras/trajetorias_movel30.png)
+![Trajetórias, ranger](../climas/koppen_movel30/resultados/figuras/trajetorias_movel30.png)
 
-![Trajetórias, modelo do mapa](climas/koppen_movel30/resultados/figuras/trajetorias_movel30_gee.png)
+![Trajetórias, modelo do mapa](../climas/koppen_movel30/resultados/figuras/trajetorias_movel30_gee.png)
 
 - Nos 9.798 locais **sem mudança de classe**, as duas trajetórias coincidem, como deveriam: as mesmas
   covariáveis e a mesma classe em todos os anos.
@@ -177,7 +177,7 @@ relação ao IPEF.
   que o modelo do mapa usa a troca de classe para separar locais que estão perdendo carbono (mais secos), mas
   não diz que ele acerta: o SOC oficial é produto de outro modelo, não verdade de campo.
 
-**Conversões de uso** ([trajetorias_movel30_conversoes.csv](climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_conversoes.csv)):
+**Conversões de uso** ([trajetorias_movel30_conversoes.csv](../climas/koppen_movel30/resultados/tabelas/trajetorias_movel30_conversoes.csv)):
 a variação do SOC 5 anos depois de uma conversão vegetação natural → agropecuária é quase a mesma nos dois
 cenários (ranger −1,5 contra −1,7 t/ha; mapa −0,6 contra −0,7 t/ha). O clima não muda a resposta ao uso.
 
@@ -230,7 +230,7 @@ cenários (ranger −1,5 contra −1,7 t/ha; mapa −0,6 contra −0,7 t/ha). O 
 
 Código em `climas/koppen_movel30/codigo/` (versionado); dados por pixel e por ponto em
 `climas/dados_koppen_movel30/` (fora do git); figuras e tabelas em `climas/koppen_movel30/resultados/`;
-decisões em [planejamento.md](climas/koppen_movel30/planejamento.md).
+decisões em [planejamento.md](../climas/koppen_movel30/planejamento.md).
 
 | Etapa | Comando (em `climas/koppen_movel30/codigo/`) | Saída principal |
 |---|---|---|

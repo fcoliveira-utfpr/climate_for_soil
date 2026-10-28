@@ -103,7 +103,7 @@ emulado). Métricas `error_statistics` do MapBiomas em t/ha, **nas amostras reai
 | Balanço hídrico, CAD 100 (9) | DEF, EXC, ETR, ETR/ETo, Ih, Ia, Im, meses com deficiência (> 5 mm), armazenamento médio (ARM) | DEF 237 mm; EXC 625 mm |
 | Balanço hídrico, CAD do solo (9) | as mesmas | DEF 233 mm; ARM 78 mm |
 
-![Correlação entre as variáveis decenais](clima_decenal/resultados/figuras/correlacao_cd.png)
+![Correlação entre as variáveis decenais](../clima_decenal/resultados/figuras/correlacao_cd.png)
 *Figura 1. Correlação de Spearman entre as 39 variáveis, nas amostras reais (linhas pretas separam os grupos).*
 
 **85 pares de variáveis têm |r| > 0,9.** As duas versões do balanço hídrico são quase idênticas (como no v1:
@@ -189,7 +189,7 @@ redundância (com a variável sozinha, a "gêmea" compensa).
 | Balanço hídrico CAD 100 | +0,045 | **−0,011** [−0,013; −0,008] | **−0,060** [−0,063; −0,053] |
 | Balanço hídrico CAD do solo | +0,032 | −0,008 | −0,054 |
 
-![Importância por permutação](clima_decenal/resultados/figuras/importancia_cd.png)
+![Importância por permutação](../clima_decenal/resultados/figuras/importancia_cd.png)
 *Figura 2. Importância de cada variável fora da amostra (queda do MEC ao embaralhá-la no teste), em V2, V3 e
 V4; ordenada pela V3. Barras à esquerda do zero: a variável atrapalha.*
 
