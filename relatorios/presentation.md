@@ -8,7 +8,7 @@ title: Clima para estimativas de SOC no MapBiomas Solo
 
 **Existe uma representação do clima melhor que o Köppen para o modelo de carbono orgânico do solo?**
 
-Síntese dos relatórios técnicos v1 a v6 (outubro de 2026)
+Síntese dos relatórios técnicos v1 a v7 (outubro de 2026)
 Fabrício Correia de Oliveira (UTFPR)
 
 ---
@@ -25,7 +25,7 @@ Fabrício Correia de Oliveira (UTFPR)
 
 ---
 
-## Caminho percorrido: 6 experimentos
+## Caminho percorrido: 7 experimentos
 
 | | Experimento | Tratamentos de clima testados |
 |---|---|---|
@@ -35,10 +35,11 @@ Fabrício Correia de Oliveira (UTFPR)
 | **v4** | 39 variáveis decenais (ETo pelo Rn, balanço hídrico) | 5 grupos: temperatura, chuva, energia, balanço hídrico (2 CADs); todas; com seleção |
 | **v5** | Köppen **dinâmico** por média móvel de 30 anos | Köppen recalculado a cada ano (normal Y−30 a Y−1) |
 | **v6** | Validação final em **partições novas** | conjunto curto (temperatura + CDD + ARM), híbrido (temperatura + hídrico estático), contra as referências |
+| **v7** | Conjunto curto com o **Xavier v3.2.4** (até 2025) | mesmo teste do v6 com a grade nova; Köppen 1991-2020 e normal no GEE |
 
 ---
 
-## Como foi feito (comum a v2-v6)
+## Como foi feito (comum a v2-v7)
 
 - **Matriz de treino idêntica à de produção** (`trainingFinal`: 27.425 linhas); o OOB publicado pelo MapBiomas
   foi reproduzido na 2ª casa decimal (MEC 0,73 e 0,58).
@@ -275,6 +276,36 @@ Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada c�
 
 ---
 
+## v7: com a grade nova do Xavier (v3.2.4, até 2025)
+
+Até o v6, o Xavier do GEE parava em **07/2020** (temperatura, umidade, radiação, vento) e **2022** (chuva): as
+janelas de 2021-2024 ficavam incompletas. A **v3.2.4** do autor vai até **31/12/2025** em todas as variáveis.
+
+| Ganho sobre o Köppen | Ranger V2 | V3 | V4 | Mapa V2 | V3 | V4 |
+|---|---|---|---|---|---|---|
+| Conjunto curto, Xavier v3.2.2 (v6) | +0,017 | +0,022 | +0,017 | +0,018 | +0,017 | +0,023 |
+| **Conjunto curto, Xavier v3.2.4 (v7)** | **+0,014** | **+0,019** | **+0,020** | **+0,012** | **+0,015** | **+0,022** |
+
+- **A recomendação se mantém:** ganha nos 6 casos, em todas as repetições (pior repetição +0,006).
+- A versão do Xavier muda a validação em no máximo ±0,005, dentro do ruído entre repetições.
+- **Trajetórias:** iguais até 2020; depois, a queda é um pouco maior (−0,2 t/ha em 2024 no Brasil, −1,0 no
+  Pantanal), porque o **ARM** deixa de ficar parado em 2020. A temperatura de 2024 quase não muda.
+
+---
+
+## v7: Köppen 1991-2020 e normal do Xavier no GEE
+
+![w:420](../C4/resultados/koppen_xavier_1991_2020/koppen_xavier_1991_2020.png)
+
+- Köppen-Geiger com a normal **completa** 1991-2020 do Xavier v3.2.4 (`agrometeorologiapy`, Alvares et al.
+  2013): Aw 46%, Af 19%, Am 18%, BSh 7%, Cfa 6%.
+- Concordância: 97,6% com o Xavier antigo e 87,8% com o CHELSA 1991-2020.
+- **Publicados em `projects/fcoliveira/assets/Climas2/`**, com descrição, legenda e exemplo de código:
+  - `koppen_xavier_1991_2020` (com e sem filtro de moda);
+  - `xavier_normal_1991_2020` (temperatura e chuva mensais e anuais).
+
+---
+
 ## Quadro geral dos tratamentos
 
 | Tratamento | Espaço (V2) | Tempo (V3) | Espaço-tempo (V4) | Veredito |
@@ -287,7 +318,7 @@ Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada c�
 | Contínuo estático (CHELSA) | **++** | − (mapa) | ≈ | melhor no espaço |
 | **Contínuo decenal** | **+** | **+** | **+** | ganha nos 3 esquemas, nos 2 modelos e em 26/27 algoritmos |
 | **Temperatura decenal** | **+** | **++** | **++** | maior ganho no tempo |
-| **Conjunto curto (v6)** | **++** | **++** | **++** | **ganha nos 6 casos em todas as repetições, também em partições novas** |
+| **Conjunto curto (v6, v7)** | **++** | **++** | **++** | **ganha nos 6 casos em todas as repetições, em partições novas e com as duas versões do Xavier** |
 | Híbrido: temperatura + hídrico estático (v6) | + | − | − | as normais hídricas tiram ganho no tempo |
 | 39 variáveis decenais juntas | ≈ | − | −− | redundância e ruído |
 | Estratificar por zona (v1) | − | | | piora |
@@ -321,14 +352,17 @@ Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada c�
 
 ## Por que 1: conjunto curto decenal
 
-- **Venceu a validação final (v6):** ganha do Köppen nas 6 combinações de modelo e esquema, em **todas as
-  repetições** e em partições que não foram usadas para escolhê-lo: +0,017 a +0,023 de MEC.
+- **Venceu a validação final (v6) e se manteve com a grade nova do Xavier (v7):** ganha do Köppen nas 6
+  combinações de modelo e esquema, em **todas as repetições** e em partições que não foram usadas para
+  escolhê-lo: +0,012 a +0,023 de MEC.
 - É o **maior ganho médio** de todos os cenários testados, nos dois modelos (+0,019).
 - **Por que essas variáveis:**
   - a **temperatura** é o único clima que ajuda no tempo (v4) e tem tendência suave e bem medida;
   - o **CDD** e o **ARM com a CAD do solo** acrescentam no espaço sem perder no tempo (o ARM traz a água que o
     solo consegue guardar).
 - **Núcleo mínimo:** só as 7 de temperatura já entregam quase todo o ganho.
+- **Dados:** usar o Xavier **v3.2.4** (`projects/ee-alexandrexavier/assets/BR-DWGD`, até 2025): janelas
+  completas até 2026.
 - **Custo:** as variáveis foram calculadas aqui (Xavier + `agrometeorologiapy`); precisam ser publicadas como
   assets anuais no GEE.
 
@@ -371,10 +405,10 @@ Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada c�
 
 ## Próximos passos
 
-1. **Publicar as 9 variáveis do conjunto curto como assets anuais no GEE** (1985-2024, grade do Xavier),
-   para o script de produção do MapBiomas.
+1. **Publicar as 9 variáveis do conjunto curto como assets anuais no GEE** (1985-2026, Xavier v3.2.4), na
+   pasta `Climas2`, para o script de produção do MapBiomas.
 2. Levar o conjunto curto ao **mapa com o ranger** (ou aumentar o maxNodes no GEE): é o maior ganho disponível.
-3. Completar 2020-2024 com o Xavier atualizado (no GEE, a temperatura acaba em 07/2020).
+3. Estender o mapa a 2025-2026: o clima já está calculado com janelas completas (v7).
 4. **Validar a queda temporal do SOC:** testar janelas mais longas para a temperatura (20-30 anos) e comparar
    com experimentos de longa duração e locais com coletas repetidas.
 
@@ -382,5 +416,5 @@ Partições novas; amostras reais de 0-30 cm; média das 3 repetições. Cada c�
 
 # Obrigado
 
-Relatórios completos em `relatorios/`: `relatorio_tecnico.md` (v1) a `relatorio_tecnicov6.md`
+Relatórios completos em `relatorios/`: `relatorio_tecnico.md` (v1) a `relatorio_tecnicov7.md`
 Código e resultados: GitHub `fcoliveira-utfpr/climate_for_soil`

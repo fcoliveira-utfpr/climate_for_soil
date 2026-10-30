@@ -1,0 +1,38 @@
+arquivo,banda,descricao,unidade,min,media,max
+koppen_xavier_1991_2020_niveis.tif,grupo,"grupo: 1 A, 2 B, 3 C, 4 D, 5 E",classe,1.000,1.247,3.000
+koppen_xavier_1991_2020_niveis.tif,subgrupo,"subgrupo: 1 Af, 2 Am, 3 As, 4 Aw, 5 BS, 6 BW, 7 Cf, 8 Cs, 9 Cw",classe,1.000,3.440,9.000
+koppen_xavier_1991_2020_criterios.tif,t_anual,temperatura média anual,°C,12.771,25.661,28.906
+koppen_xavier_1991_2020_criterios.tif,t_mes_frio,temperatura do mês mais frio,°C,8.955,23.770,27.996
+koppen_xavier_1991_2020_criterios.tif,t_mes_quente,temperatura do mês mais quente,°C,15.808,27.295,31.198
+koppen_xavier_1991_2020_criterios.tif,meses_t10,meses com T > 10 °C,meses,10.000,12.000,12.000
+koppen_xavier_1991_2020_criterios.tif,p_anual,chuva anual,mm,370.317,1719.640,3800.834
+koppen_xavier_1991_2020_criterios.tif,p_mes_seco,chuva do mês mais seco,mm,0.005,38.382,234.170
+koppen_xavier_1991_2020_criterios.tif,frac_p_verao,fração da chuva no semestre de verão (out-mar no sul),fração,0.223,0.704,0.936
+koppen_xavier_1991_2020_criterios.tif,limiar_aridez,"limiar de aridez do grupo B (2T + 0, 14 ou 28)",cm,40.125,72.932,85.699
+koppen_xavier_1991_2020_criterios.tif,razao_aridez,"chuva anual / (10 x limiar de aridez): < 1 = B; < 0,5 = BW",adimensional,0.454,2.407,5.869
+koppen_xavier_1991_2020_criterios.tif,limiar_am,limiar Am/Aw: 100 - chuva anual / 25,mm,-52.033,31.214,85.187
+koppen_xavier_1991_2020_criterios.tif,margem_am,chuva do mês mais seco - limiar Am/Aw (>= 0 -> Am quando < 60 mm),mm,-83.610,7.168,277.443
+xavier_normal_1991_2020.tif,T_01,temperatura média do mês 01,°C,15.501,26.310,29.804
+xavier_normal_1991_2020.tif,T_02,temperatura média do mês 02,°C,15.808,26.244,29.477
+xavier_normal_1991_2020.tif,T_03,temperatura média do mês 03,°C,14.933,26.160,29.514
+xavier_normal_1991_2020.tif,T_04,temperatura média do mês 04,°C,13.382,25.735,29.074
+xavier_normal_1991_2020.tif,T_05,temperatura média do mês 05,°C,10.507,24.726,28.541
+xavier_normal_1991_2020.tif,T_06,temperatura média do mês 06,°C,9.225,24.064,28.370
+xavier_normal_1991_2020.tif,T_07,temperatura média do mês 07,°C,8.955,23.893,28.371
+xavier_normal_1991_2020.tif,T_08,temperatura média do mês 08,°C,10.164,24.971,29.582
+xavier_normal_1991_2020.tif,T_09,temperatura média do mês 09,°C,11.149,26.119,30.937
+xavier_normal_1991_2020.tif,T_10,temperatura média do mês 10,°C,12.881,26.717,31.198
+xavier_normal_1991_2020.tif,T_11,temperatura média do mês 11,°C,14.038,26.521,30.788
+xavier_normal_1991_2020.tif,T_12,temperatura média do mês 12,°C,15.253,26.477,30.317
+xavier_normal_1991_2020.tif,P_01,chuva do mês 01,mm/mês,21.073,229.096,514.045
+xavier_normal_1991_2020.tif,P_02,chuva do mês 02,mm/mês,22.441,216.540,545.619
+xavier_normal_1991_2020.tif,P_03,chuva do mês 03,mm/mês,31.070,232.792,591.165
+xavier_normal_1991_2020.tif,P_04,chuva do mês 04,mm/mês,31.202,181.156,611.846
+xavier_normal_1991_2020.tif,P_05,chuva do mês 05,mm/mês,5.732,131.731,542.538
+xavier_normal_1991_2020.tif,P_06,chuva do mês 06,mm/mês,0.433,80.234,390.668
+xavier_normal_1991_2020.tif,P_07,chuva do mês 07,mm/mês,0.009,61.814,366.943
+xavier_normal_1991_2020.tif,P_08,chuva do mês 08,mm/mês,0.005,50.172,271.894
+xavier_normal_1991_2020.tif,P_09,chuva do mês 09,mm/mês,0.005,70.486,234.565
+xavier_normal_1991_2020.tif,P_10,chuva do mês 10,mm/mês,0.130,113.596,268.926
+xavier_normal_1991_2020.tif,P_11,chuva do mês 11,mm/mês,0.436,156.048,335.079
+xavier_normal_1991_2020.tif,P_12,chuva do mês 12,mm/mês,6.024,195.976,390.689
