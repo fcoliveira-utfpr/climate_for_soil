@@ -109,121 +109,197 @@ valor do pixel); no ranger fica empatada no espaço (−0,002) e melhora no temp
   (experimentos de longa duração). As imagens de 2025 e 2026 estão calculadas, mas o painel de covariáveis
   usado na validação ia até 2024.
 
-**Como usar: o módulo `clima_curto` (recomendado)**
+**Como usar**
 
-O GEE usa o vizinho mais próximo por padrão; sem `.resample('bilinear')` o modelo vê degraus de 11 km. O módulo
-abaixo devolve o clima com a bilinear e deve ser usado **no treino e no mapa**, para que o modelo veja os mesmos
-valores nos dois.
+Amostre sempre com **interpolação bilinear** (`.resample('bilinear')`), no treino e no mapa: o GEE usa o vizinho
+mais próximo por padrão, e sem a bilinear o modelo vê degraus de 11 km. Os códigos abaixo são completos: cole num
+script novo do Code Editor e clique em Run.
 
-1. No Code Editor, crie um script num repositório (por exemplo `users/SEU_USUARIO/SEU_REPOSITORIO:clima_curto`) e
-   cole o código do módulo (também em github.com/fcoliveira-utfpr/climate_for_soil, `C4/gee/clima_curto.js`).
-2. Nos scripts do modelo, carregue com `require` e use as funções `amostrar` (treino), `empilhar` e `climaDoAno`
-   (mapa).
+**1. Visualizador (Code Editor, JavaScript)**
 
-**Código do módulo `clima_curto`**
+Seletor de variável e de ano, legenda, estatísticas no console e valores das 9 variáveis no ponto clicado.
 
 ```javascript
-/**
- * Módulo: conjunto curto de clima decenal para o modelo de SOC do MapBiomas Solo (Xavier BR-DWGD v3.2.4).
- * Todas as funções devolvem o clima com interpolação BILINEAR, a forma validada.
- * Autor: Fabrício Correia de Oliveira (UTFPR). Código: github.com/fcoliveira-utfpr/climate_for_soil (C4/gee).
- */
+// ===== Xavier v3.2.4 | Conjunto curto de clima decenal | 1985-2026 | Visualizador =====
 var COLECAO = 'projects/fcoliveira/assets/Climas2/xavier_conjunto_curto_decenal';
-var BANDAS = ['cd_t_media', 'cd_tmax_media', 'cd_tmin_media', 'cd_t_mes_quente', 'cd_t_mes_frio',
-              'cd_amplitude', 'cd_biotemp', 'cd_cdd', 'cd_arm_csolo'];
-var ANO_MIN = 1985;
-var ANO_MAX = 2026;
+var col = ee.ImageCollection(COLECAO);
+var ANO_MIN = 1985, ANO_MAX = 2026;
 
-exports.BANDAS = BANDAS;
-exports.colecao = ee.ImageCollection(COLECAO);
+// Inspeção da coleção
+print('Nº de imagens:', col.size());
+print('Anos disponíveis:', col.aggregate_array('year').sort());
+print('Primeira imagem:', col.first());
 
-/** As 9 variáveis do ano (1985-2026), com interpolação bilinear. Anos fora da faixa usam o extremo mais próximo. */
-exports.climaDoAno = function (ano) {
-  var a = ee.Number(ano).max(ANO_MIN).min(ANO_MAX);
-  return ee.Image(ee.ImageCollection(COLECAO).filter(ee.Filter.eq('year', a)).first())
-    .select(BANDAS)
-    .resample('bilinear');
-};
-
-/** Acrescenta o clima do ano a uma imagem de covariáveis (para o mapa do ano). */
-exports.empilhar = function (covariaveis, ano) {
-  return ee.Image(covariaveis).addBands(exports.climaDoAno(ano));
-};
-
-/** Clima de cada amostra no ano dela (para o treino). campoAno: propriedade com o ano (padrão 'year'). */
-exports.amostrar = function (amostras, campoAno, escala) {
-  campoAno = campoAno || 'year';
-  escala = escala || 30;
-  amostras = ee.FeatureCollection(amostras);
-  var anos = amostras.aggregate_array(campoAno).distinct();
-  return ee.FeatureCollection(anos.map(function (a) {
-    return exports.climaDoAno(a).sampleRegions({
-      collection: amostras.filter(ee.Filter.eq(campoAno, a)),
-      scale: escala,
-      geometries: true
-    });
-  })).flatten();
-};
-```
-
-**Google Earth Engine (Code Editor, JavaScript)**
-
-```javascript
-// ===== Xavier v3.2.4 | Conjunto curto de clima decenal | 1985-2026 | Brasil 0,1° =====
-var clima = require('users/SEU_USUARIO/SEU_REPOSITORIO:clima_curto');
-
-// Treino: o clima de cada amostra no ano dela (propriedade 'year'), com a mesma interpolação do mapa
-var amostras = ee.FeatureCollection('...');            // amostras de SOC com a propriedade 'year'
-var treino = clima.amostrar(amostras, 'year', 30);     // acrescenta as 9 bandas como propriedades
-
-// Mapa do ano: as demais covariáveis do ano + o clima do mesmo ano
-var ano = 2020;
-// var pilha = clima.empilhar(covariaveisDoAno, ano);
-// var rf = ee.Classifier.smileRandomForest(...).setOutputMode('REGRESSION')
-//            .train(treino, 'carbono', clima.BANDAS.concat(outrasBandas));
-// var soc = pilha.classify(rf);
-
-// Visualização
+// Brasil (FAO GAUL 2015, com as ilhas oceânicas)
 var brasil = ee.FeatureCollection('FAO/GAUL/2015/level0').filter(ee.Filter.eq('ADM0_NAME', 'Brazil'));
-var paleta = ['#313695', '#4575b4', '#74add1', '#abd9e9', '#ffffbf', '#fdae61', '#f46d43', '#d73027', '#a50026'];
-var visT = {min: 14, max: 28, palette: paleta};
-var visArm = {min: 0, max: 200, palette: ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e']};
-var c = clima.climaDoAno(ano);
-Map.setCenter(-52, -14, 4);
-Map.addLayer(c.select('cd_t_media').clip(brasil), visT, 'T média ' + ano + ' (°C)');
-Map.addLayer(c.select('cd_arm_csolo').clip(brasil), visArm, 'ARM ' + ano + ' (mm)', false);
-Map.addLayer(c.select('cd_cdd').clip(brasil), {min: 10, max: 150, palette: ['#ffffd4', '#fe9929', '#993404']},
-             'CDD ' + ano + ' (dias)', false);
-Map.addLayer(ee.Image().paint(brasil, 0, 1), {palette: ['000000']}, 'Limite do Brasil');
+var limite = ee.Image().paint(brasil, 0, 1);
 
-// Legenda (barra de cores contínua)
-function legenda(titulo, vis, posicao) {
+// Paletas
+var PAL_T = ['#313695', '#4575b4', '#74add1', '#abd9e9', '#ffffbf', '#fdae61', '#f46d43', '#d73027', '#a50026'];
+var PAL_AMP = ['#f7fcf5', '#c7e9c0', '#74c476', '#238b45', '#00441b'];
+var PAL_CDD = ['#ffffd4', '#fe9929', '#993404'];
+var PAL_ARM = ['#8c510a', '#d8b365', '#f6e8c3', '#c7eae5', '#5ab4ac', '#01665e'];
+
+// Variáveis e faixas de visualização (ajuste min/max conforme as estatísticas impressas no console)
+var VARS = {
+  'Temperatura média (°C)':             {banda: 'cd_t_media',      vis: {min: 14, max: 28, palette: PAL_T}},
+  'Temperatura máxima média (°C)':      {banda: 'cd_tmax_media',   vis: {min: 20, max: 34, palette: PAL_T}},
+  'Temperatura mínima média (°C)':      {banda: 'cd_tmin_media',   vis: {min: 8,  max: 24, palette: PAL_T}},
+  'T do mês mais quente (°C)':          {banda: 'cd_t_mes_quente', vis: {min: 18, max: 32, palette: PAL_T}},
+  'T do mês mais frio (°C)':            {banda: 'cd_t_mes_frio',   vis: {min: 8,  max: 28, palette: PAL_T}},
+  'Amplitude térmica diária (°C)':      {banda: 'cd_amplitude',    vis: {min: 6,  max: 16, palette: PAL_AMP}},
+  'Biotemperatura (°C)':                {banda: 'cd_biotemp',      vis: {min: 12, max: 28, palette: PAL_T}},
+  'Dias secos consecutivos (dias)':     {banda: 'cd_cdd',          vis: {min: 10, max: 150, palette: PAL_CDD}},
+  'Armazenamento de água no solo (mm)': {banda: 'cd_arm_csolo',    vis: {min: 0,  max: 200, palette: PAL_ARM}}
+};
+var NOMES = Object.keys(VARS);
+var BANDAS = NOMES.map(function (n) { return VARS[n].banda; });
+
+// Estado
+var estado = {ano: 2020, nome: NOMES[0]};
+
+function imagemDoAno(ano) {
+  return ee.Image(col.filter(ee.Filter.eq('year', ano)).first())
+    .select(BANDAS).resample('bilinear').clip(brasil);
+}
+
+// Legenda
+var painelLegenda = ui.Panel({style: {position: 'bottom-left', padding: '8px 15px'}});
+function atualizarLegenda(titulo, vis) {
+  painelLegenda.clear();
   var barra = ui.Thumbnail({
     image: ee.Image.pixelLonLat().select(0).multiply((vis.max - vis.min) / 100).add(vis.min).visualize(vis),
     params: {bbox: [0, 0, 100, 10], dimensions: '200x12'},
     style: {stretch: 'horizontal', margin: '0 8px', maxHeight: '20px'}
   });
-  var rotulos = ui.Panel([ui.Label(String(vis.min), {margin: '4px 8px'}),
+  var rotulos = ui.Panel([
+    ui.Label(String(vis.min), {margin: '4px 8px'}),
     ui.Label(String((vis.min + vis.max) / 2), {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
-    ui.Label(String(vis.max), {margin: '4px 8px'})], ui.Panel.Layout.flow('horizontal'));
-  return ui.Panel({widgets: [ui.Label(titulo, {fontWeight: 'bold', fontSize: '13px'}), barra, rotulos],
-                   style: {position: posicao, padding: '8px 15px'}});
+    ui.Label(String(vis.max), {margin: '4px 8px'})
+  ], ui.Panel.Layout.flow('horizontal'));
+  painelLegenda.add(ui.Label(titulo, {fontWeight: 'bold', fontSize: '13px'}));
+  painelLegenda.add(barra);
+  painelLegenda.add(rotulos);
 }
-Map.add(legenda('Temperatura média decenal (°C)', visT, 'bottom-left'));
 
-// Série 1985-2026 num ponto (Santa Helena/PR)
-var ponto = ee.Geometry.Point([-54.33, -24.86]);
-var serie = clima.colecao.map(function (img) {
-  var v = img.select(['cd_t_media', 'cd_arm_csolo']).resample('bilinear')
-             .reduceRegion(ee.Reducer.first(), ponto, 30);
-  return ee.Feature(null, v).set('ano', img.get('year'));
+// Desenho do mapa
+function desenhar() {
+  var v = VARS[estado.nome];
+  var img = imagemDoAno(estado.ano).select(v.banda);
+  Map.layers().reset();
+  Map.addLayer(img, v.vis, estado.nome + ' | ' + estado.ano);
+  Map.addLayer(limite, {palette: ['000000']}, 'Limite do Brasil');
+  atualizarLegenda(estado.nome + ' | ' + estado.ano, v.vis);
+
+  // Estatísticas no Brasil (percentis 2 e 98) para conferir as faixas de visualização
+  img.reduceRegion({
+    reducer: ee.Reducer.percentile([2, 98]).combine(ee.Reducer.mean(), '', true),
+    geometry: brasil.geometry(), scale: 11132, maxPixels: 1e9, bestEffort: true
+  }).evaluate(function (s) { print(estado.nome + ' ' + estado.ano + ' (P2, P98, média):', s); });
+}
+
+// Controles
+var seletor = ui.Select({
+  items: NOMES, value: estado.nome,
+  onChange: function (n) { estado.nome = n; desenhar(); },
+  style: {stretch: 'horizontal'}
 });
-print(ui.Chart.feature.byFeature(serie.sort('ano'), 'ano', ['cd_t_media'])
-  .setOptions({title: 'Temperatura média decenal | Santa Helena/PR', hAxis: {title: 'Ano', format: '####'},
-               vAxis: {title: '°C'}, colors: ['#d73027'], lineWidth: 2, pointSize: 3, legend: {position: 'none'}}));
+var slider = ui.Slider({
+  min: ANO_MIN, max: ANO_MAX, value: estado.ano, step: 1,
+  onChange: function (a) { estado.ano = a; desenhar(); },
+  style: {stretch: 'horizontal'}
+});
+var painelInfo = ui.Label('Clique no mapa para ver as 9 variáveis no ponto.', {fontSize: '12px', whiteSpace: 'pre'});
+
+var painel = ui.Panel({
+  widgets: [
+    ui.Label('Clima decenal | Xavier v3.2.4', {fontWeight: 'bold', fontSize: '15px'}),
+    ui.Label('Variável'), seletor,
+    ui.Label('Ano'), slider,
+    painelInfo
+  ],
+  style: {width: '320px', padding: '8px'}
+});
+ui.root.insert(0, painel);
+Map.add(painelLegenda);
+
+// Valores no ponto clicado
+Map.style().set('cursor', 'crosshair');
+Map.onClick(function (coords) {
+  var pt = ee.Geometry.Point([coords.lon, coords.lat]);
+  painelInfo.setValue('Consultando...');
+  imagemDoAno(estado.ano).reduceRegion(ee.Reducer.first(), pt, 30).evaluate(function (v) {
+    if (!v) { painelInfo.setValue('Sem dados no ponto.'); return; }
+    var txt = 'Lon ' + coords.lon.toFixed(3) + ' | Lat ' + coords.lat.toFixed(3) + ' | ' + estado.ano + '\n';
+    NOMES.forEach(function (n) {
+      var x = v[VARS[n].banda];
+      txt += n + ': ' + (x === null ? '—' : x.toFixed(2)) + '\n';
+    });
+    painelInfo.setValue(txt);
+  });
+});
+
+Map.setCenter(-52, -14, 4);
+desenhar();
 ```
 
-**Google Colab (Python)**
+**2. No modelo de SOC (Code Editor, JavaScript)**
+
+O clima de cada amostra no ano dela (treino) e o clima de um ano empilhado nas demais covariáveis (mapa), com a
+mesma bilinear nos dois. Troque as amostras de teste pelas amostras de SOC (com a propriedade `year`).
+
+```javascript
+// ===== Xavier v3.2.4 | Conjunto curto de clima decenal | Uso no modelo de SOC =====
+var COLECAO = 'projects/fcoliveira/assets/Climas2/xavier_conjunto_curto_decenal';
+var BANDAS = ['cd_t_media', 'cd_tmax_media', 'cd_tmin_media', 'cd_t_mes_quente', 'cd_t_mes_frio',
+              'cd_amplitude', 'cd_biotemp', 'cd_cdd', 'cd_arm_csolo'];
+
+// As 9 variáveis do ano (1985-2026), com interpolação bilinear; anos fora da faixa usam o extremo mais próximo
+function climaDoAno(ano) {
+  var a = ee.Number(ano).max(1985).min(2026);
+  return ee.Image(ee.ImageCollection(COLECAO).filter(ee.Filter.eq('year', a)).first())
+    .select(BANDAS).resample('bilinear');
+}
+
+// Clima de cada amostra no ano dela (campoAno: propriedade com o ano)
+function amostrar(amostras, campoAno, escala) {
+  amostras = ee.FeatureCollection(amostras);
+  var anos = amostras.aggregate_array(campoAno).distinct();
+  return ee.FeatureCollection(anos.map(function (a) {
+    return climaDoAno(a).sampleRegions({
+      collection: amostras.filter(ee.Filter.eq(campoAno, a)), scale: escala, geometries: true
+    });
+  })).flatten();
+}
+
+// ---------- Treino: amostras de teste (troque pelas amostras de SOC) ----------
+var amostras = ee.FeatureCollection([
+  ee.Feature(ee.Geometry.Point([-47.90, -15.80]), {local: 'Brasília', year: 1990, carbono: 40}),
+  ee.Feature(ee.Geometry.Point([-47.90, -15.80]), {local: 'Brasília', year: 2020, carbono: 38}),
+  ee.Feature(ee.Geometry.Point([-60.02, -3.10]),  {local: 'Manaus', year: 2005, carbono: 55}),
+  ee.Feature(ee.Geometry.Point([-54.33, -24.86]), {local: 'Santa Helena', year: 2015, carbono: 45})
+]);
+var treino = amostrar(amostras, 'year', 30);
+print('Amostras com as 9 variáveis do ano de cada uma:', treino);
+
+// ---------- Mapa do ano: demais covariáveis + clima do mesmo ano ----------
+var ano = 2020;
+var clima = climaDoAno(ano);
+// var pilha = covariaveisDoAno.addBands(clima);
+// var rf = ee.Classifier.smileRandomForest(...).setOutputMode('REGRESSION')
+//            .train(treino, 'carbono', BANDAS.concat(outrasBandas));
+// var soc = pilha.classify(rf);
+
+Map.setCenter(-52, -14, 4);
+Map.addLayer(clima.select('cd_t_media'), {min: 14, max: 28,
+  palette: ['#313695', '#74add1', '#ffffbf', '#f46d43', '#a50026']}, 'T média ' + ano + ' (bilinear)');
+Map.addLayer(treino, {color: '000000'}, 'Amostras');
+```
+
+As mesmas funções, como módulo para `require`, estão em github.com/fcoliveira-utfpr/climate_for_soil,
+`C4/gee/clima_curto.js`.
+
+**3. Google Colab (Python)**
 
 ```python
 # ===== Xavier v3.2.4 | Conjunto curto de clima decenal | 1985-2026 | Brasil 0,1° =====
