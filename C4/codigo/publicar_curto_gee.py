@@ -5,8 +5,8 @@ Cobertura das bordas: a máscara do Xavier deixa sem dado 1,5% dos pixels de 0,1
 fronteira e litoral, ilhas oceânicas e a ponta oeste do Acre, fora do retângulo da grade). A grade é estendida em
 1° a norte, sul e oeste e até 28° W a leste (Fernando de Noronha, Trindade e Martim Vaz), e cada pixel sem dado
 recebe o valor do pixel válido mais próximo, no mesmo ano. A banda `dist_preenchimento_km` diz a distância até o
-pixel de origem (0 = dado do Xavier). Os valores cobrem o Brasil (limite LSIB, ilhas incluídas) mais 2 pixels
-(~22 km) além da fronteira e do litoral; fora disso a imagem é mascarada (o limite do pedido ao GEE é de 10 MB).
+pixel de origem (0 = dado do Xavier). Toda a grade estendida recebe valor (antes, só o Brasil + 2 pixels, o
+que deixava o Atol das Rocas de fora).
 
 Envio sem Cloud Storage: cada banda vai como ee.Array em inteiro escalado (temperaturas x 100, CDD e ARM x 10) e
 é remontada no GEE pela linha e coluna de cada pixel; o asset fica em float32, nas unidades originais
@@ -93,10 +93,10 @@ print(clima.bandNames());
 
 
 def alvo():
-    """Pixels que recebem valor: Brasil (LSIB) ou dado do Xavier, dilatados em 2 pixels."""
-    c = np.load(COBERTURA)
-    assert c['br'].shape == (HE, WE)
-    return ndimage.binary_dilation(c['br'] | c['xavier'], iterations=2)
+    """Pixels que recebem valor: a grade estendida inteira. Recortar pelo contorno do Brasil (LSIB, + 2 pixels)
+    deixava sem valor ilhotas fora do contorno simplificado (Atol das Rocas); com a grade toda preenchida pelo
+    vizinho mais próximo, nenhuma ilha ou borda fica descoberta, qualquer que seja o limite usado no mapa."""
+    return np.ones((HE, WE), bool)
 
 
 def preencher(x):
