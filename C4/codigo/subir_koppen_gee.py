@@ -97,12 +97,12 @@ estudos de solo e de clima, em alternativa ao Köppen de Alvares et al. (2013), 
    (`BAND_*_MULT`, `BAND_*_ADD`) são lidas das propriedades.
 2. Classificação com `classificacao_koppen_grade` da agrometeorologiapy (`koppen_1991_2020.py`), pelos critérios
    de Alvares et al. (2013), com a sazonalidade f/s/w dos grupos C e D de Kottek et al. (2006):
-   - grupo A: mês mais frio ≥ 18 °C; Af com mês mais seco ≥ 60 mm; Am quando o mês mais seco ≥ 100 − chuva
-     anual/25; senão As (seca no verão) ou Aw (seca no inverno);
-   - grupo B: chuva anual < 10 × (2T + 28, 2T + 14 ou 2T, conforme ≥ 70% da chuva no verão, distribuída ou
-     ≥ 70% no inverno); BW abaixo da metade do limiar; h/k pela temperatura anual de 18 °C;
-   - grupo C: mês mais frio entre −3 e 18 °C; letras a/b/c pelo mês mais quente (22 °C) e pelo número de meses
-     acima de 10 °C; verão = outubro a março no hemisfério sul.
+    - grupo A: mês mais frio ≥ 18 °C; Af com mês mais seco ≥ 60 mm; Am quando o mês mais seco ≥ 100 − chuva
+      anual/25; senão As (seca no verão) ou Aw (seca no inverno);
+    - grupo B: chuva anual < 10 × (2T + 28, 2T + 14 ou 2T, conforme ≥ 70% da chuva no verão, distribuída ou
+      ≥ 70% no inverno); BW abaixo da metade do limiar; h/k pela temperatura anual de 18 °C;
+    - grupo C: mês mais frio entre −3 e 18 °C; letras a/b/c pelo mês mais quente (22 °C) e pelo número de meses
+      acima de 10 °C; verão = outubro a março no hemisfério sul.
 3. Filtro de moda 3 × 3 para a banda `koppen`.
 4. Envio ao GEE sem Cloud Storage nem upload manual (`subir_koppen_gee.py`): cada banda vai como `ee.Array` e a
    imagem é remontada no GEE pela linha e coluna de cada pixel.
