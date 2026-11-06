@@ -13,7 +13,8 @@ Etapas:
                C4/resultados/holdridge_xavier_1991_2020/
     exportar   sobe para o GEE sem Cloud Storage (cada banda como ee.Array, como o Köppen), substituindo o asset
     conferir   asset x GeoTIFF, pixel a pixel
-    descricao  descrição em Markdown (C4/gee/descricoes/holdridge_xavier_1991_2020.md), para colar no GEE
+    descricao  descrição em Markdown (C4/gee/descricoes/holdridge_xavier_1991_2020.md); para gravar no GEE e na
+               cópia em covariates/climate, use descricoes_gee.py gravar
 
 Uso: python holdridge_1991_2020.py gerar | exportar | conferir | descricao
 """
@@ -198,7 +199,8 @@ def conferir():
 
 
 def descricao():
-    md = texto(pd.read_csv(SAIDA / 'legenda.csv'), pd.read_csv(SAIDA / 'conferencia.csv'))
+    from descricoes_gee import formatar      # Markdown no formato que o GEE mostra (descricoes_gee.py)
+    md = formatar(texto(pd.read_csv(SAIDA / 'legenda.csv'), pd.read_csv(SAIDA / 'conferencia.csv')))
     DESCRICOES.mkdir(parents=True, exist_ok=True)
     (DESCRICOES / 'holdridge_xavier_1991_2020.md').write_text(md, encoding='utf-8')
     print('descrição:', DESCRICOES / 'holdridge_xavier_1991_2020.md', len(md), 'caracteres')
@@ -220,8 +222,9 @@ def texto(leg, conf):
 **Resumo**
 
 Zonas de vida de Holdridge do Brasil calculadas com a normal mensal de 1991 a 2020 (30 anos completos) de
-temperatura e chuva da grade diária do Xavier BR-DWGD v3.2.4, com a biblioteca agrometeorologiapy. Duas bandas: a
-classificação com filtro de moda 3 × 3 (recomendada para mapas e modelos) e a classificação direta. Produto
+temperatura e chuva da grade diária do Xavier BR-DWGD v3.2.4, com a biblioteca agrometeorologiapy. Três bandas: a
+classificação com filtro de moda 3 × 3 (recomendada para mapas e modelos), a classificação direta e a distância
+até o pixel de onde veio a zona (bordas e ilhas preenchidas). Produto
 gerado pelo GAMBI-TEC (UTFPR, Campus Santa Helena). Entre as classificações climáticas testadas como covariável do
 modelo de carbono orgânico do solo (SOC, 0-30 cm) do MapBiomas Solo, foi a melhor: a única que ganhou do Köppen
 do IPEF nos três esquemas de validação e nos dois modelos.

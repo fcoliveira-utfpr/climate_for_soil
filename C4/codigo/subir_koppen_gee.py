@@ -265,7 +265,8 @@ def imagem():
 
 def exportar():
     leg = pd.read_csv(PASTA / 'legenda.csv')
-    props = {'description': descricao(leg), 'fonte': 'Xavier et al. (2022) BR-DWGD v3.2.4',
+    from descricoes_gee import formatar
+    props = {'description': formatar(descricao(leg)), 'fonte': 'Xavier et al. (2022) BR-DWGD v3.2.4',
              'periodo': '1991-2020', 'metodo': 'agrometeorologiapy classificacao_koppen_grade; banda koppen com moda 3x3',
              'classes': '; '.join(f'{r.id}={r.classe}' for r in leg.itertuples()),
              'paleta': ','.join(leg.cor), 'autor': 'Fabricio Correia de Oliveira (UTFPR)',
@@ -292,7 +293,8 @@ def conferir():
 
 def atualizar_descricao():
     leg = pd.read_csv(PASTA / 'legenda.csv')
-    ee.data.setAssetProperties(ASSET, {'description': descricao(leg)})
+    from descricoes_gee import formatar      # Markdown no formato que o GEE mostra (descricoes_gee.py)
+    ee.data.setAssetProperties(ASSET, {'description': formatar(descricao(leg))})
     print(ee.data.getAsset(ASSET)['properties']['description'][:400])
 
 
@@ -504,7 +506,8 @@ Produto derivado distribuído sob CC BY 4.0; cite também os dados originais do 
 
 
 def atualizar_descricao_normal():
-    ee.data.setAssetProperties(ASSET_NORMAL, {'description': DESCRICAO_NORMAL})
+    from descricoes_gee import formatar
+    ee.data.setAssetProperties(ASSET_NORMAL, {'description': formatar(DESCRICAO_NORMAL)})
     print('descrição da normal:', len(ee.data.getAsset(ASSET_NORMAL)['properties']['description']), 'caracteres')
 
 
@@ -531,7 +534,8 @@ def normal_gee():
 
 
 def exportar_normal():
-    props = {'description': DESCRICAO_NORMAL, 'fonte': 'Xavier et al. (2022) BR-DWGD v3.2.4', 'periodo': '1991-2020',
+    from descricoes_gee import formatar
+    props = {'description': formatar(DESCRICAO_NORMAL), 'fonte': 'Xavier et al. (2022) BR-DWGD v3.2.4', 'periodo': '1991-2020',
              'unidades': 'T_*: graus C; P_*: mm/mes; P_anual: mm/ano', 'autor': 'Fabricio Correia de Oliveira (UTFPR)',
              'system:time_start': ee.Date('1991-01-01').millis(), 'system:time_end': ee.Date('2021-01-01').millis()}
     regiao = ee.Geometry.Rectangle([X0, Y0 + H * DY, X0 + W * DX, Y0], 'EPSG:4326', False)

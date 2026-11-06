@@ -74,7 +74,8 @@ def conferir():
 
 
 def descricao():
-    ee.data.setAssetProperties(COLECAO, {'description': DESCRICAO})
+    from descricoes_gee import formatar      # Markdown no formato que o GEE mostra (descricoes_gee.py)
+    ee.data.setAssetProperties(COLECAO, {'description': formatar(DESCRICAO)})
     print('descrição:', len(ee.data.getAsset(COLECAO)['properties']['description']), 'caracteres')
 
 
