@@ -9,16 +9,12 @@ e:
 Uso: python descricoes_html.py paginas | gravar
 """
 import sys
+from pathlib import Path
 
-import ee
 import markdown
 import pandas as pd
 
-import montar_colecao_gee as mc
-import subir_koppen_gee as sk
-from subir_por_banda import conectar
-
-SAIDA = mc.RAIZ / 'C4' / 'gee' / 'descricoes'
+SAIDA = Path(__file__).resolve().parents[1] / 'gee' / 'descricoes'
 ESTILO = """<style>
 body {font-family: Arial, sans-serif; font-size: 14px; max-width: 980px; margin: 24px auto; padding: 0 16px;
       color: #222; background: #fff; line-height: 1.45}
@@ -28,6 +24,9 @@ pre {background: #f4f4f4; padding: 10px; overflow-x: auto; font-size: 12px} code
 
 
 def textos():
+    # importados aqui: assim o ESTILO pode ser usado por scripts que põem climas_tempo/codigo no sys.path
+    import montar_colecao_gee as mc
+    import subir_koppen_gee as sk
     return {
         mc.COLECAO: mc.DESCRICAO,
         sk.ASSET: sk.descricao(pd.read_csv(sk.PASTA / 'legenda.csv')),
@@ -50,6 +49,8 @@ def paginas():
 
 
 def gravar():
+    import ee
+    from subir_por_banda import conectar
     conectar(None)
     for asset, md in textos().items():
         ee.data.setAssetProperties(asset, {'description': html(md)})

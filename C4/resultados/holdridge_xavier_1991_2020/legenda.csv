@@ -1,0 +1,11 @@
+id,zona,zona_en,cor,area_pct,pixels,biotemp_media,p_anual_media,razao_etp_media
+22,Floresta úmida temperada quente,Warm temperate moist forest,#41ab5d,0.88,685,17.04,1696.65,0.60
+23,Floresta muito úmida temperada quente,Warm temperate wet forest,#238443,0.04,33,15.84,1942.98,0.48
+27,Estepe espinhosa subtropical,Subtropical thorn steppe,#c6dbef,2.51,1771,23.56,570.33,2.48
+28,Floresta seca subtropical,Subtropical dry forest,#9ecae1,12.27,8861,22.78,1090.51,1.28
+29,Floresta úmida subtropical,Subtropical moist forest,#6baed6,24.53,18094,21.98,1565.25,0.84
+30,Floresta muito úmida subtropical,Subtropical wet forest,#3182bd,0.00,3,21.67,2718.95,0.47
+35,Floresta muito seca tropical,Tropical very dry forest,#fdae6b,4.29,2988,24.67,576.82,2.58
+36,Floresta seca tropical,Tropical dry forest,#fd8d3c,7.31,5091,25.00,1115.54,1.37
+37,Floresta úmida tropical,Tropical moist forest,#d94801,46.87,32577,25.63,2191.29,0.70
+38,Floresta muito úmida tropical,Tropical wet forest,#8c2d04,1.31,904,26.61,3416.85,0.46
