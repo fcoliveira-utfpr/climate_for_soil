@@ -14,12 +14,13 @@ do IPEF nos três esquemas de validação e nos dois modelos.
 - Fonte: Xavier BR-DWGD v3.2.4 (Brazilian Daily Weather Gridded Data), `projects/ee-alexandrexavier/assets/BR-DWGD`
 - Variáveis originais: Tmax, Tmin e chuva diárias
 - Período: 1991-01 a 2020-12 (normal climatológica padrão OMM)
-- Resolução espacial: 0,1° (~11 km), grade nativa do BR-DWGD (391 × 393 pixels)
+- Resolução espacial: 0,1° (~11 km), a grade do BR-DWGD (469 × 413 pixels)
 - Sistema de referência: EPSG:4326 (WGS 84)
-- Extensão: 73,9° W a 34,8° W e 5,4° N a 33,9° S
-- Tipo: uint8 (códigos de zona, 1 a 38)
-- Bandas: 2 (`holdridge`, `holdridge_sem_filtro`)
-- NoData: mascarado (fora da área com dado do Xavier)
+- Extensão: 74,9° W a 28,0° W e 6,4° N a 34,9° S (a grade do Xavier estendida para cobrir todo o território,
+  ilhas oceânicas incluídas; a mesma da coleção `xavier_conjunto_curto_decenal`)
+- Tipo: uint8 (códigos de zona, 1 a 38) e uint16 (distância)
+- Bandas: 3 (`holdridge`, `holdridge_sem_filtro`, `dist_preenchimento_km`)
+- NoData: nenhum; **toda a grade tem zona**
 
 **Bandas**
 
@@ -27,6 +28,7 @@ do IPEF nos três esquemas de validação e nos dois modelos.
 |---|---|
 | `holdridge` | zona de vida com filtro de moda 3 × 3 (cada pixel recebe a zona mais frequente na janela, como o `focalMode` do GEE); remove pixels isolados nas fronteiras entre zonas |
 | `holdridge_sem_filtro` | classificação direta de cada pixel |
+| `dist_preenchimento_km` | distância até o pixel do Xavier de onde veio a zona (0 = dado original) |
 
 **Legenda** (códigos de 1 a 38 da agrometeorologiapy; só as zonas presentes no Brasil; área na banda `holdridge`;
 médias da zona: biotemperatura, chuva anual e razão ETP/P)
@@ -56,12 +58,15 @@ médias da zona: biotemperatura, chuva anual e razão ETP/P)
     - zona de vida (38 zonas) pela faixa de biotemperatura (região latitudinal), pela chuva anual e pela razão
       ETP/P (província de umidade), nos hexágonos do diagrama de Holdridge.
 3. Filtro de moda 3 × 3 para a banda `holdridge`.
-4. Envio ao GEE sem Cloud Storage nem upload manual: cada banda vai como `ee.Array` e a imagem é remontada no
+4. Pixels sem dado do Xavier (bordas de fronteira e de litoral, ilhas oceânicas e a ponta oeste do Acre: cerca de
+   1,5% dos pixels que tocam o Brasil, onde caem 141 das 27.425 amostras de SOC) e o restante da grade estendida
+   recebem a zona do pixel válido mais próximo; a distância fica na banda `dist_preenchimento_km`.
+5. Envio ao GEE sem Cloud Storage nem upload manual: cada banda vai como `ee.Array` e a imagem é remontada no
    GEE pela linha e coluna de cada pixel.
 
 **Controle de qualidade**
 
-- Asset × GeoTIFF local: 100% dos pixels iguais nas duas bandas.
+- Asset × GeoTIFF local: 100% dos pixels iguais nas três bandas; nenhum pixel sem zona em toda a grade.
 - A função foi conferida com o Holdridge do relatório técnico v1 (CHELSA, outro código) em 3.000 locais: 98,9%
   de concordância; as diferenças estão em fronteiras de zona (biotemperatura perto de 18 e 24 °C, ETP/P perto de
   0,5, 1 e 2) e vêm do filtro de moda do mapa do v1.
@@ -108,8 +113,8 @@ opção quando o modelo ou a análise precisam de uma classe.
   modelo de SOC; a fronteira de 24 °C da correção de latitude e os limites de biotemperatura caem em lugares
   diferentes conforme a base. A vantagem vale para o Xavier.
 - A resolução é a do Xavier (~11 km): zonas de altitude em serras estreitas tendem a ficar subestimadas.
-- Pixels sem dado do Xavier (bordas de fronteira e de litoral, ilhas oceânicas e a ponta oeste do Acre, cerca de
-  1,5% dos pixels que tocam o Brasil) ficam sem zona.
+- Nas bordas e nas ilhas oceânicas a zona vem do pixel de terra mais próximo do Xavier (Trindade fica a ~1.100 km
+  da costa); use `dist_preenchimento_km` para identificar esses pixels.
 - A ETP é a de Holdridge (função só da biotemperatura), não a de Penman-Monteith.
 - O teste no modelo de SOC foi feito com o Xavier v3.2.2 e nas partições do v3; não foi repetido nas partições
   novas do v6.
@@ -117,7 +122,7 @@ opção quando o modelo ou a análise precisam de uma classe.
 **Como usar**
 
 A banda `holdridge` tem códigos não contíguos; para usar a paleta, renumere as zonas presentes de 1 a n com
-`remap`. No modelo, use as zonas como variáveis indicadoras (uma coluna 0/1 por zona) ou como fator.
+`remap`. O asset cobre o retângulo da grade inteiro; recorte pelo limite do Brasil para mapas e áreas. No modelo, use as zonas como variáveis indicadoras (uma coluna 0/1 por zona) ou como fator.
 
 **Google Earth Engine (Code Editor, JavaScript)**
 
@@ -132,7 +137,7 @@ var cores = ['#41ab5d', '#238443', '#c6dbef', '#9ecae1', '#6baed6', '#3182bd', '
 var vis = holdridge.remap(ids, ee.List.sequence(1, ids.length));
 var brasil = ee.FeatureCollection('FAO/GAUL/2015/level0').filter(ee.Filter.eq('ADM0_NAME', 'Brazil'));
 Map.setCenter(-52, -14, 4);
-Map.addLayer(vis, {min: 1, max: ids.length, palette: cores}, 'Holdridge Xavier 1991-2020');
+Map.addLayer(vis.clip(brasil), {min: 1, max: ids.length, palette: cores}, 'Holdridge Xavier 1991-2020');
 Map.addLayer(ee.Image().paint(brasil, 0, 1), {palette: ['000000']}, 'Limite do Brasil');
 
 // Legenda
@@ -156,9 +161,9 @@ Map.onClick(function (c) {
   });
 });
 
-// Área de cada zona (km²)
+// Área de cada zona no Brasil (km²)
 var area = ee.Image.pixelArea().divide(1e6).addBands(holdridge).reduceRegion({
-  reducer: ee.Reducer.sum().group(1, 'zona'), geometry: holdridge.geometry(), scale: 11132, maxPixels: 1e9});
+  reducer: ee.Reducer.sum().group(1, 'zona'), geometry: brasil.geometry(), scale: 11132, maxPixels: 1e9});
 print('Área por zona (km²):', area);
 
 // Zonas como variáveis indicadoras (0/1) para o modelo: uma banda por zona
@@ -187,8 +192,10 @@ ids = [22, 23, 27, 28, 29, 30, 35, 36, 37, 38]
 zonas = ['Floresta úmida temperada quente', 'Floresta muito úmida temperada quente', 'Estepe espinhosa subtropical', 'Floresta seca subtropical', 'Floresta úmida subtropical', 'Floresta muito úmida subtropical', 'Floresta muito seca tropical', 'Floresta seca tropical', 'Floresta úmida tropical', 'Floresta muito úmida tropical']
 cores = ['#41ab5d', '#238443', '#c6dbef', '#9ecae1', '#6baed6', '#3182bd', '#fdae6b', '#fd8d3c', '#d94801', '#8c2d04']
 
+brasil = ee.FeatureCollection('FAO/GAUL/2015/level0').filter(ee.Filter.eq('ADM0_NAME', 'Brazil'))
+
 # ---------- Mapa interativo com legenda ----------
-vis = holdridge.remap(ids, list(range(1, len(ids) + 1)))
+vis = holdridge.remap(ids, list(range(1, len(ids) + 1))).clip(brasil)
 m = geemap.Map(center=[-14, -52], zoom=4)
 m.add_layer(vis, {'min': 1, 'max': len(ids), 'palette': cores}, 'Holdridge Xavier 1991-2020')
 m.add_legend(title='Zonas de vida de Holdridge 1991-2020',
@@ -197,9 +204,9 @@ m
 ```
 
 ```python
-# ---------- Área de cada zona ----------
+# ---------- Área de cada zona no Brasil ----------
 r = ee.Image.pixelArea().divide(1e6).addBands(holdridge).reduceRegion(
-    reducer=ee.Reducer.sum().group(1, 'zona'), geometry=holdridge.geometry(), scale=11132, maxPixels=1e9).getInfo()
+    reducer=ee.Reducer.sum().group(1, 'zona'), geometry=brasil.geometry(), scale=11132, maxPixels=1e9).getInfo()
 area = pd.DataFrame(r['groups']).rename(columns={'sum': 'km2'})
 area['nome'] = area['zona'].map(dict(zip(ids, zonas)))
 area['%'] = (100 * area.km2 / area.km2.sum()).round(1)
