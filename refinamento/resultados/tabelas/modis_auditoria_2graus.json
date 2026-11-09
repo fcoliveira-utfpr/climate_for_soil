@@ -1,0 +1,40 @@
+{
+  "input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "extra_sha256": "036b0c73bff7a1fe18379c3bb924888eabcd60abbefc76acd3ab698493d4b9ba",
+  "script_sha256": "39cf6ecfc7a257b194509a7d746e8093f63916a5e0e73ac6e13d8d2885e63296",
+  "output_sha256": "4832438d2a8251a5ced11de8958a1066b83828368dbfa34079330ba3cc295b41",
+  "initial_development_stations": 102,
+  "paired_stations": 42,
+  "excluded_missing_covariates": 60,
+  "holdout_scored": false,
+  "variants": {
+    "base": [
+      "latitude",
+      "longitude",
+      "month_sin",
+      "month_cos",
+      "latitude_sin",
+      "latitude_cos",
+      "dem_elevation_m",
+      "chelsa_c",
+      "slope_deg"
+    ],
+    "modis": [
+      "latitude",
+      "longitude",
+      "month_sin",
+      "month_cos",
+      "latitude_sin",
+      "latitude_cos",
+      "dem_elevation_m",
+      "chelsa_c",
+      "slope_deg",
+      "lst_day_c",
+      "lst_night_c"
+    ]
+  },
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "repeats": 3,
+  "limitation": "MODIS descriptor covers 2001-2020 only; DSM aggregation is not proof of predictive skill at 30 m."
+}

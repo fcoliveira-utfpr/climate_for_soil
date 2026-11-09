@@ -1,0 +1,9 @@
+{
+  "months_per_station": 60,
+  "draws": 10,
+  "seed": 20261108,
+  "period": "1991-2020",
+  "complete_month": "all days valid",
+  "holdout_scored": false,
+  "script_sha256": "0958a3118b493b6331eea91fabeb2f578d8d6344a2be2c7a2433725de4343ff4"
+}

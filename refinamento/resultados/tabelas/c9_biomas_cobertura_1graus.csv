@@ -1,0 +1,136 @@
+biome,method,repeat,n_stations,published
+Amazônia,M0_chelsa,0,11,True
+Amazônia,M0_chelsa,1,11,True
+Amazônia,M0_chelsa,2,11,True
+Amazônia,M0_era5,0,11,True
+Amazônia,M0_era5,1,11,True
+Amazônia,M0_era5,2,11,True
+Amazônia,M0_terraclimate,0,11,True
+Amazônia,M0_terraclimate,1,11,True
+Amazônia,M0_terraclimate,2,11,True
+Amazônia,M0_xavier,0,11,True
+Amazônia,M0_xavier,1,11,True
+Amazônia,M0_xavier,2,11,True
+Amazônia,M1_lapse_fixo,0,11,True
+Amazônia,M1_lapse_fixo,1,11,True
+Amazônia,M1_lapse_fixo,2,11,True
+Amazônia,M2_linear,0,11,True
+Amazônia,M2_linear,1,11,True
+Amazônia,M2_linear,2,11,True
+Amazônia,M4_random_forest,0,11,True
+Amazônia,M4_random_forest,1,11,True
+Amazônia,M4_random_forest,2,11,True
+Amazônia,M5_lightgbm,0,11,True
+Amazônia,M5_lightgbm,1,11,True
+Amazônia,M5_lightgbm,2,11,True
+Amazônia,MX_mensal_referencia,0,11,True
+Amazônia,MX_mensal_referencia,1,11,True
+Amazônia,MX_mensal_referencia,2,11,True
+Caatinga,M0_chelsa,0,12,True
+Caatinga,M0_chelsa,1,12,True
+Caatinga,M0_chelsa,2,12,True
+Caatinga,M0_era5,0,12,True
+Caatinga,M0_era5,1,12,True
+Caatinga,M0_era5,2,12,True
+Caatinga,M0_terraclimate,0,12,True
+Caatinga,M0_terraclimate,1,12,True
+Caatinga,M0_terraclimate,2,12,True
+Caatinga,M0_xavier,0,12,True
+Caatinga,M0_xavier,1,12,True
+Caatinga,M0_xavier,2,12,True
+Caatinga,M1_lapse_fixo,0,12,True
+Caatinga,M1_lapse_fixo,1,12,True
+Caatinga,M1_lapse_fixo,2,12,True
+Caatinga,M2_linear,0,12,True
+Caatinga,M2_linear,1,12,True
+Caatinga,M2_linear,2,12,True
+Caatinga,M4_random_forest,0,12,True
+Caatinga,M4_random_forest,1,12,True
+Caatinga,M4_random_forest,2,12,True
+Caatinga,M5_lightgbm,0,12,True
+Caatinga,M5_lightgbm,1,12,True
+Caatinga,M5_lightgbm,2,12,True
+Caatinga,MX_mensal_referencia,0,12,True
+Caatinga,MX_mensal_referencia,1,12,True
+Caatinga,MX_mensal_referencia,2,12,True
+Cerrado,M0_chelsa,0,35,True
+Cerrado,M0_chelsa,1,35,True
+Cerrado,M0_chelsa,2,35,True
+Cerrado,M0_era5,0,35,True
+Cerrado,M0_era5,1,35,True
+Cerrado,M0_era5,2,35,True
+Cerrado,M0_terraclimate,0,35,True
+Cerrado,M0_terraclimate,1,35,True
+Cerrado,M0_terraclimate,2,35,True
+Cerrado,M0_xavier,0,35,True
+Cerrado,M0_xavier,1,35,True
+Cerrado,M0_xavier,2,35,True
+Cerrado,M1_lapse_fixo,0,35,True
+Cerrado,M1_lapse_fixo,1,35,True
+Cerrado,M1_lapse_fixo,2,35,True
+Cerrado,M2_linear,0,35,True
+Cerrado,M2_linear,1,35,True
+Cerrado,M2_linear,2,35,True
+Cerrado,M4_random_forest,0,35,True
+Cerrado,M4_random_forest,1,35,True
+Cerrado,M4_random_forest,2,35,True
+Cerrado,M5_lightgbm,0,35,True
+Cerrado,M5_lightgbm,1,35,True
+Cerrado,M5_lightgbm,2,35,True
+Cerrado,MX_mensal_referencia,0,35,True
+Cerrado,MX_mensal_referencia,1,35,True
+Cerrado,MX_mensal_referencia,2,35,True
+Mata Atlântica,M0_chelsa,0,30,True
+Mata Atlântica,M0_chelsa,1,30,True
+Mata Atlântica,M0_chelsa,2,30,True
+Mata Atlântica,M0_era5,0,30,True
+Mata Atlântica,M0_era5,1,30,True
+Mata Atlântica,M0_era5,2,30,True
+Mata Atlântica,M0_terraclimate,0,30,True
+Mata Atlântica,M0_terraclimate,1,30,True
+Mata Atlântica,M0_terraclimate,2,30,True
+Mata Atlântica,M0_xavier,0,30,True
+Mata Atlântica,M0_xavier,1,30,True
+Mata Atlântica,M0_xavier,2,30,True
+Mata Atlântica,M1_lapse_fixo,0,30,True
+Mata Atlântica,M1_lapse_fixo,1,30,True
+Mata Atlântica,M1_lapse_fixo,2,30,True
+Mata Atlântica,M2_linear,0,30,True
+Mata Atlântica,M2_linear,1,30,True
+Mata Atlântica,M2_linear,2,30,True
+Mata Atlântica,M4_random_forest,0,30,True
+Mata Atlântica,M4_random_forest,1,30,True
+Mata Atlântica,M4_random_forest,2,30,True
+Mata Atlântica,M5_lightgbm,0,30,True
+Mata Atlântica,M5_lightgbm,1,30,True
+Mata Atlântica,M5_lightgbm,2,30,True
+Mata Atlântica,MX_mensal_referencia,0,30,True
+Mata Atlântica,MX_mensal_referencia,1,30,True
+Mata Atlântica,MX_mensal_referencia,2,30,True
+Pampa,M0_chelsa,0,10,True
+Pampa,M0_chelsa,1,10,True
+Pampa,M0_chelsa,2,10,True
+Pampa,M0_era5,0,10,True
+Pampa,M0_era5,1,10,True
+Pampa,M0_era5,2,10,True
+Pampa,M0_terraclimate,0,10,True
+Pampa,M0_terraclimate,1,10,True
+Pampa,M0_terraclimate,2,10,True
+Pampa,M0_xavier,0,10,True
+Pampa,M0_xavier,1,10,True
+Pampa,M0_xavier,2,10,True
+Pampa,M1_lapse_fixo,0,10,True
+Pampa,M1_lapse_fixo,1,10,True
+Pampa,M1_lapse_fixo,2,10,True
+Pampa,M2_linear,0,10,True
+Pampa,M2_linear,1,10,True
+Pampa,M2_linear,2,10,True
+Pampa,M4_random_forest,0,10,True
+Pampa,M4_random_forest,1,10,True
+Pampa,M4_random_forest,2,10,True
+Pampa,M5_lightgbm,0,10,True
+Pampa,M5_lightgbm,1,10,True
+Pampa,M5_lightgbm,2,10,True
+Pampa,MX_mensal_referencia,0,10,True
+Pampa,MX_mensal_referencia,1,10,True
+Pampa,MX_mensal_referencia,2,10,True

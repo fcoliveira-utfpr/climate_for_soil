@@ -1,0 +1,21 @@
+{
+  "temperatura_bilinear": {
+    "k90_normalized": 6.132272811942698,
+    "q90_constant": 0.8486670723257532,
+    "naive_coverage_all": 0.41748366013071897,
+    "n": 3672,
+    "predictions_sha256": "0f16aaa4cdc80d46b2225602676e1c5922e281d9ff75a06207f3b155937f337b"
+  },
+  "chuva_por_mes_bilinear": {
+    "k90_normalized": 10.587913827467903,
+    "q90_constant": 30.931619409017344,
+    "naive_coverage_all": 0.28412318068867587,
+    "n": 67608,
+    "predictions_sha256": "90136bd57d73af285846f7a01fcdd38b5362c09e89f19392aeee9fc8f65188d2"
+  },
+  "level": 0.9,
+  "block_degrees": 2,
+  "holdout_scored": false,
+  "script_sha256": "3d75fc25c22d0691902db49e33180af04cee5beb77adc9075ab758c3bd7a995f",
+  "note": "k90 multiplica a dispers\u00e3o entre membros; q90 \u00e9 meia-largura constante"
+}

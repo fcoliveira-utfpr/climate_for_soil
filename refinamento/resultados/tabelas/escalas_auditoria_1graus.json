@@ -1,0 +1,49 @@
+{
+  "input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "extra_sha256": "8d81d2862980591af8e9d11e213cd995c458b7d24aca9407c0151e15547284c2",
+  "script_sha256": "39cf6ecfc7a257b194509a7d746e8093f63916a5e0e73ac6e13d8d2885e63296",
+  "output_sha256": "aa155ab4d3cc5920b75e3b0a093a16ab89d7cd0c0ed4e9e79eff15f9bfab0d86",
+  "initial_development_stations": 102,
+  "paired_stations": 96,
+  "excluded_missing_covariates": 6,
+  "holdout_scored": false,
+  "variants": {
+    "30": [
+      "latitude",
+      "longitude",
+      "month_sin",
+      "month_cos",
+      "latitude_sin",
+      "latitude_cos",
+      "elevation_30",
+      "chelsa_c",
+      "slope_30"
+    ],
+    "90": [
+      "latitude",
+      "longitude",
+      "month_sin",
+      "month_cos",
+      "latitude_sin",
+      "latitude_cos",
+      "elevation_90",
+      "chelsa_c",
+      "slope_90"
+    ],
+    "1000": [
+      "latitude",
+      "longitude",
+      "month_sin",
+      "month_cos",
+      "latitude_sin",
+      "latitude_cos",
+      "elevation_1000",
+      "chelsa_c",
+      "slope_1000"
+    ]
+  },
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "repeats": 3,
+  "limitation": "MODIS descriptor covers 2001-2020 only; DSM aggregation is not proof of predictive skill at 30 m."
+}

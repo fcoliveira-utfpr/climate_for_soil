@@ -1,0 +1,38 @@
+{
+  "years": [
+    2008,
+    2012,
+    2016,
+    2020,
+    2024
+  ],
+  "sources": [
+    {
+      "year": 2008,
+      "source": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2008.zip",
+      "source_sha256": "51335b3d39558534cd873e5bade879ad289373876b9e8d633989479ef42ebf8b",
+      "files": 417
+    },
+    {
+      "year": 2012,
+      "source": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2012.zip",
+      "source_sha256": "ec846d42e949ad10667648f53686d5071335cc5e5c98094cc998e37304d42e9d",
+      "files": 468
+    },
+    {
+      "year": 2016,
+      "source": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2016.zip",
+      "source_sha256": "62a88787f1d976d7898dba2acbf5874f79cd486816e6d9531c53966557eb20a6",
+      "files": 529
+    },
+    {
+      "year": 2024,
+      "source": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip",
+      "source_sha256": "0a7f89de57427f79b6f82943b2f7f2e932202d9253e34bf25629ed088d108ae7",
+      "files": 565
+    }
+  ],
+  "script_sha256": "5f901a2cf40750209eacde625fb856d71baedfd17cf6336d669d5dfbdff47126",
+  "station_months": 22703,
+  "rule": "same as definicoes_temperatura_inmet.py; months with at least 80% of complete days"
+}

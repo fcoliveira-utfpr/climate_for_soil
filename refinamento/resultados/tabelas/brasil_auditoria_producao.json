@@ -1,0 +1,13 @@
+{
+  "planned_tiles": 743,
+  "complete_temperature_tiles": 0,
+  "partial_temperature_tiles": 1,
+  "tiles_with_missing_covariates": 0,
+  "processed_windows": 6,
+  "valid_temperature_pixels": 1572864,
+  "output_bytes": 28168460,
+  "national_temperature_complete": false,
+  "rainfall_maps_produced": false,
+  "scientifically_validated_national_product": false,
+  "annual_quantization_max_error_c": 0.00772403723307491
+}

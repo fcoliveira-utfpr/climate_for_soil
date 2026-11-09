@@ -1,0 +1,27 @@
+tipo,variavel,n,unidade,min,p05,mediana,media,p95,max,observacao
+distribuicao,temperature_c,1440,degC,10.23126117,16.57136297,25.35378872,24.46272514,28.8720489,31.47419873,1440 pares; 120 estacoes; sem meses anuais
+distribuicao,chelsa_c,1440,degC,9.376676559,16.25034608,24.74667739,23.94382924,28.46417971,31.34001923,1440 pares; 120 estacoes; sem meses anuais
+distribuicao,n_years,1440,anos,24,25,28,27.86736111,30,30,1440 pares; 120 estacoes; sem meses anuais
+distribuicao,coverage,1440,fracao,0.8,0.83333333,0.93333333,0.9289120374,1,1,1440 pares; 120 estacoes; sem meses anuais
+distribuicao,elevation_m,120,m,2,7.073500104,280.0249939,395.9490002,961.3,1379,Uma linha por estacao para nao repetir covariavel estatica
+distribuicao,dem_elevation_m,120,m EGM2008,0,8.804318571,288.8575134,401.9556835,956.0109345,1402.110596,Uma linha por estacao para nao repetir covariavel estatica
+distribuicao,coarse_elevation_m,120,m EGM2008,0,7.48278935,289.3078766,396.4056714,944.2380523,1397.580933,Uma linha por estacao para nao repetir covariavel estatica
+distribuicao,slope_deg,120,graus,0,0.3732002726,2.253794531,3.170793318,9.083802751,18.69853941,Uma linha por estacao para nao repetir covariavel estatica
+distribuicao,dem_menos_altitude_estacao,120,m,-47.7887573,-14.52150902,2.05055617,6.006683326,42.29348562,62.7889862,DSM inclui superficies; altitude da estacao com datum nao confirmado
+distribuicao,dem_menos_coarse,120,m,-64.9342041,-11.59066043,2.97428893,5.550012082,29.6727234,88.0370483,DSM inclui superficies; altitude da estacao com datum nao confirmado
+verificacao,pares_estacao_mes,1440,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,estacoes,120,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,duplicatas_chave,0,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,celulas_ausentes,0,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,hashes_entrada_saida_script_conferem,3,arquivos,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,atributos_originais_preservados,1,booleano,NaN,NaN,NaN,NaN,NaN,NaN,Tolerancia absoluta1e-7; variacoes apenas serializacaoCSV
+verificacao,dem_estacao_diferenca_abs_maior_50m,3,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,dem_estacao_diferenca_abs_maior_100m,0,contagem,NaN,NaN,NaN,NaN,NaN,NaN,
+verificacao,dem_igual_zero,1,contagem,NaN,NaN,NaN,NaN,NaN,NaN,Diagnostico; nao exclusao automatica
+distribuicao,erro_absoluto_auditoria_remota_dem_elevation_m,3,m,1.328123744e-08,1.351561423e-08,1.562500529e-08,1.901040984e-08,2.687498863e-08,2.812498678e-08,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+distribuicao,erro_absoluto_auditoria_remota_coarse_elevation_m,3,m,8.593758594e-09,9.296883263e-09,1.562500529e-08,1.614582364e-08,2.335933686e-08,2.421870704e-08,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+distribuicao,erro_absoluto_auditoria_remota_slope_deg,3,graus,3.636646539e-11,4.30425029e-11,1.031268404e-10,1.207895265e-09,3.146085925e-09,3.48419249e-09,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+distribuicao,erro_absoluto_auditoria_remota_chelsa_c,3,degC,1.55273483e-09,1.642090197e-09,2.446288505e-09,2.736002832e-09,4.032715495e-09,4.20898516e-09,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+distribuicao,erro_absoluto_auditoria_remota_coarse_manual_m,3,m,1.739830793e-06,3.774843782e-06,2.208996068e-05,1.537206881e-05,2.226676952e-05,2.228641495e-05,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+distribuicao,erro_absoluto_auditoria_remota_slope_manual_deg,3,graus,0.001591496747,0.002954529367,0.01522182294,0.0121977169,0.01932403022,0.01977983103,3 pontos selecionados por covariaveis; helper1.0.0; nao estima acuracia climatica
+verificacao,pixels_DSM_por_celula_auditada,961,pixels,NaN,NaN,NaN,NaN,NaN,NaN,Media independente com pesos de sobreposicao na celula CHELSA;3celulas

@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refinamento climático a 30 m</title>
+<meta name="description" content="O que foi feito no refinamento da temperatura e da chuva do Brasil para 30 m, as decisões tomadas, com exemplos, e o que ainda falta, conferido item por item contra as instruções.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Plano: relatório longo para o orientador, com índice fixo à esquerda em telas largas.
+     Laranja = temperatura, azul = chuva, neutros frios levemente esverdeados (papel de carta topográfica). */
+  --paper: #f3f5f2;
+  --card: #ffffff;
+  --ink: #17262a;
+  --muted: #55686c;
+  --temp: #b4441a;
+  --rain: #1f5c9e;
+
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* derivados */
+  --rule: #d5ddd8;
+  --grid: #e5ebe7;
+  --temp-soft: #e9935f;
+  --temp-tint: #fbeee6;
+  --rain-soft: #7aa9df;
+  --rain-tint: #e8f0f9;
+  --hl: #c9d6e2;
+  --code-bg: #eef2ef;
+  --plate: #ffffff;
+  --shadow: 0 1px 2px rgba(23, 38, 42, .06), 0 6px 18px rgba(23, 38, 42, .06);
+
+  /* estados (semânticos, separados das cores de tema) */
+  --ok: #2e7d4f;     --ok-tint: #e2f1e7;
+  --warn: #8a5a00;   --warn-tint: #faefd6;
+  --miss: #a3283c;   --miss-tint: #f8e2e5;
+  --adapt: #5b4a99;  --adapt-tint: #ebe7f7;
+  --crit: #3b4649;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101618;
+    --card: #1b2326;
+    --ink: #e3eae7;
+    --muted: #9fb0ad;
+    --temp: #f0905a;
+    --rain: #6fa8e8;
+    --rule: #2e393c;
+    --grid: #263033;
+    --temp-soft: #8a4424;
+    --temp-tint: #2a1d16;
+    --rain-soft: #2c5684;
+    --rain-tint: #15222e;
+    --hl: #34495a;
+    --code-bg: #162023;
+    --plate: #f2f4f1;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+    --ok: #6cc28f;     --ok-tint: #16271d;
+    --warn: #e3b04b;   --warn-tint: #2a2313;
+    --miss: #f08a99;   --miss-tint: #2d191d;
+    --adapt: #b3a5ef;  --adapt-tint: #221e33;
+    --crit: #c9d2cf;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #101618;
+  --card: #1b2326;
+  --ink: #e3eae7;
+  --muted: #9fb0ad;
+  --temp: #f0905a;
+  --rain: #6fa8e8;
+  --rule: #2e393c;
+  --grid: #263033;
+  --temp-soft: #8a4424;
+  --temp-tint: #2a1d16;
+  --rain-soft: #2c5684;
+  --rain-tint: #15222e;
+  --hl: #34495a;
+  --code-bg: #162023;
+  --plate: #f2f4f1;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+  --ok: #6cc28f;     --ok-tint: #16271d;
+  --warn: #e3b04b;   --warn-tint: #2a2313;
+  --miss: #f08a99;   --miss-tint: #2d191d;
+  --adapt: #b3a5ef;  --adapt-tint: #221e33;
+  --crit: #c9d2cf;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--rain); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--rain); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .08em .35em; border-radius: 4px; overflow-wrap: anywhere; }
+strong { font-weight: 600; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* ---------- cabeçalho ---------- */
+.masthead { max-width: 1180px; margin: 0 auto; padding: 44px 20px 28px; display: grid; gap: 18px; }
+.eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: .04em; color: var(--muted); }
+.masthead h1 { font-size: clamp(2.1rem, 5vw, 3.3rem); font-weight: 800; letter-spacing: -.01em; }
+.lead { font-size: 1.15rem; max-width: 62ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--muted); }
+.twotone { height: 5px; border-radius: 3px; max-width: 220px;
+  background: linear-gradient(90deg, var(--temp) 0 50%, var(--rain) 50% 100%); }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 6px; }
+.tile { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; }
+.tile .label { font-size: 13.5px; color: var(--muted); }
+.tile .value { font-family: var(--font-display); font-weight: 700; font-size: 1.85rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.tile .note { font-size: 13.5px; color: var(--muted); }
+
+/* ---------- grade principal ---------- */
+.page { max-width: 1180px; margin: 0 auto; padding: 0 20px 64px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+main { min-width: 0; display: grid; gap: 64px; }
+.toc { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; font-size: 14.5px; }
+.toc p { font-family: var(--font-display); font-weight: 700; margin-bottom: 6px; }
+.toc ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2px 16px; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a { display: block; padding: 3px 0; color: var(--ink); text-decoration: none; }
+.toc a::before { content: counter(toc); display: inline-block; width: 1.6em; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.toc a:hover { color: var(--rain); }
+@media (min-width: 1060px) {
+  .page { grid-template-columns: 220px minmax(0, 1fr); gap: 48px; }
+  .toc { position: sticky; top: 20px; align-self: start; background: transparent; border: 0; padding: 0; }
+  .toc ol { grid-template-columns: 1fr; }
+}
+
+section { display: grid; gap: 20px; scroll-margin-top: 20px; }
+.sec-head { display: grid; gap: 8px; }
+.sec-head h2 { font-size: clamp(1.55rem, 3vw, 2rem); font-weight: 800; display: flex; gap: 12px; align-items: baseline; }
+.sec-head h2 .num { font-family: var(--font-mono); font-size: .62em; font-weight: 500; color: var(--muted); }
+.prose { max-width: 68ch; }
+div.prose { display: grid; gap: 12px; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; }
+
+/* ---------- resumo ---------- */
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.box { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.box h3 { font-size: 1.08rem; }
+.box ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+
+.seg-wrap { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.seg-wrap h3 { font-size: 1.05rem; }
+.seg { display: flex; gap: 2px; height: 28px; }
+.seg span { display: flex; align-items: center; padding-left: 8px; border-radius: 4px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; color: #ffffff; }
+.seg .s-ok { background: var(--ok); }
+.seg .s-warn { background: var(--warn); }
+.seg .s-miss { background: var(--miss); }
+.seg .s-adapt { background: var(--adapt); }
+.seg .s-crit { background: var(--crit); }
+:root[data-theme="dark"] .seg span { color: #101618; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .seg span { color: #101618; } }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* ---------- diagramas ---------- */
+.diagram { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.svg-text { fill: var(--ink); font-family: var(--font-body); font-size: 13px; }
+.svg-title { fill: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.svg-small { fill: var(--muted); font-family: var(--font-body); font-size: 12px; }
+.svg-mono { fill: var(--ink); font-family: var(--font-mono); font-size: 12px; }
+.svg-line { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+.svg-dash { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+.svg-station { fill: var(--ink); }
+.svg-pixel { fill: var(--temp-soft); stroke: var(--ink); stroke-width: 1.5; }
+.svg-layer { fill: var(--card); stroke: var(--muted); stroke-width: 1.2; }
+.svg-model { fill: var(--rain-tint); stroke: var(--rain); stroke-width: 1.5; }
+.svg-arrow { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.svg-arrowhead { fill: var(--ink); }
+.svg-block { fill: var(--paper); stroke: var(--rule); stroke-width: 1; }
+.svg-block-test { fill: var(--hl); stroke: var(--rule); stroke-width: 1; }
+.svg-block-res { fill: url(#hatch); stroke: var(--rule); stroke-width: 1; }
+.hatch-line { stroke: var(--muted); stroke-width: 1.4; }
+.svg-panel { fill: none; stroke: var(--rule); stroke-width: 1; }
+
+/* ---------- etapas ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; counter-reset: step; }
+.steps li { counter-increment: step; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; display: grid; gap: 6px; align-content: start; position: relative; }
+.steps li::before { content: counter(step); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.steps b { font-family: var(--font-display); font-size: 1rem; }
+.steps span { font-size: 14px; color: var(--muted); }
+
+/* ---------- decisões ---------- */
+.decisions { display: grid; gap: 18px; }
+.decision { background: var(--card); border: 1px solid var(--rule); border-top: 4px solid var(--stripe, var(--muted)); border-radius: 12px; padding: 20px 22px; display: grid; gap: 14px; box-shadow: var(--shadow); }
+.decision.t-temp { --stripe: var(--temp); }
+.decision.t-rain { --stripe: var(--rain); }
+.decision.t-geral { --stripe: var(--ink); }
+.decision.t-prod { --stripe: var(--muted); }
+.d-top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; }
+.d-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.tag { font-size: 12px; font-weight: 600; letter-spacing: .02em; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; }
+.tag.temp { color: var(--temp); }
+.tag.rain { color: var(--rain); }
+.tag.geral { color: var(--ink); }
+.tag.prod { color: var(--muted); }
+.decision h3 { font-size: 1.3rem; font-weight: 700; width: 100%; }
+.d-grid { display: grid; gap: 14px; }
+@media (min-width: 860px) { .d-grid.two { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; } }
+.d-text { display: grid; gap: 10px; max-width: 68ch; }
+.d-text .k { font-weight: 600; }
+.example { background: var(--code-bg); border-left: 3px solid var(--stripe, var(--muted)); border-radius: 0 8px 8px 0; padding: 12px 14px; display: grid; gap: 6px; font-size: 15px; }
+.example .ex-h { font-size: 12.5px; font-weight: 600; letter-spacing: .03em; color: var(--muted); }
+.calc { font-family: var(--font-mono); font-size: 14px; line-height: 1.55; overflow-x: auto; white-space: pre; }
+.evidence { font-size: 14px; color: var(--muted); }
+.evidence code { font-size: 12.5px; }
+
+figure { margin: 0; display: grid; gap: 8px; align-content: start; }
+.diagram.fit { max-width: 640px; }
+.diagram.fit svg { min-width: 0; }
+figure.plate img { background: var(--plate); border-radius: 8px; padding: 8px; border: 1px solid var(--rule); }
+figcaption { font-size: 13.5px; color: var(--muted); max-width: 72ch; }
+
+.mini { width: 100%; border-collapse: collapse; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+.mini th, .mini td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; }
+.mini th { font-weight: 600; color: var(--muted); font-size: 13px; }
+.mini td.n, .mini th.n { text-align: right; }
+
+/* ---------- gráficos ---------- */
+.chart { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.chart h3 { font-size: 1.15rem; }
+.chart .sub { font-size: 14px; color: var(--muted); }
+.plot { position: relative; --label-w: 15.5rem; --gap: 12px; --pad-r: 3.4rem; }
+.gridlines { position: absolute; top: 0; bottom: 1.7rem; left: calc(var(--label-w) + var(--gap)); right: var(--pad-r); pointer-events: none; }
+.gridlines span { position: absolute; top: 0; bottom: 0; left: calc(var(--t) / var(--max) * 100%); border-left: 1px solid var(--grid); }
+.gridlines span.zero { border-left-color: var(--muted); }
+.bar-row { position: relative; display: grid; grid-template-columns: var(--label-w) minmax(0, 1fr); gap: var(--gap); align-items: center; padding: 4px 0; border-radius: 6px; cursor: default; }
+.bar-row:hover, .bar-row:focus-visible { background: var(--code-bg); }
+.bar-label { font-size: 14px; text-align: right; line-height: 1.3; }
+.bar-label b { font-weight: 600; }
+.bar-track { display: flex; align-items: center; gap: 6px; padding-right: var(--pad-r); min-height: 22px; }
+.bar { flex: none; height: 14px; width: calc(var(--v) / var(--max) * 100%); border-radius: 0 4px 4px 0; }
+.bar-val { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chart.temp .bar.model, .tip-key.temp-model, .chart.temp .lg-model { background: var(--temp); }
+.chart.temp .bar.ref, .tip-key.temp-ref, .chart.temp .lg-ref { background: var(--temp-soft); }
+.chart.rain .bar.model, .tip-key.rain-model, .chart.rain .lg-model { background: var(--rain); }
+.chart.rain .bar.ref, .tip-key.rain-ref, .chart.rain .lg-ref { background: var(--rain-soft); }
+.bar-row:hover .bar, .bar-row:focus-visible .bar { box-shadow: 0 0 0 2px var(--card), 0 0 0 3px var(--ink); }
+.axis { position: relative; height: 1.7rem; margin-left: calc(var(--label-w) + var(--gap)); margin-right: var(--pad-r); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.axis span { position: absolute; top: 4px; left: calc(var(--t) / var(--max) * 100%); transform: translateX(-50%); }
+.axis-title { text-align: center; font-size: 12.5px; color: var(--muted); margin-left: calc(var(--label-w) + var(--gap)); margin-right: var(--pad-r); }
+@media (max-width: 640px) {
+  .plot { --label-w: 8.6rem; --gap: 8px; --pad-r: 2.9rem; }
+  .bar-label { font-size: 12.5px; }
+}
+details.table-view summary { cursor: pointer; font-size: 14px; color: var(--rain); width: max-content; }
+details.table-view[open] summary { margin-bottom: 8px; }
+.table-scroll { overflow-x: auto; }
+
+#tip { position: fixed; z-index: 10; pointer-events: none; background: var(--card); color: var(--ink); border: 1px solid var(--rule); border-radius: 8px; box-shadow: var(--shadow); padding: 8px 11px; font-size: 13px; max-width: 280px; opacity: 0; transition: opacity .12s; display: grid; gap: 2px; }
+#tip.on { opacity: 1; }
+.tip-val { font-weight: 700; font-size: 15.5px; font-variant-numeric: tabular-nums; }
+.tip-label { color: var(--muted); display: flex; gap: 7px; align-items: center; }
+.tip-key { display: inline-block; width: 12px; height: 3px; border-radius: 2px; flex: none; }
+.tip-extra { color: var(--muted); font-size: 12.5px; }
+
+.gallery { display: grid; gap: 18px; }
+@media (min-width: 900px) { .gallery.two { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- conferência ---------- */
+.check-wrap { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; overflow-x: auto; }
+table.check { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 640px; }
+table.check th, table.check td { padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; text-align: left; }
+table.check thead th { font-size: 12.5px; color: var(--muted); font-weight: 600; letter-spacing: .03em; }
+table.check tr.grp th { background: var(--paper); font-family: var(--font-display); font-size: 14.5px; color: var(--ink); padding-top: 12px; }
+table.check td:first-child { width: 40%; }
+table.check td:nth-child(2) { width: 120px; white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 1px 9px 2px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.pill::before { font-size: 11px; }
+.pill.ok { background: var(--ok-tint); color: var(--ok); }
+.pill.ok::before { content: "✓"; }
+.pill.warn { background: var(--warn-tint); color: var(--warn); }
+.pill.warn::before { content: ""; width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px currentColor; background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+.pill.miss { background: var(--miss-tint); color: var(--miss); }
+.pill.miss::before { content: "✕"; }
+.pill.adapt { background: var(--adapt-tint); color: var(--adapt); }
+.pill.adapt::before { content: "⇄"; }
+.pill.crit { background: var(--miss-tint); color: var(--miss); border: 1px solid currentColor; }
+.pill.crit::before { content: "!"; font-weight: 800; }
+
+/* ---------- C1-C15 ---------- */
+.cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.ccard { background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--cs, var(--muted)); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.ccard.done { --cs: var(--ok); }
+.ccard.part { --cs: var(--warn); }
+.ccard .c-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ccard .c-id { font-family: var(--font-mono); font-weight: 500; font-size: 13px; color: var(--muted); }
+.ccard h3 { font-size: 1rem; font-weight: 700; }
+.ccard p { font-size: 14px; }
+.ccard .c-next { color: var(--muted); font-size: 13.5px; }
+
+/* ---------- pendências ---------- */
+.todo { display: grid; gap: 14px; }
+@media (min-width: 900px) { .todo { grid-template-columns: 1fr 1.25fr; } }
+.todo ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; }
+.todo .box.ask { border-color: var(--warn); background: var(--warn-tint); }
+
+/* ---------- pasta ---------- */
+.tree { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 0; }
+.tree .c { color: var(--muted); }
+.docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.docs a { display: grid; gap: 2px; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; color: var(--ink); text-decoration: none; }
+.docs a:hover { border-color: var(--rain); }
+.docs a b { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--rain); }
+.docs a span { font-size: 14px; color: var(--muted); }
+
+footer { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--rule); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  #tip { transition: none; }
+}
+@media print {
+  .toc, #tip { display: none; }
+  .page { grid-template-columns: 1fr; }
+  .decision, .box, .chart { box-shadow: none; break-inside: avoid; }
+  body { background: #ffffff; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <p class="eyebrow">climate_for_soil · pasta refinamento/</p>
+  <h1>Refinamento climático a 30&nbsp;m</h1>
+  <div class="twotone" aria-hidden="true"></div>
+  <p class="lead">Temperatura média do ar e precipitação, normal 1991-2020, com pixel de 30&nbsp;m gerado por modelo, já produzidas para o Paraná inteiro. Esta página reúne o que foi feito, as decisões tomadas e o que ainda falta, conferido item por item contra as instruções do Fabrício.</p>
+  <p class="meta">
+    <span>Vitor</span>
+    <span>Situação em 09/11/2026</span>
+    <span>Versão em texto: <a href="mapa.md">mapa.md</a></span>
+    <span>Pedido original: <a href="instrucoes.md">instrucoes.md</a></span>
+  </p>
+  <div class="tiles">
+    <div class="tile"><span class="label">Teste reservado, temperatura</span><span class="value">0,72 °C</span><span class="note">CHELSA 0,97 · Xavier reproduzido 0,88</span></div>
+    <div class="tile"><span class="label">Teste reservado, chuva</span><span class="value">17,0 mm</span><span class="note">CHELSA 19,6 · Xavier reproduzido 21,6</span></div>
+    <div class="tile"><span class="label">Comparações C1-C15</span><span class="value">12 + 3</span><span class="note">executadas + encerradas com justificativa</span></div>
+    <div class="tile"><span class="label">Mapa de 30 m</span><span class="value">Paraná</span><span class="note">199.271 km², 942 janelas, 2 variáveis</span></div>
+  </div>
+</header>
+
+<div class="page">
+  <nav class="toc" aria-label="Índice">
+    <p>Nesta página</p>
+    <ol>
+      <li><a href="#resumo">Resumo</a></li>
+      <li><a href="#final">Teste reservado e Paraná</a></li>
+      <li><a href="#regra">A regra do projeto</a></li>
+      <li><a href="#caminho">Do dado ao mapa</a></li>
+      <li><a href="#decisoes">Decisões, com exemplos</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#conferencia">Pedido × feito</a></li>
+      <li><a href="#comparacoes">Comparações C1-C15</a></li>
+      <li><a href="#falta">O que falta</a></li>
+      <li><a href="#pasta">Onde está cada coisa</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- 1. RESUMO -->
+    <section id="resumo">
+      <div class="sec-head"><h2><span class="num">1</span>Resumo</h2></div>
+      <div class="summary">
+        <div class="box">
+          <h3>O que existe</h3>
+          <ul>
+            <li>Mapas de 30&nbsp;m do <strong>Paraná inteiro</strong>: temperatura e chuva, 12 meses e anual, com incerteza calibrada e área de aplicabilidade.</li>
+            <li>Cinco métodos comparados nas duas variáveis, em validação espacial por blocos.</li>
+            <li>O método do Xavier reproduzido nas mesmas dobras (C15).</li>
+            <li>O teste reservado, aberto uma única vez no fim.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>O resultado principal</h3>
+          <p>Nas estações reservadas, o modelo erra <strong>0,72&nbsp;°C</strong> contra 0,97 do CHELSA e 0,88 do método do Xavier, e <strong>17,0&nbsp;mm</strong> contra 19,6 e 21,6&nbsp;mm.</p>
+          <p>Ganha do CHELSA nas duas variáveis e do método do Xavier na chuva; na temperatura, a vantagem sobre o Xavier fica no limite do intervalo. Empata com o CHIRPS.</p>
+        </div>
+        <div class="box">
+          <h3>O que ainda falta</h3>
+          <ul>
+            <li>Os demais estados (o produtor é o mesmo) e o upload do Paraná no GEE.</li>
+            <li>Covariáveis ainda não testadas: orientação, TPI, distância ao oceano, NDVI, IMERG.</li>
+            <li>Três decisões pendentes (seção <a href="#falta">O que falta</a>).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="seg-wrap">
+        <h3>41 itens das instruções conferidos</h3>
+        <div class="seg" role="img" aria-label="30 feitos, 4 parciais, 6 faltando e 1 adaptado">
+          <span class="s-ok" style="flex: 30" tabindex="0" data-value="30 itens" data-label="Feitos" data-group="">30</span>
+          <span class="s-warn" style="flex: 4" tabindex="0" data-value="4 itens" data-label="Parciais" data-group="">4</span>
+          <span class="s-miss" style="flex: 6" tabindex="0" data-value="6 itens" data-label="Faltando" data-group="">6</span>
+          <span class="s-adapt" style="flex: 1" tabindex="0" data-value="1 item" data-label="Adaptado (grade em UTM)" data-group=""></span>
+        </div>
+        <div class="legend">
+          <span><i style="background: var(--ok)"></i>Feito (30)</span>
+          <span><i style="background: var(--warn)"></i>Parcial (4)</span>
+          <span><i style="background: var(--miss)"></i>Falta (6)</span>
+          <span><i style="background: var(--adapt)"></i>Adaptado (1)</span>
+        </div>
+        <p class="small muted">A lista completa está na seção <a href="#conferencia">Pedido × feito</a>.</p>
+      </div>
+    </section>
+
+    <!-- 1b. FINAL -->
+    <section id="final">
+      <div class="sec-head">
+        <h2><span class="num">2</span>Teste reservado e o mapa do Paraná</h2>
+        <p class="prose muted">As estações reservadas foram sorteadas em 18/10/2026, antes de qualquer modelo, e só foram usadas uma vez, em 09/11/2026, com o método congelado.</p>
+      </div>
+      <div class="table-scroll check-wrap">
+        <table class="check">
+          <thead><tr><th>RMSE nas estações reservadas</th><th>Modelo</th><th>CHELSA</th><th>Xavier reproduzido (MX)</th><th>CHIRPS</th></tr></thead>
+          <tbody>
+            <tr><td>Temperatura, 18 estações, mensal</td><td><strong>0,717 °C</strong></td><td>0,966</td><td>0,875</td><td>—</td></tr>
+            <tr><td>Temperatura, anual</td><td><strong>0,648 °C</strong></td><td>0,902</td><td>0,729</td><td>—</td></tr>
+            <tr><td>Chuva, 416 estações, mensal</td><td><strong>17,05 mm</strong></td><td>19,63</td><td>21,61</td><td>16,66</td></tr>
+            <tr><td>Chuva, anual</td><td><strong>133,5 mm</strong></td><td>169,4</td><td>165,7</td><td>113,0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>Modelo menos CHELSA: <strong>−0,25&nbsp;°C</strong> [−0,41; −0,12] e <strong>−2,6&nbsp;mm</strong> [−4,2; −0,4]. Modelo menos Xavier reproduzido: −0,16&nbsp;°C [−0,32; +0,00] e <strong>−4,6&nbsp;mm</strong> [−8,8; −1,9]. Contra o CHIRPS, empate (+0,4&nbsp;mm [−0,9; +2,0]).</p>
+        <p>O intervalo de 90% cobriu 90% dos erros mensais da chuva, mas só 75% na temperatura: nessas 18 estações o erro foi maior que na validação (0,72 contra 0,52&nbsp;°C).</p>
+      </div>
+      <figure class="plate">
+        <img src="resultados/figuras/parana_anual.png" alt="Mapas do Paraná: temperatura média anual e chuva anual, normal 1991-2020, com pixel de 30 metros">
+        <figcaption>Paraná, normal 1991-2020, pixel de 30&nbsp;m (figura reamostrada para leitura): 221.411.999 pixels, todos com valor. Temperatura anual de 16,7 a 24,6&nbsp;°C (1% e 99% dos pixels; mediana 21,0), com o noroeste mais quente e as serras do sul mais frias. Chuva anual de 1.286 a 2.327&nbsp;mm (mediana 1.709), maior na Serra do Mar e no sudoeste.</figcaption>
+      </figure>
+      <div class="gallery two">
+        <figure class="plate">
+          <img src="resultados/figuras/parana_janeiro_julho.png" alt="Temperatura e chuva de janeiro e de julho no Paraná">
+          <figcaption>Janeiro e julho: temperatura e chuva.</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="resultados/figuras/parana_incerteza_aoa.png" alt="Meia-largura do intervalo de 90% e pixels fora da área de aplicabilidade no Paraná">
+          <figcaption>Meia-largura do intervalo de 90% e pixels fora da área de aplicabilidade. Os retângulos de bordas retas vêm das divisões das árvores na latitude e na longitude; trocar as coordenadas por covariáveis físicas é a forma de reduzi-los numa próxima versão.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. REGRA -->
+    <section id="regra">
+      <div class="sec-head"><h2><span class="num">3</span>A regra do projeto: modelo, não interpolação</h2></div>
+      <div class="prose">
+        <p>As instruções proíbem IDW, ADW, krigagem, splines e krigagem dos resíduos. Cada pixel tem que sair de um modelo aplicado às covariáveis daquele pixel. Os métodos do Xavier (IDW e ADW) entram só como régua, com o nome <strong>MX</strong>.</p>
+      </div>
+      <div class="diagram" role="img" aria-label="Comparação: na interpolação, o valor do pixel é a média ponderada das cinco estações vizinhas; no modelo, o valor sai das covariáveis do próprio pixel">
+        <svg viewBox="0 0 780 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" class="svg-arrowhead"></path>
+            </marker>
+          </defs>
+          <rect x="4" y="4" width="364" height="292" rx="10" class="svg-panel"></rect>
+          <text x="22" y="32" class="svg-title">Interpolação (IDW / ADW)</text>
+          <text x="22" y="50" class="svg-small">só como régua: o método MX</text>
+          <line x1="70" y1="100" x2="186" y2="170" class="svg-dash"></line>
+          <line x1="300" y1="92" x2="186" y2="170" class="svg-dash"></line>
+          <line x1="320" y1="236" x2="186" y2="170" class="svg-dash"></line>
+          <line x1="96" y1="262" x2="186" y2="170" class="svg-dash"></line>
+          <line x1="196" y1="84" x2="186" y2="170" class="svg-dash"></line>
+          <circle cx="70" cy="100" r="6" class="svg-station"></circle>
+          <circle cx="300" cy="92" r="6" class="svg-station"></circle>
+          <circle cx="320" cy="236" r="6" class="svg-station"></circle>
+          <circle cx="96" cy="262" r="6" class="svg-station"></circle>
+          <circle cx="196" cy="84" r="6" class="svg-station"></circle>
+          <rect x="173" y="157" width="26" height="26" class="svg-pixel"></rect>
+          <text x="208" y="176" class="svg-text">pixel</text>
+          <text x="22" y="282" class="svg-small">valor = média das 5 vizinhas, com peso 1/d²</text>
+
+          <rect x="398" y="4" width="378" height="292" rx="10" class="svg-panel"></rect>
+          <text x="416" y="32" class="svg-title">Modelo (vai para o mapa)</text>
+          <text x="416" y="50" class="svg-small">treinado nas estações, aplicado em qualquer pixel</text>
+          <rect x="416" y="76" width="140" height="34" rx="6" class="svg-layer"></rect>
+          <text x="428" y="98" class="svg-text">Relevo a 30 m</text>
+          <rect x="416" y="118" width="140" height="34" rx="6" class="svg-layer"></rect>
+          <text x="428" y="140" class="svg-text">Latitude, longitude</text>
+          <rect x="416" y="160" width="140" height="34" rx="6" class="svg-layer"></rect>
+          <text x="428" y="182" class="svg-text">CHELSA do mês</text>
+          <rect x="416" y="202" width="140" height="34" rx="6" class="svg-layer"></rect>
+          <text x="428" y="224" class="svg-text">Época do ano</text>
+          <path d="M560 156 L594 156" class="svg-arrow" marker-end="url(#arrow)"></path>
+          <rect x="598" y="132" width="92" height="48" rx="8" class="svg-model"></rect>
+          <text x="644" y="161" text-anchor="middle" class="svg-text">LightGBM</text>
+          <path d="M692 156 L716 156" class="svg-arrow" marker-end="url(#arrow)"></path>
+          <rect x="722" y="143" width="26" height="26" class="svg-pixel"></rect>
+          <text x="735" y="194" text-anchor="middle" class="svg-small">pixel</text>
+          <text x="416" y="272" class="svg-small">as mesmas covariáveis existem em todo o Brasil</text>
+          <text x="416" y="288" class="svg-small">e no GEE, com ou sem estação por perto</text>
+        </svg>
+      </div>
+      <div class="example" style="--stripe: var(--ink); max-width: 76ch">
+        <span class="ex-h">EXEMPLO</span>
+        <p>Um pixel numa encosta a 1.050&nbsp;m, a 40&nbsp;km da estação mais próxima. A interpolação devolve uma média das cinco estações vizinhas, ajustada pela altitude. O modelo olha a altitude e a declividade do pixel, a posição, o CHELSA daquele mês e a época do ano, e aplica a relação que aprendeu com todas as estações do treino. Por isso o mesmo modelo serve para qualquer pixel do país e pode rodar dentro do GEE.</p>
+      </div>
+    </section>
+
+    <!-- 3. CAMINHO -->
+    <section id="caminho">
+      <div class="sec-head"><h2><span class="num">4</span>Do dado ao mapa</h2></div>
+      <ol class="steps">
+        <li><b>Observações</b><span>Tmax, Tmin e chuva diários cedidos pelo Xavier, 1961-2025: 1.186 estações de temperatura e 14.170 pluviômetros.</span></li>
+        <li><b>Controle e normais</b><span>Limites físicos, 80% de cobertura, mês de chuva completo. Ficam 120 e 2.360 estações com as 12 normais.</span></li>
+        <li><b>Covariáveis</b><span>CHELSA do mês, relevo Copernicus (30, 90 e 1.000 m), posição e época do ano, extraídos no GEE.</span></li>
+        <li><b>Validação em blocos</b><span>Blocos de 1° e 2°, 5 dobras × 3 repetições, ajuste em dobras internas, teste reservado fechado.</span></li>
+        <li><b>Modelos escolhidos</b><span>LightGBM corrigindo o CHELSA (temperatura) e um LightGBM por mês (chuva), aplicados pixel a pixel.</span></li>
+        <li><b>GeoTIFF de 30 m</b><span>Paraná em grade UTM única, 12 meses e anual, com intervalo de 90% e área de aplicabilidade.</span></li>
+      </ol>
+    </section>
+
+    <!-- 4. DECISÕES -->
+    <section id="decisoes">
+      <div class="sec-head">
+        <h2><span class="num">5</span>Decisões, com exemplos</h2>
+        <p class="prose muted">Cada decisão vem com o motivo, um exemplo e a evidência. Os exemplos marcados como ilustrativos usam números redondos para mostrar a conta; os demais números saem das tabelas em <code>resultados/tabelas/</code>.</p>
+      </div>
+      <div class="decisions">
+
+        <article class="decision t-geral" id="d-correcao">
+          <div class="d-top"><span class="d-id">D2</span><span class="tag geral">Geral</span><h3>Corrigir o CHELSA em vez de prever do zero</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> O modelo prevê quanto a estação difere do CHELSA no mesmo mês. O mapa é o CHELSA mais essa correção.</p>
+              <p><span class="k">Por quê.</span> O CHELSA já traz o padrão regional do clima. Sobra para o modelo um desvio pequeno, ligado ao relevo e à posição, que se comporta melhor longe das estações.</p>
+              <div class="example">
+                <span class="ex-h">EXEMPLO ILUSTRATIVO</span>
+                <p>Num pixel em que o CHELSA de julho dá 13,6&nbsp;°C, o modelo estima que lugares parecidos ficam 0,8&nbsp;°C acima da grade:</p>
+                <div class="calc">13,6 + 0,8 = 14,4 °C</div>
+              </div>
+              <p class="evidence"><span class="k">Evidência (C4, blocos de 2°).</span> Random forest 0,601 → 0,528&nbsp;°C; LightGBM 0,570 → 0,524&nbsp;°C. Na regressão linear as duas formas são equivalentes. <code>modelos_exploratorios_2graus_grade_*.csv</code></p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/previa_curitiba_anual.png" width="1800" height="1620" alt="Quatro mapas de Curitiba: o CHELSA em blocos de 1 km, o mapa corrigido com textura de 30 m, a correção entre zero e mais um grau e a dispersão entre cinco modelos">
+              <figcaption>Curitiba, 12 × 12&nbsp;km, temperatura anual: o CHELSA, o mapa corrigido, a correção e a dispersão entre cinco modelos. A textura fina ainda não foi validada (C10).</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-geral" id="d-blocos">
+          <div class="d-top"><span class="d-id">D3</span><span class="tag geral">Geral</span><h3>Validar em blocos e guardar um teste que ninguém olha</h3></div>
+          <div class="d-grid">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> As estações são agrupadas em blocos de 1° e de 2°. Em cada rodada, blocos inteiros ficam de fora para teste. Antes de tudo, alguns blocos foram separados e nunca entram na escolha do método.</p>
+              <p><span class="k">Por quê.</span> Estações vizinhas têm quase o mesmo clima. Se uma fica no treino e a outra no teste, o modelo aproveita a resposta da vizinha e o erro parece menor do que é.</p>
+              <div class="example">
+                <span class="ex-h">EXEMPLO</span>
+                <p>Duas estações a 15&nbsp;km uma da outra caem no mesmo bloco de 2° (cerca de 220&nbsp;km de lado) e saem juntas do treino.</p>
+              </div>
+              <p class="evidence"><span class="k">Como ficou.</span> 5 dobras × 3 repetições; hiperparâmetros escolhidos em 3 dobras internas, só com o treino; 18 estações de temperatura e 416 de chuva reservadas, abertas uma única vez no fim (seção 2).</p>
+            </div>
+            <div class="diagram fit" role="img" aria-label="Grade de blocos com estações: a maioria dos blocos é treino, cinco blocos formam o teste de uma dobra e três blocos hachurados são o teste reservado">
+              <svg viewBox="0 0 552 330" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                    <line x1="0" y1="0" x2="0" y2="7" class="hatch-line"></line>
+                  </pattern>
+                </defs>
+                <g>
+                  <rect x="12" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="78" y="12" width="66" height="52" class="svg-block-test"></rect>
+                  <rect x="144" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="210" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="276" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="342" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="408" y="12" width="66" height="52" class="svg-block"></rect>
+                  <rect x="474" y="12" width="66" height="52" class="svg-block-res"></rect>
+
+                  <rect x="12" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="78" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="144" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="210" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="276" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="342" y="64" width="66" height="52" class="svg-block-test"></rect>
+                  <rect x="408" y="64" width="66" height="52" class="svg-block"></rect>
+                  <rect x="474" y="64" width="66" height="52" class="svg-block"></rect>
+
+                  <rect x="12" y="116" width="66" height="52" class="svg-block-res"></rect>
+                  <rect x="78" y="116" width="66" height="52" class="svg-block"></rect>
+                  <rect x="144" y="116" width="66" height="52" class="svg-block"></rect>
+                  <rect x="210" y="116" width="66" height="52" class="svg-block-test"></rect>
+                  <rect x="276" y="116" width="66" height="52" class="svg-block"></rect>
+                  <rect x="342" y="116" width="66" height="52" class="svg-block"></rect>
+                  <rect x="408" y="116" width="66" height="52" class="svg-block"></rect>
+                  <rect x="474" y="116" width="66" height="52" class="svg-block"></rect>
+
+                  <rect x="12" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="78" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="144" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="210" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="276" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="342" y="168" width="66" height="52" class="svg-block"></rect>
+                  <rect x="408" y="168" width="66" height="52" class="svg-block-test"></rect>
+                  <rect x="474" y="168" width="66" height="52" class="svg-block"></rect>
+
+                  <rect x="12" y="220" width="66" height="52" class="svg-block-test"></rect>
+                  <rect x="78" y="220" width="66" height="52" class="svg-block"></rect>
+                  <rect x="144" y="220" width="66" height="52" class="svg-block"></rect>
+                  <rect x="210" y="220" width="66" height="52" class="svg-block"></rect>
+                  <rect x="276" y="220" width="66" height="52" class="svg-block-res"></rect>
+                  <rect x="342" y="220" width="66" height="52" class="svg-block"></rect>
+                  <rect x="408" y="220" width="66" height="52" class="svg-block"></rect>
+                  <rect x="474" y="220" width="66" height="52" class="svg-block"></rect>
+                </g>
+                <g class="svg-station">
+                  <circle cx="40" cy="30" r="3.5"></circle><circle cx="95" cy="40" r="3.5"></circle><circle cx="120" cy="28" r="3.5"></circle>
+                  <circle cx="170" cy="50" r="3.5"></circle><circle cx="230" cy="30" r="3.5"></circle><circle cx="250" cy="52" r="3.5"></circle>
+                  <circle cx="300" cy="36" r="3.5"></circle><circle cx="360" cy="48" r="3.5"></circle><circle cx="385" cy="26" r="3.5"></circle>
+                  <circle cx="430" cy="40" r="3.5"></circle><circle cx="490" cy="30" r="3.5"></circle><circle cx="512" cy="50" r="3.5"></circle>
+                  <circle cx="30" cy="90" r="3.5"></circle><circle cx="110" cy="100" r="3.5"></circle><circle cx="160" cy="80" r="3.5"></circle>
+                  <circle cx="190" cy="104" r="3.5"></circle><circle cx="245" cy="90" r="3.5"></circle><circle cx="290" cy="104" r="3.5"></circle>
+                  <circle cx="318" cy="78" r="3.5"></circle><circle cx="355" cy="92" r="3.5"></circle><circle cx="440" cy="84" r="3.5"></circle>
+                  <circle cx="460" cy="108" r="3.5"></circle><circle cx="505" cy="96" r="3.5"></circle>
+                  <circle cx="35" cy="140" r="3.5"></circle><circle cx="58" cy="128" r="3.5"></circle><circle cx="100" cy="150" r="3.5"></circle>
+                  <circle cx="175" cy="132" r="3.5"></circle><circle cx="225" cy="145" r="3.5"></circle><circle cx="250" cy="128" r="3.5"></circle>
+                  <circle cx="240" cy="158" r="3.5"></circle><circle cx="300" cy="140" r="3.5"></circle><circle cx="370" cy="150" r="3.5"></circle>
+                  <circle cx="425" cy="132" r="3.5"></circle><circle cx="500" cy="145" r="3.5"></circle>
+                  <circle cx="45" cy="190" r="3.5"></circle><circle cx="90" cy="200" r="3.5"></circle><circle cx="118" cy="180" r="3.5"></circle>
+                  <circle cx="170" cy="196" r="3.5"></circle><circle cx="232" cy="188" r="3.5"></circle><circle cx="310" cy="205" r="3.5"></circle>
+                  <circle cx="350" cy="182" r="3.5"></circle><circle cx="372" cy="206" r="3.5"></circle><circle cx="420" cy="192" r="3.5"></circle>
+                  <circle cx="450" cy="178" r="3.5"></circle><circle cx="510" cy="200" r="3.5"></circle>
+                  <circle cx="30" cy="245" r="3.5"></circle><circle cx="55" cy="258" r="3.5"></circle><circle cx="105" cy="240" r="3.5"></circle>
+                  <circle cx="180" cy="250" r="3.5"></circle><circle cx="240" cy="236" r="3.5"></circle><circle cx="290" cy="250" r="3.5"></circle>
+                  <circle cx="318" cy="240" r="3.5"></circle><circle cx="365" cy="256" r="3.5"></circle><circle cx="440" cy="244" r="3.5"></circle>
+                  <circle cx="495" cy="236" r="3.5"></circle>
+                </g>
+                <rect x="12" y="296" width="14" height="14" class="svg-block"></rect>
+                <text x="32" y="308" class="svg-text">treino</text>
+                <rect x="100" y="296" width="14" height="14" class="svg-block-test"></rect>
+                <text x="120" y="308" class="svg-text">teste desta dobra</text>
+                <rect x="252" y="296" width="14" height="14" class="svg-block-res"></rect>
+                <text x="272" y="308" class="svg-text">reservado (fechado)</text>
+                <circle cx="430" cy="303" r="3.5" class="svg-station"></circle>
+                <text x="440" y="308" class="svg-text">estação</text>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <article class="decision t-temp" id="d-definicao">
+          <div class="d-top"><span class="d-id">D4</span><span class="tag temp">Temperatura</span><h3>Qual temperatura média?</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> Por enquanto a resposta é <code>(Tmax + Tmin)/2</code>, como no Xavier, sem desconto.</p>
+              <p><span class="k">Por quê.</span> Os dados do Xavier só têm a máxima e a mínima do dia. O CHELSA e o ERA5 representam a média das 24 horas, que costuma ficar abaixo porque a curva do dia não é simétrica.</p>
+              <div class="example">
+                <span class="ex-h">EXEMPLO ILUSTRATIVO</span>
+                <div class="calc">Tmax 28 °C, Tmin 16 °C → (28 + 16)/2 = 22,0 °C
+média das 24 leituras horárias  = 21,1 °C
+diferença                        = +0,9 °C</div>
+              </div>
+              <p class="evidence"><span class="k">Evidência (C11, INMET 2020, 4.619 meses em 521 estações).</span> <code>(Tmax + Tmin)/2</code> fica +0,865&nbsp;°C acima da média de 24&nbsp;h (RMSE 0,935); a média compensada fica a −0,062&nbsp;°C (RMSE 0,216). Como só 2020 foi medido, nenhum desconto nacional foi aplicado. A definição final está entre as decisões em aberto.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/c11_definicoes_2020.png" width="1700" height="816" alt="Barras do viés e do RMSE contra a média de 24 horas: média dos extremos com viés de 0,865 e RMSE de 0,935 grau; compensada com viés de menos 0,062 e RMSE de 0,216 grau">
+              <figcaption>Viés e RMSE das duas definições contra a média das 24 horas, nas estações automáticas do INMET em 2020.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-geral" id="d-cobertura">
+          <div class="d-top"><span class="d-id">D5</span><span class="tag geral">Geral</span><h3>Quantos anos fazem uma normal</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> Cada normal mensal exige 24 dos 30 anos (80%). As regras de 70% e 90% ficam como sensibilidade.</p>
+              <p><span class="k">Por quê.</span> Com 90%, a temperatura cairia para 58 estações. Com 70%, entram normais com até 9 anos faltando. 80% é o meio-termo sugerido nas instruções.</p>
+            </div>
+            <div class="table-scroll">
+              <table class="mini">
+                <thead><tr><th>Cobertura mínima por mês</th><th class="n">Temperatura</th><th class="n">Chuva</th></tr></thead>
+                <tbody>
+                  <tr><td>70% (21 anos)</td><td class="n">191</td><td class="n">2.971</td></tr>
+                  <tr><td><strong>80% (24 anos), adotada</strong></td><td class="n"><strong>120</strong></td><td class="n"><strong>2.360</strong></td></tr>
+                  <tr><td>90% (27 anos)</td><td class="n">58</td><td class="n">1.159</td></tr>
+                </tbody>
+              </table>
+              <p class="small muted" style="margin-top: 8px">Estações com as 12 normais mensais elegíveis.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="decision t-rain" id="d-chuva">
+          <div class="d-top"><span class="d-id">D6 · D7</span><span class="tag rain">Chuva</span><h3>Mês de chuva com falha não entra</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> Um mês só conta se todos os dias tiverem medição. Dia sem dado não vira zero e nada é preenchido. A normal anual é a soma das 12 normais mensais.</p>
+            <p><span class="k">Por quê.</span> Na chuva, o dia que falta pode ser justamente o do temporal, e a soma dos dias medidos subestima o mês.</p>
+            <div class="example" style="--stripe: var(--rain)">
+              <span class="ex-h">EXEMPLO ILUSTRATIVO</span>
+              <div class="calc">janeiro: 30 dias medidos somam 180 mm, 1 dia sem dado
+se nesse dia choveu 45 mm, o mês real foi 225 mm
+usar 180 mm erraria 20%  →  o mês inteiro sai</div>
+            </div>
+            <p><span class="k">Valores preenchidos.</span> No asset indicado pelo Fabrício (<code>observados_inmet/pr</code>), 10,34% dos valores foram preenchidos com a grade do Xavier. A flag <code>preenchido</code> separa esses valores, e eles não entram como observação. Numa amostra de 10 estações, os 889 registros medidos coincidem com o <code>pr.npz</code> (835 até 0,001&nbsp;mm) e os 41 preenchidos não existem nele.</p>
+            <p><span class="k">Na modelagem.</span> A chuva entra como <code>log1p(chuva)</code>, por ser assimétrica (muitos meses secos, poucos muito chuvosos), e volta para milímetros com a correção de smearing calculada no treino. O total anual previsto é a soma dos 12 meses.</p>
+          </div>
+        </article>
+
+        <article class="decision t-temp" id="d-diferencas">
+          <div class="d-top"><span class="d-id">C12</span><span class="tag temp">Temperatura</span><h3>Séries curtas: o método das diferenças</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> Para estações com poucos anos, a normal é corrigida pela diferença que uma grade de referência mostra entre o período completo e os anos que a estação tem. Já foi testado e ainda não foi aplicado às normais dos mapas.</p>
+              <div class="example">
+                <span class="ex-h">FÓRMULA E EXEMPLO ILUSTRATIVO</span>
+                <div class="calc">normal = média da estação nos anos que ela tem
+       + (grade em 1991-2020 − grade nesses mesmos anos)
+
+estação só com 2011-2020: janeiro = 24,0 °C
+ERA5 no pixel: 1991-2020 = 23,2 °C; 2011-2020 = 23,6 °C
+normal = 24,0 + (23,2 − 23,6) = 23,6 °C</div>
+              </div>
+              <p class="evidence"><span class="k">Evidência (C12, 250 séries de 43 estações, anos retirados de propósito).</span> Só com 2011-2020, a média simples erra 0,408&nbsp;°C e o método das diferenças, 0,210&nbsp;°C; o viés cai de +0,309 para +0,016&nbsp;°C. A média simples sai quente porque o Brasil aqueceu no período.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/c12_falhas_artificiais.png" width="1600" height="928" alt="Barras do RMSE da normal estimada em quatro cenários de anos retidos; o método das diferenças e a regressão ficam perto da metade do erro da média simples">
+              <figcaption>Erro da normal estimada quando só parte dos 30 anos está disponível.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-temp" id="d-gradiente">
+          <div class="d-top"><span class="d-id">D11</span><span class="tag temp">Temperatura</span><h3>O gradiente fixo de −6,5 °C/km piorou</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> Não usar a correção por elevação com gradiente fixo. A fórmula correta é <code>T₃₀ = T_grade + Γ·(z₃₀ − z_grade)</code>.</p>
+            <div class="example">
+              <span class="ex-h">EXEMPLO</span>
+              <div class="calc">Γ = −6,5 °C/km, pixel a 1.000 m, célula do CHELSA a 900 m
+certo:   Γ·(z₃₀ − z_grade) = −0,0065 × (1.000 − 900) = −0,65 °C   (mais frio em cima)
+antigo:  (z_grade − z₃₀)·Γ = −0,0065 × (900 − 1.000) = +0,65 °C   (sinal trocado)</div>
+            </div>
+            <p>O script do teste anterior (commit <code>e14ea63</code>) usava a segunda forma e aquecia os pixels mais altos. Não está provado que a tabela antiga saiu exatamente desse script, por isso ela não foi usada como resultado.</p>
+            <p class="evidence"><span class="k">Evidência (C2, 102 estações, blocos de 2°).</span> CHELSA 0,794&nbsp;°C; gradiente fixo 0,826&nbsp;°C (piora +0,031 [0,013; 0,050]); gradientes ajustados no treino: global 0,788, mensal 0,789 e mensal por região 0,775&nbsp;°C, sem ganho conclusivo. <code>c2_gradientes_2graus.csv</code></p>
+          </div>
+        </article>
+
+        <article class="decision t-geral" id="d-escala">
+          <div class="d-top"><span class="d-id">D12</span><span class="tag geral">Geral</span><h3>Pixel de 30 m não é informação de 30 m</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> Entregar 30&nbsp;m, como pedido, sem tratar o detalhe fino como prova de qualidade.</p>
+              <p><span class="k">Por quê.</span> No teste C5, trocar o relevo de 30&nbsp;m por relevo agregado a 1.000&nbsp;m não piorou o modelo. Na temperatura, melhorou.</p>
+              <div class="table-scroll">
+                <table class="mini">
+                  <thead><tr><th>Relevo</th><th class="n">Temperatura (°C)</th><th class="n">Chuva (mm)</th></tr></thead>
+                  <tbody>
+                    <tr><td>30 m</td><td class="n">0,550</td><td class="n">20,889</td></tr>
+                    <tr><td>90 m</td><td class="n">0,561</td><td class="n">20,727</td></tr>
+                    <tr><td>1.000 m</td><td class="n">0,524</td><td class="n">20,715</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="evidence">RMSE mensal do LightGBM, blocos de 2° (96 estações de temperatura, 1.878 de chuva). Temperatura, 1.000 − 30&nbsp;m: −0,026&nbsp;°C [−0,053; −0,002]. Os perfis de Curitiba (C10) mostram oscilações finas e degraus nas bordas das células do CHELSA, que precisam ser revistos antes da produção nacional.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/c10_perfis_curitiba.png" width="1920" height="1280" alt="Três transectos oeste-leste em Curitiba: a temperatura do modelo oscila muito de pixel a pixel, o CHELSA forma degraus, e o relevo varia entre 880 e 980 metros">
+              <figcaption>C10: três transectos em Curitiba. O modelo de 30&nbsp;m (azul) oscila de pixel a pixel; o CHELSA (laranja) forma degraus.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-prod" id="d-utm">
+          <div class="d-top"><span class="d-id">D8</span><span class="tag prod">Produção</span><h3>Pixel de 30 m de verdade: UTM por zona</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> A grade usa a zona UTM de cada tile, com pixel de 30 × 30&nbsp;m e origem em múltiplos de 30&nbsp;m. As instruções sugeriam EPSG:4326.</p>
+              <p><span class="k">Por quê.</span> Em graus, o pixel muda de tamanho com a latitude. Um segundo de arco (1″) de longitude mede:</p>
+              <div class="table-scroll">
+                <table class="mini">
+                  <thead><tr><th>Lugar</th><th class="n">Latitude</th><th class="n">1″ de longitude</th></tr></thead>
+                  <tbody>
+                    <tr><td>Monte Caburaí (RR)</td><td class="n">5,3° N</td><td class="n">30,8 m</td></tr>
+                    <tr><td>Linha do equador</td><td class="n">0°</td><td class="n">30,9 m</td></tr>
+                    <tr><td>Brasília</td><td class="n">15,8° S</td><td class="n">29,8 m</td></tr>
+                    <tr><td>Porto Alegre</td><td class="n">30,0° S</td><td class="n">26,8 m</td></tr>
+                    <tr><td>Chuí (RS)</td><td class="n">33,7° S</td><td class="n">25,7 m</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p><span class="k">Consequência.</span> O Brasil vira 743 tiles, separados por zona UTM e hemisfério. No GEE, cada tile sobe como um asset da ImageCollection e o mosaico junta tudo. É uma das decisões que o Fabrício precisa confirmar.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/brasil_grade_planejada.png" width="1360" height="1360" alt="Mapa do Brasil coberto por 743 retângulos de tiles, organizados em colunas por zona UTM">
+              <figcaption>Os 743 tiles planejados, de 4.096 × 4.096 pixels. A figura mostra o inventário, não mapas prontos.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-prod" id="d-disco">
+          <div class="d-top"><span class="d-id">D9 · D10</span><span class="tag prod">Produção</span><h3>Como o Brasil cabe em disco</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> Temperatura em <code>int16</code> com fator 100 (nodata −32768); chuva em <code>uint16</code>, em milímetros (nodata 65535); compressão DEFLATE; tiles de 4.096 × 4.096 pixels (cerca de 123&nbsp;km de lado), gerados em janelas de 512 × 512.</p>
+            <div class="example">
+              <span class="ex-h">EXEMPLO E CONTA</span>
+              <div class="calc">18,39 °C   → gravado 1839  → lido 1839 × 0,01 = 18,39 °C
+1.712 mm   → gravado 1712
+
+~9,44 bilhões de pixels × 2 bytes ≈ 18,9 GB por mapa
+2 variáveis × 13 períodos = 26 mapas ≈ 491 GB sem compressão
+com dispersão (float32) e flag (uint8)  ≈ 1,72 TB</div>
+            </div>
+            <p><span class="k">Por que janelas de 512.</span> O download síncrono do GEE aceita até 32&nbsp;MB por pedido. A produção retoma de onde parou e se recusa a continuar se a fonte, o treino ou o código mudarem.</p>
+            <p class="evidence"><span class="k">Situação.</span> Tile <code>utm22S_5_58</code>: 6 de 64 janelas de temperatura e 2 de 64 de chuva, com os nomes pedidos (<code>temperatura_media_30m_&lt;mes&gt;_&lt;tile&gt;.tif</code>, <code>precipitacao_30m_&lt;mes&gt;_&lt;tile&gt;.tif</code>). Nenhum dos 743 tiles está completo, e falta definir onde guardar a coleção.</p>
+          </div>
+        </article>
+
+        <article class="decision t-temp" id="d-xavier">
+          <div class="d-top"><span class="d-id">D13</span><span class="tag temp">Temperatura</span><h3>A comparação justa com o Xavier</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> A comparação com o Xavier é feita reproduzindo o método dele (MX) nas mesmas dobras e no teste reservado, e não contra a grade publicada.</p>
+            <p><span class="k">Por quê.</span> Nas 98 estações comuns, a grade Xavier erra 0,241&nbsp;°C e o melhor modelo, 0,526&nbsp;°C (diferença +0,284 [+0,220; +0,353]). Só que o Xavier construiu a grade com essas mesmas estações: ele é avaliado onde já conhece a resposta. A comparação justa precisa de estações que ele não usou (C14) e do método dele reproduzido nas mesmas dobras (C15).</p>
+            <p class="evidence"><span class="k">Resultado (C15).</span> Na validação, o MX com gradiente recalibrado (−5,4&nbsp;°C/km, de pares de estações a até 90&nbsp;km) erra 0,860&nbsp;°C contra 0,524 do modelo; na chuva, o ADW erra 27,7 contra 20,9&nbsp;mm. No teste reservado: 0,875 contra 0,717&nbsp;°C e 21,6 contra 17,0&nbsp;mm. Não há estações fora do Xavier com normal 1991-2020 (C14): das 589 estações INMET de 2020, 571 já estão no conjunto dele.</p>
+          </div>
+        </article>
+
+        <article class="decision t-rain" id="d-chirps">
+          <div class="d-top"><span class="d-id">D15</span><span class="tag rain">Chuva</span><h3>CHIRPS fora do produto, por enquanto</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> O mapa de chuva usa CHELSA, relevo, posição e época do ano, sem o CHIRPS.</p>
+              <p><span class="k">Por quê.</span> O CHIRPS como covariável reduz o erro (20,889 → 19,155&nbsp;mm; −1,734 [−2,048; −1,351]), mas ele usa pluviômetros na calibração. Sem saber quais, as estações de teste podem já estar dentro da covariável. Contra a grade CHIRPS pura, o ganho (−0,492 [−1,577; +0,510]) não é conclusivo.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/chuva_c5_c6.png" width="1920" height="800" alt="Barras do RMSE mensal da chuva com relevo de 30, 90 e 1.000 metros e com CHIRPS; o CHIRPS reduz o erro para cerca de 19 milímetros">
+              <figcaption>Chuva: escala do relevo (C5) e CHIRPS como covariável (C6).</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-rain" id="d-chuva-mes">
+          <div class="d-top"><span class="d-id">D16</span><span class="tag rain">Chuva</span><h3>Um modelo por mês na chuva</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> A chuva usa 12 LightGBM, um para cada mês, em vez de um modelo único com harmônicos do mês.</p>
+              <p><span class="k">Por quê.</span> O padrão espacial da chuva muda muito ao longo do ano (frentes no inverno, convecção no verão). Um modelo por mês aprende cada padrão separadamente.</p>
+              <p class="evidence"><span class="k">Evidência (C7).</span> Melhor nos dois tamanhos de bloco: −0,92&nbsp;mm [−1,25; −0,58] em 1° e −0,57&nbsp;mm [−1,00; −0,16] em 2°. Ganha também do random forest, da GWR e do híbrido.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/chuva_metodos_completo_2graus.png" width="1440" height="832" alt="Barras do RMSE mensal da chuva para todos os métodos; o LightGBM por mês tem o menor erro entre os modelos">
+              <figcaption>Chuva: todos os métodos na validação em blocos de 2°.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-geral" id="d-bilinear">
+          <div class="d-top"><span class="d-id">D17</span><span class="tag geral">Geral</span><h3>CHELSA suavizado para tirar os degraus de 1 km</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> O CHELSA entra no modelo reamostrado por interpolação bilinear, no treino e no mapa.</p>
+            <p><span class="k">Por quê.</span> Os mapas do piloto tinham degraus nas bordas das células de 1&nbsp;km do CHELSA, porque a covariável era copiada pelo vizinho mais próximo. Interpolar uma covariável de grade não é interpolar estações, então a regra do projeto continua valendo.</p>
+            <div class="example">
+              <span class="ex-h">EXEMPLO</span>
+              <div class="calc">vizinho mais próximo: 17,4 | 17,4 | 17,4 || 17,7 | 17,7   (degrau de 0,3 °C na borda)
+bilinear:             17,4 | 17,5 | 17,5 || 17,6 | 17,7   (transição contínua)</div>
+            </div>
+            <p class="evidence"><span class="k">Evidência (C10).</span> Nas estações, o valor muda pouco (mediana de 0,02&nbsp;°C). Na validação, a diferença foi +0,0001&nbsp;°C [−0,013; +0,013] na temperatura e −0,02&nbsp;mm [−0,07; +0,05] na chuva: sem custo, então foi adotado.</p>
+          </div>
+        </article>
+
+        <article class="decision t-geral" id="d-incerteza">
+          <div class="d-top"><span class="d-id">D18</span><span class="tag geral">Geral</span><h3>Incerteza calibrada e área de aplicabilidade</h3></div>
+          <div class="d-grid two">
+            <div class="d-text">
+              <p><span class="k">Decisão.</span> Cada mapa traz a meia-largura de um intervalo de 90% calibrado e uma camada que marca os pixels fora da área de aplicabilidade do modelo.</p>
+              <p><span class="k">Por quê.</span> A dispersão entre cinco modelos, usada antes, cobria só 19% a 43% dos erros reais. Multiplicada por um fator calibrado na validação espacial (conformidade), cobre 90%.</p>
+              <div class="example">
+                <span class="ex-h">EXEMPLO</span>
+                <div class="calc">dispersão entre modelos num pixel: 0,17 °C
+intervalo de 90%:  ± 6,13 × 0,17 = ± 1,04 °C</div>
+              </div>
+              <p class="evidence"><span class="k">Área de aplicabilidade (Meyer &amp; Pebesma, 2021).</span> Mede quanto as covariáveis de um pixel se parecem com as das estações de treino. Fora dela, o erro na validação sobe de 0,52 para até 0,70&nbsp;°C e de 20 para 31-33&nbsp;mm.</p>
+            </div>
+            <figure class="plate">
+              <img src="resultados/figuras/incerteza_cobertura.png" width="1360" height="704" alt="Barras da cobertura do intervalo de 90%: ingênuo entre 19 e 43%, calibrado em 90%">
+              <figcaption>Cobertura do intervalo de 90% na validação espacial.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="decision t-prod" id="d-candidato">
+          <div class="d-top"><span class="d-id">D14</span><span class="tag prod">Produção</span><h3>O método congelado</h3></div>
+          <div class="d-text">
+            <p><span class="k">Decisão.</span> Temperatura: LightGBM corrigindo o CHELSA, com relevo, posição e harmônicos do mês. Chuva: um LightGBM por mês corrigindo o CHELSA (D16). Foi este o método congelado e avaliado no teste reservado.</p>
+            <p><span class="k">Por quê.</span> Está entre os melhores nas comparações e roda pixel a pixel com covariáveis que existem no Brasil inteiro. Random forest e LightGBM empatam na temperatura.</p>
+            <p class="evidence"><span class="k">O que sai no mapa.</span> Para cada variável, 13 bandas de valor (12 meses e anual), 13 de meia-largura do intervalo de 90% calibrado e 13 de área de aplicabilidade (D18).</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 5. RESULTADOS -->
+    <section id="resultados">
+      <div class="sec-head">
+        <h2><span class="num">6</span>Resultados</h2>
+        <p class="prose muted">RMSE mensal na validação em blocos de 2°, média de 3 repetições. Passe o mouse (ou o foco do teclado) sobre uma barra para ver também o erro anual.</p>
+      </div>
+
+      <figure class="chart temp" id="grafico-temperatura">
+        <h3>Temperatura: modelos e grades nas mesmas 98 estações (C1)</h3>
+        <p class="sub">Menor é melhor. O Xavier provavelmente usou estas estações para montar a grade.</p>
+        <div class="legend"><span><i class="lg-model"></i>Métodos testados neste trabalho</span><span><i class="lg-ref"></i>Grades e referências</span></div>
+        <div class="plot" style="--max: 1.4">
+          <div class="gridlines" aria-hidden="true"><span class="zero" style="--t: 0"></span><span style="--t: 0.2"></span><span style="--t: 0.4"></span><span style="--t: 0.6"></span><span style="--t: 0.8"></span><span style="--t: 1"></span><span style="--t: 1.2"></span><span style="--t: 1.4"></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-ref" data-label="Xavier publicado (grade)" data-value="0,241 °C" data-extra="anual 0,236 °C"><span class="bar-label">Xavier publicado</span><span class="bar-track"><span class="bar ref" style="--v: 0.241"></span><span class="bar-val">0,241</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-model" data-label="LightGBM corrigindo o CHELSA (escolhido)" data-value="0,526 °C" data-extra="anual 0,456 °C"><span class="bar-label"><b>LightGBM corrigindo o CHELSA</b></span><span class="bar-track"><span class="bar model" style="--v: 0.526"></span><span class="bar-val">0,526</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-model" data-label="Random forest corrigindo o CHELSA" data-value="0,531 °C" data-extra="anual 0,460 °C"><span class="bar-label">Random forest corrigindo o CHELSA</span><span class="bar-track"><span class="bar model" style="--v: 0.531"></span><span class="bar-val">0,531</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-model" data-label="Regressão linear" data-value="0,593 °C" data-extra="anual 0,523 °C"><span class="bar-label">Regressão linear</span><span class="bar-track"><span class="bar model" style="--v: 0.593"></span><span class="bar-val">0,593</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-ref" data-label="CHELSA (grade)" data-value="0,798 °C" data-extra="anual 0,722 °C"><span class="bar-label">CHELSA</span><span class="bar-track"><span class="bar ref" style="--v: 0.798"></span><span class="bar-val">0,798</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-model" data-label="M1: gradiente fixo de −6,5 °C/km" data-value="0,832 °C" data-extra="anual 0,759 °C"><span class="bar-label">M1: gradiente fixo</span><span class="bar-track"><span class="bar model" style="--v: 0.832"></span><span class="bar-val">0,832</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-ref" data-label="MX: aproximação mensal do Xavier (IDW)" data-value="0,836 °C" data-extra="anual 0,753 °C"><span class="bar-label">MX: aproximação do Xavier</span><span class="bar-track"><span class="bar ref" style="--v: 0.836"></span><span class="bar-val">0,836</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-ref" data-label="ERA5-Land (grade)" data-value="1,228 °C" data-extra="anual 1,138 °C"><span class="bar-label">ERA5-Land</span><span class="bar-track"><span class="bar ref" style="--v: 1.228"></span><span class="bar-val">1,228</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="temp-ref" data-label="TerraClimate (grade)" data-value="1,267 °C" data-extra="anual 1,227 °C"><span class="bar-label">TerraClimate</span><span class="bar-track"><span class="bar ref" style="--v: 1.267"></span><span class="bar-val">1,267</span></span></div>
+          <div class="axis" aria-hidden="true"><span style="--t: 0">0</span><span style="--t: 0.2">0,2</span><span style="--t: 0.4">0,4</span><span style="--t: 0.6">0,6</span><span style="--t: 0.8">0,8</span><span style="--t: 1">1,0</span><span style="--t: 1.2">1,2</span><span style="--t: 1.4">1,4</span></div>
+          <p class="axis-title">RMSE mensal (°C)</p>
+        </div>
+        <details class="table-view">
+          <summary>Ver os números em tabela</summary>
+          <div class="table-scroll">
+            <table class="mini">
+              <thead><tr><th>Método</th><th>Tipo</th><th class="n">Mensal (°C)</th><th class="n">Anual (°C)</th></tr></thead>
+              <tbody>
+                <tr><td>Xavier publicado</td><td>grade</td><td class="n">0,241</td><td class="n">0,236</td></tr>
+                <tr><td>LightGBM corrigindo o CHELSA</td><td>modelo</td><td class="n">0,526</td><td class="n">0,456</td></tr>
+                <tr><td>Random forest corrigindo o CHELSA</td><td>modelo</td><td class="n">0,531</td><td class="n">0,460</td></tr>
+                <tr><td>Regressão linear</td><td>modelo</td><td class="n">0,593</td><td class="n">0,523</td></tr>
+                <tr><td>CHELSA</td><td>grade</td><td class="n">0,798</td><td class="n">0,722</td></tr>
+                <tr><td>M1: gradiente fixo</td><td>modelo</td><td class="n">0,832</td><td class="n">0,759</td></tr>
+                <tr><td>MX: aproximação do Xavier</td><td>referência</td><td class="n">0,836</td><td class="n">0,753</td></tr>
+                <tr><td>ERA5-Land</td><td>grade</td><td class="n">1,228</td><td class="n">1,138</td></tr>
+                <tr><td>TerraClimate</td><td>grade</td><td class="n">1,267</td><td class="n">1,227</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted">Fonte: <code>resultados/tabelas/c1_modelos_2graus.csv</code>. LightGBM − CHELSA: −0,272&nbsp;°C [−0,340; −0,195]; LightGBM − Xavier: +0,284&nbsp;°C [+0,220; +0,353].</p>
+        </details>
+      </figure>
+
+      <figure class="chart rain" id="grafico-chuva">
+        <h3>Chuva: modelos e grades nas mesmas 1.878 estações</h3>
+        <p class="sub">Menor é melhor. O CHIRPS usa pluviômetros na calibração, então também pode ter visto estas estações.</p>
+        <div class="legend"><span><i class="lg-model"></i>Métodos testados neste trabalho</span><span><i class="lg-ref"></i>Grades e referências</span></div>
+        <div class="plot" style="--max: 30">
+          <div class="gridlines" aria-hidden="true"><span class="zero" style="--t: 0"></span><span style="--t: 5"></span><span style="--t: 10"></span><span style="--t: 15"></span><span style="--t: 20"></span><span style="--t: 25"></span><span style="--t: 30"></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="LightGBM + CHIRPS como covariável" data-value="19,155 mm" data-extra="anual 163,606 mm"><span class="bar-label">LightGBM + CHIRPS</span><span class="bar-track"><span class="bar model" style="--v: 19.155"></span><span class="bar-val">19,16</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-ref" data-label="CHIRPS (grade)" data-value="19,647 mm" data-extra="anual 161,809 mm"><span class="bar-label">CHIRPS</span><span class="bar-track"><span class="bar ref" style="--v: 19.647"></span><span class="bar-val">19,65</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="LightGBM, um modelo por mês (escolhido)" data-value="20,323 mm" data-extra="anual 171,484 mm"><span class="bar-label"><b>LightGBM, um modelo por mês</b></span><span class="bar-track"><span class="bar model" style="--v: 20.323"></span><span class="bar-val">20,32</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="Random forest, direta" data-value="20,762 mm" data-extra="anual 172,871 mm"><span class="bar-label">Random forest, direta</span><span class="bar-track"><span class="bar model" style="--v: 20.762"></span><span class="bar-val">20,76</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="Híbrido: linear + LightGBM" data-value="20,866 mm" data-extra="anual 180,286 mm"><span class="bar-label">Híbrido</span><span class="bar-track"><span class="bar model" style="--v: 20.866"></span><span class="bar-val">20,87</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="LightGBM corrigindo o CHELSA, harmônicos" data-value="20,889 mm" data-extra="anual 180,677 mm"><span class="bar-label">LightGBM, harmônicos</span><span class="bar-track"><span class="bar model" style="--v: 20.889"></span><span class="bar-val">20,89</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="LightGBM, direta" data-value="21,071 mm" data-extra="anual 178,817 mm"><span class="bar-label">LightGBM, direta</span><span class="bar-track"><span class="bar model" style="--v: 21.071"></span><span class="bar-val">21,07</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="Random forest, correção" data-value="21,222 mm" data-extra="anual 185,360 mm"><span class="bar-label">Random forest, correção</span><span class="bar-track"><span class="bar model" style="--v: 21.222"></span><span class="bar-val">21,22</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-ref" data-label="CHELSA (grade)" data-value="22,055 mm" data-extra="anual 196,920 mm"><span class="bar-label">CHELSA</span><span class="bar-track"><span class="bar ref" style="--v: 22.055"></span><span class="bar-val">22,06</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-model" data-label="Regressão linear" data-value="22,189 mm" data-extra="anual 197,220 mm"><span class="bar-label">Regressão linear</span><span class="bar-track"><span class="bar model" style="--v: 22.189"></span><span class="bar-val">22,19</span></span></div>
+          <div class="bar-row" tabindex="0" data-group="rain-ref" data-label="ERA5-Land (grade)" data-value="27,543 mm" data-extra="anual 240,596 mm"><span class="bar-label">ERA5-Land</span><span class="bar-track"><span class="bar ref" style="--v: 27.543"></span><span class="bar-val">27,54</span></span></div>
+          <div class="axis" aria-hidden="true"><span style="--t: 0">0</span><span style="--t: 5">5</span><span style="--t: 10">10</span><span style="--t: 15">15</span><span style="--t: 20">20</span><span style="--t: 25">25</span><span style="--t: 30">30</span></div>
+          <p class="axis-title">RMSE mensal (mm)</p>
+        </div>
+        <details class="table-view">
+          <summary>Ver os números em tabela</summary>
+          <div class="table-scroll">
+            <table class="mini">
+              <thead><tr><th>Método</th><th>Tipo</th><th class="n">Mensal (mm)</th><th class="n">Anual (mm)</th></tr></thead>
+              <tbody>
+                <tr><td>LightGBM + CHIRPS como covariável</td><td>modelo</td><td class="n">19,155</td><td class="n">163,606</td></tr>
+                <tr><td>CHIRPS</td><td>grade</td><td class="n">19,647</td><td class="n">161,809</td></tr>
+                <tr><td>LightGBM, um modelo por mês</td><td>modelo</td><td class="n">20,323</td><td class="n">171,484</td></tr>
+                <tr><td>Random forest, direta</td><td>modelo</td><td class="n">20,762</td><td class="n">172,871</td></tr>
+                <tr><td>Híbrido (linear + LightGBM)</td><td>modelo</td><td class="n">20,866</td><td class="n">180,286</td></tr>
+                <tr><td>LightGBM corrigindo o CHELSA</td><td>modelo</td><td class="n">20,889</td><td class="n">180,677</td></tr>
+                <tr><td>LightGBM, direta</td><td>modelo</td><td class="n">21,071</td><td class="n">178,817</td></tr>
+                <tr><td>Random forest, correção</td><td>modelo</td><td class="n">21,222</td><td class="n">185,360</td></tr>
+                <tr><td>CHELSA</td><td>grade</td><td class="n">22,055</td><td class="n">196,920</td></tr>
+                <tr><td>Regressão linear</td><td>modelo</td><td class="n">22,189</td><td class="n">197,220</td></tr>
+                <tr><td>ERA5-Land</td><td>grade</td><td class="n">27,543</td><td class="n">240,596</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted">Fontes: <code>chuva_metodos_2graus.csv</code>, <code>chuva_M4_2graus_30m_base.csv</code> (random forest, concluído depois da consolidação), <code>chuva_covariaveis_2graus.csv</code> e <code>chuva_c7_c8_2graus.csv</code>.</p>
+        </details>
+      </figure>
+
+      <div class="gallery two">
+        <figure class="plate">
+          <img src="resultados/figuras/c3_metodos_ampliados.png" width="1870" height="833" alt="Barras do RMSE mensal da temperatura para regressão linear, GWR, LightGBM e híbrido, em blocos de 1 e 2 graus, todos entre 0,52 e 0,59 grau">
+          <figcaption>Temperatura, C3: linear, GWR, LightGBM e híbrido. Nenhum supera o LightGBM de forma conclusiva.</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="resultados/figuras/c8_densidade.png" width="1700" height="781" alt="Efeito de usar 25, 50, 75 e 100 por cento das estações de treino no erro da temperatura">
+          <figcaption>Temperatura, C8: com 25% das estações de treino, o erro sobe 0,097&nbsp;°C [0,056; 0,139].</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="resultados/figuras/chuva_c7.png" width="1920" height="800" alt="Comparação das estratégias de sazonalidade na chuva; um modelo por mês tem o menor erro">
+          <figcaption>Chuva, C7: um modelo por mês foi melhor que os harmônicos (−0,566&nbsp;mm [−0,995; −0,162]).</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="resultados/figuras/chuva_primeira_janela.png" width="1120" height="960" alt="Mapa de chuva anual de uma janela de 15 por 15 quilômetros, entre 1.450 e 1.900 milímetros, com quadrados visíveis da grade de origem">
+          <figcaption>Primeira janela de chuva do tile <code>utm22S_5_58</code>. Os quadrados visíveis vêm da grade de origem e ainda precisam da revisão C10.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 6. CONFERÊNCIA -->
+    <section id="conferencia">
+      <div class="sec-head">
+        <h2><span class="num">7</span>O que as instruções pedem × o que foi feito</h2>
+        <p class="prose muted">Cada linha é um pedido de <a href="instrucoes.md">instrucoes.md</a>, na ordem das seções.</p>
+      </div>
+      <div class="check-wrap">
+        <table class="check">
+          <thead><tr><th>Pedido</th><th>Situação</th><th>O que foi feito</th></tr></thead>
+          <tbody>
+            <tr class="grp"><th colspan="3">§1 Contexto e regra</th></tr>
+            <tr><td>Cada pixel gerado por modelo, sem interpolação</td><td><span class="pill ok">Feito</span></td><td>LightGBM aplicado pixel a pixel; MX só como referência</td></tr>
+            <tr><td>Comparar métodos estatísticos com ML</td><td><span class="pill ok">Feito</span></td><td>linear, GWR, random forest, LightGBM e híbrido, nas duas variáveis</td></tr>
+            <tr class="grp"><th colspan="3">§2 Escopo</th></tr>
+            <tr><td>Começar pela temperatura</td><td><span class="pill ok">Feito</span></td><td>—</td></tr>
+            <tr><td>Normal 1991-2020, 12 meses e anual</td><td><span class="pill ok">Feito</span></td><td>—</td></tr>
+            <tr><td>Região-piloto com relevo</td><td><span class="pill ok">Feito</span></td><td>Paraná inteiro</td></tr>
+            <tr><td>Brasil inteiro</td><td><span class="pill warn">Parcial</span></td><td>grade nacional pronta; produzido o Paraná</td></tr>
+            <tr><td>30 m em EPSG:4326</td><td><span class="pill adapt">Adaptado</span></td><td>30 m em UTM (<a href="#d-utm">D8</a>)</td></tr>
+            <tr class="grp"><th colspan="3">§3.1 Observações e controle de qualidade</th></tr>
+            <tr><td>Observações do Xavier (Tmax, Tmin, pr)</td><td><span class="pill ok">Feito</span></td><td>1.186 estações de temperatura; 14.170 pluviômetros</td></tr>
+            <tr><td>INMET para completar séries e validar de forma independente</td><td><span class="pill warn">Parcial</span></td><td>5 anos usados em C11 e C14; não há estações independentes com normal 1991-2020</td></tr>
+            <tr><td>Definição da temperatura média (C11)</td><td><span class="pill ok">Feito</span></td><td>medida em 2008-2024; escolha final é do professor</td></tr>
+            <tr><td>Cobertura, dias mínimos, limites, saltos, duplicatas, altitude</td><td><span class="pill ok">Feito</span></td><td>—</td></tr>
+            <tr><td>Homogeneidade</td><td><span class="pill ok">Feito</span></td><td>31 de 98 estações marcadas; erro do modelo igual nelas</td></tr>
+            <tr><td>Falhas e normal de período reduzido (C12)</td><td><span class="pill ok">Feito</span></td><td>anos e dias testados; regras mantidas</td></tr>
+            <tr><td>Estabilidade no tempo (C13)</td><td><span class="pill ok">Feito</span></td><td>encerrada com justificativa</td></tr>
+            <tr class="grp"><th colspan="3">§3.2 Covariáveis</th></tr>
+            <tr><td>Relevo: elevação e declividade</td><td><span class="pill ok">Feito</span></td><td>a 30 m; 90 m e 1 km testados</td></tr>
+            <tr><td>Relevo: orientação, TPI, TRI, curvatura</td><td><span class="pill miss">Falta</span></td><td>—</td></tr>
+            <tr><td>Distância ao oceano, continentalidade, exposição</td><td><span class="pill miss">Falta</span></td><td>—</td></tr>
+            <tr><td>Clima de grade</td><td><span class="pill ok">Feito</span></td><td>CHELSA bilinear como covariável; demais como referência</td></tr>
+            <tr><td>Satélite: MODIS e CHIRPS</td><td><span class="pill ok">Feito</span></td><td>C6</td></tr>
+            <tr><td>IMERG, NDVI/EVI, MapBiomas</td><td><span class="pill miss">Falta</span></td><td>—</td></tr>
+            <tr class="grp"><th colspan="3">§4 Validação</th></tr>
+            <tr><td>Blocos espaciais, dobras e repetições</td><td><span class="pill ok">Feito</span></td><td>1° e 2°, 5 × 3</td></tr>
+            <tr><td>Teste independente reservado</td><td><span class="pill ok">Feito</span></td><td>aberto uma vez, no fim</td></tr>
+            <tr><td>Métricas completas; por região, bioma, altitude e mês</td><td><span class="pill ok">Feito</span></td><td>C9</td></tr>
+            <tr><td>Linhas de base nas mesmas estações</td><td><span class="pill ok">Feito</span></td><td>na chuva, sem Xavier e TerraClimate</td></tr>
+            <tr><td>Comparações pareadas com intervalo</td><td><span class="pill ok">Feito</span></td><td>bootstrap por blocos</td></tr>
+            <tr class="grp"><th colspan="3">§5 Métodos</th></tr>
+            <tr><td>Ler o artigo do Xavier</td><td><span class="pill miss">Falta</span></td><td>texto integral não obtido</td></tr>
+            <tr><td>MX reproduzido, mesmas dobras</td><td><span class="pill ok">Feito</span></td><td>gradiente recalibrado; IDW e ADW</td></tr>
+            <tr><td>Escada M0-M6, direta × correção, log, validação aninhada</td><td><span class="pill ok">Feito</span></td><td>M7 opcional não feito</td></tr>
+            <tr class="grp"><th colspan="3">§6 Comparações e critério de sucesso</th></tr>
+            <tr><td>Comparações C1-C15</td><td><span class="pill ok">Feito</span></td><td>C14 como limitação (<a href="#comparacoes">seção 8</a>)</td></tr>
+            <tr><td>Critério de sucesso</td><td><span class="pill ok">Feito</span></td><td>atingido nos testes justos (seção 2)</td></tr>
+            <tr class="grp"><th colspan="3">§7 Incerteza</th></tr>
+            <tr><td>Incerteza por mapa</td><td><span class="pill ok">Feito</span></td><td>intervalo de 90% calibrado (<a href="#d-incerteza">D18</a>)</td></tr>
+            <tr><td>Área de aplicabilidade</td><td><span class="pill ok">Feito</span></td><td>Meyer &amp; Pebesma</td></tr>
+            <tr class="grp"><th colspan="3">§8 Produção e entrega</th></tr>
+            <tr><td>Janelas com retomada, GeoTIFF, DEFLATE, escala inteira</td><td><span class="pill ok">Feito</span></td><td>—</td></tr>
+            <tr><td>COG</td><td><span class="pill miss">Falta</span></td><td>GeoTIFF com blocos internos</td></tr>
+            <tr><td>Região-piloto completa antes do Brasil</td><td><span class="pill ok">Feito</span></td><td>Paraná</td></tr>
+            <tr><td>Upload manual no GEE</td><td><span class="pill warn">Parcial</span></td><td>Curitiba no GEE; Paraná empacotado</td></tr>
+            <tr><td>Rota alternativa (modelo aplicado no GEE)</td><td><span class="pill miss">Falta</span></td><td>o LightGBM validado não roda no GEE</td></tr>
+            <tr class="grp"><th colspan="3">§9 e §10 Fases e organização</th></tr>
+            <tr><td>Fases 0 a 4</td><td><span class="pill ok">Feito</span></td><td>—</td></tr>
+            <tr><td>Fase 5 (produção)</td><td><span class="pill warn">Parcial</span></td><td>Paraná; Brasil pendente</td></tr>
+            <tr><td>Fase 6 (documentação)</td><td><span class="pill ok">Feito</span></td><td>mapa.md, esta página, registro</td></tr>
+            <tr><td>Organização da pasta</td><td><span class="pill ok">Feito</span></td><td>o README.md do §10 agora se chama mapa.md</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. C1-C15 -->
+    <section id="comparacoes">
+      <div class="sec-head"><h2><span class="num">8</span>Comparações C1-C15</h2></div>
+      <div class="cgrid">
+        <div class="ccard done"><div class="c-top"><span class="c-id">C1</span><span class="pill ok">Executada</span></div><h3>Melhor base de partida</h3><p>Xavier 0,241, CHELSA 0,798, ERA5-Land 1,228 e TerraClimate 1,267&nbsp;°C, nas mesmas 98 estações.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C2</span><span class="pill ok">Executada</span></div><h3>A correção por elevação resolve?</h3><p>Não: o gradiente fixo piora e os ajustados não têm ganho conclusivo.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C3</span><span class="pill ok">Executada</span></div><h3>Estatística × ML</h3><p>O ML melhora a linear e a GWR nas duas variáveis.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C4</span><span class="pill ok">Executada</span></div><h3>Direta × correção da grade</h3><p>A correção venceu (LightGBM 0,570 → 0,524&nbsp;°C).</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C5</span><span class="pill ok">Executada</span></div><h3>30 m × 90 m × 1 km</h3><p>Relevo de 1&nbsp;km tão bom ou melhor que o de 30&nbsp;m.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C6</span><span class="pill ok">Executada</span></div><h3>Com e sem satélite</h3><p>MODIS sem ganho; CHIRPS ajuda, sem independência comprovada.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C7</span><span class="pill ok">Executada</span></div><h3>Sazonalidade</h3><p>Temperatura: harmônicos. Chuva: um modelo por mês, adotado.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C8</span><span class="pill ok">Executada</span></div><h3>Densidade de estações</h3><p>Com 25% das estações, +0,097&nbsp;°C e +0,914&nbsp;mm.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C9</span><span class="pill ok">Executada</span></div><h3>Região, bioma e altitude</h3><p>Métricas por estrato; Pantanal sem estação de temperatura.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C10</span><span class="pill ok">Executada</span></div><h3>Artefatos no mapa</h3><p>Degraus de 1&nbsp;km resolvidos com o CHELSA bilinear.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C11</span><span class="pill ok">Executada</span></div><h3>Definição da temperatura média</h3><p>+0,78 a +0,89&nbsp;°C (2008-2024); +0,1 a +1,6&nbsp;°C entre estações.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C12</span><span class="pill ok">Executada</span></div><h3>Falhas e séries curtas</h3><p>Método das diferenças; um dia faltando já tira 3,3% da chuva do mês.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C13</span><span class="pill ok">Encerrada</span></div><h3>Estabilidade no tempo</h3><p>Normais com 24 de 30 anos em 1991-2020; ERA5 mostra estabilidade.</p></div>
+        <div class="ccard part"><div class="c-top"><span class="c-id">C14</span><span class="pill warn">Limitação</span></div><h3>Independência do Xavier</h3><p>Não há estações fora do Xavier com normal 1991-2020.</p></div>
+        <div class="ccard done"><div class="c-top"><span class="c-id">C15</span><span class="pill ok">Executada</span></div><h3>Modelo × método do Xavier</h3><p>Modelo vence nas duas variáveis; no teste reservado, na chuva.</p></div>
+      </div>
+    </section>
+
+    <!-- 8. FALTA -->
+    <section id="falta">
+      <div class="sec-head"><h2><span class="num">9</span>O que falta para encerrar</h2></div>
+      <div class="todo">
+        <div class="box ask">
+          <h3>Decisões pendentes</h3>
+          <ol>
+            <li>Qual temperatura média mapear: <code>(Tmax + Tmin)/2</code>, como o Xavier, ou a média de 24&nbsp;h, como o CHELSA e o ERA5. No segundo caso, a correção precisa variar no espaço (+0,1 a +1,6&nbsp;°C entre estações).</li>
+            <li>Aceitar a grade em UTM no lugar de EPSG:4326.</li>
+            <li>Se vale produzir os demais estados com o mesmo produtor, e onde guardar a coleção nacional.</li>
+          </ol>
+        </div>
+        <div class="box">
+          <h3>Pendências técnicas</h3>
+          <ol>
+            <li>Testar as covariáveis do §3.2 que faltam: orientação, TPI/TRI, curvatura, distância ao oceano, exposição, NDVI, MapBiomas, IMERG.</li>
+            <li>Auditar a independência do CHIRPS antes de usá-lo na chuva.</li>
+            <li>Revisar as 31 estações com quebra provável.</li>
+            <li>Produzir os demais estados e converter para COG.</li>
+            <li>Ler o artigo completo do Xavier.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. PASTA -->
+    <section id="pasta">
+      <div class="sec-head"><h2><span class="num">10</span>Onde está cada coisa</h2></div>
+<pre class="tree">refinamento/
+├── <a href="mapa.md">mapa.md</a>                  <span class="c"># o mesmo conteúdo em texto, com a tabela de scripts</span>
+├── mapa.html                <span class="c"># esta página</span>
+├── <a href="instrucoes.md">instrucoes.md</a>            <span class="c"># pedido original do Fabrício (preservado)</span>
+├── <a href="codigo/">codigo/</a>                  <span class="c"># 59 scripts Python</span>
+│   └── testes/              <span class="c"># 21 módulos de teste (pytest)</span>
+├── <a href="gee/">gee/</a>                     <span class="c"># visualizadores no GEE (piloto e Paraná)</span>
+├── <a href="notebooks/">notebooks/</a>               <span class="c"># leitura comentada das tabelas de temperatura</span>
+├── resultados/
+│   ├── <a href="resultados/tabelas/">tabelas/</a>             <span class="c"># tabelas agregadas: métricas, diferenças, auditorias</span>
+│   └── <a href="resultados/figuras/">figuras/</a>             <span class="c"># figuras PNG</span>
+├── <a href="docs/">docs/</a>                    <span class="c"># diário das sessões e relatórios de cada etapa</span>
+└── dados/                   <span class="c"># fora do git: dados cedidos, modelos e GeoTIFFs (Paraná em dados/parana/saida)</span></pre>
+      <div class="docs">
+        <a href="docs/registro.md"><b>docs/registro.md</b><span>Diário das sessões: o que foi feito em cada data, decisões e verificações.</span></a>
+        <a href="docs/entrega_brasil.md"><b>docs/entrega_brasil.md</b><span>Atendimento às instruções seção por seção, grade nacional, C2, C7 e C8.</span></a>
+        <a href="docs/comparacoes_complementares.md"><b>docs/comparacoes_complementares.md</b><span>M3/M6, C5, C6, C9, C10, C11 e C14 da temperatura.</span></a>
+        <a href="docs/modelagem_chuva.md"><b>docs/modelagem_chuva.md</b><span>Modelos e comparações da chuva e os primeiros GeoTIFFs de chuva.</span></a>
+        <a href="docs/auditoria_escopo.md"><b>docs/auditoria_escopo.md</b><span>Auditoria de 03/11: C1, C12 e C13.</span></a>
+        <a href="docs/metodologia_reproducao.md"><b>docs/metodologia_reproducao.md</b><span>Ambiente, versões e comandos para reproduzir.</span></a>
+        <a href="docs/fonte_chuva_inmet.md"><b>docs/fonte_chuva_inmet.md</b><span>O asset de chuva indicado pelo Fabrício e a conferência com o pr.npz.</span></a>
+        <a href="docs/referencias.md"><b>docs/referencias.md</b><span>Referências conferidas e a decisão sobre o pixel de 30 m.</span></a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Números tirados de <code>resultados/tabelas/</code> em 08/11/2026. Os dados por estação, os modelos e os GeoTIFFs ficam fora do git, em <code>dados/</code>. Abra esta página de dentro da pasta <code>refinamento/</code> para as figuras aparecerem.
+</footer>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var tip = document.getElementById('tip');
+  if (!tip) return;
+  function fill(el) {
+    tip.textContent = '';
+    var v = document.createElement('div');
+    v.className = 'tip-val';
+    v.textContent = el.getAttribute('data-value');
+    var l = document.createElement('div');
+    l.className = 'tip-label';
+    var group = el.getAttribute('data-group');
+    if (group) {
+      var k = document.createElement('span');
+      k.className = 'tip-key ' + group;
+      l.appendChild(k);
+    }
+    l.appendChild(document.createTextNode(el.getAttribute('data-label')));
+    tip.appendChild(v);
+    tip.appendChild(l);
+    var extra = el.getAttribute('data-extra');
+    if (extra) {
+      var e = document.createElement('div');
+      e.className = 'tip-extra';
+      e.textContent = extra;
+      tip.appendChild(e);
+    }
+  }
+  function place(x, y) {
+    var r = tip.getBoundingClientRect();
+    var left = Math.min(x + 14, window.innerWidth - r.width - 8);
+    var top = y + 16;
+    if (top + r.height > window.innerHeight - 8) top = y - r.height - 12;
+    tip.style.left = Math.max(8, left) + 'px';
+    tip.style.top = Math.max(8, top) + 'px';
+  }
+  function hide() { tip.classList.remove('on'); }
+  var marks = document.querySelectorAll('[data-value]');
+  for (var i = 0; i < marks.length; i++) {
+    (function (el) {
+      el.addEventListener('pointerenter', function (ev) { fill(el); tip.classList.add('on'); place(ev.clientX, ev.clientY); });
+      el.addEventListener('pointermove', function (ev) { place(ev.clientX, ev.clientY); });
+      el.addEventListener('pointerleave', hide);
+      el.addEventListener('focus', function () {
+        fill(el);
+        tip.classList.add('on');
+        var r = el.getBoundingClientRect();
+        place(r.left + Math.min(r.width * 0.6, 320), r.bottom - 6);
+      });
+      el.addEventListener('blur', hide);
+    })(marks[i]);
+  }
+  window.addEventListener('scroll', hide, { passive: true });
+})();
+</script>
+</body>
+</html>

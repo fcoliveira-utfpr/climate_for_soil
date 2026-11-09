@@ -18,3 +18,15 @@ clima_decenal/dados/
 climas/dados_koppen_movel30/
 artigo/
 climas/dados_mapas_1km/
+
+# Refinamento: dados cedidos, rasters, modelos e ambiente ficam apenas locais.
+refinamento/dados/
+refinamento/.local/
+refinamento/.tmp/
+refinamento/.venv/
+refinamento/**/.pytest_cache/
+refinamento/**/*.py[cod]
+refinamento/**/.env
+refinamento/**/*.log
+refinamento/requirements.txt
+refinamento/AGENTS.md

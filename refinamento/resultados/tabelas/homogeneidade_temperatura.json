@@ -1,0 +1,10 @@
+{
+  "reference": "ERA5-Land monthly at the station pixel",
+  "min_years": 15,
+  "min_months_per_year": 9,
+  "step_threshold_c": 0.3,
+  "tests": "Pettitt p<0.01 and SNHT>95% critical and |step|>=0.3 C",
+  "removed_stations": 0,
+  "private_station_table_sha256": "1f3d787044c42e7a4bfc47616b40208786f65891946a7ad181d3464b2ea56658",
+  "script_sha256": "c50a0a02ee19f9a7e064f0d8011217bf9eba29e808a9096ee8b1db8425e54e53"
+}

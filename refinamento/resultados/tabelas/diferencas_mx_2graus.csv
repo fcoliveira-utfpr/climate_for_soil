@@ -1,0 +1,5 @@
+method,reference,delta_rmse_c,ci025,ci975,n_blocks,bootstrap
+M2_linear,MX_mensal_referencia,0.8081030398744463,0.6170240639868885,1.0058620948710086,70,1000
+M4_random_forest,MX_mensal_referencia,0.28217203816428194,0.15734776003709292,0.4038709399526209,70,1000
+M5_lightgbm,MX_mensal_referencia,0.2116105849183071,0.09677437930904692,0.3358231001204687,70,1000
+MX_mensal_referencia,MX_mensal_referencia,0.0,0.0,0.0,70,1000

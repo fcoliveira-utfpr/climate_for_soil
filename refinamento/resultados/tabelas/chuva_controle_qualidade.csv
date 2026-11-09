@@ -1,0 +1,2 @@
+source_stations,source_days,selected_days,station_months_expected,station_months_complete,invalid_finite_daily_values,nonfinite_daily_values,stations_duplicate_coordinates_flag
+14170,23741,10958,5101200,1617793,24,101355414,555

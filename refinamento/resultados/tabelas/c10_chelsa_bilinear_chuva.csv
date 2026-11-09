@@ -1,0 +1,3 @@
+method,reference,delta_rmse_c,ci025,ci975,n_blocks,bootstrap,rmse_medio,unit
+CHELSA_bilinear,CHELSA_vizinho,-0.01742663139673084,-0.0748556965601744,0.0476812580563294,153,1000,20.305320539193428,mm
+CHELSA_vizinho,CHELSA_vizinho,0.0,0.0,0.0,153,1000,20.322728616749654,mm

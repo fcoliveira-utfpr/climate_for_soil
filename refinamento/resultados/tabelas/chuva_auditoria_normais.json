@@ -1,0 +1,11 @@
+{
+  "normal_sha256": "d47391176c3074fa6c9f63cd6cf5010e500ef85d0d4ddcf0272daf428b3bc80e",
+  "script_sha256": "9c49747dc72de60221c1ad798c16ab35517951dabc9905cce470ce40248cb8ec",
+  "stations_annual_eligible": 2360,
+  "maximum_annual_sum_rounding_error_mm": 7.49999799154466e-07,
+  "eligible_duplicate_coordinate_flags": 0,
+  "eligible_missing_elevation": 602,
+  "monthly_normals_nonnegative": true,
+  "source_comparison_with_gee_completed": false,
+  "homogeneity_completed": false
+}

@@ -1,0 +1,18 @@
+{
+  "boundary_source": "https://geoftp.ibge.gov.br/informacoes_ambientais/estudos_ambientais/biomas/vetores/2025_Biomas-e-Sistema-Costeiro-Marinho-do-Brasil-1-250000_shp.zip",
+  "boundary_sha256": "247b15c427070805044ebe02012f15552850d535fbfecaddb359875cdda1ea8f",
+  "source_crs": "EPSG:4674",
+  "input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "script_sha256": "765824d7cd98cb95ed233c36514b1d177ba0e951a56d21fcb9dacdeeb086d6e9",
+  "holdout_scored": false,
+  "development_by_biome": {
+    "Cerrado": 35,
+    "Mata Atlântica": 32,
+    "Amazônia": 12,
+    "Caatinga": 12,
+    "Pampa": 10,
+    "sem_atribuicao_univoca": 1
+  },
+  "minimum_stations_to_publish": 5,
+  "limitation": "biome boundary at 1:250000, not a 30m territorial certification; rainfall pending"
+}

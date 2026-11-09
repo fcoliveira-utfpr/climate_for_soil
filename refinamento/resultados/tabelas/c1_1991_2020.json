@@ -1,0 +1,26 @@
+{
+  "status": "exploratory_not_independent_of_source_grids",
+  "comparisons": {
+    "1": {
+      "common_stations": 98,
+      "excluded_for_missing_grids": 4,
+      "prediction_input_sha256": "4f2f55f62e3b3ba7f6756cfeec322392043ab0d20277908932e8cdd03a3b5c95"
+    },
+    "2": {
+      "common_stations": 98,
+      "excluded_for_missing_grids": 4,
+      "prediction_input_sha256": "79e8c093c162ae0e60a46d72783b4550d83a6b0e04389123de45d74ddcd49a01"
+    }
+  },
+  "grid_sha256": "51481b2880d29b150972ade25106037246f384d511ebda01d6e423af72a145c8",
+  "normals_input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "script_sha256": "aceebe9700bbc69574b7379b1c5c068ac621f904e62eda5ebb5df61616fb4c3f",
+  "holdout_scored": false,
+  "limitations": [
+    "C11: definições térmicas diferentes.",
+    "Normal observada usa 24–30 anos por mês; CHELSA só tem normal integral aqui.",
+    "Xavier e outras grades podem ter usado as estações avaliadas: C14 pendente.",
+    "Suporte espacial nativo de cada base; nenhuma correção focal de costa.",
+    "C9 acrescenta altitude; regiões e biomas ainda pendentes."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "asset": "projects/fcoliveira/assets/observados_inmet/pr",
+  "asset_update_time": "2026-10-19T18:46:06.206095Z",
+  "npz_sha256": "26c4f28f8e4f0f72b3069b0418eb4c05be951d60942a4bf61f1acede74b699fd",
+  "script_sha256": "e2751441c2b70a619916cf1f30090805e00aa7e2f9b43b88c74be0418e27f368",
+  "sample_rule": "10 development stations equally spaced in latitude ordering; January 1991/2010/2020",
+  "stations_queried": 10,
+  "stations_without_records": 0,
+  "stations_with_records": 10,
+  "records": 930,
+  "duplicate_station_dates": 0,
+  "filled_values_used_as_truth": false,
+  "limitation": "Sample only; exact IDs, no alias matching. Does not certify national equivalence, QC or independence."
+}

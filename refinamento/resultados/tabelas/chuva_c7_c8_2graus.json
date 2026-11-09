@@ -1,0 +1,34 @@
+{
+  "stations_before_covariates": 2360,
+  "stations_complete_covariates": 2294,
+  "excluded_missing_covariates": 66,
+  "reserved_before_covariates": 428,
+  "missing_rows_by_covariate": {
+    "chelsa_mm": 0,
+    "era5_mm": 192,
+    "chirps_mm": 12,
+    "elevation_30": 0,
+    "slope_30": 0,
+    "elevation_90": 0,
+    "slope_90": 612,
+    "elevation_1000": 0,
+    "slope_1000": 0
+  },
+  "hashes": {
+    "normals": "d47391176c3074fa6c9f63cd6cf5010e500ef85d0d4ddcf0272daf428b3bc80e",
+    "chelsa": "0d140f9beb12fb950f63194abe0c23434a481182fb8be6f9fca1d1f4173b2f5c",
+    "era5": "8ee7cf46c896e151e94ccd3fd117fba6bd7bbb8d80aa7abd1b5eec91a8497c7d",
+    "chirps": "d0bbb91eb19a0db1a376bfd877b3d6ecc6571138669cddbdd4d7d423943fc32b",
+    "terrain": "f10e33154c9056a27a6a918d2235f04ae893f27faf2081ef6d3ba3b390d6adaf"
+  },
+  "development_stations": 1878,
+  "reserved_after_covariates": 416,
+  "block_size": 2,
+  "script_sha256": "139da28aebe8810b19be16873a31d90f688e75c893a5608b99fea2998304d316",
+  "output_sha256": "d139b077cb44f818d0c74f73a5a9ad10b052a0c89c4d4c0a03be7a2bcdb8c248",
+  "holdout_scored": false,
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "repeats": 3,
+  "subsample_unit": "station, training only"
+}

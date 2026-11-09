@@ -1,0 +1,13 @@
+{
+  "temperature_folds_identical": true,
+  "temperature_development_stations": 102,
+  "rain_folds_identical": true,
+  "rain_development_stations": 1878,
+  "block_size": 1,
+  "neighbors": 5,
+  "pair_km": 90,
+  "cdd_pair_km": 500,
+  "adw_exponent": 4,
+  "holdout_scored": false,
+  "script_sha256": "24090a9dfcef134101d8187dc3ac62988bb776f9fa1b9225769043301ba7eff5"
+}

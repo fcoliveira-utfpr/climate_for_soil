@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-11-06T20:28:09.984490+00:00",
+  "status": "inventory_only_no_national_maps_generated",
+  "tiles": 743,
+  "utm_crs": [
+    "EPSG:32619",
+    "EPSG:32620",
+    "EPSG:32621",
+    "EPSG:32622",
+    "EPSG:32718",
+    "EPSG:32719",
+    "EPSG:32720",
+    "EPSG:32721",
+    "EPSG:32722",
+    "EPSG:32723",
+    "EPSG:32724",
+    "EPSG:32725",
+    "EPSG:32726"
+  ],
+  "estimated_country_pixels": 9441986462,
+  "uncompressed_climate_only_bytes": 490983296032,
+  "uncompressed_with_auxiliary_bytes": 1718441536113,
+  "uncompressed_temperature_annual_with_auxiliary_bytes": 66093905235,
+  "free_bytes": 121164017664,
+  "inventory_sha256": "30ebaaa0cc74f35b8e9e61b1327d3d374ec407010b99c0d1593d12e4e8de7330",
+  "boundary_sha256": "8389c913a4576e824d7fce5735dec94484c97388fad2cd932eeeeeb4cddf64fc",
+  "boundary_url": "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application/vnd.geo+json&qualidade=maxima&intrarregiao=UF",
+  "limitations": [
+    "Bytes por pixels do territorio; headers, margens de tiles e caches adicionais.",
+    "Tamanho comprimido depende de teste real; nao pressuposto.",
+    "Malha API IBGE; fronteira nao certificada a 30 m.",
+    "UTM por zona/hemisferio; nao aplicar CRS de Curitiba ao pais inteiro.",
+    "Inventario nao demonstra cobertura climatica nem valida modelos."
+  ]
+}

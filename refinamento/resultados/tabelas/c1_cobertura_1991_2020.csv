@@ -1,0 +1,8 @@
+mode,source,expected_normals,valid_normals,complete_stations
+full_1991_2020,xavier,1224,1212,101
+full_1991_2020,era5,1224,1176,98
+full_1991_2020,terraclimate,1224,1224,102
+full_1991_2020,chelsa,1224,1224,102
+same_observed_years,xavier,1224,1212,101
+same_observed_years,era5,1224,1176,98
+same_observed_years,terraclimate,1224,1224,102

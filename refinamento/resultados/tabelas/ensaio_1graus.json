@@ -1,0 +1,24 @@
+{
+  "status": "exploratorio_sem_covariaveis_raster_sem_C11",
+  "features": [
+    "latitude",
+    "longitude",
+    "elevation_m",
+    "month_sin",
+    "month_cos",
+    "latitude_sin",
+    "latitude_cos"
+  ],
+  "formulation": "direct",
+  "normal_period": "1991-2020",
+  "input_sha256": "de44cc99bac2157b3fc69139c490bfcba1aeeb47daa306ab33499f1313a172de",
+  "stations_complete": 120,
+  "stations_development": 102,
+  "stations_reserved_unscored": 18,
+  "block_size_degrees": 1.0,
+  "repeats": 3,
+  "folds_outer": 5,
+  "folds_inner": 3,
+  "test_seed": 20261018,
+  "mx": "IDW mensal; 5 vizinhos treino; gamma=-0.006 C/m; n\u00e3o reprodu\u00e7\u00e3o di\u00e1ria"
+}

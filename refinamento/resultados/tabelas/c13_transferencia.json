@@ -1,0 +1,32 @@
+{
+  "status": "temporal_and_spatial_hindcast_era5_only",
+  "holdout_scored": false,
+  "stations": 68,
+  "features": [
+    "latitude",
+    "longitude",
+    "month_sin",
+    "month_cos",
+    "latitude_sin",
+    "latitude_cos",
+    "dem_elevation_m",
+    "slope_deg",
+    "era5_c"
+  ],
+  "minimum_years_per_month": 8,
+  "train_period": "2001-2010",
+  "test_period": "2011-2020",
+  "control_training_period": "2011-2020",
+  "monthly_input_sha256": "ce4d4f11aba8277b755a5c856461cee62af171af34f5405b495b18ba26d95fc3",
+  "grid_input_sha256": "51481b2880d29b150972ade25106037246f384d511ebda01d6e423af72a145c8",
+  "normals_input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "script_sha256": "db4bada8ddba0e16e40e36c1d1907290b5a54c6e9678229d5db3821ec637e8b2",
+  "limitations": [
+    "A covariável é ERA5 da década avaliada; isto é hindcast, não previsão futura.",
+    "Controle contemporâneo também mantém estações e blocos de teste fora do treino.",
+    "Compara apenas correção de ERA5; não demonstra transferência da correção de CHELSA.",
+    "Meses decenais admitem 8–10 anos, com referência nos mesmos anos observados.",
+    "O anual usa pesos fixos 1991–2020 apenas para comparabilidade sazonal.",
+    "Não prova validade retrospectiva em 1991–2000 nem independência das grades."
+  ]
+}

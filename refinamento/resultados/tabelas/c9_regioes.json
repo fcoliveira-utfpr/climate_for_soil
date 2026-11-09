@@ -1,0 +1,16 @@
+{
+  "boundary_sha256": "8389c913a4576e824d7fce5735dec94484c97388fad2cd932eeeeeb4cddf64fc",
+  "normals_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "script_sha256": "e4850d4543bd1c9553af922faaff7d2260f56de53f380a9e6739e569d5dca371",
+  "holdout_scored": false,
+  "development_by_region": {
+    "Sudeste": 33,
+    "Nordeste": 23,
+    "Sul": 17,
+    "Norte": 16,
+    "Centro-Oeste": 12,
+    "sem_atribuicao_univoca": 1
+  },
+  "biomes_completed": false,
+  "minimum_stations_to_publish": 5
+}

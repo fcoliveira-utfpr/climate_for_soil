@@ -1,0 +1,14 @@
+{
+  "source": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2020.zip",
+  "source_sha256": "e6cf2016dd3b78d7180dac8cbd482e5f549b227dc87a9dff642ecb7bb9e5ba0b",
+  "script_sha256": "8b3ece3e6f9f293f69e45f0b52fcd1485d7dc2467efce3de1d5d4260b80c74e5",
+  "files": 589,
+  "stations_with_paired_days": 553,
+  "paired_days": 149249,
+  "eligible_station_months": 4619,
+  "minimum_month_coverage": 0.8,
+  "daily_window": "01:00 to next 00:00 UTC, all 24 records for instantaneous air and hourly extrema",
+  "compensated_formula": "(Tmax + Tmin + T12 + 2*T24)/5",
+  "limitation": "one year of automatic stations; operational compensated proxy, not reproduction of conventional thermometer windows or 1991-2020 normal",
+  "source_method": "https://portal.inmet.gov.br/uploads/normais/NORMAISCLIMATOLOGICAS.pdf"
+}

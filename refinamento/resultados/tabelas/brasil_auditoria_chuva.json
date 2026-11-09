@@ -1,0 +1,10 @@
+{
+  "planned_tiles": 743,
+  "complete_rainfall_tiles": 0,
+  "partial_rainfall_tiles": 1,
+  "processed_windows": 2,
+  "valid_pixels": 524288,
+  "annual_quantization_max_error_mm": 4.0,
+  "national_rainfall_complete": false,
+  "scientifically_validated_national_product": false
+}

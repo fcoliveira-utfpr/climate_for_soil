@@ -1,0 +1,16 @@
+comparacao,status,evidencia,decisao_pendente
+C1,executada_no_desenvolvimento,c1_normais_1991_2020.csv; c1_modelos_2graus.csv; c1_diferencas_2graus.csv,Xavier publicado provavelmente usou as estações; comparação justa feita pelo C15 e pelo teste reservado
+C2,executada,c2_gradientes_1graus.csv; c2_gradientes_2graus.csv; c2_gradientes_diferencas_2graus.csv,Gradiente fixo piora; ajustados sem ganho conclusivo; correção por elevação sozinha não resolve
+C3,executada_temperatura_e_chuva,m3_m6_temperatura_2graus.csv; chuva_metodos_1graus.csv; chuva_metodos_2graus.csv; chuva_M3_1graus_30m_base.csv; chuva_M3_2graus_30m_base.csv,ML melhora a regressão linear e a GWR nas duas variáveis; RF e LightGBM empatam na temperatura
+C4,executada,modelos_exploratorios_2graus_grade_direct.csv; modelos_exploratorios_2graus_grade_correction.csv,Correção da grade adotada
+C5,executada_temperatura_e_chuva,escalas_temperatura_2graus.csv; chuva_covariaveis_2graus.csv,"Relevo de 1 km tão bom ou melhor que 30 m; pixel de 30 m é especificação, não ganho demonstrado"
+C6,executada_MODIS_e_CHIRPS,modis_temperatura_2graus.csv; chuva_covariaveis_2graus.csv,MODIS sem ganho; CHIRPS ajuda mas fica fora do produto até a auditoria de independência; IMERG e NDVI não testados
+C7,executada_temperatura_e_chuva,c7_c8_metricas_2graus.csv; chuva_c7_c8_1graus.csv; chuva_c7_c8_2graus.csv,"Temperatura: harmônicos; chuva: um modelo por mês (melhor nos dois blocos), adotado no mapa do Paraná"
+C8,executada_temperatura_e_chuva,c7_c8_diferencas_2graus.csv; chuva_c7_c8_diferencas_2graus.csv,Menos estações piora as duas variáveis
+C9,executada_temperatura_e_chuva,c9_regioes_2graus.csv; c9_biomas_2graus.csv; chuva_c9_2graus.csv,Pantanal sem estação de temperatura
+C10,parcial,auditoria_piloto.csv; c10_perfis_curitiba.json; c10_saltos_curitiba.csv,Degraus vêm do CHELSA copiado por vizinho mais próximo; correção (CHELSA bilinear) depende do GEE
+C11,executada_2008_a_2024,c11_definicoes_multianual.csv; c11_estabilidade_estacoes.csv; c11_definicoes_mensais_2020.csv,"Diferença estável no tempo (+0,78 a +0,89 °C) e variável entre estações (+0,1 a +1,6 °C); definição final é decisão do professor"
+C12,executada_anos_e_dias,c12_falhas_artificiais.csv; c12_falhas_diarias_temperatura.csv; c12_falhas_diarias_chuva.csv,"Regras mantidas: 80% dos dias na temperatura, mês completo na chuva; método das diferenças fica para séries curtas"
+C13,encerrada_com_justificativa,c13_modelos_2graus.csv; c13_transferencia.json,"As normais exigem 24 de 30 anos dentro de 1991-2020, então o mapa não depende de transferir correção entre décadas; ERA5 mostra estabilidade"
+C14,limitacao_documentada,c14_triagem_inmet_2020.json,Não há estações fora do Xavier com normal 1991-2020; a comparação justa com o Xavier é o C15 e o teste reservado
+C15,executada,c15_mx_temperatura_2graus.csv; c15_diferencas_temperatura_2graus.csv; c15_mx_chuva_2graus.csv; c15_diferencas_chuva_2graus.csv,"Modelo vence o método do Xavier reproduzido nas mesmas dobras, nas duas variáveis e nos dois tamanhos de bloco"

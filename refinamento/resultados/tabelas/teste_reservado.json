@@ -1,0 +1,23 @@
+{
+  "evaluated_once": true,
+  "frozen_preparo_sha256": "52d3b91bab972a1a93e6a680deaac58568c2413100e47e00d2ae3d460d8687bc",
+  "chelsa_bilinear": true,
+  "temperature": {
+    "coverage_90_monthly": 0.7546296296296297,
+    "median_halfwidth_monthly_c": 1.0572843733335937,
+    "fraction_outside_aoa": 0.0,
+    "reserved_stations": 18,
+    "gamma_c_per_km": -5.375691898947522,
+    "gamma_pairs": 1538,
+    "coverage_90_annual": 0.7222222222222222
+  },
+  "rain": {
+    "coverage_90_monthly": 0.8988381410256411,
+    "coverage_90_annual": 0.9399038461538461,
+    "median_halfwidth_monthly_mm": 26.60472139885988,
+    "fraction_outside_aoa": 0.009615384615384616,
+    "reserved_stations": 416,
+    "cdd_km": 367.0373534449606
+  },
+  "script_sha256": "7dec6313b17f8afe0d9dd6dbff922276a797d48d90686da31aef82e11ab363ac"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "partial_C12_artificial_missing_years_only",
+  "seed": 20261103,
+  "random_repetitions": 30,
+  "n_stations": 43,
+  "n_station_months": 250,
+  "holdout_scored": false,
+  "monthly_input_sha256": "ce4d4f11aba8277b755a5c856461cee62af171af34f5405b495b18ba26d95fc3",
+  "grid_input_sha256": "51481b2880d29b150972ade25106037246f384d511ebda01d6e423af72a145c8",
+  "normals_input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "script_sha256": "54d87c626814710c57fddc30e1251166c6e9010983f636a3ef876b9834f75d18",
+  "private_output_sha256": "07325cd9bf51a6e6d6d3c7589534b2be271fc545c9095404caa824fb843436a7",
+  "limitations": [
+    "Elegibilidade é 30 meses-ano aprovados pelo QC diário de 80%, não 100% dos dias.",
+    "Amostra de séries longas, não representativa de todas as estações curtas.",
+    "Não testa falhas diárias, média compensada ou transferência de modelo espacial.",
+    "Métricas agrupam máscaras repetidas; não são 30 amostras independentes.",
+    "Nenhuma regra de preenchimento foi promovida ao pipeline de produção."
+  ]
+}

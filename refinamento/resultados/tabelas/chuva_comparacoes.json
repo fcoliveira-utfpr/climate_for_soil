@@ -1,0 +1,48 @@
+{
+  "1": {
+    "methods_executed": [
+      "M2",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "development_stations": 1878,
+    "reserved_stations": 416,
+    "hashes": {
+      "normals": "d47391176c3074fa6c9f63cd6cf5010e500ef85d0d4ddcf0272daf428b3bc80e",
+      "chelsa": "0d140f9beb12fb950f63194abe0c23434a481182fb8be6f9fca1d1f4173b2f5c",
+      "era5": "8ee7cf46c896e151e94ccd3fd117fba6bd7bbb8d80aa7abd1b5eec91a8497c7d",
+      "chirps": "d0bbb91eb19a0db1a376bfd877b3d6ecc6571138669cddbdd4d7d423943fc32b",
+      "terrain": "f10e33154c9056a27a6a918d2235f04ae893f27faf2081ef6d3ba3b390d6adaf"
+    },
+    "variants_executed": [
+      "M5_30m_base",
+      "M5_90m_base",
+      "M5_1000m_base",
+      "M5_30m_CHIRPS"
+    ]
+  },
+  "2": {
+    "methods_executed": [
+      "M2",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "development_stations": 1878,
+    "reserved_stations": 416,
+    "hashes": {
+      "normals": "d47391176c3074fa6c9f63cd6cf5010e500ef85d0d4ddcf0272daf428b3bc80e",
+      "chelsa": "0d140f9beb12fb950f63194abe0c23434a481182fb8be6f9fca1d1f4173b2f5c",
+      "era5": "8ee7cf46c896e151e94ccd3fd117fba6bd7bbb8d80aa7abd1b5eec91a8497c7d",
+      "chirps": "d0bbb91eb19a0db1a376bfd877b3d6ecc6571138669cddbdd4d7d423943fc32b",
+      "terrain": "f10e33154c9056a27a6a918d2235f04ae893f27faf2081ef6d3ba3b390d6adaf"
+    },
+    "variants_executed": [
+      "M5_30m_base",
+      "M5_90m_base",
+      "M5_1000m_base",
+      "M5_30m_CHIRPS"
+    ]
+  }
+}

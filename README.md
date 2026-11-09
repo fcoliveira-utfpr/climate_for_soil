@@ -152,6 +152,12 @@ relação ao Köppen e as classificações climáticas podem ser explorados no G
 
 ## 3. Estrutura do repositório
 
+**Refinamento climático a 30 m:** o [mapa da etapa](refinamento/mapa.md) (também em versão
+visual, [`refinamento/mapa.html`](refinamento/mapa.html), para abrir no navegador) registra o que
+foi feito, as decisões, os resultados e o que falta, conferido contra as
+[instruções](refinamento/instrucoes.md). A grade nacional está planejada; a produção e a
+validação dos mapas de temperatura e chuva ainda estão em desenvolvimento.
+
 ```
 .
 ├── README.md
@@ -177,16 +183,25 @@ relação ao Köppen e as classificações climáticas podem ser explorados no G
 │       ├── reproducao_resultados.ipynb
 │       ├── codigo/                      # config, dados, modelagem, fases, mapas, métricas, rodar.sh
 │       └── resultados/                  # tabelas agregadas e figuras
-└── corelacao/                           # comparação de climas e experimento dos modelos
-    ├── comparacao_climas.ipynb
-    ├── experimento_clima_modelos.ipynb
-    ├── codigo/                          # preparar_dados, comparar_climas, zonas_clima, experimento_*, testes
+├── corelacao/                           # comparação de climas e experimento dos modelos
+│   ├── comparacao_climas.ipynb
+│   ├── experimento_clima_modelos.ipynb
+│   ├── codigo/                          # preparar_dados, comparar_climas, zonas_clima, experimento_*, testes
+│   ├── resultados/                      # tabelas agregadas e figuras
+│   └── docs/memoria_fabricio.md         # registro do que foi feito e decidido
+└── refinamento/                         # temperatura e chuva a 30 m por modelo (normal 1991-2020)
+    ├── mapa.md, mapa.html               # o que foi feito, decisões, resultados e pendências
+    ├── instrucoes.md                    # pedido original
+    ├── codigo/                          # dados, covariáveis, modelos, validação, mapas; testes em codigo/testes/
+    ├── gee/                             # visualizador do piloto de Curitiba no GEE
+    ├── notebooks/                       # leitura comentada das tabelas de temperatura
     ├── resultados/                      # tabelas agregadas e figuras
-    └── docs/memoria_fabricio.md         # registro do que foi feito e decidido
+    └── docs/                            # registro.md (diário) e relatórios de cada etapa
 ```
 
 **Fora do git** (em `.gitignore`): dados por ponto (`corelacao/.local/`, `climas/dados_reproducao/`),
-rasters locais do CHELSA e das classificações (`climas/dados_chelsa/…`) e os mapas gerados.
+rasters locais do CHELSA e das classificações (`climas/dados_chelsa/…`), os dados cedidos, modelos e GeoTIFFs
+do refinamento (`refinamento/dados/`) e os mapas gerados.
 
 ---
 

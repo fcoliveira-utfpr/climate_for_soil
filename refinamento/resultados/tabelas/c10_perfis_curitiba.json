@@ -1,0 +1,12 @@
+{
+  "temperature_sha256": "0ac6c079ba403475c67720ea8b1369507e9e92d1cc64b07ee0cf76be75f80f48",
+  "covariates_sha256": "90f1c9300a24f135e9f11d1c492fbd761ebf6efbe16a8d3645d5fce280a70666",
+  "script_sha256": "16ab06562909fee27c2a0901fa024f7dcbca7242542e2859fabe49e54b8341f9",
+  "transect_row_fractions": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "interpretation": "Descriptive pixel jumps; terrain confounding not controlled; no national seams assessed.",
+  "independent_validation": false
+}

@@ -1,0 +1,15 @@
+{
+  "hourly_sha256": "e6cf2016dd3b78d7180dac8cbd482e5f549b227dc87a9dff642ecb7bb9e5ba0b",
+  "author_sources_sha256": {
+    "Tmax": "fc5bd48bb0fa5cc9a9ab3973b25df437e12906d5b59982ce941944d9575e66ae",
+    "Tmin": "53f304b29258bdf5617833afb8032b280ee54a1990da110a7d93a1d10886b997"
+  },
+  "script_sha256": "32474966f07fba43eff8c48be94d5b547d963d0e2c4bda7b293178151da1691c",
+  "inmet_stations": 589,
+  "matching_author_id": 571,
+  "within_5km_author_station": 564,
+  "candidate_without_id_or_5km_match": 18,
+  "proven_independent_stations": 0,
+  "independent_test_completed": false,
+  "reason": "Absence from supplied Tmax/Tmin is only a candidate screen; needs historical versions, aliases, relocations and grid-specific provenance. 2020 alone is not a 1991-2020 normal."
+}

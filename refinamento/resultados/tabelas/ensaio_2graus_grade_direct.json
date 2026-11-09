@@ -1,0 +1,27 @@
+{
+  "status": "exploratorio_C11_C12_C13_pendentes",
+  "features": [
+    "latitude",
+    "longitude",
+    "month_sin",
+    "month_cos",
+    "latitude_sin",
+    "latitude_cos",
+    "dem_elevation_m",
+    "chelsa_c",
+    "slope_deg"
+  ],
+  "with_grid": true,
+  "formulation": "direct",
+  "normal_period": "1991-2020",
+  "input_sha256": "49fc894756ecca954f5c1da48088856e39e61ab83c77bc23a7595bce1d007ef9",
+  "stations_complete": 120,
+  "stations_development": 102,
+  "stations_reserved_unscored": 18,
+  "block_size_degrees": 2.0,
+  "repeats": 3,
+  "folds_outer": 5,
+  "folds_inner": 3,
+  "test_seed": 20261018,
+  "mx": "IDW mensal; 5 vizinhos treino; gamma=-0.006 C/m; n\u00e3o reprodu\u00e7\u00e3o di\u00e1ria"
+}

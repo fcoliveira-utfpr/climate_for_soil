@@ -1,0 +1,73 @@
+{
+  "stations_before_covariates": 2360,
+  "stations_complete_covariates": 2294,
+  "excluded_missing_covariates": 66,
+  "reserved_before_covariates": 428,
+  "missing_rows_by_covariate": {
+    "chelsa_mm": 0,
+    "era5_mm": 192,
+    "chirps_mm": 12,
+    "elevation_30": 0,
+    "slope_30": 0,
+    "elevation_90": 0,
+    "slope_90": 612,
+    "elevation_1000": 0,
+    "slope_1000": 0
+  },
+  "hashes": {
+    "normals": "d47391176c3074fa6c9f63cd6cf5010e500ef85d0d4ddcf0272daf428b3bc80e",
+    "chelsa": "0d140f9beb12fb950f63194abe0c23434a481182fb8be6f9fca1d1f4173b2f5c",
+    "era5": "8ee7cf46c896e151e94ccd3fd117fba6bd7bbb8d80aa7abd1b5eec91a8497c7d",
+    "chirps": "d0bbb91eb19a0db1a376bfd877b3d6ecc6571138669cddbdd4d7d423943fc32b",
+    "terrain": "f10e33154c9056a27a6a918d2235f04ae893f27faf2081ef6d3ba3b390d6adaf"
+  },
+  "development_stations": 1878,
+  "reserved_after_covariates": 416,
+  "holdout_scored": false,
+  "boundary_sha256": "8389c913a4576e824d7fce5735dec94484c97388fad2cd932eeeeeb4cddf64fc",
+  "biomes_sha256": "247b15c427070805044ebe02012f15552850d535fbfecaddb359875cdda1ea8f",
+  "script_sha256": "686338c12536185172e07fbb7dd3f6564ec3d3d671f0196bc540e2d017f88785",
+  "minimum_stations_to_publish": 5,
+  "methods": {
+    "1": [
+      "M0_chelsa",
+      "M0_era5",
+      "M0_chirps",
+      "M2_direct",
+      "M2_correction",
+      "M5_direct",
+      "M5_correction",
+      "M6_direct",
+      "M6_correction",
+      "M5_correction_CHIRPS"
+    ],
+    "2": [
+      "M0_chelsa",
+      "M0_era5",
+      "M0_chirps",
+      "M2_direct",
+      "M2_correction",
+      "M5_direct",
+      "M5_correction",
+      "M6_direct",
+      "M6_correction",
+      "M5_correction_CHIRPS"
+    ]
+  },
+  "stations_by_biome": {
+    "Mata Atlântica": 864,
+    "Cerrado": 407,
+    "Caatinga": 350,
+    "Amazônia": 169,
+    "Pampa": 69,
+    "Pantanal": 19
+  },
+  "stations_by_region": {
+    "Sudeste": 613,
+    "Nordeste": 460,
+    "Sul": 438,
+    "Centro-Oeste": 212,
+    "Norte": 155
+  },
+  "limitation": "Descriptive stratification; no subgroup-specific independent validation."
+}
