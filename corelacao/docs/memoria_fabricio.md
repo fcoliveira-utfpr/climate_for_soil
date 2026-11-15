@@ -879,3 +879,29 @@ cenário (`koppen_movel30`) com o **Köppen IPEF estático**. Dados do Xavier. P
    `VAL_MATRIZ=climas/dados_koppen_movel30/matriz_movel30.parquet VAL_CENARIOS=climas/koppen_movel30/codigo/cenarios_movel30.json VAL_OOF=climas/dados_koppen_movel30/oof_ranger Rscript climas/analise_espaco_tempo/codigo/validacao.R koppen_movel30 v2,v3,v4 direta`
    e o mesmo com `validacao_gee.py koppen_movel30` e `VAL_OOF=.../oof_mapa`; depois `python metricas.py`.
 3. Trajetórias 1985-2024 no painel e `relatorio_tecnicov5.md`.
+
+## Artigo e mapas de 1 km (iniciado em 2026-11-15)
+
+**Decisões do usuário (15/11):** artigo com foco em **como o clima atua** na estimativa do SOC, **só com o
+ranger**, objetivo próprio (o MapBiomas entra como fonte de dados; Köppen IPEF como referência); mapas próprios a
+**1 km** para o artigo (série 1985-2024, cenários Köppen IPEF, melhor clima e sem clima) e, depois, 30 m no GEE
+para disponibilizar. Plano em `artigo/` (pasta fora do git, só no Mac: `plano_artigo.md`, `plano_mapas_1km.md`).
+
+**Mapas de 1 km, etapas 1-2 (Mac, 15/11):** pasta `climas/mapas_1km/` (dados em `climas/dados_mapas_1km/`, fora
+do git).
+- `codigo/grade.py`: pixel = 33 × 33 pixels de 30 m do MapBiomas (0,0088933°, ~990 m), origem da Coleção 10
+  (−74,02073025380652; 5,405791885246045; a do SOC oficial C3 está na mesma rede), 4.681 × 4.432 pixels, 72 tiles
+  de 560 × 560. O centro de cada pixel de 1 km é um pixel de 30 m (o 17º do bloco).
+- `codigo/covariaveis_1km.py`, teste num tile do MT com as 126 covariáveis da produção (estáticas + 2020):
+  - **download direto a 1 km não serve**: o GEE usa as pirâmides (médias); em 26 de 126 bandas < 90% dos pixels
+    iguais ao valor de 30 m do centro (relevo, textura C3, NDVI/EVI2, WRB, idades de uso);
+  - forçar o cálculo a 30 m (`reproject`) estoura a memória;
+  - **amostragem dos centros** (máscara do pixel central de cada bloco 33 × 33 + `sample` na projeção de 30 m +
+    `computeFeatures`): exata (100% igual aos pontos a 30 m) e ~50 s por bloco de 1° (12.544 pixels, 126 bandas).
+    Estimativa: ~760 blocos com terra → ~10 h por ano em série, ~1,5-3 h com 4-8 em paralelo; estáticas 1 vez,
+    dinâmicas (16 bandas) por ano.
+- `pixelCoordinates(proj)` devolve o **índice do pixel** (centro em k + 0,5), não graus.
+
+**Próximo:** script de download completo (estáticas 1 vez, dinâmicas por ano, retomável, parquet int16 por bloco);
+atenção ao disco do Mac (15 GB livres); clima dos cenários depois da escolha do melhor clima (análises do artigo,
+no outro PC).
