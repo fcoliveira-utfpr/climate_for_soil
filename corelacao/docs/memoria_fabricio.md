@@ -905,3 +905,13 @@ do git).
 **Próximo:** script de download completo (estáticas 1 vez, dinâmicas por ano, retomável, parquet int16 por bloco);
 atenção ao disco do Mac (15 GB livres); clima dos cenários depois da escolha do melhor clima (análises do artigo,
 no outro PC).
+- **Correção (15/11):** a amostragem por máscara de `pixelCoordinates` + `sample` repetia ~1,45 mil pixels por bloco
+  e perdia outros tantos (o índice oscila entre tiles internos do GEE), e incluía pixels fora do Brasil (o
+  `unmask` desfazia a máscara). Trocada por `centros_pontos`: ponto explícito no centro de cada pixel de 1 km +
+  `sampleRegions` na projeção de 30 m (12.544 únicos por bloco, 100% iguais aos pontos de 30 m). Mais lenta:
+  ~37 s por bloco com 8 em paralelo; estáticas ~8 h; dinâmicas ~3-4 h por ano (~6 dias para 1985-2024). A versão
+  com erro ficou em `dados_mapas_1km/estaticas_v0_com_erro/` (apagar depois de conferir a nova).
+- **Em andamento (15/11, Mac, com `caffeinate`):** `covariaveis_1km.py estaticas` (12 em paralelo) e, encadeado ao
+  fim dela, `dinamicas 1985 2024` (log em `dados_mapas_1km/dinamicas.log`). Tudo retomável: se parar, rodar de
+  novo continua. Usuário optou por seguir com o download (opção A: ranger local), em vez de levar o modelo ao GEE
+  (B: smileRandomForest sem limite; C: converter as árvores do ranger para `decisionTreeEnsemble`).
