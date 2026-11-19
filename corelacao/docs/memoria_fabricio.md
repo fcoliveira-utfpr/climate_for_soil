@@ -915,3 +915,27 @@ no outro PC).
   fim dela, `dinamicas 1985 2024` (log em `dados_mapas_1km/dinamicas.log`). Tudo retomável: se parar, rodar de
   novo continua. Usuário optou por seguir com o download (opção A: ranger local), em vez de levar o modelo ao GEE
   (B: smileRandomForest sem limite; C: converter as árvores do ranger para `decisionTreeEnsemble`).
+- **Concluído (19/11, 15h05):** estáticas (829 blocos, 8.996.132 pixels, 202 MB; tempo real 173 min) e dinâmicas
+  1985-2024 (40 anos × 829 blocos, 8.996.141 pixels por ano, 1,6 GB; ~2-3,3 h por ano, mais lento em horário
+  comercial). 7 blocos de 2011 falharam numa queda de conexão (18/11, 8h) e foram refeitos por uma segunda passada
+  automática. Todos os parquets legíveis. **Atenção:** dinâmicas têm 9 pixels a mais que as estáticas — usar junção
+  interna por (col, lin). Dados ficam só no Mac (usuário decidiu não publicar em Releases: parte das covariáveis vem
+  de assets internos do MapBiomas, e o repositório é público).
+  **Próximo:** etapa 3 (modelos ranger finais, precisa da matriz de treino) e etapa 4 (predição por ano).
+- **Etapas 3-4 iniciadas no Mac (19/11):** matriz refeita aqui (`matriz.py baixar` + `filtrar`: 27.425 linhas,
+  14.704 ids, 13.108 grupos, igual à trainingFinal), R com ranger/arrow (no R, `options(timeout = 1200)` para o
+  arrow baixar). Script `climas/mapas_1km/codigo/prever_1km.R <cenarios> <ano0> [ano1]`: modelo final por cenário
+  (ranger da produção, matriz inteira, semente 1984, `dados_mapas_1km/modelos/*.rds`, ~40 s, OOB R² 0,728 Köppen IPEF
+  e 0,729 sem clima) e predição por lotes de 25 blocos (100 blocos estoura os 9 GB; `verbose = FALSE` no predict, a
+  barra de progresso travava) -> `predicoes/<cenario>/<ano>.parquet` (col, lin, lulc, soc em 0,1 t/ha).
+  ~25 min por ano para os 2 cenários. `rasterizar.py <cenario>` -> `mapas/<cenario>/soc_<ano>.tif` (SOC = 0 em uso
+  23/24/30; sem dado em 31/33, como no oficial, sem máscara de areia e grupo textural 1).
+  - 1985: 8,72 milhões de pixels, média 48,7 t/ha (sem clima 49,3; painel oficial 48,07), 40,4 Pg C em 831 Mha.
+    Köppen − sem clima: média −0,7 t/ha, p5-p95 −5,8 a 4,1; figura `mapas_1km/resultados/figuras/teste_1985.png`.
+  - **Cuidado na interpretação:** a diferença entre dois RF treinados separadamente inclui o ruído do RF; para o
+    "efeito do clima" no artigo, usar várias sementes (média) ou comparar com a diferença entre sementes.
+  - Rodando 1986-2024 (koppen_ipef + sem_clima), log `dados_mapas_1km/prever.log`, ~16 h. Retomável.
+  **Próximo:** rasterizar todos os anos; séries nacionais/bioma; comparar com o SOC oficial C3 agregado (etapa 6);
+  cenário "melhor clima" depende das análises do artigo (outro PC) e do download das covariáveis de clima.
+- **Pausa (19/11, noite):** PC desligado com 1985-1987 preditos (~21 min por ano). Para retomar:
+  `bash climas/mapas_1km/codigo/retomar.sh` (predição 1985-2024 retomável + GeoTIFFs; log `dados_mapas_1km/prever.log`).
