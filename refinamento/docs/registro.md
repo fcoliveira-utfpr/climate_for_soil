@@ -750,3 +750,25 @@ script e um teste novo em `codigo/testes/test_finalizacao.py`. Os arquivos foram
 **Earth Agent.** Depois do reinício, as ferramentas apareceram. O `visualizar_piloto.js` rodou no Code Editor sem
 erro (painel, legenda de 17,8 a 19 °C, mapa centrado em Curitiba); o asset do piloto tem 39 bandas e bate
 exatamente com o arquivo local em três pixels conferidos pela API. O asset ainda não tem leitores (falta o Share).
+
+## 12/11/2026 — Brasil inteiro calculado dentro do GEE
+
+**Pedido do professor:** mapa para o Brasil todo, sem processar estado a estado. **Estratégia:** levar o modelo
+congelado para dentro do GEE, em vez de produzir localmente (~130 h e ~340 GB estimados a partir do Paraná).
+
+- `codigo/modelo_gee.py`: converte os 78 LightGBM (temperatura: principal + 5 membros; chuva: 12 meses × 6) para
+  o formato de `ee.Classifier.decisionTreeEnsemble` (folhas × número de árvores, porque o GEE tira a média) e grava
+  as árvores em 13 tabelas em `projects/mystic-hull-480913-h5/assets/refinamento_30m/modelos/`. Gera
+  `gee/brasil_30m.js` (biblioteca, a partir de `gee/brasil_30m_modelo.js`) com as constantes do preparo.
+- Tentativas registradas: `Export.classifier.toAsset` gravou os classificadores, mas eles voltam vazios ao carregar
+  ("Classifier has no training data"); foram apagados. A primeira exportação das tabelas falhou por feições sem
+  geometria; refeita com um ponto fixo. O GEE não tem `log1p`; usado `add(1).log()`.
+- **Conferência:** os 78 modelos dão o mesmo valor no GEE e em Python (diferença máxima 5,6e-13). A imagem do GEE
+  contra o mapa do Paraná, em 200 pixels: temperatura com diferença mediana 0,005 °C (95% abaixo de 0,18-0,25 °C);
+  chuva 0,3-0,4 mm (95% abaixo de 2-3,5 mm). O resto vem do relevo reamostrado na grade do GEE.
+  `resultados/tabelas/brasil_gee_x_parana.json`. Valores plausíveis em Manaus, Brasília, Porto Alegre, Petrolina e
+  Campos do Jordão.
+- Fica de fora no GEE: a área de aplicabilidade (vizinho mais próximo no espaço das covariáveis). A incerteza
+  calibrada vai junto (5 membros × k90).
+- `gee/visualizar_brasil.js` usa a biblioteca via `require`. Não testado no Code Editor (Earth Agent desconectado);
+  exportação de asset por região grande disponível em `exports.exportar`, não executada.

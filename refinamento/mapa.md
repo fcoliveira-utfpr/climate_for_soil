@@ -206,6 +206,13 @@ Ficam em `dados/parana/saida/` (fora do git). Para o GEE, `codigo/pacote_gee_par
 num GeoTIFF int16 de 39 bandas em `dados/gee/`; o visualizador está em
 [`gee/visualizar_parana.js`](gee/visualizar_parana.js).
 
+**Brasil inteiro, calculado no GEE:** o mesmo modelo congelado roda dentro do GEE (árvores do LightGBM convertidas
+para `ee.Classifier.decisionTreeEnsemble`), sem processamento local nem upload. A biblioteca
+[`gee/brasil_30m.js`](gee/brasil_30m.js) devolve as imagens `temperatura` e `chuva` (12 meses, anual e incerteza
+de 90%) para todo o país, e [`gee/visualizar_brasil.js`](gee/visualizar_brasil.js) mostra no mapa. Os 78 modelos
+dão o mesmo valor que em Python, e no Paraná a imagem do GEE fica a 0,005 °C e 0,4 mm (medianas) do mapa local.
+A área de aplicabilidade ainda não está no GEE.
+
 **Piloto de Curitiba:** 12 × 12 km, 39 GeoTIFFs, no GEE em
 `projects/mystic-hull-480913-h5/assets/refinamento_30m/piloto_curitiba_30m`, com o visualizador
 [`gee/visualizar_piloto.js`](gee/visualizar_piloto.js).

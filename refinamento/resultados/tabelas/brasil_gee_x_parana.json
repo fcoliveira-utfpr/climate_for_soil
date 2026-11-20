@@ -1,0 +1,30 @@
+{
+  "temperatura_jan_C": {
+    "pixels": 200,
+    "dif_media": 0.0028512310028075837,
+    "dif_abs_mediana": 0.004930381774901349,
+    "dif_abs_p95": 0.17989832687377932,
+    "dif_abs_max": 0.31101867675781136
+  },
+  "chuva_jan_mm": {
+    "pixels": 200,
+    "dif_media": 0.11662310166559436,
+    "dif_abs_mediana": 0.3710642572360001,
+    "dif_abs_p95": 3.502933249588732,
+    "dif_abs_max": 8.447868256224183
+  },
+  "temperatura_jul_C": {
+    "pixels": 200,
+    "dif_media": 0.00477255191802981,
+    "dif_abs_mediana": 0.005679073333739737,
+    "dif_abs_p95": 0.25474373245239107,
+    "dif_abs_max": 0.539637565612793
+  },
+  "chuva_jul_mm": {
+    "pixels": 200,
+    "dif_media": -0.13186361321422782,
+    "dif_abs_mediana": 0.2588548237973356,
+    "dif_abs_p95": 2.063059650197988,
+    "dif_abs_max": 12.243909982534916
+  }
+}
